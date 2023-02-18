@@ -1,0 +1,13 @@
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  color: gray;
+  svg {
+    width: 9rem;
+    height: 9rem;
+  }
+}

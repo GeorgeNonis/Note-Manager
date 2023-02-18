@@ -1,0 +1,84 @@
+@mixin baseStyle {
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  width: 100%;
+  background-color: transparent;
+  color: gray;
+  border: 1px solid gray;
+  margin-inline: auto;
+  outline: none;
+  color: white;
+}
+
+.title {
+  text-align: center;
+  font-family: monospace;
+}
+
+.mainSection {
+  display: grid;
+  width: 50%;
+  margin-inline: auto;
+  position: relative;
+
+  .pin {
+    position: absolute;
+    top: 5px;
+    right: -30px;
+
+    &:hover {
+      .icon {
+        color: gray;
+      }
+
+      .span {
+        display: block;
+      }
+    }
+  }
+
+  .span {
+    position: absolute;
+    right: 0rem;
+    top: 2rem;
+    width: 4rem;
+    text-align: center;
+    display: none;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    margin-inline: auto;
+    transform: rotate(315deg);
+    position: absolute;
+    right: 14px;
+  }
+}
+
+.noteTitle {
+  @include baseStyle();
+  border-bottom: none;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.noteInput {
+  @include baseStyle();
+}
+
+.noteBorders {
+  border-top: none;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}
+
+.notes {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  margin: 1rem;
+}

@@ -1,0 +1,33 @@
+.main {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+
+  .div {
+    div {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 2fr 6fr;
+      place-items: center;
+      border-radius: 0 10px 10px 0;
+      height: 4rem;
+      color: gray;
+      &:hover {
+        background-color: #28292c;
+      }
+      h3 {
+        color: white;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
+      }
+    }
+  }
+}
+
+.active {
+  background-color: #41331c;
+}

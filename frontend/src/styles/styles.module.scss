@@ -1,0 +1,16 @@
+.actions {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.8rem;
+  width: 100%;
+  button {
+    font-size: 0.7rem;
+    appearance: none;
+    border-radius: 5px;
+    background-color: gray;
+    padding: 0.3rem;
+  }
+}
