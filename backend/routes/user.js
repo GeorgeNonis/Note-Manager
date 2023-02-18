@@ -4,6 +4,8 @@ const {
   writeData,
   writeDeleted,
   readDataDel,
+  writePinned,
+  readDataPinned,
 } = require("../utils/utils");
 const router = express.Router();
 
@@ -11,8 +13,14 @@ const router = express.Router();
  * GET REQUESTS
  */
 router.get("/", async (req, res, next) => {
-  const data = await readData();
-  res.status(201).json(data);
+  /**
+   * Promise.all([readDataPinned,readData,readDataDel])
+   */
+  const pinned = await readDataPinned();
+  const unpinned = await readData();
+  const deleted = await readDataDel();
+
+  res.status(202).json({ unpinned, pinned, deleted });
 });
 
 router.get("/deleted", async (req, res, next) => {
@@ -44,26 +52,19 @@ router.post("/sort", async (req, res, next) => {
 });
 
 router.post("/restore", async (req, res, next) => {
+  console.log("RESTORING");
   const id = req.body.id;
   const data = await readDataDel();
   const restoredNote = data.find((n) => n.id === id);
   const currentState = await readData();
   try {
+    await writeDeleted([...data.filter((n) => n.id !== id)]);
     await writeData([...currentState, { ...restoredNote }]);
     res.status(201).json({ message: "Restored successfully" });
   } catch (error) {
     res.status(400).json({ message: "Something went wrong", error });
   }
 });
-
-const test = (arg1) => {
-  if (!arg1) arg1 = 10;
-
-  console.log("If statement didnt stop me");
-  console.log(arg1);
-};
-
-test();
 
 router.post("/remove", async (req, res, next) => {
   const id = req.body.id;
@@ -78,19 +79,54 @@ router.post("/remove", async (req, res, next) => {
   }
 });
 
+router.post("/pin", async (req, res, next) => {
+  const pinned = await readDataPinned();
+  const unpinned = await readData();
+  const id = req.body.id;
+  const isItPinned = pinned.find((n) => n.id === id);
+  const pinNote = unpinned.find((n) => n.id === id);
+  if (isItPinned === undefined) {
+    try {
+      await writePinned([...pinned, { ...pinNote }]);
+      await writeData([...unpinned.filter((n) => n.id !== id)]);
+      return res.status(201).json({ message: "Successfully pinned" });
+    } catch (error) {
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  } else {
+    try {
+      await writePinned([...pinned.filter((n) => n.id !== id)]);
+      await writeData([...unpinned, { ...isItPinned }]);
+      return res.status(201).json({ message: "Successfully unpinned" });
+    } catch (error) {
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  }
+});
+
 /**
  * DELETE REQUESTS
  */
 
 router.delete("/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
-  const prevState = await readData();
-  const note = prevState.find((n) => n.id === id);
+  const pinned = req.query.pinned;
   const prevStateDel = await readDataDel();
-  const newState = prevState.filter((n) => n.id != id);
+  let prevState;
+  let note;
 
+  if (!pinned) {
+    prevState = await readData();
+    note = prevState.find((n) => n.id === id);
+
+    await writeData([...prevState.filter((n) => n.id != id)]);
+  } else {
+    prevState = await readDataPinned();
+    note = prevState.find((n) => n.id === id);
+
+    await writePinned([...prevState.filter((n) => n.id != id)]);
+  }
   await writeDeleted([...prevStateDel, note]);
-  await writeData([...newState]);
   res.status(200).json({ message: "Deleted note successfully" });
 });
 
