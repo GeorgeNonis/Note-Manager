@@ -69,10 +69,6 @@ const DeletedNote = ({
         onDragEnter={(e) => onDragEnter(e, position)}
         onDragEnd={onDragEnd}
       >
-        <div className={styles.pin}>
-          <BsPinAngle className={styles.icon} />
-          <span className={styles.span}>Pin note</span>
-        </div>
         <h3 aria-multiline="true">{note.title}</h3>
         <p aria-multiline="true">{note.note}</p>
         <div className={styles.actions}>

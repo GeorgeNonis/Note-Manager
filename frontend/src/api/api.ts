@@ -4,12 +4,11 @@ interface Notes {
   title: string;
   note: string;
   id: string;
-  pinned: boolean;
 }
 
 const BASE_URL = "http://localhost:8080/";
 
-export const sortData = async (data: Notes[], sort: boolean) => {
+export const sortDataHttp = async (data: Notes[], sort: boolean) => {
   await axios
     .post(`${BASE_URL}sort?sort=${sort}`, data)
     .then((res) => {
@@ -22,11 +21,10 @@ export const sortData = async (data: Notes[], sort: boolean) => {
     });
 };
 
-export const getData = async (): Promise<Notes[]> => {
+export const getDataHttp = async (): Promise<Notes[]> => {
   return axios
     .get<Notes[]>(BASE_URL)
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => {
@@ -34,7 +32,7 @@ export const getData = async (): Promise<Notes[]> => {
     });
 };
 
-export const addData = async (data: Notes) => {
+export const addDataHttp = async (data: Notes) => {
   await axios
     .post("http://localhost:8080/", { ...data })
     .then((res) => {
@@ -44,22 +42,12 @@ export const addData = async (data: Notes) => {
       console.log(err);
     });
 };
-
-export const getDeletedNotes = async () => {
-  return axios
-    .get(`${BASE_URL}deleted`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
-};
-
-export const deleteNote = async (id: string): Promise<void> => {
+export const deleteNoteHttp = async (
+  id: string,
+  pinned: boolean
+): Promise<void> => {
   await axios
-    .delete(`${BASE_URL}:${id}`)
+    .delete(`${BASE_URL}:${id}?pinned=${pinned}`)
     .then((res) => {
       console.log(res);
     })
@@ -83,6 +71,19 @@ export const restoreNoteHttp = async (id: string) => {
 export const removeNoteHttp = async (id: string) => {
   await axios
     .post(`${BASE_URL}remove`, { id })
+    .then((res) => {
+      console.log(res);
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
+};
+
+export const pinNoteHandlerHttp = async (id: string) => {
+  await axios
+    .post(`${BASE_URL}pin`, { id })
     .then((res) => {
       console.log(res);
       return res;

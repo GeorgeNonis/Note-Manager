@@ -83,6 +83,11 @@
   right: 14px;
 }
 
+.pinned {
+  color: gray;
+  transform: none;
+}
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -167,7 +172,7 @@ Options styling
   bottom: 1.2rem;
   background-color: #242424;
   border-radius: 5px;
-  box-shadow: 0px 0px 8px 1px black;
+  box-shadow: 0px 0px 8px -1px black;
   display: grid;
   gap: 1rem;
 
@@ -196,9 +201,15 @@ Deleted Note styling
   width: 100%;
   button {
     font-size: 0.7rem;
-    appearance: none;
     border-radius: 5px;
-    background-color: gray;
+    color: white;
     padding: 0.3rem;
+    border: none;
+    background-color: transparent;
+    font-style: italic;
+
+    &:hover {
+      background-color: #28292c;
+    }
   }
 }

@@ -3,52 +3,41 @@ import { Notes } from "../components/notesSection";
 
 interface InitialState {
   notes: Notes[];
+  pinnedNotes: Notes[];
   deletedNotes: Notes[];
 }
 
 const initialState: InitialState = {
   notes: [],
   deletedNotes: [],
+  pinnedNotes: [],
 };
-
-type New = Record<string, number | string>;
-
-type Xx = {
-  name: string;
-  age: string | number;
-};
-
-const test = {
-  name: "giorgos",
-  age: 12,
-} satisfies Xx; /** Could use New as well*/
-
-const x = test.name;
 
 const notes = createSlice({
   name: "notes",
   initialState,
   reducers: {
     initial(state, { payload }) {
-      state.notes = payload;
-      /**
-       * Should make 1 request to set up the whole state
-       */
-      // state.pinned = payload.pinned
-      // state.deletedNotes = payload.deletedNotes
+      state.notes = [...payload.unpinned];
+      state.pinnedNotes = [...payload.pinned];
+      state.deletedNotes = [...payload.deleted];
     },
     add(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
     },
-    initialDelState(state, { payload }) {
-      state.deletedNotes = payload;
-    },
     deleteN(state, { payload }) {
-      const id = payload;
-      const note = state.notes.find((n) => n.id === id) as Notes;
-      state.deletedNotes.push(note);
-
-      state.notes = [...state.notes.filter((n) => n.id !== id)];
+      const id = payload.id;
+      const pinned = payload.pinned;
+      let note;
+      if (!pinned) {
+        note = state.notes.find((n) => n.id === id) as Notes;
+        state.notes = [...state.notes.filter((n) => n.id !== id)];
+        state.deletedNotes.push(note);
+      } else {
+        note = state.pinnedNotes.find((n) => n.id === id) as Notes;
+        state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
+        state.deletedNotes.push(note);
+      }
     },
     sortNotes(state, { payload }) {
       state.notes = payload;
@@ -66,17 +55,22 @@ const notes = createSlice({
     removeNote(state, { payload: id }) {
       state.deletedNotes = [...state.deletedNotes.filter((n) => n.id !== id)];
     },
-    pinNote(state, { payload: id }) {
-      state.notes.forEach((note) => {
-        if (note.id !== id) return;
-        note.pinned = true;
-      });
+    pinHandler(state, { payload: id }) {
+      const isItPinned = state.pinnedNotes.some((n) => n.id === id);
+      if (isItPinned) {
+        const note = state.pinnedNotes.find((n) => n.id === id)!;
+        state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
+
+        state.notes = [...state.notes, note];
+      } else {
+        const note = state.notes.find((n) => n.id === id)!;
+        state.notes = [...state.notes.filter((n) => n.id !== id)];
+
+        state.pinnedNotes = [...state.pinnedNotes, note];
+      }
     },
-    unpinNote(state, { payload: id }) {
-      state.notes.forEach((note) => {
-        if (note.id !== id) return;
-        note.pinned = false;
-      });
+    sortPinnedNotes(state, { payload }) {
+      state.pinnedNotes = payload;
     },
   },
 });
@@ -87,11 +81,10 @@ export const {
   sortNotes,
   sortDelNotes,
   initial,
-  initialDelState,
   restoreNote,
   removeNote,
-  pinNote,
-  unpinNote,
+  pinHandler,
+  sortPinnedNotes,
 } = notes.actions;
 
 export default notes.reducer;

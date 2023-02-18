@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { pinNote, unpinNote } from "../store/notesSlice";
+import { pinHandler } from "../store/notesSlice";
 import Options from "./options";
 import ReviewModal from "./reviewModal";
-import { BsPinAngle } from "react-icons/bs";
+import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
 import styles from "../styles/note.module.scss";
+import { pinNoteHandlerHttp } from "../api/api";
 
 interface Props {
   note: {
     note: string;
     title: string;
     id: string;
-    pinned: boolean;
   };
   zindex: number;
   position: number;
+  pinned: boolean;
   onDragEnd: () => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;
   onDragStart: (e: React.DragEvent, position: number) => void;
@@ -29,17 +30,17 @@ const Note = ({
   onDragEnter,
   onDragStart,
   zindex,
+  pinned,
 }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const outside = useOutsideClick(() => setReview(false));
 
-  const pinNoteHandler = () => {
-    if (note.pinned) {
-      return dispatch(unpinNote(note.id));
-    }
-    dispatch(pinNote(note.id));
+  const pinNoteHandler = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(pinHandler(note.id));
+    await pinNoteHandlerHttp(note.id);
   };
 
   const noteStyle = !review ? styles.note : `${styles.note} ${styles.review}`;
@@ -65,7 +66,11 @@ const Note = ({
         onDragEnd={onDragEnd}
       >
         <div className={styles.pin} onClick={pinNoteHandler}>
-          <BsPinAngle className={styles.icon} />
+          {pinned ? (
+            <BsFillPinFill className={`${styles.pinned} ${styles.icon}`} />
+          ) : (
+            <BsPinAngle className={styles.icon} />
+          )}
           <span className={styles.span}>Pin note</span>
         </div>
         <h3
@@ -84,7 +89,7 @@ const Note = ({
         >
           {note.note}
         </p>
-        <Options id={note.id} />
+        <Options id={note.id} pinned />
       </div>
     </>
   );

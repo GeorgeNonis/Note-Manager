@@ -1,7 +1,7 @@
 import styles from "../styles/note.module.scss";
 import { useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { deleteNote } from "../api/api";
+import { deleteNoteHttp } from "../api/api";
 import { deleteN } from "../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { BsImage } from "react-icons/bs";
@@ -10,9 +10,10 @@ import { AiOutlineBell } from "react-icons/ai";
 
 type Id = {
   id: string;
+  pinned: boolean;
 };
 
-const Options = ({ id }: Id) => {
+const Options = ({ id, pinned }: Id) => {
   const dispatch = useDispatch();
   const [display, setDisplay] = useState<boolean>(false);
   const outside = useOutsideClick(() => setDisplay(false));
@@ -20,8 +21,8 @@ const Options = ({ id }: Id) => {
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
     console.log("Deleting");
-    await deleteNote(id);
-    dispatch(deleteN(id));
+    await deleteNoteHttp(id, pinned);
+    dispatch(deleteN({ id, pinned }));
     setDisplay(!display);
   };
   return (

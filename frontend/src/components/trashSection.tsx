@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
-import { getDeletedNotes, sortData } from "../api/api";
+import { sortDataHttp } from "../api/api";
 import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
 import DeletedNote from "./deletedNote";
 import LoadingSpinner from "./loadingSpinner";
 import EmptyTrash from "./emptyTrash";
-import { initialDelState, sortDelNotes } from "../store/notesSlice";
+import { sortDelNotes } from "../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/trashSection.module.scss";
 
@@ -24,19 +24,10 @@ const Deleted = () => {
       notesPrevState.splice(indexOf, 1);
       const rest = notesPrevState.splice(index);
       rest.unshift(note!);
-      sortData([...notesPrevState, ...rest], false);
+      sortDataHttp([...notesPrevState, ...rest], false);
       dispatch(sortDelNotes([...notesPrevState, ...rest]));
     }
   }, [indexOf, index]);
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getDeletedNotes();
-      setLoading(false);
-      dispatch(initialDelState(data));
-    };
-    getData();
-  }, []);
   let zindex = 1000;
   return (
     <>
@@ -45,11 +36,9 @@ const Deleted = () => {
           Notes in Trash are deleted after 7 days.
         </h3>
         <section className={styles.notes}>
-          {loading && <LoadingSpinner />}
-          {deletedNotes.length === 0 && !loading ? (
+          {deletedNotes.length === 0 ? (
             <EmptyTrash />
           ) : (
-            !loading &&
             deletedNotes.map((note, i) => {
               zindex -= 1;
               return (

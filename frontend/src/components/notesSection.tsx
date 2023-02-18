@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { addData, getData, sortData } from "../api/api";
+import { addDataHttp, getDataHttp, sortDataHttp } from "../api/api";
 import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
 import { add, initial, sortNotes } from "../store/notesSlice";
@@ -16,7 +16,6 @@ export interface Notes {
   title: string;
   note: string;
   id: string;
-  pinned: boolean;
 }
 
 const Notes = () => {
@@ -49,7 +48,7 @@ const Notes = () => {
       notesPrevState.splice(indexOf, 1);
       const rest = notesPrevState.splice(index);
       rest.unshift(note!);
-      sortData([...notesPrevState, ...rest], true);
+      sortDataHttp([...notesPrevState, ...rest], true);
       dispatch(sortNotes([...notesPrevState, ...rest]));
     }
   }, [indexOf, index]);
@@ -66,7 +65,8 @@ const Notes = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await getData();
+      const data = await getDataHttp();
+      console.log(data);
       dispatch(initial(data));
     };
     if (loading) {
@@ -89,7 +89,7 @@ const Notes = () => {
     tempNote.note = note;
     tempNote.id = uuid();
 
-    addData(tempNote);
+    addDataHttp(tempNote);
     dispatch(add(tempNote));
     setTitle("");
     setNote("");
@@ -116,30 +116,36 @@ const Notes = () => {
           key={100}
         />
       </main>
-      <section className={styles.notes}>
+      <section className={styles.allNotes}>
         {loading && <LoadingSpinner />}
-        {notes.notes.some((n) => n.pinned) && (
-          <PinnedSection notes={[...notes.notes.filter((n) => n.pinned)]} />
+        {notes.pinnedNotes.length !== 0 && (
+          <PinnedSection notes={[...notes.pinnedNotes]} />
         )}
-        {notes.notes.length === 0 && !loading ? (
+        {notes.pinnedNotes.length > 0 && (
+          <p>{notes.notes.length !== 0 && "Others"}</p>
+        )}
+        {notes.notes.length === 0 && notes.pinnedNotes.length === 0 && (
           <p style={{ textAlign: "center", gridColumn: 3 }}>No notes</p>
-        ) : (
-          !loading &&
-          notes.notes.map((note, i) => {
-            zIndex -= 1;
-            return (
-              <Note
-                zindex={zIndex}
-                note={note}
-                key={i}
-                position={i}
-                onDragEnd={onDragEnd}
-                onDragEnter={onDragEnter}
-                onDragStart={onDragStart}
-              />
-            );
-          })
         )}
+        <section className={styles.notes}>
+          {!loading &&
+            notes.notes.length !== 0 &&
+            notes.notes.map((note, i) => {
+              zIndex -= 1;
+              return (
+                <Note
+                  pinned={false}
+                  zindex={zIndex}
+                  note={note}
+                  key={i}
+                  position={i}
+                  onDragEnd={onDragEnd}
+                  onDragEnter={onDragEnter}
+                  onDragStart={onDragStart}
+                />
+              );
+            })}
+        </section>
       </section>
     </div>
   );
