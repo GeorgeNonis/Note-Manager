@@ -10,13 +10,6 @@ export const useDnd = () => {
 
   const onDragEnter = (e: React.DragEvent, position: number) => {
     setIndex(position);
-    // console.log(position);
-  };
-
-  const onDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    // console.log(e);
-    const div = e.dataTransfer.getData("id") as string;
-    // console.log(div);
   };
 
   return {

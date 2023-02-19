@@ -89,7 +89,7 @@ const Note = ({
         >
           {note.note}
         </p>
-        <Options id={note.id} pinned />
+        <Options id={note.id} pinned={pinned} />
       </div>
     </>
   );

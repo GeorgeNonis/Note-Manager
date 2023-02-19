@@ -18,6 +18,7 @@ const notes = createSlice({
   initialState,
   reducers: {
     initial(state, { payload }) {
+      // console.log(payload);
       state.notes = [...payload.unpinned];
       state.pinnedNotes = [...payload.pinned];
       state.deletedNotes = [...payload.deleted];
@@ -28,12 +29,16 @@ const notes = createSlice({
     deleteN(state, { payload }) {
       const id = payload.id;
       const pinned = payload.pinned;
+      console.log(payload);
+      console.log(pinned);
       let note;
       if (!pinned) {
+        console.log("Not pinned");
         note = state.notes.find((n) => n.id === id) as Notes;
         state.notes = [...state.notes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
       } else {
+        console.log("Pinned");
         note = state.pinnedNotes.find((n) => n.id === id) as Notes;
         state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);

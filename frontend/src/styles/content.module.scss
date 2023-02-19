@@ -10,12 +10,10 @@
       place-items: center;
       border-radius: 0 10px 10px 0;
       height: 4rem;
-      color: gray;
       &:hover {
         background-color: #28292c;
       }
       h3 {
-        color: white;
         text-align: center;
         padding: 0;
         margin: 0;
@@ -29,5 +27,10 @@
 }
 
 .active {
+  color: white;
   background-color: #41331c;
+}
+
+.inactive {
+  color: gray;
 }

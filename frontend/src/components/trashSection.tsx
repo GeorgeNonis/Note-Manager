@@ -3,18 +3,17 @@ import { sortDataHttp } from "../api/api";
 import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
 import DeletedNote from "./deletedNote";
-import LoadingSpinner from "./loadingSpinner";
 import EmptyTrash from "./emptyTrash";
 import { sortDelNotes } from "../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/trashSection.module.scss";
 
 const Deleted = () => {
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const deletedNotes = useSelector(
     (state: IRootState) => state.notes.deletedNotes
   );
+  // console.log(deletedNotes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
 
   const onDragEnd = useCallback(() => {

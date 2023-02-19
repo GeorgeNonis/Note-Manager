@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
-import { BsPinAngle } from "react-icons/bs";
 import { removeNoteHttp, restoreNoteHttp } from "../api/api";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../store/notesSlice";
@@ -31,6 +30,7 @@ const DeletedNote = ({
 }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
+  // console.log(note);
 
   const outside = useOutsideClick(() => setReview(false));
 

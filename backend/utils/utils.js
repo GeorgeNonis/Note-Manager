@@ -34,9 +34,17 @@ const readDataDel = async () => {
   return JSON.parse(data);
 };
 
+const readDataPinned = async () => {
+  const data = await fs.readFile(databasePinned, (err, data) => {
+    return data;
+  });
+
+  return JSON.parse(data);
+};
+
 const writeData = async (data) => {
   await fs.writeFile(database, JSON.stringify(data), (err) => {
-    console.log(err);
+    if (err) return err;
   });
 };
 
@@ -44,14 +52,6 @@ const writeDeleted = async (data) => {
   await fs.writeFile(databaseDel, JSON.stringify(data), (err) => {
     if (err) return err;
   });
-};
-
-const readDataPinned = async () => {
-  const data = await fs.readFile(databasePinned, (err, data) => {
-    return data;
-  });
-
-  return JSON.parse(data);
 };
 
 const writePinned = async (data) => {

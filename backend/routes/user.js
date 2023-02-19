@@ -13,14 +13,15 @@ const router = express.Router();
  * GET REQUESTS
  */
 router.get("/", async (req, res, next) => {
-  /**
-   * Promise.all([readDataPinned,readData,readDataDel])
-   */
-  const pinned = await readDataPinned();
-  const unpinned = await readData();
-  const deleted = await readDataDel();
-
-  res.status(202).json({ unpinned, pinned, deleted });
+  await Promise.all([readDataPinned(), readData(), readDataDel()]).then(
+    (val) => {
+      res.status(202).json({
+        pinned: [...val[0]],
+        unpinned: [...val[1]],
+        deleted: [...val[2]],
+      });
+    }
+  );
 });
 
 router.get("/deleted", async (req, res, next) => {
@@ -35,8 +36,12 @@ router.get("/deleted", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
-  await writeData([...prevState, { ...data }]);
-  res.status(201).json({ message: "Succssfully added your Note" });
+  try {
+    await writeData([...prevState, { ...data }]);
+    res.status(201).json({ message: "Succssfully added your Note" });
+  } catch (error) {
+    res.status(500).json({ message: "ERROR", error });
+  }
 });
 
 router.post("/sort", async (req, res, next) => {
@@ -114,18 +119,21 @@ router.delete("/:id", async (req, res, next) => {
   const prevStateDel = await readDataDel();
   let prevState;
   let note;
-
-  if (!pinned) {
+  console.log(typeof pinned);
+  if (pinned === "false") {
     prevState = await readData();
     note = prevState.find((n) => n.id === id);
-
+    console.log(note);
+    console.log("unpinned");
     await writeData([...prevState.filter((n) => n.id != id)]);
   } else {
+    console.log("pinned");
     prevState = await readDataPinned();
     note = prevState.find((n) => n.id === id);
 
     await writePinned([...prevState.filter((n) => n.id != id)]);
   }
+  console.log(note);
   await writeDeleted([...prevStateDel, note]);
   res.status(200).json({ message: "Deleted note successfully" });
 });

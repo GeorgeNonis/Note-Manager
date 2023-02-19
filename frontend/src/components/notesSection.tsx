@@ -5,12 +5,16 @@ import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
 import { add, initial, sortNotes } from "../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import uuid from "react-uuid";
 import LoadingSpinner from "./loadingSpinner";
 import Note from "./note";
 import Inputs from "./form";
 import styles from "../styles/App.module.scss";
 import PinnedSection from "./pinnedSection";
+
+/**
+ * Comes native with React
+ */
+import { v4 as uuid } from "uuid";
 
 export interface Notes {
   title: string;
@@ -22,7 +26,6 @@ const Notes = () => {
   const [loading, setLoading] = useState(true);
   const { notes } = useSelector((state: IRootState) => state);
   const dispatch = useDispatch();
-  // const [blur, setBlur] = useState<boolean>(false);
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -66,7 +69,7 @@ const Notes = () => {
   useEffect(() => {
     const fetch = async () => {
       const data = await getDataHttp();
-      console.log(data);
+      // console.log(data);
       dispatch(initial(data));
     };
     if (loading) {
@@ -87,7 +90,8 @@ const Notes = () => {
     };
     tempNote.title = title;
     tempNote.note = note;
-    tempNote.id = uuid();
+    // tempNote.id = uuid();
+    tempNote.id = crypto.randomUUID();
 
     addDataHttp(tempNote);
     dispatch(add(tempNote));
