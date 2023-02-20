@@ -34,7 +34,7 @@ const Options = ({ id, pinned }: Id) => {
     },
     []
   );
-  // console.log(displayPalette);
+  console.log(display);
   return (
     <div className={styles.optionsContent} onClick={(e) => e.stopPropagation()}>
       <div className={styles.style}>

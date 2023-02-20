@@ -1,37 +1,17 @@
-import React, {
-  useState,
-  useRef,
-  MutableRefObject,
-  RefObject,
-  LegacyRef,
-  useEffect,
-} from "react";
+import React, { useState, useRef, MutableRefObject, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import { colorLogic } from "../utils/utils";
 import { editNote, pinHandler } from "../store/notesSlice";
 import Options from "./options";
 import ReviewModal from "./reviewModal";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
 import { editNoteHttp, pinNoteHandlerHttp } from "../api/api";
-import { Notes } from "./notesSection";
 import styles from "../styles/note.module.scss";
-import { colorLogic } from "../utils/utils";
-
-interface Props {
-  note: Notes;
-  zindex: number;
-  position: number;
-  pinned: boolean;
-  onDragEnd: () => void;
-  onDragEnter: (e: React.DragEvent, position: number) => void;
-  onDragStart: (
-    e: React.DragEvent,
-    position: number,
-    pinned: boolean,
-    id: string
-  ) => void;
-}
+import { Title } from "./title";
+import { NoteDetails } from "./noteDetails";
+import { NoteProps } from "../interfaces/interfaces";
 
 const Note = ({
   note,
@@ -41,19 +21,19 @@ const Note = ({
   onDragStart,
   zindex,
   pinned,
-}: Props) => {
+}: NoteProps) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
   const outside = useOutsideClick(() => setReview(false));
   const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
-  const paragraph = useRef(
+  const noteDetails = useRef(
     null
   ) as MutableRefObject<HTMLParagraphElement | null>;
   const noteId = note.id;
 
   useEffect(() => {
     const titleValue = title.current?.innerText;
-    const noteValue = paragraph.current?.innerText;
+    const noteValue = noteDetails.current?.innerText;
     if (note.note === noteValue && note.title === titleValue) return;
     dispatch(editNote({ pinned, noteId, titleValue, noteValue }));
     editNoteHttp({ noteId, pinned, noteValue, titleValue });
@@ -102,25 +82,8 @@ const Note = ({
             {pinned ? "Unpin Note" : "Pin note"}
           </span>
         </div>
-        <h3
-          ref={title}
-          onChange={(e) => console.log(e.target)}
-          contentEditable="true"
-          spellCheck="true"
-          aria-multiline="true"
-          suppressContentEditableWarning
-        >
-          {note.title}
-        </h3>
-        <p
-          ref={paragraph}
-          contentEditable="true"
-          spellCheck="true"
-          aria-multiline="true"
-          suppressContentEditableWarning
-        >
-          {note.note}
-        </p>
+        <Title title={note.title} titleRef={title} editable={true} />
+        <NoteDetails note={note.note} noteRef={noteDetails} editable={true} />
         <Options id={note.id} pinned={pinned} />
       </div>
     </>

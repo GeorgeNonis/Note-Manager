@@ -16,13 +16,6 @@ import styles from "../styles/App.module.scss";
  */
 // import { v4 as uuid } from "uuid";
 
-export interface Notes {
-  title: string;
-  note: string;
-  id: string;
-  color: string;
-}
-
 const Notes = () => {
   const [loading, setLoading] = useState(true);
   const state = useSelector((state: IRootState) => state.notes);
@@ -117,6 +110,19 @@ const Notes = () => {
   if (loading) return <LoadingSpinner />;
 
   if (state.error) return <p className={styles.error}>{state.error}</p>;
+
+  const pinnedNotes = state.pinnedNotes.length !== 0 && (
+    <PinnedSection notes={[...state.pinnedNotes]} />
+  );
+
+  const othersPara = state.pinnedNotes.length > 0 && (
+    <p>{state.notes.length !== 0 && "Others"}</p>
+  );
+
+  const noNotes = state.notes.length === 0 &&
+    state.pinnedNotes.length === 0 && (
+      <p style={{ textAlign: "center" }}>No notes</p>
+    );
   return (
     <div className={styles.content}>
       <h3 className={styles.title}>Your Note's</h3>
@@ -133,15 +139,9 @@ const Notes = () => {
         />
       </main>
       <section className={styles.allNotes}>
-        {state.pinnedNotes.length !== 0 && (
-          <PinnedSection notes={[...state.pinnedNotes]} />
-        )}
-        {state.pinnedNotes.length > 0 && (
-          <p>{state.notes.length !== 0 && "Others"}</p>
-        )}
-        {state.notes.length === 0 && state.pinnedNotes.length === 0 && (
-          <p style={{ textAlign: "center" }}>No notes</p>
-        )}
+        {pinnedNotes}
+        {othersPara}
+        {noNotes}
         <section className={styles.notes}>
           {!loading &&
             state.notes.length !== 0 &&

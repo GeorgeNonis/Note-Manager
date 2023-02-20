@@ -7,21 +7,18 @@ import { removeNote, restoreNote } from "../store/notesSlice";
 import ReviewModal from "./reviewModal";
 import styles from "../styles/note.module.scss";
 import { colorLogic } from "../utils/utils";
+import { Notes } from "../interfaces/interfaces";
+import { Title } from "./title";
+import { NoteDetails } from "./noteDetails";
 
 interface Props {
-  note: {
-    note: string;
-    title: string;
-    id: string;
-    color: string;
-  };
+  note: Notes;
   zindex: number;
 }
 
 const DeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
-  // console.log(note);
 
   const outside = useOutsideClick(() => setReview(false));
 
@@ -59,22 +56,8 @@ const DeletedNote = ({ note, zindex }: Props) => {
         }}
         aria-multiline="true"
       >
-        <h3
-          contentEditable="true"
-          spellCheck="true"
-          aria-multiline="true"
-          suppressContentEditableWarning
-        >
-          {note.title}
-        </h3>
-        <p
-          contentEditable="true"
-          spellCheck="true"
-          aria-multiline="true"
-          suppressContentEditableWarning
-        >
-          {note.note}
-        </p>
+        <Title title={note.title} />
+        <NoteDetails note={note.note} />
         <div className={styles.actions}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>
