@@ -1,5 +1,5 @@
 import { deleteNoteHttp } from "../api/api";
-
+import { useEffect, RefObject, MutableRefObject, useRef } from "react";
 /**
  * Practising Typescript
  */
@@ -32,3 +32,13 @@ export const onDropBin = (
     deleteNoteHttp(id, pinned);
   }
 };
+
+export function useStateRef<T>(value: T): RefObject<T> {
+  const ref: MutableRefObject<T> = useRef<T>(value);
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref;
+}

@@ -49,6 +49,41 @@ router.post("/", async (req, res, next) => {
     });
 });
 
+router.post("/edit", async (req, res, next) => {
+  const id = req.body.noteId;
+  const { noteValue, titleValue } = req.body;
+  const pinned = req.params.pinned;
+
+  const pinnedNotes = await readDataPinned();
+  const unPinnedNotes = await readData();
+  let noteIndex;
+
+  if (pinned === "true") {
+    noteIndex = pinnedNotes.findIndex((n) => n.id === id);
+    pinnedNotes[noteIndex].title = titleValue;
+    pinnedNotes[noteIndex].note = noteValue;
+
+    await writePinned([...pinnedNotes])
+      .then((response) => {
+        res.status(202).json({ message: "Sucessfully edited note" });
+      })
+      .catch((error) => {
+        res.status(404).json({ message: "THIS IS THE ERROR", error });
+      });
+  } else {
+    noteIndex = unPinnedNotes.findIndex((n) => n.id === id);
+    unPinnedNotes[noteIndex].title = titleValue;
+    unPinnedNotes[noteIndex].note = noteValue;
+    await writeData([...unPinnedNotes])
+      .then((response) => {
+        res.status(202).json({ message: "Sucessfully edited color" });
+      })
+      .catch((error) => {
+        res.status(404).json({ message: "THIS IS THE ERROR", error });
+      });
+  }
+});
+
 router.post("/sort", async (req, res, next) => {
   const data = req.body;
   const sortFile = req.query.sort;
@@ -119,16 +154,10 @@ router.post("/color", async (req, res, next) => {
   const color = req.body.color;
   const pinned = req.query.pinned;
 
-  console.log(pinned);
-  console.log(color);
-  console.log(id);
-
   const pinnedNotes = await readDataPinned();
   const unPinnedNotes = await readData();
 
   let noteIndex;
-  noteIndex = unPinnedNotes.findIndex((n) => n.id === id);
-  console.log(noteIndex);
 
   if (pinned === "true") {
     noteIndex = pinnedNotes.findIndex((n) => n.id === id);

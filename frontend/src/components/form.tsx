@@ -1,4 +1,3 @@
-import { BsPinAngle } from "react-icons/bs";
 import styles from "../styles/App.module.scss";
 import Input from "./input";
 
@@ -25,10 +24,6 @@ const Inputs = ({
     <>
       {display && (
         <>
-          <div className={styles.pin}>
-            <BsPinAngle className={styles.icon} />
-            <span className={styles.span}>Pin note</span>
-          </div>
           <Input
             className={styles.noteTitle}
             onChange={onChangeTitle}

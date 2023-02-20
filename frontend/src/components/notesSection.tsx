@@ -30,6 +30,7 @@ const Notes = () => {
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  console.log(state.notes);
 
   /**
    *

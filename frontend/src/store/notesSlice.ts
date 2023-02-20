@@ -31,6 +31,22 @@ const notes = createSlice({
     errorState(state, { payload: error }) {
       state.error = error;
     },
+    editNote(state, { payload }) {
+      const pinned = payload.pinned;
+      const id = payload.noteId;
+      console.log(id);
+      console.log(pinned);
+      let noteIndex;
+      if (pinned) {
+        noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
+        state.pinnedNotes[noteIndex].note = payload.noteValue;
+        state.pinnedNotes[noteIndex].title = payload.titleValue;
+      } else {
+        noteIndex = state.notes.findIndex((n) => n.id === id);
+        state.notes[noteIndex].note = payload.noteValue;
+        state.notes[noteIndex].title = payload.titleValue;
+      }
+    },
     deleteN(state, { payload }) {
       const id = payload.id;
       const pinned = payload.pinned;
@@ -51,9 +67,6 @@ const notes = createSlice({
     },
     sortNotes(state, { payload }) {
       state.notes = payload;
-    },
-    sortDelNotes(state, { payload }) {
-      state.deletedNotes = payload;
     },
     restoreNote(state, { payload }) {
       const id = payload;
@@ -102,9 +115,9 @@ const notes = createSlice({
 export const {
   add,
   errorState,
+  editNote,
   deleteN,
   sortNotes,
-  sortDelNotes,
   initial,
   restoreNote,
   removeNote,

@@ -16,15 +16,6 @@ interface Props {
     color: string;
   };
   zindex: number;
-  position: number;
-  onDragEnd: () => void;
-  onDragEnter: (e: React.DragEvent, position: number) => void;
-  onDragStart: (
-    e: React.DragEvent,
-    position: number,
-    pinned: boolean,
-    id: string
-  ) => void;
 }
 
 const DeletedNote = ({ note, zindex }: Props) => {

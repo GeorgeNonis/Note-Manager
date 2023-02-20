@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  MutableRefObject,
+  RefObject,
+  LegacyRef,
+  useEffect,
+} from "react";
 import ReactDOM from "react-dom";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { pinHandler } from "../store/notesSlice";
+import { editNote, pinHandler } from "../store/notesSlice";
 import Options from "./options";
 import ReviewModal from "./reviewModal";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
-import { pinNoteHandlerHttp } from "../api/api";
+import { editNoteHttp, pinNoteHandlerHttp } from "../api/api";
 import { Notes } from "./notesSection";
 import styles from "../styles/note.module.scss";
 import { colorLogic } from "../utils/utils";
@@ -37,8 +44,20 @@ const Note = ({
 }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
-
   const outside = useOutsideClick(() => setReview(false));
+  const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
+  const paragraph = useRef(
+    null
+  ) as MutableRefObject<HTMLParagraphElement | null>;
+  const noteId = note.id;
+
+  useEffect(() => {
+    const titleValue = title.current?.innerText;
+    const noteValue = paragraph.current?.innerText;
+    if (note.note === noteValue && note.title === titleValue) return;
+    dispatch(editNote({ pinned, noteId, titleValue, noteValue }));
+    editNoteHttp({ noteId, pinned, noteValue, titleValue });
+  }, [review]);
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -84,6 +103,8 @@ const Note = ({
           </span>
         </div>
         <h3
+          ref={title}
+          onChange={(e) => console.log(e.target)}
           contentEditable="true"
           spellCheck="true"
           aria-multiline="true"
@@ -92,6 +113,7 @@ const Note = ({
           {note.title}
         </h3>
         <p
+          ref={paragraph}
           contentEditable="true"
           spellCheck="true"
           aria-multiline="true"

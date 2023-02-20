@@ -108,3 +108,28 @@ export const setColorHttp = async (
       return err;
     });
 };
+
+interface EditNoteArgs {
+  noteId: string;
+  pinned: boolean;
+  titleValue: string | undefined;
+  noteValue: string | undefined;
+}
+
+export const editNoteHttp = async ({
+  noteId,
+  pinned,
+  noteValue,
+  titleValue,
+}: EditNoteArgs) => {
+  await axios
+    .post(`${BASE_URL}edit?pinned=${pinned}`, { noteId, noteValue, titleValue })
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
+};
