@@ -1,10 +1,25 @@
 import React, { useState } from "react";
 
+interface DStartProps {
+  e: React.DragEvent;
+  position: number;
+  pinned: boolean;
+  id: string;
+}
+
 export const useDnd = () => {
   const [index, setIndex] = useState<number>(0);
   const [indexOf, setIndexOf] = useState<number>(0);
 
-  const onDragStart = (e: React.DragEvent, position: number) => {
+  const onDragStart = (
+    e: React.DragEvent,
+    position: number,
+    pinned: boolean,
+    id: string
+  ) => {
+    console.log(pinned);
+    e.dataTransfer.setData("id", `${id}`);
+    e.dataTransfer.setData("pinned", `${pinned}`);
     setIndexOf(position);
   };
 

@@ -1,10 +1,5 @@
 import axios from "axios";
-
-interface Notes {
-  title: string;
-  note: string;
-  id: string;
-}
+import { Notes } from "../components/notesSection";
 
 const BASE_URL = "http://localhost:8080/";
 
@@ -25,10 +20,12 @@ export const getDataHttp = async (): Promise<Notes[]> => {
   return axios
     .get<Notes[]>(BASE_URL)
     .then((res) => {
+      console.log(res);
       return res.data;
     })
     .catch((err) => {
-      return err;
+      console.log(err);
+      throw new Error(err.response.data.message);
     });
 };
 
@@ -46,6 +43,7 @@ export const deleteNoteHttp = async (
   id: string,
   pinned: boolean
 ): Promise<void> => {
+  console.log("Removing");
   await axios
     .delete(`${BASE_URL}:${id}?pinned=${pinned}`)
     .then((res) => {
@@ -84,6 +82,23 @@ export const removeNoteHttp = async (id: string) => {
 export const pinNoteHandlerHttp = async (id: string) => {
   await axios
     .post(`${BASE_URL}pin`, { id })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
+};
+
+export const setColorHttp = async (
+  color: string,
+  id: string,
+  pinned: boolean
+) => {
+  console.log({ id, color, pinned });
+  await axios
+    .post(`${BASE_URL}color?pinned=${pinned}`, { id, color })
     .then((res) => {
       console.log(res);
       return res;

@@ -6,21 +6,24 @@ import { pinHandler } from "../store/notesSlice";
 import Options from "./options";
 import ReviewModal from "./reviewModal";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
-import styles from "../styles/note.module.scss";
 import { pinNoteHandlerHttp } from "../api/api";
+import { Notes } from "./notesSection";
+import styles from "../styles/note.module.scss";
+import { colorLogic } from "../utils/utils";
 
 interface Props {
-  note: {
-    note: string;
-    title: string;
-    id: string;
-  };
+  note: Notes;
   zindex: number;
   position: number;
   pinned: boolean;
   onDragEnd: () => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;
-  onDragStart: (e: React.DragEvent, position: number) => void;
+  onDragStart: (
+    e: React.DragEvent,
+    position: number,
+    pinned: boolean,
+    id: string
+  ) => void;
 }
 
 const Note = ({
@@ -45,6 +48,8 @@ const Note = ({
 
   const noteStyle = !review ? styles.note : `${styles.note} ${styles.review}`;
   const zIndex = !review ? zindex : 10000;
+
+  const backgroundColor = colorLogic({ review, note });
   return (
     <>
       {review &&
@@ -54,14 +59,17 @@ const Note = ({
         )}
       <div
         ref={outside}
-        style={{ zIndex: zIndex }}
+        style={{
+          zIndex: zIndex,
+          backgroundColor,
+        }}
         className={noteStyle}
         onClick={(e) => {
           e.stopPropagation();
-          setReview(!review);
+          setReview(true);
         }}
         draggable={true}
-        onDragStart={(e) => onDragStart(e, position)}
+        onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
         onDragEnter={(e) => onDragEnter(e, position)}
         onDragEnd={onDragEnd}
       >
@@ -71,7 +79,9 @@ const Note = ({
           ) : (
             <BsPinAngle className={styles.icon} />
           )}
-          <span className={styles.span}>Pin note</span>
+          <span className={styles.span}>
+            {pinned ? "Unpin Note" : "Pin note"}
+          </span>
         </div>
         <h3
           contentEditable="true"

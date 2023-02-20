@@ -3,28 +3,29 @@ import { useOutsideClick } from "../hooks/useOutsideClick";
 import { addDataHttp, getDataHttp, sortDataHttp } from "../api/api";
 import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
-import { add, initial, sortNotes } from "../store/notesSlice";
+import { add, initial, sortNotes, errorState } from "../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingSpinner from "./loadingSpinner";
 import Note from "./note";
 import Inputs from "./form";
-import styles from "../styles/App.module.scss";
 import PinnedSection from "./pinnedSection";
+import styles from "../styles/App.module.scss";
 
 /**
  * Comes native with React
  */
-import { v4 as uuid } from "uuid";
+// import { v4 as uuid } from "uuid";
 
 export interface Notes {
   title: string;
   note: string;
   id: string;
+  color: string;
 }
 
 const Notes = () => {
   const [loading, setLoading] = useState(true);
-  const { notes } = useSelector((state: IRootState) => state);
+  const state = useSelector((state: IRootState) => state.notes);
   const dispatch = useDispatch();
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
@@ -45,7 +46,7 @@ const Notes = () => {
   });
 
   const onDragEnd = useCallback(() => {
-    const notesPrevState = [...notes.notes];
+    const notesPrevState = [...state.notes];
     if (indexOf) {
       const note = notesPrevState.find((n, i) => i === indexOf);
       notesPrevState.splice(indexOf, 1);
@@ -68,9 +69,16 @@ const Notes = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await getDataHttp();
-      // console.log(data);
-      dispatch(initial(data));
+      await getDataHttp()
+        .then((data) => {
+          console.log(data);
+          dispatch(initial(data));
+        })
+        .catch((error) => {
+          console.log(error);
+          console.log(error.message);
+          dispatch(errorState(error.message));
+        });
     };
     if (loading) {
       fetch();
@@ -87,6 +95,7 @@ const Notes = () => {
       title: "",
       note: "",
       id: "0",
+      color: "transparent",
     };
     tempNote.title = title;
     tempNote.note = note;
@@ -104,7 +113,9 @@ const Notes = () => {
   }`;
 
   let zIndex = 10000;
+  if (loading) return <LoadingSpinner />;
 
+  if (state.error) return <p className={styles.error}>{state.error}</p>;
   return (
     <div className={styles.content}>
       <h3 className={styles.title}>Your Note's</h3>
@@ -121,20 +132,19 @@ const Notes = () => {
         />
       </main>
       <section className={styles.allNotes}>
-        {loading && <LoadingSpinner />}
-        {notes.pinnedNotes.length !== 0 && (
-          <PinnedSection notes={[...notes.pinnedNotes]} />
+        {state.pinnedNotes.length !== 0 && (
+          <PinnedSection notes={[...state.pinnedNotes]} />
         )}
-        {notes.pinnedNotes.length > 0 && (
-          <p>{notes.notes.length !== 0 && "Others"}</p>
+        {state.pinnedNotes.length > 0 && (
+          <p>{state.notes.length !== 0 && "Others"}</p>
         )}
-        {notes.notes.length === 0 && notes.pinnedNotes.length === 0 && (
-          <p style={{ textAlign: "center", gridColumn: 3 }}>No notes</p>
+        {state.notes.length === 0 && state.pinnedNotes.length === 0 && (
+          <p style={{ textAlign: "center" }}>No notes</p>
         )}
         <section className={styles.notes}>
           {!loading &&
-            notes.notes.length !== 0 &&
-            notes.notes.map((note, i) => {
+            state.notes.length !== 0 &&
+            state.notes.map((note, i) => {
               zIndex -= 1;
               return (
                 <Note

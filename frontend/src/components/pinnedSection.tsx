@@ -18,7 +18,7 @@ const PinnedSection = ({ notes }: Props) => {
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
   const dispatch = useDispatch();
 
-  console.log(notes);
+  // console.log(notes);
   /**
    * Hook to detect outside click from the note's div
    * so you can close it

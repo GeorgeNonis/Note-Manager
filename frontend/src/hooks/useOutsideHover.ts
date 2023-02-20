@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-export const useOutsideClick = (callback: () => void) => {
+export const useOutsideHover = (callback: () => void) => {
   const ref = useRef<any>();
 
   useEffect(() => {
@@ -15,10 +15,10 @@ export const useOutsideClick = (callback: () => void) => {
       }
     };
 
-    document.addEventListener("click", handleClick, true);
+    document.addEventListener("mouseover", handleClick, true);
 
     return () => {
-      document.removeEventListener("click", handleClick, true);
+      document.removeEventListener("mouseover", handleClick, true);
     };
   }, []);
 

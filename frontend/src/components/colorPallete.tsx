@@ -1,26 +1,55 @@
+import { Dispatch, SetStateAction, useState } from "react";
 import { MdFormatColorReset } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { setColorHttp } from "../api/api";
+import { setColor } from "../store/notesSlice";
 import styles from "../styles/colorPalette.module.scss";
 
-const ColorPallete = () => {
+interface Props {
+  closePalette: (value: boolean) => void;
+  id: string;
+  pinned: boolean;
+}
+
+const ColorPallete = ({ closePalette, id, pinned }: Props) => {
+  const dispatch = useDispatch();
+
   const colorGenerator = () => {
     return (
       "#" +
       Math.floor(Math.random() * (0xffffff + 1))
         .toString(16)
         .padStart(6, "0") +
-      "5d"
+      "f9"
     );
   };
+
+  const displayHandler = async (value: string) => {
+    closePalette(false);
+    dispatch(setColor({ value, id, pinned }));
+    await setColorHttp(value, id, pinned);
+  };
+
+  const colors = [
+    colorGenerator(),
+    colorGenerator(),
+    colorGenerator(),
+    colorGenerator(),
+  ];
   return (
     <div className={styles.content}>
-      <div className={styles.colors}>
+      <div
+        className={styles.colors}
+        onClick={() => displayHandler("transparent")}
+      >
         <MdFormatColorReset />
       </div>
-      {[...Array(4).keys()].map((e, i) => {
+      {colors.map((value, i) => {
         return (
           <div
+            onClick={() => displayHandler(value)}
             key={i}
-            style={{ background: colorGenerator() }}
+            style={{ background: value }}
             className={styles.colors}
           >
             {" "}

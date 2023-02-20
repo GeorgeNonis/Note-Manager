@@ -10,14 +10,12 @@ import styles from "../styles/trashSection.module.scss";
 
 const Deleted = () => {
   const dispatch = useDispatch();
-  const deletedNotes = useSelector(
-    (state: IRootState) => state.notes.deletedNotes
-  );
+  const state = useSelector((state: IRootState) => state.notes);
   // console.log(deletedNotes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
 
   const onDragEnd = useCallback(() => {
-    const notesPrevState = [...deletedNotes];
+    const notesPrevState = [...state.deletedNotes];
     if (indexOf) {
       const note = notesPrevState.find((n, i) => i === indexOf);
       notesPrevState.splice(indexOf, 1);
@@ -28,6 +26,8 @@ const Deleted = () => {
     }
   }, [indexOf, index]);
   let zindex = 1000;
+
+  if (state.error) return <p className={styles.error}>{state.error}</p>;
   return (
     <>
       <main>
@@ -35,10 +35,10 @@ const Deleted = () => {
           Notes in Trash are deleted after 7 days.
         </h3>
         <section className={styles.notes}>
-          {deletedNotes.length === 0 ? (
+          {state.deletedNotes.length === 0 ? (
             <EmptyTrash />
           ) : (
-            deletedNotes.map((note, i) => {
+            state.deletedNotes.map((note, i) => {
               zindex -= 1;
               return (
                 <DeletedNote

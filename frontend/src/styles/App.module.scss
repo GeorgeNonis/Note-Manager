@@ -1,3 +1,10 @@
+@mixin errorStyle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @mixin baseStyle {
   padding: 0.6rem 1rem;
   border-radius: 5px;
@@ -79,7 +86,7 @@
 .notes {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
   margin: 1rem;
 }
 
@@ -89,4 +96,8 @@
   p {
     color: gray;
   }
+}
+
+.error {
+  @include errorStyle;
 }

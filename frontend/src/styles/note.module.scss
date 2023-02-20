@@ -1,6 +1,6 @@
 .note {
   position: relative;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 2rem 0.6rem 0.6rem;
   border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
@@ -64,9 +64,9 @@
 
 .span {
   position: absolute;
-  right: 0rem;
   top: 2rem;
-  width: 4rem;
+  right: -2rem;
+  left: -5rem;
   text-align: center;
   // display: none;
   opacity: 0%;
@@ -172,7 +172,7 @@ Options styling
   bottom: 1.2rem;
   background-color: #242424;
   border-radius: 5px;
-  box-shadow: 0px 0px 8px -1px black;
+  box-shadow: -1px -1px 14px -6px black;
   display: grid;
   gap: 1rem;
 

@@ -4,30 +4,30 @@ import { useDispatch } from "react-redux";
 import { removeNoteHttp, restoreNoteHttp } from "../api/api";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../store/notesSlice";
-import styles from "../styles/note.module.scss";
 import ReviewModal from "./reviewModal";
+import styles from "../styles/note.module.scss";
+import { colorLogic } from "../utils/utils";
 
 interface Props {
   note: {
     note: string;
     title: string;
     id: string;
+    color: string;
   };
   zindex: number;
   position: number;
   onDragEnd: () => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;
-  onDragStart: (e: React.DragEvent, position: number) => void;
+  onDragStart: (
+    e: React.DragEvent,
+    position: number,
+    pinned: boolean,
+    id: string
+  ) => void;
 }
 
-const DeletedNote = ({
-  note,
-  position,
-  onDragEnd,
-  onDragEnter,
-  onDragStart,
-  zindex,
-}: Props) => {
+const DeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
   // console.log(note);
@@ -49,6 +49,8 @@ const DeletedNote = ({
 
   const noteStyle = !review ? styles.note : `${styles.note} ${styles.review}`;
   const zIndex = !review ? zindex : 10000;
+
+  const backgroundColor = colorLogic({ review, note });
   return (
     <>
       {review &&
@@ -58,19 +60,30 @@ const DeletedNote = ({
         )}
       <div
         ref={outside}
-        style={{ zIndex: zIndex }}
+        style={{ zIndex: zIndex, backgroundColor }}
         className={noteStyle}
         onClick={(e) => {
           e.stopPropagation();
-          setReview(!review);
+          setReview(true);
         }}
-        draggable={true}
-        onDragStart={(e) => onDragStart(e, position)}
-        onDragEnter={(e) => onDragEnter(e, position)}
-        onDragEnd={onDragEnd}
+        aria-multiline="true"
       >
-        <h3 aria-multiline="true">{note.title}</h3>
-        <p aria-multiline="true">{note.note}</p>
+        <h3
+          contentEditable="true"
+          spellCheck="true"
+          aria-multiline="true"
+          suppressContentEditableWarning
+        >
+          {note.title}
+        </h3>
+        <p
+          contentEditable="true"
+          spellCheck="true"
+          aria-multiline="true"
+          suppressContentEditableWarning
+        >
+          {note.note}
+        </p>
         <div className={styles.actions}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>

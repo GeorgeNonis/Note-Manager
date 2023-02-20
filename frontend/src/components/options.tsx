@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, Dispatch, SetStateAction } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { deleteNoteHttp } from "../api/api";
 import { deleteN } from "../store/notesSlice";
@@ -24,11 +24,13 @@ const Options = ({ id, pinned }: Id) => {
   const deleteHandler = useCallback(
     async (e: React.MouseEvent<HTMLHeadElement>) => {
       e.stopPropagation();
-      console.log("Deleting");
-      await deleteNoteHttp(id, pinned);
-      console.log(pinned);
-      dispatch(deleteN({ id, pinned }));
-      setDisplay(!display);
+      if (window.confirm("Are you sure you wanna delete this note?")) {
+        console.log("Deleting");
+        await deleteNoteHttp(id, pinned);
+        console.log(pinned);
+        dispatch(deleteN({ id, pinned }));
+        setDisplay(!display);
+      }
     },
     []
   );
@@ -64,7 +66,11 @@ const Options = ({ id, pinned }: Id) => {
       </div>
       {displayPalette && (
         <div ref={outsidePalette}>
-          <ColorPallete />
+          <ColorPallete
+            closePalette={setDisplayPalette}
+            id={id}
+            pinned={pinned}
+          />
         </div>
       )}
       {display && (

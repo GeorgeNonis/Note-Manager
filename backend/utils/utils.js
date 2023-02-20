@@ -22,6 +22,7 @@ const databasePinned = path.join(
 
 const readData = async () => {
   const data = await fs.readFile(database, (err, data) => {
+    if (err) return err;
     return data;
   });
   return JSON.parse(data);
@@ -29,6 +30,7 @@ const readData = async () => {
 
 const readDataDel = async () => {
   const data = await fs.readFile(databaseDel, (err, data) => {
+    if (err) return err;
     return data;
   });
   return JSON.parse(data);
@@ -36,6 +38,7 @@ const readDataDel = async () => {
 
 const readDataPinned = async () => {
   const data = await fs.readFile(databasePinned, (err, data) => {
+    if (err) return err;
     return data;
   });
 
@@ -43,19 +46,19 @@ const readDataPinned = async () => {
 };
 
 const writeData = async (data) => {
-  await fs.writeFile(database, JSON.stringify(data), (err) => {
+  return await fs.writeFile(database, JSON.stringify(data), (err) => {
     if (err) return err;
   });
 };
 
 const writeDeleted = async (data) => {
-  await fs.writeFile(databaseDel, JSON.stringify(data), (err) => {
+  return await fs.writeFile(databaseDel, JSON.stringify(data), (err) => {
     if (err) return err;
   });
 };
 
 const writePinned = async (data) => {
-  await fs.writeFile(databasePinned, JSON.stringify(data), (err) => {
+  return await fs.writeFile(databasePinned, JSON.stringify(data), (err) => {
     if (err) return err;
   });
 };

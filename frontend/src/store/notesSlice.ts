@@ -5,12 +5,14 @@ interface InitialState {
   notes: Notes[];
   pinnedNotes: Notes[];
   deletedNotes: Notes[];
+  error: "";
 }
 
 const initialState: InitialState = {
   notes: [],
   deletedNotes: [],
   pinnedNotes: [],
+  error: "",
 };
 
 const notes = createSlice({
@@ -25,6 +27,9 @@ const notes = createSlice({
     },
     add(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
+    },
+    errorState(state, { payload: error }) {
+      state.error = error;
     },
     deleteN(state, { payload }) {
       const id = payload.id;
@@ -77,11 +82,26 @@ const notes = createSlice({
     sortPinnedNotes(state, { payload }) {
       state.pinnedNotes = payload;
     },
+    setColor(state, { payload }) {
+      const color = payload.value;
+      const id = payload.id;
+      const pinned = payload.pinned;
+
+      let noteIndex;
+      if (pinned) {
+        noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
+        state.pinnedNotes[noteIndex].color = color;
+      } else {
+        noteIndex = state.notes.findIndex((n) => n.id === id);
+        state.notes[noteIndex].color = color;
+      }
+    },
   },
 });
 
 export const {
   add,
+  errorState,
   deleteN,
   sortNotes,
   sortDelNotes,
@@ -90,6 +110,7 @@ export const {
   removeNote,
   pinHandler,
   sortPinnedNotes,
+  setColor,
 } = notes.actions;
 
 export default notes.reducer;
