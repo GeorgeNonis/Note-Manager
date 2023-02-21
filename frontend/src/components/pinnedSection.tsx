@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../hooks/useDnD";
 import { sortPinnedNotes } from "../store/notesSlice";
@@ -6,6 +6,7 @@ import { IRootState } from "../store/store";
 import Note from "./note";
 import styles from "../styles/pinnedSection.module.scss";
 import { Notes } from "../interfaces/interfaces";
+import { sortNotesHttp } from "../api/api";
 
 interface Props {
   notes: Notes[];
@@ -30,7 +31,7 @@ const PinnedSection = ({ notes }: Props) => {
     pinnedNotesPrevState.splice(indexOf, 1);
     const rest = pinnedNotesPrevState.splice(index);
     rest.unshift(note!);
-    // sortData([...pinnedNotesPrevState, ...rest], true);
+    sortNotesHttp([...pinnedNotesPrevState, ...rest], true);
     dispatch(sortPinnedNotes([...pinnedNotesPrevState, ...rest]));
   }, [indexOf, index]);
   let zIndex = 1000;

@@ -8,7 +8,6 @@ import {
 import { deleteNoteHttp, sortDataHttp } from "../api/api";
 import { Notes } from "../interfaces/interfaces";
 import { InitialState } from "../store/notesSlice";
-import { IRootState } from "../store/store";
 /**
  * Practising Typescript
  */

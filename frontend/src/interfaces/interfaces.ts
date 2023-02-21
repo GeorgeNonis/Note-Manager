@@ -19,3 +19,10 @@ export interface NoteProps {
     id: string
   ) => void;
 }
+
+export interface EditNoteArgs {
+  noteId: string;
+  pinned: boolean;
+  titleValue: string | undefined;
+  noteValue: string | undefined;
+}

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import { addDataHttp, getDataHttp, sortDataHttp } from "../api/api";
+import { addNoteHttp, getNotesHttp, sortNotesHttp } from "../api/api";
 import { IRootState } from "../store/store";
 import { useDnd } from "../hooks/useDnD";
 import { add, initial, sortNotes, errorState } from "../store/notesSlice";
@@ -51,7 +51,7 @@ const Notes = () => {
       notesPrevState.splice(indexOf, 1);
       const rest = notesPrevState.splice(index);
       rest.unshift(note);
-      sortDataHttp([...notesPrevState, ...rest], true);
+      sortNotesHttp([...notesPrevState, ...rest], true);
       dispatch(sortNotes([...notesPrevState, ...rest]));
     }
   }, [indexOf, index]);
@@ -68,7 +68,7 @@ const Notes = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      await getDataHttp()
+      await getNotesHttp()
         .then((data) => {
           setLoading(false);
           dispatch(initial(data));
@@ -97,7 +97,7 @@ const Notes = () => {
     // tempNote.id = uuid();
     tempNote.id = crypto.randomUUID();
 
-    addDataHttp(tempNote);
+    addNoteHttp(tempNote);
     dispatch(add(tempNote));
     setTitle("");
     setNote("");

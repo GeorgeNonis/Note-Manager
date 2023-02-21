@@ -7,6 +7,7 @@ Features implemented
 5. Drag and drop to re-order your notes
 6. Drag and drop the note the the bin to remove it
 7. Remove a note and also restore
+8. Clicking on the note it brings it up in the middle and expands it.
 
 Features to be added
 
@@ -21,3 +22,30 @@ Improve code
 
 1. Better error handling
 2. Better nameCases
+
+Tips
+
+Long names on variables its okay to describe
+
+FrontEnd
+
+1. Better file namings and maybe subfolders
+2. Make my components smaller for better readability
+3. Consistent with backend codes
+4. Each component should fetch its own state from the backend
+
+BackEnd
+
+1. Never get/post requests to Root(/)
+2. Never have action names in http requests
+3. Also use more appropiate names like for
+   /color it could be /update_colors
+4. Use import in back as well to be consistent
+
+/api/v1/{resource}?{queryParameters}
+/resource/subResource/{id}
+
+ON README FILE ADD INSTRUCTIONS ON HOW TO RUN A PROJECT
+
+-> Nodemon? for backend
+-> Yarn for frontend

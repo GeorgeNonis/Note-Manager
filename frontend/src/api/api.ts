@@ -1,11 +1,11 @@
 import axios from "axios";
-import { Notes } from "../components/notesSection";
+import { EditNoteArgs, Notes } from "../interfaces/interfaces";
 
 const BASE_URL = "http://localhost:8080/";
 
-export const sortDataHttp = async (data: Notes[], sort: boolean) => {
+export const sortNotesHttp = async (data: Notes[], pinned: boolean) => {
   await axios
-    .post(`${BASE_URL}sort?sort=${sort}`, data)
+    .post(`${BASE_URL}notes/sortnotes?isnotepined=${pinned}`, data)
     .then((res) => {
       console.log(res);
       return res;
@@ -16,9 +16,9 @@ export const sortDataHttp = async (data: Notes[], sort: boolean) => {
     });
 };
 
-export const getDataHttp = async (): Promise<Notes[]> => {
+export const getNotesHttp = async (): Promise<Notes[]> => {
   return axios
-    .get<Notes[]>(BASE_URL)
+    .get<Notes[]>(`${BASE_URL}notes`)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -29,9 +29,9 @@ export const getDataHttp = async (): Promise<Notes[]> => {
     });
 };
 
-export const addDataHttp = async (data: Notes) => {
+export const addNoteHttp = async (data: Notes) => {
   await axios
-    .post("http://localhost:8080/", { ...data })
+    .post(`${BASE_URL}notes/addnote`, { ...data })
     .then((res) => {
       console.log(res);
     })
@@ -43,9 +43,8 @@ export const deleteNoteHttp = async (
   id: string,
   pinned: boolean
 ): Promise<void> => {
-  console.log("Removing");
   await axios
-    .delete(`${BASE_URL}:${id}?pinned=${pinned}`)
+    .delete(`${BASE_URL}notes/:${id}?isnotepined=${pinned}`)
     .then((res) => {
       console.log(res);
     })
@@ -81,7 +80,7 @@ export const removeNoteHttp = async (id: string) => {
 
 export const pinNoteHandlerHttp = async (id: string) => {
   await axios
-    .post(`${BASE_URL}pin`, { id })
+    .post(`${BASE_URL}notes/pinnote/:${id}`)
     .then((res) => {
       return res;
     })
@@ -91,14 +90,15 @@ export const pinNoteHandlerHttp = async (id: string) => {
     });
 };
 
-export const setColorHttp = async (
+export const updateNoteColorHttp = async (
   color: string,
   id: string,
   pinned: boolean
 ) => {
   console.log({ id, color, pinned });
   await axios
-    .post(`${BASE_URL}color?pinned=${pinned}`, { id, color })
+    // /notes/:id/colorupdate
+    .post(`${BASE_URL}notes/:${id}?isnotepined=${pinned}`, { color })
     .then((res) => {
       console.log(res);
       return res;
@@ -109,13 +109,6 @@ export const setColorHttp = async (
     });
 };
 
-interface EditNoteArgs {
-  noteId: string;
-  pinned: boolean;
-  titleValue: string | undefined;
-  noteValue: string | undefined;
-}
-
 export const editNoteHttp = async ({
   noteId,
   pinned,
@@ -123,7 +116,10 @@ export const editNoteHttp = async ({
   titleValue,
 }: EditNoteArgs) => {
   await axios
-    .post(`${BASE_URL}edit?pinned=${pinned}`, { noteId, noteValue, titleValue })
+    .post(`${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`, {
+      noteValue,
+      titleValue,
+    })
     .then((res) => {
       console.log(res);
       return res.data;

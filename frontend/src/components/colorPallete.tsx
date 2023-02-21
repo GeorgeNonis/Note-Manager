@@ -1,6 +1,6 @@
 import { MdFormatColorReset } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { setColorHttp } from "../api/api";
+import { updateNoteColorHttp } from "../api/api";
 import { setColor } from "../store/notesSlice";
 import styles from "../styles/colorPalette.module.scss";
 
@@ -26,7 +26,7 @@ const ColorPallete = ({ closePalette, id, pinned }: Props) => {
   const displayHandler = async (value: string) => {
     closePalette(false);
     dispatch(setColor({ value, id, pinned }));
-    await setColorHttp(value, id, pinned);
+    await updateNoteColorHttp(value, id, pinned);
   };
 
   const colors = [
