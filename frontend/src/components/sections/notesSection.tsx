@@ -5,12 +5,15 @@ import { IRootState } from "../../store/store";
 import { useDnd } from "../../hooks/useDnD";
 import { add, initial, sortNotes, errorState } from "../../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingSpinner from "../uiComponents/loadingSpinner";
+import LoadingSpinner from "../ui/loadingSpinner";
 import Note from "../notes/note";
 import Form from "../formComponents/form";
 import PinnedSection from "./pinnedNotesSection";
+import ErrorFetching from "../ui/errorForFetchingData";
+import { formBorders } from "../../utils/utilsStyling";
+import NoNotesTitle from "./ui/noNotesTitle";
+import OthersTitle from "./ui/othersTitle";
 import styles from "../../styles/App.module.scss";
-import ErrorFetching from "../uiComponents/errorForFetchingData";
 
 const Notes = () => {
   const [loading, setLoading] = useState(true);
@@ -99,11 +102,8 @@ const Notes = () => {
     setNote("");
   }, [display]);
 
-  const noteStlye = `${styles.noteInput} ${
-    !display ? styles.noteInput : styles.noteBorders
-  }`;
-
   let zIndex = 10000;
+
   if (loading) return <LoadingSpinner />;
 
   if (state.error) return <ErrorFetching errorMessage={state.error} />;
@@ -111,15 +111,6 @@ const Notes = () => {
   const pinnedNotes = state.pinnedNotes.length !== 0 && (
     <PinnedSection notes={[...state.pinnedNotes]} />
   );
-
-  const othersPara = state.pinnedNotes.length > 0 && (
-    <p>{state.notes.length !== 0 && "Others"}</p>
-  );
-
-  const noNotes = state.notes.length === 0 &&
-    state.pinnedNotes.length === 0 && (
-      <p style={{ textAlign: "center" }}>No notes</p>
-    );
   return (
     <div className={styles.content}>
       <h3 className={styles.title}>Your Note's</h3>
@@ -127,7 +118,7 @@ const Notes = () => {
         <Form
           display={display}
           note={note}
-          noteStlye={noteStlye}
+          noteStlye={formBorders({ styles, display })}
           onChangeNote={onChangeNote}
           onChangeTitle={onChangeTitle}
           setDisplay={setDisplay}
@@ -137,8 +128,8 @@ const Notes = () => {
       </main>
       <section className={styles.allNotes}>
         {pinnedNotes}
-        {othersPara}
-        {noNotes}
+        <OthersTitle state={state} />
+        <NoNotesTitle state={state} />
         <section className={styles.notes}>
           {!loading &&
             state.notes.length !== 0 &&

@@ -14,13 +14,13 @@ const App = () => {
   const [mouseOverTrash, setMouseOverTrash] = useState(false);
   const [display, setDisplay] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const outsideHoverTrash = useOutsideHover(() => setMouseOverTrash(false));
+  const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Note Manager</h3>
       <main className={styles.main}>
         <div
-          ref={outsideHoverTrash}
+          ref={hoverOutsideTrash}
           className={styles.BiTrash}
           onMouseEnter={() => {
             setMouseOverTrash(true);
@@ -28,8 +28,8 @@ const App = () => {
           onDragEnter={() => {
             setMouseOverTrash(true);
           }}
-          onDrop={(e) => {
-            onDropBin(e, (id, pinned) => {
+          onDrop={async (e) => {
+            await onDropBin(e, (id, pinned) => {
               dispatch(deleteN({ id, pinned }));
             });
           }}

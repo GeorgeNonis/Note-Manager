@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { colorLogic } from "../../utils/utils";
 import { Notes } from "../../interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { removeNoteHttp, restoreNoteHttp } from "../../api/api";
@@ -10,6 +9,7 @@ import ReviewModal from "../modal/reviewModal";
 import { Title } from "../notesComponents/title";
 import { NoteDetails } from "../notesComponents/noteDetails";
 import styles from "../../styles/note.module.scss";
+import DeletedNoteWrapper from "../notesComponents/wrappers/deletedNoteWrapper";
 
 interface Props {
   note: Notes;
@@ -20,7 +20,7 @@ const DeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const outsideNote = useOutsideClick(() => setReview(false));
+  const clickOutsideNote = useOutsideClick(() => setReview(false));
 
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -35,10 +35,8 @@ const DeletedNote = ({ note, zindex }: Props) => {
     setReview(false);
   };
 
-  const noteStyle = !review ? styles.note : `${styles.note} ${styles.review}`;
   const zIndex = !review ? zindex : 10000;
 
-  const backgroundColor = colorLogic({ review, note });
   return (
     <>
       {review &&
@@ -46,15 +44,12 @@ const DeletedNote = ({ note, zindex }: Props) => {
           <ReviewModal />,
           document.getElementById("reviewModal")!
         )}
-      <div
-        ref={outsideNote}
-        style={{ zIndex: zIndex, backgroundColor }}
-        className={noteStyle}
-        onClick={(e) => {
-          e.stopPropagation();
-          setReview(true);
-        }}
-        aria-multiline="true"
+      <DeletedNoteWrapper
+        clickOutsideNote={clickOutsideNote}
+        note={note}
+        setReview={setReview}
+        review={review}
+        zIndex={zIndex}
       >
         <Title title={note.title} />
         <NoteDetails note={note.note} />
@@ -62,7 +57,7 @@ const DeletedNote = ({ note, zindex }: Props) => {
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>
         </div>
-      </div>
+      </DeletedNoteWrapper>
     </>
   );
 };

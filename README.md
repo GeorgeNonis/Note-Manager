@@ -1,3 +1,9 @@
+HOW TO GET STARTED
+
+1. Requires yarn package manager
+2. Server needs to be up and running on backend folder
+3. frontend -> yarn dev <- and you good to go
+
 Features implemented
 
 1. Create note on clickoutside from the form
@@ -30,21 +36,21 @@ Long names on variables its okay to describe
 FrontEnd
 
 1. Better file namings and maybe subfolders -- DONE
-2. Make my components smaller for better readability
+2. Make my components smaller for better readability -- DONE
 3. Each component should fetch its own state from the backend
 
 BackEnd
 
 1. Never get/post requests to Root(/) -- DONE
 2. Never have action names in http requests -- DONE
-3. Also use more appropiate names like for => /color it could be /update_colors <= --DONE
-4. Use import in back as well to be consistent --DONE
-5. Consistent with backend status code --DONE
+3. Also use more appropiate names like for => /color it could be /update_colors <= -- DONE
+4. Use import in back as well to be consistent -- DONE
+5. Consistent with backend status code -- DONE
 
 /api/v1/{resource}?{queryParameters}
 /resource/subResource/{id}
 
-ON README FILE ADD INSTRUCTIONS ON HOW TO RUN A PROJECT
+ON README FILE ADD INSTRUCTIONS ON HOW TO RUN A PROJECT -- DONE
 
 -> Nodemon? for backend
 -> Yarn for frontend

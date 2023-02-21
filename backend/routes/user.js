@@ -203,13 +203,16 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
   const prevStateDel = await readDataDel();
   let prevState;
   let note;
+  console.log(id);
   console.log(typeof isNotePined);
   if (isNotePined === "false") {
     prevState = await readData();
     note = prevState.find((n) => n.id === id);
+    console.log(note);
     await writeData([...prevState.filter((n) => n.id != id)]);
   } else {
     prevState = await readDataPinned();
+    console.log(note);
     note = prevState.find((n) => n.id === id);
 
     await writePinned([...prevState.filter((n) => n.id != id)]);

@@ -49,11 +49,15 @@ const notes = createSlice({
       const id = payload.id;
       const pinned = payload.pinned;
       let note;
+      console.log(id);
+      console.log(pinned);
       if (!pinned) {
         note = state.notes.find((n) => n.id === id) as Notes;
         state.notes = [...state.notes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
+        console.log(note);
       } else {
+        console.log(note);
         note = state.pinnedNotes.find((n) => n.id === id) as Notes;
         state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);

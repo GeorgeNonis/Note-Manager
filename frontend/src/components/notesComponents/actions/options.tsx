@@ -1,13 +1,13 @@
 import { useState, useCallback } from "react";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { deleteNoteHttp } from "../../api/api";
-import { deleteN } from "../../store/notesSlice";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { deleteNoteHttp } from "../../../api/api";
+import { deleteN } from "../../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
 import { AiOutlineBell } from "react-icons/ai";
 import ColorPallete from "./colorPallete";
-import styles from "../../styles/note.module.scss";
+import styles from "../../../styles/note.module.scss";
 
 type Id = {
   id: string;

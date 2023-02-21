@@ -4,14 +4,14 @@ import { NoteProps } from "../../interfaces/interfaces";
 import { editNoteHttp, pinNoteHandlerHttp } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { colorLogic } from "../../utils/utils";
 import { editNote, pinHandler } from "../../store/notesSlice";
-import Options from "../notesComponents/options";
+import Options from "../notesComponents/actions/options";
 import ReviewModal from "../modal/reviewModal";
-import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
 import { Title } from "../notesComponents/title";
 import { NoteDetails } from "../notesComponents/noteDetails";
+import Pin from "../notesComponents/pin";
 import styles from "../../styles/note.module.scss";
+import NoteWrapper from "../notesComponents/wrappers/noteWrapper";
 
 const Note = ({
   note,
@@ -24,7 +24,7 @@ const Note = ({
 }: NoteProps) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const outsideNote = useOutsideClick(() => setReview(false));
+  const clickOutsideNote = useOutsideClick(() => setReview(false));
   const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
   const noteDetails = useRef(
     null
@@ -45,10 +45,8 @@ const Note = ({
     await pinNoteHandlerHttp(note.id);
   };
 
-  const noteStyle = !review ? styles.note : `${styles.note} ${styles.review}`;
   const zIndex = !review ? zindex : 10000;
 
-  const backgroundColor = colorLogic({ review, note });
   return (
     <>
       {review &&
@@ -56,36 +54,24 @@ const Note = ({
           <ReviewModal />,
           document.getElementById("reviewModal")!
         )}
-      <div
-        ref={outsideNote}
-        style={{
-          zIndex: zIndex,
-          backgroundColor,
-        }}
-        className={noteStyle}
-        onClick={(e) => {
-          e.stopPropagation();
-          setReview(true);
-        }}
-        draggable={true}
-        onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
-        onDragEnter={(e) => onDragEnter(e, position)}
+      <NoteWrapper
+        zIndex={zIndex}
+        position={position}
+        pinned={pinned}
+        review={review}
+        setReview={setReview}
+        clickOutsideNote={clickOutsideNote}
+        note={note}
         onDragEnd={onDragEnd}
+        onDragEnter={onDragEnter}
+        onDragStart={onDragStart}
       >
-        <div className={styles.pin} onClick={pinNoteHandler}>
-          {pinned ? (
-            <BsFillPinFill className={`${styles.pinned} ${styles.icon}`} />
-          ) : (
-            <BsPinAngle className={styles.icon} />
-          )}
-          <span className={styles.span}>
-            {pinned ? "Unpin Note" : "Pin note"}
-          </span>
-        </div>
+        <Pin pinned={pinned} pinNoteHandler={pinNoteHandler} styles={styles} />
         <Title title={note.title} titleRef={title} editable={true} />
         <NoteDetails note={note.note} noteRef={noteDetails} editable={true} />
         <Options id={note.id} pinned={pinned} />
-      </div>
+      </NoteWrapper>
+      {/* </div> */}
     </>
   );
 };
