@@ -1,17 +1,17 @@
 import React, { useState, useRef, MutableRefObject, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { NoteProps } from "../../interfaces/interfaces";
+import { editNoteHttp, pinNoteHandlerHttp } from "../../api/api";
 import { useDispatch } from "react-redux";
-import { useOutsideClick } from "../hooks/useOutsideClick";
-import { colorLogic } from "../utils/utils";
-import { editNote, pinHandler } from "../store/notesSlice";
-import Options from "./options";
-import ReviewModal from "./reviewModal";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { colorLogic } from "../../utils/utils";
+import { editNote, pinHandler } from "../../store/notesSlice";
+import Options from "../notesComponents/options";
+import ReviewModal from "../modal/reviewModal";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
-import { editNoteHttp, pinNoteHandlerHttp } from "../api/api";
-import styles from "../styles/note.module.scss";
-import { Title } from "./title";
-import { NoteDetails } from "./noteDetails";
-import { NoteProps } from "../interfaces/interfaces";
+import { Title } from "../notesComponents/title";
+import { NoteDetails } from "../notesComponents/noteDetails";
+import styles from "../../styles/note.module.scss";
 
 const Note = ({
   note,
@@ -24,7 +24,7 @@ const Note = ({
 }: NoteProps) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const outside = useOutsideClick(() => setReview(false));
+  const outsideNote = useOutsideClick(() => setReview(false));
   const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
   const noteDetails = useRef(
     null
@@ -57,7 +57,7 @@ const Note = ({
           document.getElementById("reviewModal")!
         )}
       <div
-        ref={outside}
+        ref={outsideNote}
         style={{
           zIndex: zIndex,
           backgroundColor,

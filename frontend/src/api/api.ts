@@ -31,7 +31,7 @@ export const getNotesHttp = async (): Promise<Notes[]> => {
 
 export const addNoteHttp = async (data: Notes) => {
   await axios
-    .post(`${BASE_URL}notes/addnote`, { ...data })
+    .post(`${BASE_URL}notes`, { ...data })
     .then((res) => {
       console.log(res);
     })
@@ -54,7 +54,7 @@ export const deleteNoteHttp = async (
 export const restoreNoteHttp = async (id: string) => {
   console.log(id);
   await axios
-    .post(`${BASE_URL}restore`, { id })
+    .post(`${BASE_URL}trashbin/:${id}`)
     .then((res) => {
       console.log(res);
       return res;
@@ -67,7 +67,7 @@ export const restoreNoteHttp = async (id: string) => {
 
 export const removeNoteHttp = async (id: string) => {
   await axios
-    .post(`${BASE_URL}remove`, { id })
+    .post(`${BASE_URL}trashbin`, { id })
     .then((res) => {
       console.log(res);
       return res;
@@ -98,7 +98,9 @@ export const updateNoteColorHttp = async (
   console.log({ id, color, pinned });
   await axios
     // /notes/:id/colorupdate
-    .post(`${BASE_URL}notes/:${id}?isnotepined=${pinned}`, { color })
+    .post(`${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`, {
+      color,
+    })
     .then((res) => {
       console.log(res);
       return res;

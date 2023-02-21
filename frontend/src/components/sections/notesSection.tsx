@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { useOutsideClick } from "../hooks/useOutsideClick";
-import { addNoteHttp, getNotesHttp, sortNotesHttp } from "../api/api";
-import { IRootState } from "../store/store";
-import { useDnd } from "../hooks/useDnD";
-import { add, initial, sortNotes, errorState } from "../store/notesSlice";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { addNoteHttp, getNotesHttp, sortNotesHttp } from "../../api/api";
+import { IRootState } from "../../store/store";
+import { useDnd } from "../../hooks/useDnD";
+import { add, initial, sortNotes, errorState } from "../../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingSpinner from "./loadingSpinner";
-import Note from "./note";
-import Form from "./form";
+import LoadingSpinner from "../uiComponents/loadingSpinner";
+import Note from "../notes/note";
+import Form from "../formComponents/form";
 import PinnedSection from "./pinnedSection";
 import styles from "../styles/App.module.scss";
 

@@ -1,7 +1,7 @@
-import { useState, useCallback, Dispatch, SetStateAction } from "react";
-import { useOutsideClick } from "../hooks/useOutsideClick";
-import { deleteNoteHttp } from "../api/api";
-import { deleteN } from "../store/notesSlice";
+import { useState, useCallback } from "react";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { deleteNoteHttp } from "../../api/api";
+import { deleteN } from "../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";

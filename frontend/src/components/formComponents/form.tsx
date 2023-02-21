@@ -1,5 +1,5 @@
 import styles from "../styles/App.module.scss";
-import Input from "./input";
+import Input from "./inputText";
 
 interface Props {
   display: boolean;

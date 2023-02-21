@@ -28,7 +28,7 @@ router.get("/notes", async (req, res, next) => {
 
 // Promise.allSettled
 
-router.get("/deleted", async (req, res, next) => {
+router.get("/trashbin", async (req, res, next) => {
   const data = await readDataDel();
   res.status(200).json(data);
 });
@@ -37,7 +37,7 @@ router.get("/deleted", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/notes/addnote", async (req, res, next) => {
+router.post("/notes", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
   await writeData([...prevState, { ...data }])
@@ -107,9 +107,8 @@ router.post("/notes/sortnotes", async (req, res, next) => {
   }
 });
 
-router.post("/restore", async (req, res, next) => {
-  console.log("RESTORING");
-  const id = req.body.id;
+router.post("/trashbin/:id", async (req, res, next) => {
+  const id = req.params.id.split(":")[1];
   const data = await readDataDel();
   const restoredNote = data.find((n) => n.id === id);
   const currentState = await readData();
@@ -122,7 +121,7 @@ router.post("/restore", async (req, res, next) => {
   }
 });
 
-router.post("/remove", async (req, res, next) => {
+router.post("/trashbin", async (req, res, next) => {
   const id = req.body.id;
   console.log(id);
   console.log("REMOVING");
@@ -160,7 +159,7 @@ router.post("/notes/pinnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/notes/:id/colorupdate", async (req, res, next) => {
+router.post("/notes/colorupdate/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const color = req.body.color;
   const pinned = req.query.isnotepined;

@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useDnd } from "../hooks/useDnD";
-import { sortPinnedNotes } from "../store/notesSlice";
-import { IRootState } from "../store/store";
-import Note from "./note";
-import styles from "../styles/pinnedSection.module.scss";
-import { Notes } from "../interfaces/interfaces";
-import { sortNotesHttp } from "../api/api";
+import { useDnd } from "../../hooks/useDnD";
+import { sortPinnedNotes } from "../../store/notesSlice";
+import { IRootState } from "../../store/store";
+import { Notes } from "../../interfaces/interfaces";
+import { sortNotesHttp } from "../../api/api";
+import Note from "../notes/note";
+import styles from "../../styles/pinnedSection.module.scss";
 
 interface Props {
   notes: Notes[];
@@ -19,12 +19,10 @@ const PinnedSection = ({ notes }: Props) => {
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
   const dispatch = useDispatch();
 
-  // console.log(notes);
   /**
    * Hook to detect outside click from the note's div
    * so you can close it
    */
-
   const onDragEnd = useCallback(() => {
     const pinnedNotesPrevState = [...pinnedNotes];
     const note = pinnedNotesPrevState.find((n, i) => i === indexOf)!;

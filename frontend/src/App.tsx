@@ -1,14 +1,14 @@
-import { Suspense, useState } from "react";
-import Deleted from "./components/trashSection";
-import Notes from "./components/notesSection";
-import { FaTrash, FaTrashRestore } from "react-icons/fa";
-import { BiTrash } from "react-icons/bi";
-import { FaRegLightbulb } from "react-icons/fa";
-import styles from "./styles/content.module.scss";
+import { useState } from "react";
 import { useOutsideHover } from "./hooks/useOutsideHover";
 import { useDispatch } from "react-redux";
 import { deleteN } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
+import Notes from "./components/sections/notesSection";
+import Deleted from "./components/sections/trashSection";
+import { FaTrash, FaTrashRestore } from "react-icons/fa";
+import { BiTrash } from "react-icons/bi";
+import { FaRegLightbulb } from "react-icons/fa";
+import styles from "./styles/content.module.scss";
 
 const App = () => {
   const [mouseOverTrash, setMouseOverTrash] = useState(false);
@@ -56,16 +56,8 @@ const App = () => {
           </div>
         </div>
         {/* <Test /> */}
-        {display && (
-          <Suspense fallback={<p>Loading...</p>}>
-            <Notes />
-          </Suspense>
-        )}
-        {!display && (
-          <Suspense fallback={<p>Loading...</p>}>
-            <Deleted />
-          </Suspense>
-        )}
+        {display && <Notes />}
+        {!display && <Deleted />}
       </main>
     </>
   );
