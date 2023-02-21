@@ -1,11 +1,5 @@
-import {
-  useCallback,
-  useEffect,
-  RefObject,
-  MutableRefObject,
-  useRef,
-} from "react";
-import { deleteNoteHttp, sortDataHttp } from "../api/api";
+import { useEffect, RefObject, MutableRefObject, useRef } from "react";
+import { deleteNoteHttp, sortNotesHttp } from "../api/api";
 import { Notes } from "../interfaces/interfaces";
 import { InitialState } from "../store/notesSlice";
 /**
@@ -61,7 +55,7 @@ export const DragEndUtil = async ({ indexOf, index, state }: DragEndProps) => {
     notesPrevState.splice(indexOf, 1);
     const rest = notesPrevState.splice(index);
     rest.unshift(note!);
-    await sortDataHttp([...notesPrevState, ...rest], true);
+    await sortNotesHttp([...notesPrevState, ...rest], true);
 
     return [...notesPrevState, ...rest];
   }

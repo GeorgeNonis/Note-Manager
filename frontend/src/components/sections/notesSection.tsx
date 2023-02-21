@@ -9,7 +9,7 @@ import LoadingSpinner from "../uiComponents/loadingSpinner";
 import Note from "../notes/note";
 import Form from "../formComponents/form";
 import PinnedSection from "./pinnedSection";
-import styles from "../styles/App.module.scss";
+import styles from "../../styles/App.module.scss";
 
 /**
  * Comes native with React

@@ -9,7 +9,7 @@ import { removeNote, restoreNote } from "../../store/notesSlice";
 import ReviewModal from "../modal/reviewModal";
 import { Title } from "../notesComponents/title";
 import { NoteDetails } from "../notesComponents/noteDetails";
-import styles from "../styles/note.module.scss";
+import styles from "../../styles/note.module.scss";
 
 interface Props {
   note: Notes;

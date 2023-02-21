@@ -7,7 +7,7 @@ import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
 import { AiOutlineBell } from "react-icons/ai";
 import ColorPallete from "./colorPallete";
-import styles from "../styles/note.module.scss";
+import styles from "../../styles/note.module.scss";
 
 type Id = {
   id: string;

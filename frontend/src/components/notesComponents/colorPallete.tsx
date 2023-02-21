@@ -2,7 +2,7 @@ import { MdFormatColorReset } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../api/api";
 import { setColor } from "../../store/notesSlice";
-import styles from "../styles/colorPalette.module.scss";
+import styles from "../../styles/colorPalette.module.scss";
 
 interface Props {
   closePalette: (value: boolean) => void;
