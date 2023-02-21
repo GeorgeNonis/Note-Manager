@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteN } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
 import Notes from "./components/sections/notesSection";
-import Deleted from "./components/sections/trashSection";
+import Deleted from "./components/sections/deletedNotesSection";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
 import { FaRegLightbulb } from "react-icons/fa";
@@ -14,13 +14,13 @@ const App = () => {
   const [mouseOverTrash, setMouseOverTrash] = useState(false);
   const [display, setDisplay] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const outside = useOutsideHover(() => setMouseOverTrash(false));
+  const outsideHoverTrash = useOutsideHover(() => setMouseOverTrash(false));
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Note Manager</h3>
       <main className={styles.main}>
         <div
-          ref={outside}
+          ref={outsideHoverTrash}
           className={styles.BiTrash}
           onMouseEnter={() => {
             setMouseOverTrash(true);

@@ -12,7 +12,7 @@ const router = express.Router();
 /**
  * GET REQUESTS
  */
-router.get("/notes", async (req, res, next) => {
+router.get("/v1/notes", async (req, res, next) => {
   await Promise.all([readDataPinned(), readData(), readDataDel()])
     .then((val) => {
       res.status(200).json({
@@ -28,7 +28,7 @@ router.get("/notes", async (req, res, next) => {
 
 // Promise.allSettled
 
-router.get("/trashbin", async (req, res, next) => {
+router.get("/v1/trashbin", async (req, res, next) => {
   const data = await readDataDel();
   res.status(200).json(data);
 });
@@ -37,7 +37,7 @@ router.get("/trashbin", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/notes", async (req, res, next) => {
+router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
   await writeData([...prevState, { ...data }])
@@ -49,7 +49,7 @@ router.post("/notes", async (req, res, next) => {
     });
 });
 
-router.post("/notes/editnote/:id", async (req, res, next) => {
+router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const { noteValue, titleValue } = req.body;
   const isNotePined = req.params.isnotepined;
@@ -84,7 +84,7 @@ router.post("/notes/editnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/notes/sortnotes", async (req, res, next) => {
+router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
   const isItPinned = req.query.pinned;
 
@@ -107,7 +107,7 @@ router.post("/notes/sortnotes", async (req, res, next) => {
   }
 });
 
-router.post("/trashbin/:id", async (req, res, next) => {
+router.post("/v1/trashbin/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const data = await readDataDel();
   const restoredNote = data.find((n) => n.id === id);
@@ -121,7 +121,7 @@ router.post("/trashbin/:id", async (req, res, next) => {
   }
 });
 
-router.post("/trashbin", async (req, res, next) => {
+router.post("/v1/trashbin", async (req, res, next) => {
   const id = req.body.id;
   console.log(id);
   console.log("REMOVING");
@@ -134,7 +134,7 @@ router.post("/trashbin", async (req, res, next) => {
   }
 });
 
-router.post("/notes/pinnote/:id", async (req, res, next) => {
+router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   const pinned = await readDataPinned();
   const unpinned = await readData();
   const id = req.params.id.split(":")[1];
@@ -159,7 +159,7 @@ router.post("/notes/pinnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/notes/colorupdate/:id", async (req, res, next) => {
+router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const color = req.body.color;
   const pinned = req.query.isnotepined;
@@ -197,7 +197,7 @@ router.post("/notes/colorupdate/:id", async (req, res, next) => {
  * DELETE REQUESTS
  */
 
-router.delete("/notes/:id", async (req, res, next) => {
+router.delete("/v1/notes/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const isNotePined = req.query.isnotepined;
   const prevStateDel = await readDataDel();

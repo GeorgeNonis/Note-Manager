@@ -29,18 +29,17 @@ Long names on variables its okay to describe
 
 FrontEnd
 
-1. Better file namings and maybe subfolders
+1. Better file namings and maybe subfolders -- DONE
 2. Make my components smaller for better readability
-3. Consistent with backend codes
-4. Each component should fetch its own state from the backend
+3. Each component should fetch its own state from the backend
 
 BackEnd
 
-1. Never get/post requests to Root(/)
-2. Never have action names in http requests
-3. Also use more appropiate names like for
-   /color it could be /update_colors
+1. Never get/post requests to Root(/) -- DONE
+2. Never have action names in http requests -- DONE
+3. Also use more appropiate names like for => /color it could be /update_colors <= --DONE
 4. Use import in back as well to be consistent
+5. Consistent with backend status code --DONE
 
 /api/v1/{resource}?{queryParameters}
 /resource/subResource/{id}

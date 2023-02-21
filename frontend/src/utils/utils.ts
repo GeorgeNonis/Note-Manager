@@ -2,9 +2,7 @@ import { useEffect, RefObject, MutableRefObject, useRef } from "react";
 import { deleteNoteHttp, sortNotesHttp } from "../api/api";
 import { Notes } from "../interfaces/interfaces";
 import { InitialState } from "../store/notesSlice";
-/**
- * Practising Typescript
- */
+
 interface Props {
   review: boolean;
   note: Notes;
@@ -25,7 +23,6 @@ export const onDropBin = (
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
-    // dispatch(deleteN({ id, pinned }));
     cb(id, pinned);
     deleteNoteHttp(id, pinned);
   }
