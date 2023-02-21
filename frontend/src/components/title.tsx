@@ -7,7 +7,6 @@ interface Props {
 }
 
 export const Title = ({ titleRef, title, editable }: Props) => {
-  console.log(editable ? "true" : "false");
   return (
     <h3
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}

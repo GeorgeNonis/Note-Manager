@@ -9,7 +9,6 @@ export const useOutsideClick = (callback: () => void) => {
      * couldnt figure out the type ...
      */
     const handleClick = (event: any) => {
-      // console.log("HERE");
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }

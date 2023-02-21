@@ -1,15 +1,20 @@
-import { deleteNoteHttp } from "../api/api";
-import { useEffect, RefObject, MutableRefObject, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  RefObject,
+  MutableRefObject,
+  useRef,
+} from "react";
+import { deleteNoteHttp, sortDataHttp } from "../api/api";
+import { Notes } from "../interfaces/interfaces";
+import { InitialState } from "../store/notesSlice";
+import { IRootState } from "../store/store";
 /**
  * Practising Typescript
  */
 interface Props {
   review: boolean;
-  note: {
-    color: string;
-    title: string;
-    note: string;
-  };
+  note: Notes;
 }
 
 export const colorLogic = ({ review, note }: Props) => {
@@ -42,3 +47,23 @@ export function useStateRef<T>(value: T): RefObject<T> {
 
   return ref;
 }
+
+interface DragEndProps {
+  // cb: ([]) => void;
+  indexOf: number;
+  index: number;
+  state: InitialState;
+}
+
+export const DragEndUtil = async ({ indexOf, index, state }: DragEndProps) => {
+  const notesPrevState = [...state.notes];
+  if (indexOf) {
+    const note = notesPrevState.find((n, i) => i === indexOf);
+    notesPrevState.splice(indexOf, 1);
+    const rest = notesPrevState.splice(index);
+    rest.unshift(note!);
+    await sortDataHttp([...notesPrevState, ...rest], true);
+
+    return [...notesPrevState, ...rest];
+  }
+};

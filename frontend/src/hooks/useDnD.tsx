@@ -1,12 +1,5 @@
 import React, { useState } from "react";
 
-interface DStartProps {
-  e: React.DragEvent;
-  position: number;
-  pinned: boolean;
-  id: string;
-}
-
 export const useDnd = () => {
   const [index, setIndex] = useState<number>(0);
   const [indexOf, setIndexOf] = useState<number>(0);

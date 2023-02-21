@@ -11,7 +11,7 @@ interface Props {
   title: string;
 }
 
-const Inputs = ({
+const Form = ({
   display,
   noteStlye,
   onChangeNote,
@@ -45,4 +45,4 @@ const Inputs = ({
   );
 };
 
-export default Inputs;
+export default Form;

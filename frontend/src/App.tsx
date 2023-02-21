@@ -6,7 +6,6 @@ import { BiTrash } from "react-icons/bi";
 import { FaRegLightbulb } from "react-icons/fa";
 import styles from "./styles/content.module.scss";
 import { useOutsideHover } from "./hooks/useOutsideHover";
-import { deleteNoteHttp } from "./api/api";
 import { useDispatch } from "react-redux";
 import { deleteN } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
@@ -30,14 +29,6 @@ const App = () => {
             setMouseOverTrash(true);
           }}
           onDrop={(e) => {
-            // const id = e.dataTransfer.getData("id");
-            // const pinned =
-            //   e.dataTransfer.getData("pinned") === "false" ? false : true;
-            // if (id.length === 0) return;
-            // if (window.confirm("Are you sure you wanna delete this note?")) {
-            //   dispatch(deleteN({ id, pinned }));
-            //   deleteNoteHttp(id, pinned);
-            // }
             onDropBin(e, (id, pinned) => {
               dispatch(deleteN({ id, pinned }));
             });
@@ -48,6 +39,7 @@ const App = () => {
         </div>
         <div className={styles.div}>
           <div
+            role={"button"}
             className={`${display ? styles.active : styles.inactive}`}
             onClick={() => setDisplay(true)}
           >
@@ -55,6 +47,7 @@ const App = () => {
             <h3>Your Note's</h3>
           </div>
           <div
+            role={"button"}
             className={`${!display ? styles.active : styles.inactive}`}
             onClick={() => setDisplay(false)}
           >

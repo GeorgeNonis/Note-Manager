@@ -25,35 +25,36 @@ const Options = ({ id, pinned }: Id) => {
     async (e: React.MouseEvent<HTMLHeadElement>) => {
       e.stopPropagation();
       if (window.confirm("Are you sure you wanna delete this note?")) {
-        console.log("Deleting");
         await deleteNoteHttp(id, pinned);
-        console.log(pinned);
         dispatch(deleteN({ id, pinned }));
         setDisplay(!display);
       }
     },
     []
   );
-  console.log(display);
   return (
     <div className={styles.optionsContent} onClick={(e) => e.stopPropagation()}>
       <div className={styles.style}>
         <div
+          role={"button"}
           onClick={() => setDisplayPalette(!displayPalette)}
           className={styles.option}
         >
           <IoMdColorPalette />
           <h3>Background Options</h3>
         </div>
+        role={"button"}
         <div className={styles.option}>
           <BsImage />
           <h3>Upload Image</h3>
         </div>
+        role={"button"}
         <div className={styles.option}>
           <AiOutlineBell />
           <h3>Remind me</h3>
         </div>
         <div
+          role={"button"}
           className={styles.option}
           onClick={(e) => {
             e.stopPropagation();
@@ -75,7 +76,9 @@ const Options = ({ id, pinned }: Id) => {
       )}
       {display && (
         <div className={styles.options} ref={outsideOptions}>
-          <h3 onClick={deleteHandler}>Delete</h3>
+          <h3 onClick={deleteHandler} role={"button"}>
+            Delete
+          </h3>
           <h3>Add Label</h3>
           <h3>Make Copy</h3>
           <h3>Show Checkboxes</h3>

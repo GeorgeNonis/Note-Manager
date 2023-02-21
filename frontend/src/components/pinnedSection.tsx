@@ -4,8 +4,8 @@ import { useDnd } from "../hooks/useDnD";
 import { sortPinnedNotes } from "../store/notesSlice";
 import { IRootState } from "../store/store";
 import Note from "./note";
-import { Notes } from "./notesSection";
 import styles from "../styles/pinnedSection.module.scss";
+import { Notes } from "../interfaces/interfaces";
 
 interface Props {
   notes: Notes[];

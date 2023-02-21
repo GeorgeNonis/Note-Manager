@@ -7,7 +7,7 @@ import { add, initial, sortNotes, errorState } from "../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingSpinner from "./loadingSpinner";
 import Note from "./note";
-import Inputs from "./form";
+import Form from "./form";
 import PinnedSection from "./pinnedSection";
 import styles from "../styles/App.module.scss";
 
@@ -23,7 +23,6 @@ const Notes = () => {
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  console.log(state.notes);
 
   /**
    *
@@ -39,7 +38,13 @@ const Notes = () => {
     setDisplay(false);
   });
 
+  // const onDragEnd = () => {
+  //   console.log("Dragging");
+  //   const sortedArray = DragEndUtil({ state, index, indexOf });
+  //   dispatch(sortNotes(sortedArray));
+  // };
   const onDragEnd = useCallback(() => {
+    console.log(indexOf);
     const notesPrevState = [...state.notes];
     if (indexOf) {
       const note = notesPrevState.find((n, i) => i === indexOf);
@@ -65,21 +70,17 @@ const Notes = () => {
     const fetch = async () => {
       await getDataHttp()
         .then((data) => {
-          console.log(data);
+          setLoading(false);
           dispatch(initial(data));
         })
         .catch((error) => {
-          console.log(error);
-          console.log(error.message);
           dispatch(errorState(error.message));
         });
     };
-    if (loading) {
-      fetch();
-      setLoading(false);
-      return;
-    }
+    fetch();
+  }, []);
 
+  useEffect(() => {
     if (note.length === 0 && title.length === 0) return;
     /**
      * Storing the details of note with id so in the state
@@ -127,7 +128,7 @@ const Notes = () => {
     <div className={styles.content}>
       <h3 className={styles.title}>Your Note's</h3>
       <main className={styles.mainSection} ref={outside}>
-        <Inputs
+        <Form
           display={display}
           note={note}
           noteStlye={noteStlye}

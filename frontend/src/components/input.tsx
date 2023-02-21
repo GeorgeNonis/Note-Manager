@@ -9,7 +9,6 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = (props: Props) => {
-  // const { ...restProps} = props
   return (
     <input
       {...props}

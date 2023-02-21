@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Notes } from "../components/notesSection";
+import { Notes } from "../interfaces/interfaces";
 
-interface InitialState {
+export interface InitialState {
   notes: Notes[];
   pinnedNotes: Notes[];
   deletedNotes: Notes[];
