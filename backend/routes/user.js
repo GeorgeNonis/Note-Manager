@@ -1,12 +1,12 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   readData,
   writeData,
   writeDeleted,
   readDataDel,
   writePinned,
   readDataPinned,
-} = require("../utils/utils");
+} from "../utils/utils.js";
 const router = express.Router();
 
 /**
@@ -218,4 +218,4 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
   res.status(200).json({ message: "Deleted note successfully" });
 });
 
-module.exports = router;
+export default router;

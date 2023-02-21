@@ -38,7 +38,7 @@ BackEnd
 1. Never get/post requests to Root(/) -- DONE
 2. Never have action names in http requests -- DONE
 3. Also use more appropiate names like for => /color it could be /update_colors <= --DONE
-4. Use import in back as well to be consistent
+4. Use import in back as well to be consistent --DONE
 5. Consistent with backend status code --DONE
 
 /api/v1/{resource}?{queryParameters}

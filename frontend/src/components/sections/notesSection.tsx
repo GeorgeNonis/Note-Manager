@@ -10,11 +10,7 @@ import Note from "../notes/note";
 import Form from "../formComponents/form";
 import PinnedSection from "./pinnedNotesSection";
 import styles from "../../styles/App.module.scss";
-
-/**
- * Comes native with React
- */
-// import { v4 as uuid } from "uuid";
+import ErrorFetching from "../uiComponents/errorForFetchingData";
 
 const Notes = () => {
   const [loading, setLoading] = useState(true);
@@ -110,7 +106,7 @@ const Notes = () => {
   let zIndex = 10000;
   if (loading) return <LoadingSpinner />;
 
-  if (state.error) return <p className={styles.error}>{state.error}</p>;
+  if (state.error) return <ErrorFetching errorMessage={state.error} />;
 
   const pinnedNotes = state.pinnedNotes.length !== 0 && (
     <PinnedSection notes={[...state.pinnedNotes]} />
