@@ -43,13 +43,13 @@ const Options = ({ id, pinned }: Id) => {
           <IoMdColorPalette />
           <h3>Background Options</h3>
         </div>
-        role={"button"}
-        <div className={styles.option}>
+
+        <div className={styles.option} role={"button"}>
           <BsImage />
           <h3>Upload Image</h3>
         </div>
-        role={"button"}
-        <div className={styles.option}>
+
+        <div className={styles.option} role={"button"}>
           <AiOutlineBell />
           <h3>Remind me</h3>
         </div>

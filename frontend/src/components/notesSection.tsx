@@ -47,10 +47,10 @@ const Notes = () => {
     console.log(indexOf);
     const notesPrevState = [...state.notes];
     if (indexOf) {
-      const note = notesPrevState.find((n, i) => i === indexOf);
+      const note = notesPrevState.find((n, i) => i === indexOf)!;
       notesPrevState.splice(indexOf, 1);
       const rest = notesPrevState.splice(index);
-      rest.unshift(note!);
+      rest.unshift(note);
       sortDataHttp([...notesPrevState, ...rest], true);
       dispatch(sortNotes([...notesPrevState, ...rest]));
     }
