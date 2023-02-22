@@ -21,6 +21,7 @@ const DeletedNote = ({ note, zindex }: Props) => {
 
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+
     dispatch(restoreNote(note.id));
     await restoreNoteHttp(note.id);
   };

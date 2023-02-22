@@ -20,15 +20,15 @@ const notes = createSlice({
   initialState,
   reducers: {
     initial(state, { payload }) {
-      // console.log(payload);
       state.notes = [...payload.unpinned];
       state.pinnedNotes = [...payload.pinned];
       state.deletedNotes = [...payload.deleted];
     },
-    add(state, { payload }) {
+    addNote(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
     },
     errorState(state, { payload: error }) {
+      console.log(error);
       state.error = error;
     },
     editNote(state, { payload }) {
@@ -91,9 +91,6 @@ const notes = createSlice({
         state.pinnedNotes = [...state.pinnedNotes, note];
       }
     },
-    sortPinnedNotes(state, { payload }) {
-      state.pinnedNotes = payload;
-    },
     setColor(state, { payload }) {
       const color = payload.value;
       const id = payload.id;
@@ -112,7 +109,7 @@ const notes = createSlice({
 });
 
 export const {
-  add,
+  addNote,
   errorState,
   editNote,
   deleteNote,
@@ -121,7 +118,6 @@ export const {
   restoreNote,
   removeNote,
   pinHandler,
-  sortPinnedNotes,
   setColor,
 } = notes.actions;
 

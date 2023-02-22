@@ -1,8 +1,8 @@
 import React, { useState, useRef, MutableRefObject, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { useDispatch } from "react-redux";
 import { NoteProps } from "../../interfaces/interfaces";
 import { editNoteHttp, pinNoteHandlerHttp } from "../../api/api";
-import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { editNote, pinHandler } from "../../store/notesSlice";
 import {

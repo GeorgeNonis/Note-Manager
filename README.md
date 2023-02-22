@@ -23,6 +23,7 @@ Features to be added
 4. Remove a note after 7 days from the trashbin
 5. Make a copy of the note
 6. Show checkboxes and progress level
+7. Last time it was edited
 
 Improve code
 

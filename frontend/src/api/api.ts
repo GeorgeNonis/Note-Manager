@@ -4,17 +4,25 @@ import { EditNoteArgs, NoteObj } from "../interfaces/interfaces";
 const API_VERSION = `v1/`;
 const BASE_URL = `http://localhost:8080/${API_VERSION}`;
 
+// export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
+//   await axios
+//     .post(`${BASE_URL}notes/sortnotes?isnotepined=${pinned}`, data)
+//     .then((res) => {
+//       console.log(res);
+//       return res;
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return err;
+//     });
+// };
+
 export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
-  await axios
-    .post(`${BASE_URL}notes/sortnotes?isnotepined=${pinned}`, data)
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+  const response = await axios.post(
+    `${BASE_URL}notes/sortnotes?isnotepined=${pinned}`,
+    data
+  );
+  console.log(response);
 };
 
 export const getNotesHttp = async (): Promise<NoteObj[]> => {
@@ -38,6 +46,7 @@ export const addNoteHttp = async (data: NoteObj) => {
     })
     .catch((err) => {
       console.log(err);
+      return err;
     });
 };
 export const deleteNoteHttp = async (
@@ -49,12 +58,15 @@ export const deleteNoteHttp = async (
     .then((res) => {
       console.log(res);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      return err;
+    });
 };
 
 export const restoreNoteHttp = async (id: string) => {
   console.log(id);
-  await axios
+  return await axios
     .post(`${BASE_URL}trashbin/:${id}`)
     .then((res) => {
       console.log(res);
@@ -96,9 +108,7 @@ export const updateNoteColorHttp = async (
   id: string,
   pinned: boolean
 ) => {
-  console.log({ id, color, pinned });
   await axios
-    // /notes/:id/colorupdate
     .post(`${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`, {
       color,
     })

@@ -22,15 +22,20 @@ router.get("/v1/notes", async (req, res, next) => {
       });
     })
     .catch((error) => {
-      return res.status(500).json({ message: "Internal error", error });
+      res.status(500).json({ message: "Internal error", error });
     });
 });
 
 // Promise.allSettled
 
 router.get("/v1/trashbin", async (req, res, next) => {
-  const data = await readDataDel();
-  res.status(200).json(data);
+  await readDataDel()
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((error) => {
+      return res.status(500).json({ message: "Internal error", error });
+    });
 });
 
 /**
@@ -90,16 +95,19 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
   console.log(typeof isItPinned);
   if (isItPinned === "true") {
     await writePinned(data)
-      .then((response) => {
+      .then(() => {
         res.status(200).json({ message: "Sorted your items Successfully" });
       })
       .catch((error) => {
+        console.log(error);
         res.status(500).json({ message: "Internal error", error });
       });
   } else {
     await writeData(data)
-      .then((response) => {
-        res.status(200).json({ message: "Sorted your items Successfully" });
+      .then(() => {
+        res.status(200).json({
+          message: "Sorted your items Successfully",
+        });
       })
       .catch((error) => {
         res.status(500).json({ message: "Internal error", error });
@@ -112,13 +120,21 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
   const data = await readDataDel();
   const restoredNote = data.find((n) => n.id === id);
   const currentState = await readData();
-  try {
-    await writeDeleted([...data.filter((n) => n.id !== id)]);
-    await writeData([...currentState, { ...restoredNote }]);
-    res.status(201).json({ message: "Restored successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-  }
+  await writeDeleted([...data.filter((n) => n.id !== id)])
+    .then(async () => {
+      await writeData([...currentState, { ...restoredNote }]);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Internal error", error });
+    })
+    .then(() => {
+      console.log("not error");
+      res.status(201).json({ message: "Restored successfully" });
+    })
+    .catch((error) => {
+      console.log("throwing error");
+      res.status(500).json({ message: "Internal error", error });
+    });
 });
 
 router.post("/v1/trashbin", async (req, res, next) => {
@@ -126,12 +142,13 @@ router.post("/v1/trashbin", async (req, res, next) => {
   console.log(id);
   console.log("REMOVING");
   const data = await readDataDel();
-  try {
-    await writeDeleted([...data.filter((n) => n.id !== id)]);
-    res.status(200).json({ message: "Successfully removed" });
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-  }
+  await writeDeleted([...data.filter((n) => n.id !== id)])
+    .then((response) => {
+      res.status(200).json({ message: "Successfully removed" });
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Internal error", error });
+    });
 });
 
 router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
@@ -142,21 +159,27 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   const pinNote = unpinned.find((n) => n.id === id);
   console.log("pining note");
   if (isItPinned === undefined) {
-    try {
-      await writePinned([...pinned, { ...pinNote }]);
-      await writeData([...unpinned.filter((n) => n.id !== id)]);
-      return res.status(200).json({ message: "Successfully pinned" });
-    } catch (error) {
-      return res.status(500).json({ message: "Internal error" });
-    }
+    await writePinned([...pinned, { ...pinNote }])
+      .then(async () => {
+        await writeData([...unpinned.filter((n) => n.id !== id)]);
+      })
+      .then(() => {
+        return res.status(200).json({ message: "Successfully pinned" });
+      })
+      .catch((error) => {
+        return res.status(500).json({ message: "Internal error", error });
+      });
   } else {
-    try {
-      await writePinned([...pinned.filter((n) => n.id !== id)]);
-      await writeData([...unpinned, { ...isItPinned }]);
-      return res.status(200).json({ message: "Successfully unpinned" });
-    } catch (error) {
-      return res.status(500).json({ message: "Something went wrong" });
-    }
+    await writePinned([...pinned.filter((n) => n.id !== id)])
+      .then(async () => {
+        await writeData([...unpinned, { ...isItPinned }]);
+      })
+      .then(() => {
+        return res.status(200).json({ message: "Successfully unpinned" });
+      })
+      .catch((error) => {
+        return res.status(500).json({ message: "Something went wrong", error });
+      });
   }
 });
 

@@ -51,6 +51,7 @@ export const DragEndUtil = async ({
   const rest = notesPrevState.splice(index);
 
   indexOf !== 0 ? rest.unshift(note!) : rest.splice(0, 0, note!);
+  const response = await sortNotesHttp([...notesPrevState, ...rest], pinned);
+  console.log(response);
   cb([...notesPrevState, ...rest]);
-  await sortNotesHttp([...notesPrevState, ...rest], pinned);
 };

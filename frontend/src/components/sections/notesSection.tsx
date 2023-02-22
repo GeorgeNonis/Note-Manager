@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { useSelector, useDispatch } from "react-redux";
+import { useDnd, useOutsideClick } from "../../hooks";
 import { addNoteHttp, getNotesHttp } from "../../api/api";
 import { IRootState } from "../../store/store";
-import { useDnd } from "../../hooks/useDnD";
-import { add, initial, sortNotes, errorState } from "../../store/notesSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { formBorders } from "../../utils/utilsStyling";
-import { DragEndUtil } from "../../utils/utils";
+import {
+  addNote,
+  initial,
+  sortNotes,
+  errorState,
+} from "../../store/notesSlice";
+import { formBorders, DragEndUtil } from "../../utils";
 import { NoteObj } from "../../interfaces/interfaces";
 import {
   LoadingSpinner,
@@ -52,12 +55,14 @@ const NotesSecion = () => {
 
   useEffect(() => {
     const fetch = async () => {
+      dispatch(errorState(""));
       await getNotesHttp()
         .then((data) => {
           setLoading(false);
           dispatch(initial(data));
         })
         .catch((error) => {
+          setLoading(false);
           dispatch(errorState(error.message));
         });
     };
@@ -77,7 +82,7 @@ const NotesSecion = () => {
     tempNote.id = crypto.randomUUID();
 
     addNoteHttp(tempNote);
-    dispatch(add(tempNote));
+    dispatch(addNote(tempNote));
     setTitle("");
     setNote("");
   }, [display]);
