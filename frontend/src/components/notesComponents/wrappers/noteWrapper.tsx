@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import { Notes } from "../../../interfaces/interfaces";
+import { NoteObj } from "../../../interfaces/interfaces";
 import styles from "../../../styles/note.module.scss";
 import { colorLogic, onReviewingNote } from "../../../utils/utilsStyling";
 
 interface Props {
   children: React.ReactNode;
   review: boolean;
-  note: Notes;
+  note: NoteObj;
   pinned: boolean;
   position: number;
   zIndex: number;

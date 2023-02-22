@@ -3,19 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../../hooks/useDnD";
 import { sortPinnedNotes } from "../../store/notesSlice";
 import { IRootState } from "../../store/store";
-import { Notes } from "../../interfaces/interfaces";
+import { NoteObj } from "../../interfaces/interfaces";
 import { sortNotesHttp } from "../../api/api";
 import Note from "../notes/note";
 import styles from "../../styles/pinnedSection.module.scss";
+import { DragEndUtil } from "../../utils/utils";
 
 interface Props {
-  notes: Notes[];
+  notes: NoteObj[];
 }
 
 const PinnedSection = ({ notes }: Props) => {
-  const pinnedNotes = useSelector(
-    (state: IRootState) => state.notes.pinnedNotes
-  );
+  const state = useSelector((state: IRootState) => state.notes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
   const dispatch = useDispatch();
 
@@ -23,15 +22,12 @@ const PinnedSection = ({ notes }: Props) => {
    * Hook to detect outside click from the note's div
    * so you can close it
    */
-  const onDragEnd = useCallback(() => {
-    const pinnedNotesPrevState = [...pinnedNotes];
-    const note = pinnedNotesPrevState.find((n, i) => i === indexOf)!;
-    pinnedNotesPrevState.splice(indexOf, 1);
-    const rest = pinnedNotesPrevState.splice(index);
-    rest.unshift(note!);
-    sortNotesHttp([...pinnedNotesPrevState, ...rest], true);
-    dispatch(sortPinnedNotes([...pinnedNotesPrevState, ...rest]));
-  }, [indexOf, index]);
+  const onDragEnd = async () => {
+    const cb = (arr: Iterable<NoteObj>[]) => {
+      dispatch(sortPinnedNotes(arr));
+    };
+    await DragEndUtil({ state, index, indexOf, cb, pinned: true });
+  };
   let zIndex = 1000;
   return (
     <main className={styles.content}>

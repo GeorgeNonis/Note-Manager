@@ -1,8 +1,8 @@
-import { Notes } from "../interfaces/interfaces";
+import { NoteObj } from "../interfaces/interfaces";
 
 interface Props {
   review: boolean;
-  note: Notes;
+  note: NoteObj;
 }
 
 interface ReviewingFnc {

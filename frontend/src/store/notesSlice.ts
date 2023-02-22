@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Notes } from "../interfaces/interfaces";
+import { NoteObj } from "../interfaces/interfaces";
 
 export interface InitialState {
-  notes: Notes[];
-  pinnedNotes: Notes[];
-  deletedNotes: Notes[];
+  notes: NoteObj[];
+  pinnedNotes: NoteObj[];
+  deletedNotes: NoteObj[];
   error: "";
 }
 
@@ -45,22 +45,26 @@ const notes = createSlice({
         state.notes[noteIndex].title = payload.titleValue;
       }
     },
-    deleteN(state, { payload }) {
+    deleteNote(state, { payload }) {
       const id = payload.id;
       const pinned = payload.pinned;
       let note;
-      console.log(id);
-      console.log(pinned);
+      console.group();
+      console.log(`Slice handler id: ${id}`);
+      console.log(`Slice handler is it pinned: ${pinned}`);
+      console.log(typeof pinned);
+      console.groupEnd();
       if (!pinned) {
-        note = state.notes.find((n) => n.id === id) as Notes;
+        console.log(state.notes);
+        note = state.notes.find((n) => n.id === id) as NoteObj;
         state.notes = [...state.notes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
         console.log(note);
       } else {
-        console.log(note);
-        note = state.pinnedNotes.find((n) => n.id === id) as Notes;
+        note = state.pinnedNotes.find((n) => n.id === id) as NoteObj;
         state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
+        console.log(note);
       }
     },
     sortNotes(state, { payload }) {
@@ -114,7 +118,7 @@ export const {
   add,
   errorState,
   editNote,
-  deleteN,
+  deleteNote,
   sortNotes,
   initial,
   restoreNote,

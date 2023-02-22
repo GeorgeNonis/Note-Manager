@@ -1,4 +1,4 @@
-export interface Notes {
+export interface NoteObj {
   title: string;
   note: string;
   id: string;
@@ -6,7 +6,7 @@ export interface Notes {
 }
 
 export interface NoteProps {
-  note: Notes;
+  note: NoteObj;
   zindex: number;
   position: number;
   pinned: boolean;

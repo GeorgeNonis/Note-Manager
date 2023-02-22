@@ -29,17 +29,28 @@ interface DragEndProps {
   indexOf: number;
   index: number;
   state: InitialState;
+  cb: ([]: any) => void;
+  pinned: boolean;
+  /**
+   * Doesnt work idk
+   */
+  // cb: ([]: Iterable<NoteObj>[]) => void;
 }
 
-// export const DragEndUtil = async ({ indexOf, index, state }: DragEndProps) => {
-//   const notesPrevState = [...state.notes];
-//   if (indexOf) {
-//     const note = notesPrevState.find((n, i) => i === indexOf);
-//     notesPrevState.splice(indexOf, 1);
-//     const rest = notesPrevState.splice(index);
-//     rest.unshift(note!);
-//     await sortNotesHttp([...notesPrevState, ...rest], true);
+export const DragEndUtil = async ({
+  indexOf,
+  index,
+  state,
+  cb,
+  pinned,
+}: DragEndProps) => {
+  const notesPrevState = !pinned ? [...state.notes] : [...state.pinnedNotes];
+  const note = notesPrevState.find((n, i) => i === indexOf);
 
-//     return [...notesPrevState, ...rest];
-//   }
-// };
+  notesPrevState.splice(indexOf, 1);
+  const rest = notesPrevState.splice(index);
+
+  indexOf !== 0 ? rest.unshift(note!) : rest.splice(0, 0, note!);
+  cb([...notesPrevState, ...rest]);
+  await sortNotesHttp([...notesPrevState, ...rest], pinned);
+};

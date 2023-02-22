@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
-import { Notes } from "../../../interfaces/interfaces";
+import { NoteObj } from "../../../interfaces/interfaces";
 import { colorLogic, onReviewingNote } from "../../../utils/utilsStyling";
 import styles from "../../../styles/note.module.scss";
 
 interface Props {
   children: React.ReactNode;
   review: boolean;
-  note: Notes;
+  note: NoteObj;
   zIndex: number;
   setReview: Dispatch<SetStateAction<boolean>>;
   clickOutsideNote: React.MutableRefObject<any>;

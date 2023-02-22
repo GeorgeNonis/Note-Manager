@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Notes } from "../../interfaces/interfaces";
+import { NoteObj } from "../../interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { removeNoteHttp, restoreNoteHttp } from "../../api/api";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
@@ -12,7 +12,7 @@ import styles from "../../styles/note.module.scss";
 import DeletedNoteWrapper from "../notesComponents/wrappers/deletedNoteWrapper";
 
 interface Props {
-  note: Notes;
+  note: NoteObj;
   zindex: number;
 }
 

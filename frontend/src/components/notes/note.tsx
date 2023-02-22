@@ -22,6 +22,7 @@ const Note = ({
   zindex,
   pinned,
 }: NoteProps) => {
+  // console.log(note);
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
   const clickOutsideNote = useOutsideClick(() => setReview(false));

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useOutsideHover } from "./hooks/useOutsideHover";
 import { useDispatch } from "react-redux";
-import { deleteN } from "./store/notesSlice";
+import { deleteNote } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
-import Notes from "./components/sections/notesSection";
+import NotesSecion from "./components/sections/notesSection";
 import Deleted from "./components/sections/deletedNotesSection";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
@@ -30,7 +30,7 @@ const App = () => {
           }}
           onDrop={async (e) => {
             await onDropBin(e, (id, pinned) => {
-              dispatch(deleteN({ id, pinned }));
+              dispatch(deleteNote({ id, pinned }));
             });
           }}
           onDragOver={(e) => e.preventDefault()}
@@ -56,7 +56,7 @@ const App = () => {
           </div>
         </div>
         {/* <Test /> */}
-        {display && <Notes />}
+        {display && <NotesSecion />}
         {!display && <Deleted />}
       </main>
     </>

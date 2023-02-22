@@ -1,10 +1,10 @@
 import axios from "axios";
-import { EditNoteArgs, Notes } from "../interfaces/interfaces";
+import { EditNoteArgs, NoteObj } from "../interfaces/interfaces";
 
 const API_VERSION = `v1/`;
 const BASE_URL = `http://localhost:8080/${API_VERSION}`;
 
-export const sortNotesHttp = async (data: Notes[], pinned: boolean) => {
+export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
   await axios
     .post(`${BASE_URL}notes/sortnotes?isnotepined=${pinned}`, data)
     .then((res) => {
@@ -17,9 +17,9 @@ export const sortNotesHttp = async (data: Notes[], pinned: boolean) => {
     });
 };
 
-export const getNotesHttp = async (): Promise<Notes[]> => {
+export const getNotesHttp = async (): Promise<NoteObj[]> => {
   return axios
-    .get<Notes[]>(`${BASE_URL}notes`)
+    .get<NoteObj[]>(`${BASE_URL}notes`)
     .then((res) => {
       console.log(res);
       return res.data;
@@ -30,7 +30,7 @@ export const getNotesHttp = async (): Promise<Notes[]> => {
     });
 };
 
-export const addNoteHttp = async (data: Notes) => {
+export const addNoteHttp = async (data: NoteObj) => {
   await axios
     .post(`${BASE_URL}notes`, { ...data })
     .then((res) => {

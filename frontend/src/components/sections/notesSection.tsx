@@ -14,8 +14,10 @@ import { formBorders } from "../../utils/utilsStyling";
 import NoNotesTitle from "./ui/noNotesTitle";
 import OthersTitle from "./ui/othersTitle";
 import styles from "../../styles/App.module.scss";
+import { DragEndUtil } from "../../utils/utils";
+import { NoteObj } from "../../interfaces/interfaces";
 
-const Notes = () => {
+const NotesSecion = () => {
   const [loading, setLoading] = useState(true);
   const state = useSelector((state: IRootState) => state.notes);
   const dispatch = useDispatch();
@@ -23,37 +25,18 @@ const Notes = () => {
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
 
-  /**
-   *
-   * Drag and Drop hook with states and functions
-   */
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
 
-  /**
-   * Hook to detect outside click from the note's div
-   * so you can close it
-   */
-  const outside = useOutsideClick(() => {
+  const clickOutsideNote = useOutsideClick(() => {
     setDisplay(false);
   });
 
-  // const onDragEnd = () => {
-  //   console.log("Dragging");
-  //   const sortedArray = DragEndUtil({ state, index, indexOf });
-  //   dispatch(sortNotes(sortedArray));
-  // };
-  const onDragEnd = useCallback(() => {
-    console.log(indexOf);
-    const notesPrevState = [...state.notes];
-    if (indexOf) {
-      const note = notesPrevState.find((n, i) => i === indexOf)!;
-      notesPrevState.splice(indexOf, 1);
-      const rest = notesPrevState.splice(index);
-      rest.unshift(note);
-      sortNotesHttp([...notesPrevState, ...rest], true);
-      dispatch(sortNotes([...notesPrevState, ...rest]));
-    }
-  }, [indexOf, index]);
+  const onDragEnd = async () => {
+    const cb = (arr: Iterable<NoteObj>[]) => {
+      dispatch(sortNotes(arr));
+    };
+    await DragEndUtil({ state, index, indexOf, cb, pinned: false });
+  };
 
   const onChangeTitle = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -81,10 +64,6 @@ const Notes = () => {
 
   useEffect(() => {
     if (note.length === 0 && title.length === 0) return;
-    /**
-     * Storing the details of note with id so in the state
-     * and in backend are the same info
-     */
     const tempNote = {
       title: "",
       note: "",
@@ -93,7 +72,6 @@ const Notes = () => {
     };
     tempNote.title = title;
     tempNote.note = note;
-    // tempNote.id = uuid();
     tempNote.id = crypto.randomUUID();
 
     addNoteHttp(tempNote);
@@ -114,7 +92,7 @@ const Notes = () => {
   return (
     <div className={styles.content}>
       <h3 className={styles.title}>Your Note's</h3>
-      <main className={styles.mainSection} ref={outside}>
+      <main className={styles.mainSection} ref={clickOutsideNote}>
         <Form
           display={display}
           note={note}
@@ -154,4 +132,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default NotesSecion;

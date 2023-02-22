@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { deleteNoteHttp } from "../../../api/api";
-import { deleteN } from "../../../store/notesSlice";
+import { deleteNote } from "../../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
@@ -21,17 +21,12 @@ const Options = ({ id, pinned }: Id) => {
   const outsideOptions = useOutsideClick(() => setDisplay(false));
   const outsidePalette = useOutsideClick(() => setDisplayPalette(false));
 
-  const deleteHandler = useCallback(
-    async (e: React.MouseEvent<HTMLHeadElement>) => {
-      e.stopPropagation();
-      if (window.confirm("Are you sure you wanna delete this note?")) {
-        await deleteNoteHttp(id, pinned);
-        dispatch(deleteN({ id, pinned }));
-        setDisplay(!display);
-      }
-    },
-    []
-  );
+  const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
+    e.stopPropagation();
+    await deleteNoteHttp(id, pinned);
+    dispatch(deleteNote({ id, pinned }));
+    setDisplay(false);
+  };
   return (
     <div className={styles.optionsContent} onClick={(e) => e.stopPropagation()}>
       <div className={styles.style}>
