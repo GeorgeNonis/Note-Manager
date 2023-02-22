@@ -1,13 +1,11 @@
-import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../../hooks/useDnD";
-import { sortPinnedNotes } from "../../store/notesSlice";
+import { sortNotes, sortPinnedNotes } from "../../store/notesSlice";
 import { IRootState } from "../../store/store";
 import { NoteObj } from "../../interfaces/interfaces";
-import { sortNotesHttp } from "../../api/api";
+import { DragEndUtil } from "../../utils/utils";
 import Note from "../notes/note";
 import styles from "../../styles/pinnedSection.module.scss";
-import { DragEndUtil } from "../../utils/utils";
 
 interface Props {
   notes: NoteObj[];
@@ -24,7 +22,7 @@ const PinnedSection = ({ notes }: Props) => {
    */
   const onDragEnd = async () => {
     const cb = (arr: Iterable<NoteObj>[]) => {
-      dispatch(sortPinnedNotes(arr));
+      dispatch(sortNotes({ arr, pinned: true }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: true });
   };

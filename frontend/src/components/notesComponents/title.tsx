@@ -6,7 +6,7 @@ interface Props {
   editable?: boolean;
 }
 
-export const Title = ({ titleRef, title, editable }: Props) => {
+const Title = ({ titleRef, title, editable }: Props) => {
   return (
     <h3
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
@@ -20,3 +20,5 @@ export const Title = ({ titleRef, title, editable }: Props) => {
     </h3>
   );
 };
+
+export default Title;

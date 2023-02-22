@@ -86,8 +86,8 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
-  const isItPinned = req.query.pinned;
-
+  const isItPinned = req.query.isnotepined;
+  console.log(typeof isItPinned);
   if (isItPinned === "true") {
     await writePinned(data)
       .then((response) => {
@@ -140,6 +140,7 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const isItPinned = pinned.find((n) => n.id === id);
   const pinNote = unpinned.find((n) => n.id === id);
+  console.log("pining note");
   if (isItPinned === undefined) {
     try {
       await writePinned([...pinned, { ...pinNote }]);

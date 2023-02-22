@@ -5,13 +5,15 @@ import { editNoteHttp, pinNoteHandlerHttp } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { editNote, pinHandler } from "../../store/notesSlice";
-import Options from "../notesComponents/actions/options";
-import ReviewModal from "../modal/reviewModal";
-import { Title } from "../notesComponents/title";
-import { NoteDetails } from "../notesComponents/noteDetails";
-import Pin from "../notesComponents/pin";
+import {
+  Options,
+  ReviewModal,
+  Title,
+  NoteDetails,
+  Pin,
+  NoteWrapper,
+} from "../index";
 import styles from "../../styles/note.module.scss";
-import NoteWrapper from "../notesComponents/wrappers/noteWrapper";
 
 const Note = ({
   note,
@@ -72,7 +74,6 @@ const Note = ({
         <NoteDetails note={note.note} noteRef={noteDetails} editable={true} />
         <Options id={note.id} pinned={pinned} />
       </NoteWrapper>
-      {/* </div> */}
     </>
   );
 };

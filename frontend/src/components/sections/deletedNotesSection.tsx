@@ -1,7 +1,6 @@
 import { IRootState } from "../../store/store";
 import { useSelector } from "react-redux";
-import EmptyTrash from "../ui/emptyTrash";
-import DeletedNote from "../notes/deletedNote";
+import { EmptyTrash, DeletedNote } from "../index";
 import styles from "../../styles/trashSection.module.scss";
 
 const Deleted = () => {

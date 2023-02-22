@@ -49,31 +49,28 @@ const notes = createSlice({
       const id = payload.id;
       const pinned = payload.pinned;
       let note;
-      console.group();
-      console.log(`Slice handler id: ${id}`);
-      console.log(`Slice handler is it pinned: ${pinned}`);
-      console.log(typeof pinned);
-      console.groupEnd();
       if (!pinned) {
         console.log(state.notes);
         note = state.notes.find((n) => n.id === id) as NoteObj;
         state.notes = [...state.notes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
-        console.log(note);
       } else {
         note = state.pinnedNotes.find((n) => n.id === id) as NoteObj;
         state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
         state.deletedNotes.push(note);
-        console.log(note);
       }
     },
     sortNotes(state, { payload }) {
-      state.notes = payload;
+      console.log(payload);
+      if (payload.pinned) {
+        state.pinnedNotes = [...payload.arr];
+      } else {
+        state.notes = [...payload.arr];
+      }
     },
     restoreNote(state, { payload }) {
       const id = payload;
       const note = state.deletedNotes.find((n) => n.id === id);
-      console.log(note);
       state.deletedNotes = [...state.deletedNotes.filter((n) => n.id !== id)];
       state.notes = [...state.notes, { ...note! }];
     },

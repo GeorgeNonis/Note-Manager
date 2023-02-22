@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
-import { addNoteHttp, getNotesHttp, sortNotesHttp } from "../../api/api";
+import { addNoteHttp, getNotesHttp } from "../../api/api";
 import { IRootState } from "../../store/store";
 import { useDnd } from "../../hooks/useDnD";
 import { add, initial, sortNotes, errorState } from "../../store/notesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import LoadingSpinner from "../ui/loadingSpinner";
-import Note from "../notes/note";
-import Form from "../formComponents/form";
-import PinnedSection from "./pinnedNotesSection";
-import ErrorFetching from "../ui/errorForFetchingData";
 import { formBorders } from "../../utils/utilsStyling";
-import NoNotesTitle from "./ui/noNotesTitle";
-import OthersTitle from "./ui/othersTitle";
-import styles from "../../styles/App.module.scss";
 import { DragEndUtil } from "../../utils/utils";
 import { NoteObj } from "../../interfaces/interfaces";
+import {
+  LoadingSpinner,
+  Note,
+  Form,
+  PinnedSection,
+  ErrorFetching,
+  NoNotesTitle,
+  OthersTitle,
+} from "../index";
+import styles from "../../styles/App.module.scss";
 
 const NotesSecion = () => {
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,7 @@ const NotesSecion = () => {
 
   const onDragEnd = async () => {
     const cb = (arr: Iterable<NoteObj>[]) => {
-      dispatch(sortNotes(arr));
+      dispatch(sortNotes({ arr, pinned: false }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };

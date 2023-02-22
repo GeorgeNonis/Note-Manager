@@ -5,11 +5,8 @@ import { useDispatch } from "react-redux";
 import { removeNoteHttp, restoreNoteHttp } from "../../api/api";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../../store/notesSlice";
-import ReviewModal from "../modal/reviewModal";
-import { Title } from "../notesComponents/title";
-import { NoteDetails } from "../notesComponents/noteDetails";
+import { ReviewModal, Title, NoteDetails, DeletedNoteWrapper } from "../index";
 import styles from "../../styles/note.module.scss";
-import DeletedNoteWrapper from "../notesComponents/wrappers/deletedNoteWrapper";
 
 interface Props {
   note: NoteObj;
@@ -24,14 +21,14 @@ const DeletedNote = ({ note, zindex }: Props) => {
 
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    await restoreNoteHttp(note.id);
     dispatch(restoreNote(note.id));
+    await restoreNoteHttp(note.id);
   };
 
   const removeProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    await removeNoteHttp(note.id);
     dispatch(removeNote(note.id));
+    await removeNoteHttp(note.id);
     setReview(false);
   };
 

@@ -6,7 +6,7 @@ interface Props {
   editable?: boolean;
 }
 
-export const NoteDetails = ({ noteRef, note, editable }: Props) => {
+const NoteDetails = ({ noteRef, note, editable }: Props) => {
   return (
     <p
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
@@ -20,3 +20,5 @@ export const NoteDetails = ({ noteRef, note, editable }: Props) => {
     </p>
   );
 };
+
+export default NoteDetails;
