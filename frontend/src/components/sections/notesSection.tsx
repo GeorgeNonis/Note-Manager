@@ -3,12 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../hooks";
 import { addNoteHttp, getNotesHttp } from "../../api/api";
 import { IRootState } from "../../store/store";
-import {
-  addNote,
-  initial,
-  sortNotes,
-  errorState,
-} from "../../store/notesSlice";
+import { addNote, initial, errorState } from "../../store/notesSlice";
 import { formBorders, DragEndUtil } from "../../utils";
 import { NoteObj } from "../../interfaces/interfaces";
 import {

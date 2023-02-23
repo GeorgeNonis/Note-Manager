@@ -114,14 +114,6 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
         message: "Sorted your items Successfully",
       });
     }
-    // .then(() => {
-    //   res.status(200).json({
-    //     message: "Sorted your items Successfully",
-    //   });
-    // })
-    // .catch((error) => {
-    //   res.status(500).json({ message: "Internal error", error });
-    // });
   }
 });
 

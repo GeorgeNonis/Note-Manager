@@ -29,6 +29,7 @@ Improve code
 
 1. Better error handling
 2. Better nameCases
+3. .gitignore should always refering to both folders if you have backend frontend
 
 Tips
 

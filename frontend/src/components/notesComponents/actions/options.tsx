@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { deleteNoteHttp } from "../../../api/api";
 import { deleteNote } from "../../../store/notesSlice";
