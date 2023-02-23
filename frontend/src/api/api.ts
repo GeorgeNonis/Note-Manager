@@ -34,102 +34,108 @@ export const getNotesHttp = async <T>(): Promise<
 export const addNoteHttp = async (data: NoteObj) => {
   try {
     const response = await axios.post(`${BASE_URL}notes`, { ...data });
+    console.log(response);
     return [response, null];
   } catch (error) {
     return [null, error];
   }
 };
 
-export const deleteNoteHttp = async (
+/** Reworked the error hanlding  - DONE*/
+export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean
-): Promise<void> => {
-  await axios
-    .delete(`${BASE_URL}notes/:${id}?isnotepined=${pinned}`)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.delete<T, E>(
+      `${BASE_URL}notes/:${id}?isnotepined=${pinned}`
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };
 
-export const restoreNoteHttp = async (id: string) => {
-  console.log(id);
-  return await axios
-    .post(`${BASE_URL}trashbin/:${id}`)
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+/** Reworked the error hanlding  - DONE*/
+export const restoreNoteHttp = async <T, E>(
+  id: string
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(`${BASE_URL}trashbin/:${id}`);
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };
 
-export const removeNoteHttp = async (id: string) => {
-  await axios
-    .post(`${BASE_URL}trashbin`, { id })
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+export const removeNoteHttp = async <T, E>(
+  id: string
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(`${BASE_URL}trashbin`, { id });
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };
 
-export const pinNoteHandlerHttp = async (id: string) => {
-  await axios
-    .post(`${BASE_URL}notes/pinnote/:${id}`)
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+export const pinNoteHandlerHttp = async <T, E>(
+  id: string
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(`${BASE_URL}notes/pinnote/:${id}`);
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };
 
-export const updateNoteColorHttp = async (
+export const updateNoteColorHttp = async <T, E>(
   color: string,
   id: string,
   pinned: boolean
-) => {
-  await axios
-    .post(`${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`, {
-      color,
-    })
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`,
+      {
+        color,
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };
 
-export const editNoteHttp = async ({
+export const editNoteHttp = async <T, E>({
   noteId,
   pinned,
   noteValue,
   titleValue,
-}: EditNoteArgs) => {
-  await axios
-    .post(`${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`, {
-      noteValue,
-      titleValue,
-    })
-    .then((res) => {
-      console.log(res);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+}: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`,
+      {
+        noteValue,
+        titleValue,
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
 };

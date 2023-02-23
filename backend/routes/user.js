@@ -45,11 +45,15 @@ router.get("/v1/trashbin", async (req, res, next) => {
 router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
+  console.log(data);
   try {
     const response = await writeData([...prevState, { ...data }]);
-
+    console.log("theres NOT error");
+    res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
   } catch (error) {
+    console.log("theres error");
+    res.status(500).json({ message: "Internal error", error });
     return [null, error];
   }
 });

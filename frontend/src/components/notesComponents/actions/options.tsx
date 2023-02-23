@@ -8,6 +8,7 @@ import { IoMdColorPalette } from "react-icons/io";
 import { AiOutlineBell } from "react-icons/ai";
 import ColorPallete from "./colorPallete";
 import styles from "../../../styles/note.module.scss";
+import { isThereError } from "../../../utils/utils";
 
 type Id = {
   id: string;
@@ -23,8 +24,14 @@ const Options = ({ id, pinned }: Id) => {
 
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
-    await deleteNoteHttp(id, pinned);
-    dispatch(deleteNote({ id, pinned }));
+
+    const response = await deleteNoteHttp(id, pinned);
+    const sucessfullRequest = isThereError(response);
+    console.log(sucessfullRequest);
+    sucessfullRequest
+      ? dispatch(deleteNote({ id, pinned }))
+      : console.log(response[1]?.message);
+
     setDisplay(false);
   };
   return (

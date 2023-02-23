@@ -74,7 +74,7 @@ const NotesSecion = () => {
     if (note.length === 0 && title.length === 0) return;
     const postNote = async () => {
       const { processedNote, boolean } = await notePostHandler(title, note);
-
+      console.log(boolean);
       boolean ? dispatch(addNote(processedNote)) : console.log("error");
 
       setTitle("");

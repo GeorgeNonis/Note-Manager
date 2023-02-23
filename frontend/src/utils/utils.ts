@@ -66,10 +66,13 @@ export const isThereError = <
 >(
   response: T
 ) => {
+  console.log(response);
   if (response[1] === null) {
+    console.log("true");
     return true;
   } else {
-    return;
+    console.log("false");
+    return false;
   }
 };
 
@@ -87,6 +90,8 @@ export const notePostHandler = async (
   processedNote.note = noteValue;
   processedNote.id = crypto.randomUUID();
   const response = await addNoteHttp(processedNote);
+  console.log(processedNote);
+  console.log(response);
   const boolean = isThereError(response);
 
   return { processedNote, boolean };

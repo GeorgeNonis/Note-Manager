@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../../api/api";
 import { setColor } from "../../../store/notesSlice";
 import styles from "../../../styles/colorPalette.module.scss";
+import { isThereError } from "../../../utils/utils";
 
 interface Props {
   closePalette: (value: boolean) => void;
@@ -25,8 +26,13 @@ const ColorPallete = ({ closePalette, id, pinned }: Props) => {
 
   const displayHandler = async (value: string) => {
     closePalette(false);
-    dispatch(setColor({ value, id, pinned }));
-    await updateNoteColorHttp(value, id, pinned);
+
+    const response = await updateNoteColorHttp(value, id, pinned);
+
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(setColor({ value, id, pinned }))
+      : console.log(response[1]?.message);
   };
 
   const colors = [

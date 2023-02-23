@@ -14,6 +14,7 @@ import {
   NoteWrapper,
 } from "../index";
 import styles from "../../styles/note.module.scss";
+import { isThereError } from "../../utils/utils";
 
 const Note = ({
   note,
@@ -38,14 +39,32 @@ const Note = ({
     const titleValue = title.current?.innerText;
     const noteValue = noteDetails.current?.innerText;
     if (note.note === noteValue && note.title === titleValue) return;
-    dispatch(editNote({ pinned, noteId, titleValue, noteValue }));
-    editNoteHttp({ noteId, pinned, noteValue, titleValue });
+
+    const editNoteHandler = async () => {
+      const response = await editNoteHttp({
+        noteId,
+        pinned,
+        noteValue,
+        titleValue,
+      });
+
+      const sucessfullRequest = isThereError(response);
+      sucessfullRequest
+        ? dispatch(editNote({ pinned, noteId, titleValue, noteValue }))
+        : console.log(response[1]?.message);
+    };
+    editNoteHandler();
   }, [review]);
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    dispatch(pinHandler(note.id));
-    await pinNoteHandlerHttp(note.id);
+
+    const response = await pinNoteHandlerHttp(note.id);
+
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(pinHandler(note.id))
+      : console.log(response[1]?.message);
   };
 
   const zIndex = !review ? zindex : 10000;

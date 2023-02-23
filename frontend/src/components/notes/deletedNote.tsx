@@ -7,6 +7,7 @@ import { useOutsideClick } from "../../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../../store/notesSlice";
 import { ReviewModal, Title, NoteDetails, DeletedNoteWrapper } from "../index";
 import styles from "../../styles/note.module.scss";
+import { isThereError } from "../../utils/utils";
 
 interface Props {
   note: NoteObj;
@@ -22,14 +23,23 @@ const DeletedNote = ({ note, zindex }: Props) => {
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    dispatch(restoreNote(note.id));
-    await restoreNoteHttp(note.id);
+    const response = await restoreNoteHttp(note.id);
+
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(restoreNote(note.id))
+      : console.log(response[1]?.message);
   };
 
   const removeProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(removeNote(note.id));
-    await removeNoteHttp(note.id);
+    const response = await removeNoteHttp(note.id);
+
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(removeNote(note.id))
+      : console.log(response[1]?.message);
+
     setReview(false);
   };
 
