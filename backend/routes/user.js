@@ -45,13 +45,13 @@ router.get("/v1/trashbin", async (req, res, next) => {
 router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
-  await writeData([...prevState, { ...data }])
-    .then((response) => {
-      res.status(201).json({ message: "Succssfully added your Note" });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: "Failed to register your note", error });
-    });
+  try {
+    const response = await writeData([...prevState, { ...data }]);
+
+    return [response, null];
+  } catch (error) {
+    return [null, error];
+  }
 });
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
@@ -92,21 +92,19 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
   const isItPinned = req.query.isnotepined;
-  console.log(typeof isItPinned);
   if (isItPinned === "true") {
-    await writePinned(data)
-      .then(() => {
-        res.status(200).json({ message: "Sorted your items Successfully" });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json({ message: "Internal error", error });
+    const response = await writePinned(data);
+    const [, error] = response;
+    if (error) {
+      res.status(500).json({ message: "Internal error", error });
+    } else {
+      res.status(200).json({
+        message: "Sorted your items Successfully",
       });
+    }
   } else {
     const response = await writeData(data);
-    const [uffu, error] = response;
-    console.log("error");
-    console.log(error);
+    const [, error] = response;
     if (error) {
       res.status(500).json({ message: "Internal error", error });
     } else {

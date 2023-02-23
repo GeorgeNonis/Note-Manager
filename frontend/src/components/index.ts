@@ -14,3 +14,5 @@ export { default as OthersTitle } from "./sections/ui/othersTitle";
 export { default as EmptyTrash } from "./ui/emptyTrash";
 export { default as DeletedNote } from "./notes/deletedNote";
 export { default as DeletedNoteWrapper } from "./notesComponents/wrappers/deletedNoteWrapper";
+export { default as NotesSecion } from "../components/sections/notesSection";
+export { default as Deleted } from "../components/sections/deletedNotesSection";

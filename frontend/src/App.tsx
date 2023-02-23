@@ -3,8 +3,7 @@ import { useOutsideHover } from "./hooks/useOutsideHover";
 import { useDispatch } from "react-redux";
 import { deleteNote } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
-import NotesSecion from "./components/sections/notesSection";
-import Deleted from "./components/sections/deletedNotesSection";
+import { Deleted, NotesSecion } from "./components";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
 import { FaRegLightbulb } from "react-icons/fa";
@@ -55,7 +54,6 @@ const App = () => {
             <h3>Trash</h3>
           </div>
         </div>
-        {/* <Test /> */}
         {display && <NotesSecion />}
         {!display && <Deleted />}
       </main>

@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../hooks";
-import { addNoteHttp, getNotesHttp } from "../../api/api";
+import { getNotesHttp } from "../../api/api";
 import { IRootState } from "../../store/store";
-import { addNote, initial, errorState } from "../../store/notesSlice";
+import {
+  addNote,
+  initial,
+  errorState,
+  sortNotes,
+} from "../../store/notesSlice";
 import { formBorders, DragEndUtil } from "../../utils";
 import { NoteObj } from "../../interfaces/interfaces";
 import {
@@ -16,14 +21,15 @@ import {
   OthersTitle,
 } from "../index";
 import styles from "../../styles/App.module.scss";
+import { isThereError, notePostHandler } from "../../utils/utils";
 
 const NotesSecion = () => {
   const [loading, setLoading] = useState(true);
-  const state = useSelector((state: IRootState) => state.notes);
-  const dispatch = useDispatch();
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const state = useSelector((state: IRootState) => state.notes);
+  const dispatch = useDispatch();
 
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
 
@@ -33,8 +39,8 @@ const NotesSecion = () => {
 
   const onDragEnd = async () => {
     const cb = (arr: Iterable<NoteObj>[]) => {
-      console.log("message" in arr);
-      // dispatch(sortNotes({ arr, pinned: false }));
+      console.log(arr);
+      dispatch(sortNotes({ arr, pinned: false }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };
@@ -52,35 +58,29 @@ const NotesSecion = () => {
   useEffect(() => {
     const fetch = async () => {
       dispatch(errorState(""));
-      await getNotesHttp()
-        .then((data) => {
-          setLoading(false);
-          dispatch(initial(data));
-        })
-        .catch((error) => {
-          setLoading(false);
-          dispatch(errorState(error.message));
-        });
+      const response = await getNotesHttp();
+
+      const sucessfullRequest = isThereError(response);
+      sucessfullRequest
+        ? dispatch(initial(response[0]))
+        : dispatch(errorState(response[1]?.message));
+
+      setLoading(false);
     };
     fetch();
   }, []);
 
   useEffect(() => {
     if (note.length === 0 && title.length === 0) return;
-    const tempNote = {
-      title: "",
-      note: "",
-      id: "0",
-      color: "transparent",
-    };
-    tempNote.title = title;
-    tempNote.note = note;
-    tempNote.id = crypto.randomUUID();
+    const postNote = async () => {
+      const { processedNote, boolean } = await notePostHandler(title, note);
 
-    addNoteHttp(tempNote);
-    dispatch(addNote(tempNote));
-    setTitle("");
-    setNote("");
+      boolean ? dispatch(addNote(processedNote)) : console.log("error");
+
+      setTitle("");
+      setNote("");
+    };
+    postNote();
   }, [display]);
 
   let zIndex = 10000;

@@ -1,5 +1,6 @@
+import { AxiosError } from "axios";
 import { useEffect, RefObject, MutableRefObject, useRef } from "react";
-import { deleteNoteHttp, sortNotesHttp } from "../api/api";
+import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../api/api";
 import { InitialState } from "../store/notesSlice";
 
 export const onDropBin = async (
@@ -52,10 +53,53 @@ export const DragEndUtil = async ({
 
   indexOf !== 0 ? rest.unshift(note!) : rest.splice(0, 0, note!);
   const response = await sortNotesHttp([...notesPrevState, ...rest], pinned);
-  const [res, error] = response;
-  if (error) {
+  const [, error] = response;
+  if (!error === undefined) {
     cb(error);
   } else {
     cb([...notesPrevState, ...rest]);
   }
 };
+
+export const isThereError = <
+  T extends unknown[] | [unknown[], AxiosError<unknown, any>]
+>(
+  response: T
+) => {
+  if (response[1] === null) {
+    return true;
+  } else {
+    return;
+  }
+};
+
+export const notePostHandler = async (
+  titleValue: string,
+  noteValue: string
+) => {
+  const processedNote = {
+    title: "",
+    note: "",
+    id: "0",
+    color: "transparent",
+  };
+  processedNote.title = titleValue;
+  processedNote.note = noteValue;
+  processedNote.id = crypto.randomUUID();
+  const response = await addNoteHttp(processedNote);
+  const boolean = isThereError(response);
+
+  return { processedNote, boolean };
+};
+
+// interface FetchHandlerProps {
+//   response: [unknown[] | unknown, AxiosError<unknown, any> | null];
+// }
+
+// export const isThereError = ({ response }: FetchHandlerProps) => {
+//   if (response[1] === null) {
+//     return true;
+//   } else {
+//     return;
+//   }
+// };

@@ -1,61 +1,45 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { EditNoteArgs, NoteObj } from "../interfaces/interfaces";
 
 const API_VERSION = `v1/`;
 const BASE_URL = `http://localhost:8080/${API_VERSION}`;
 
-// export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
-//   await axios
-//     .post(`${BASE_URL}notes/sortnotes?isnotepined=${pinned}`, data)
-//     .then((res) => {
-//       console.log(res);
-//       return res;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       return err;
-//     });
-// };
-
+/** Reworked the error hanlding  - DONE*/
 export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
-  console.log("before posting");
   try {
     const response = await axios.post(
       `${BASE_URL}notes/sortnotes?isnotepined=${pinned}`,
       data
     );
-
     return [response, null];
   } catch (error) {
-    console.log(error);
     return [null, error];
   }
 };
 
-export const getNotesHttp = async (): Promise<NoteObj[]> => {
-  return axios
-    .get<NoteObj[]>(`${BASE_URL}notes`)
-    .then((res) => {
-      console.log(res);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-      throw new Error(err.response.data.message);
-    });
+/** Reworked the error hanlding  - DONE*/
+export const getNotesHttp = async <T>(): Promise<
+  [T | null, AxiosError | null]
+> => {
+  try {
+    const response = await axios.get<T>(`${BASE_URL}notes`);
+    return [response.data, null];
+  } catch (error) {
+    const err = error as AxiosError;
+    return [null, err];
+  }
 };
 
+/** Reworked the error hanlding  - DONE*/
 export const addNoteHttp = async (data: NoteObj) => {
-  await axios
-    .post(`${BASE_URL}notes`, { ...data })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
+  try {
+    const response = await axios.post(`${BASE_URL}notes`, { ...data });
+    return [response, null];
+  } catch (error) {
+    return [null, error];
+  }
 };
+
 export const deleteNoteHttp = async (
   id: string,
   pinned: boolean
