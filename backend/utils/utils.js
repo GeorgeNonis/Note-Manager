@@ -46,9 +46,16 @@ export const readDataPinned = async () => {
 };
 
 export const writeData = async (data) => {
-  return await fs.writeFile(database, JSON.stringify(data), (err) => {
-    if (err) return err;
-  });
+  try {
+    const response = await fs.writeFile("", JSON.stringify(data), (err) => {
+      if (err) return err;
+    });
+    console.log(`Write data ${response}`);
+    return [response, null];
+  } catch (error) {
+    console.log("below");
+    return [null, error];
+  }
 };
 
 export const writeDeleted = async (data) => {

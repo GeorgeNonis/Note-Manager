@@ -18,11 +18,18 @@ const BASE_URL = `http://localhost:8080/${API_VERSION}`;
 // };
 
 export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
-  const response = await axios.post(
-    `${BASE_URL}notes/sortnotes?isnotepined=${pinned}`,
-    data
-  );
-  console.log(response);
+  console.log("before posting");
+  try {
+    const response = await axios.post(
+      `${BASE_URL}notes/sortnotes?isnotepined=${pinned}`,
+      data
+    );
+
+    return [response, null];
+  } catch (error) {
+    console.log(error);
+    return [null, error];
+  }
 };
 
 export const getNotesHttp = async (): Promise<NoteObj[]> => {

@@ -38,7 +38,8 @@ const NotesSecion = () => {
 
   const onDragEnd = async () => {
     const cb = (arr: Iterable<NoteObj>[]) => {
-      dispatch(sortNotes({ arr, pinned: false }));
+      console.log("message" in arr);
+      // dispatch(sortNotes({ arr, pinned: false }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };
