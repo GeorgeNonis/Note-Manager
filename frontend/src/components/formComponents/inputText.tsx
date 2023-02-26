@@ -1,14 +1,6 @@
-import React from "react";
+import { InputTextProps } from "./interface";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  placeholder: string;
-  onClick?: () => void;
-  className: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-}
-
-const Input = (props: Props) => {
+const Input = (props: InputTextProps) => {
   return (
     <input
       {...props}

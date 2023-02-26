@@ -1,15 +1,6 @@
 import Input from "./inputText";
-import styles from "../../styles/App.module.scss";
-
-interface Props {
-  display: boolean;
-  noteStlye: string;
-  onChangeNote: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  note: string;
-  setDisplay: (arg: boolean) => void;
-  title: string;
-}
+import styles from "./styles.module.scss";
+import { FormProps } from "./interface";
 
 const Form = ({
   display,
@@ -19,7 +10,7 @@ const Form = ({
   note,
   setDisplay,
   title,
-}: Props) => {
+}: FormProps) => {
   return (
     <>
       {display && (
