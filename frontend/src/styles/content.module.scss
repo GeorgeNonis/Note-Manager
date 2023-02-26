@@ -37,8 +37,7 @@
 
 .BiTrash {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  inset: 1rem 1rem auto auto;
 
   svg {
     width: 3rem;

@@ -2,8 +2,7 @@
 
 .warning {
   position: absolute;
-  top: 4rem;
-  left: 50%;
+  inset: 4rem auto auto 50%;
   transform: translateX(-49%);
   font-style: italic;
   font-size: 1rem;

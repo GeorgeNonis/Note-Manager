@@ -1,7 +1,6 @@
 @mixin errorStyle {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -30,8 +29,7 @@
 
   .pin {
     position: absolute;
-    top: 5px;
-    right: -30px;
+    inset: 5px -30px auto auto;
 
     &:hover {
       .icon {
@@ -46,8 +44,7 @@
 
   .span {
     position: absolute;
-    right: 0rem;
-    top: 2rem;
+    inset: 2rem 0rem auto auto;
     width: 4rem;
     text-align: center;
     display: none;

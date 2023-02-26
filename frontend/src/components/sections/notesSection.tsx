@@ -21,7 +21,12 @@ import {
   OthersTitle,
 } from "../index";
 import styles from "../../styles/App.module.scss";
-import { isThereError, notePostHandler } from "../../utils/utils";
+import {
+  IfNetworkDown,
+  isThereError,
+  notePostHandler,
+} from "../../utils/utils";
+import { ErrorMessages } from "../../ErrorMessages/ErrorMessags";
 
 const NotesSecion = () => {
   const [loading, setLoading] = useState(true);
@@ -59,11 +64,15 @@ const NotesSecion = () => {
     const fetch = async () => {
       dispatch(errorState(""));
       const response = await getNotesHttp();
+      console.log(response);
 
       const sucessfullRequest = isThereError(response);
-      sucessfullRequest
-        ? dispatch(initial(response[0]))
-        : dispatch(errorState(response[1]?.message));
+      if (sucessfullRequest) {
+        dispatch(initial(response[0]));
+      } else {
+        const msg = response[1]?.message!;
+        dispatch(errorState(IfNetworkDown(msg)));
+      }
 
       setLoading(false);
     };

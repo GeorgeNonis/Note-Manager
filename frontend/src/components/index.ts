@@ -1,6 +1,6 @@
 export { default as Note } from "./notes/note";
 export { default as Options } from "./notesComponents/actions/options";
-export { default as ReviewModal } from "./modal/reviewModal";
+export { default as ReviewModal } from "./modal";
 export { default as Title } from "./notesComponents/title";
 export { default as NoteDetails } from "./notesComponents/noteDetails";
 export { default as Pin } from "./notesComponents/pin";

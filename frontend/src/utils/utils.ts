@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect, RefObject, MutableRefObject, useRef } from "react";
 import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../api/api";
+import { ErrorMessages } from "../ErrorMessages/ErrorMessags";
 import { InitialState } from "../store/notesSlice";
 
 export const onDropBin = async (
@@ -97,14 +98,14 @@ export const notePostHandler = async (
   return { processedNote, boolean };
 };
 
-// interface FetchHandlerProps {
-//   response: [unknown[] | unknown, AxiosError<unknown, any> | null];
-// }
+/**
+ * Testing vs code extension for Github collab
+ */
 
-// export const isThereError = ({ response }: FetchHandlerProps) => {
-//   if (response[1] === null) {
-//     return true;
-//   } else {
-//     return;
-//   }
-// };
+export const IfNetworkDown = (msg: string): string => {
+  if (msg === "Network down") {
+    return ErrorMessages.networkdown;
+  } else {
+    return msg;
+  }
+};
