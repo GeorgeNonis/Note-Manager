@@ -1,8 +1,8 @@
 import { AxiosError } from "axios";
 import { useEffect, RefObject, MutableRefObject, useRef } from "react";
-import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../api/api";
+import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../services";
 import { ErrorMessages } from "../errors/ErrorMessags";
-import { InitialState } from "../store/notesSlice";
+import { DragEndProps } from "./interfaces";
 
 export const onDropBin = async (
   e: React.DragEvent,
@@ -10,6 +10,8 @@ export const onDropBin = async (
 ) => {
   const id = e.dataTransfer.getData("id");
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
+  console.log(id);
+  console.log(pinned);
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
     await deleteNoteHttp(id, pinned);
@@ -27,18 +29,6 @@ export function useStateRef<T>(value: T): RefObject<T> {
   return ref;
 }
 
-interface DragEndProps {
-  indexOf: number;
-  index: number;
-  state: InitialState;
-  cb: ([]: any) => void;
-  pinned: boolean;
-  /**
-   * Doesnt work idk
-   */
-  // cb: ([]: Iterable<NoteObj>[]) => void;
-}
-
 export const DragEndUtil = async ({
   indexOf,
   index,
@@ -54,6 +44,7 @@ export const DragEndUtil = async ({
 
   indexOf !== 0 ? rest.unshift(note!) : rest.splice(0, 0, note!);
   const response = await sortNotesHttp([...notesPrevState, ...rest], pinned);
+  console.log(response);
   const [, error] = response;
   if (!error === undefined) {
     cb(error);

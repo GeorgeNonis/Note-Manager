@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateNoteColorHttp } from "../../../../../api/api";
+import { updateNoteColorHttp } from "../../../../../services/";
 import { setColor } from "../../../../../store/notesSlice";
 import { isThereError } from "../../../../../utils/utils";
 import { ColorPalleteProps } from "./interfaces";

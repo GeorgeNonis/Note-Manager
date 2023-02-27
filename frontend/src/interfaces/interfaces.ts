@@ -4,3 +4,10 @@ export interface NoteObj {
   id: string;
   color: string;
 }
+
+export interface EditNoteArgs {
+  noteId: string;
+  pinned: boolean;
+  noteValue?: string;
+  titleValue?: string;
+}

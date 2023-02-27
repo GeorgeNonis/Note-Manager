@@ -4,9 +4,8 @@ import { useDispatch } from "react-redux";
 import { deleteNote } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
 import { DeletedNotesSection, ExistinNotesSection } from "./components";
-import { FaTrash, FaTrashRestore } from "react-icons/fa";
+import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
-import { FaRegLightbulb } from "react-icons/fa";
 import styles from "./styles/App.module.scss";
 
 const App = () => {

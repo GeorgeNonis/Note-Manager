@@ -96,25 +96,24 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
   const isItPinned = req.query.isnotepined;
+  console.log(isItPinned);
   if (isItPinned === "true") {
-    const response = await writePinned(data);
-    const [, error] = response;
-    if (error) {
-      res.status(500).json({ message: "Internal error", error });
-    } else {
-      res.status(200).json({
+    try {
+      await writePinned(data);
+      return res.status(200).json({
         message: "Sorted your items Successfully",
       });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal error", error });
     }
   } else {
-    const response = await writeData(data);
-    const [, error] = response;
-    if (error) {
-      res.status(500).json({ message: "Internal error", error });
-    } else {
+    try {
+      await writeData(data);
       res.status(200).json({
         message: "Sorted your items Successfully",
       });
+    } catch (error) {
+      res.status(500).json({ message: "Internal error", error });
     }
   }
 });

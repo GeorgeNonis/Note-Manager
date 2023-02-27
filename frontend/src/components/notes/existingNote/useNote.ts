@@ -1,7 +1,7 @@
 import React, { useState, useRef, MutableRefObject, useEffect } from "react";
 
 import { useDispatch } from "react-redux";
-import { editNoteHttp, pinNoteHandlerHttp } from "../../../api/api";
+import { editNoteHttp, pinNoteHandlerHttp } from "../../../services";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { editNote, pinHandler } from "../../../store/notesSlice";
 import { isThereError } from "../../../utils/utils";
@@ -26,8 +26,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       const response = await editNoteHttp({
         noteId,
         pinned,
-        noteValue,
         titleValue,
+        noteValue,
       });
 
       const sucessfullRequest = isThereError(response);

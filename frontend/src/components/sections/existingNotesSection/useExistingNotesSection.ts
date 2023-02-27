@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
-import { getNotesHttp } from "../../../api/api";
+import { getNotesHttp } from "../../../services";
 import { IRootState } from "../../../store/store";
 import {
   addNote,

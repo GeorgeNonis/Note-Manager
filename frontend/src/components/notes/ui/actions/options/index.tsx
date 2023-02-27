@@ -15,13 +15,16 @@ const Options = ({ id, pinned }: OptionsProps) => {
     outsidePalette,
     setDisplay,
     setDisplayPalette,
-  } = useOptions({ id, pinned });
+    contentStyle,
+    optionsStyle,
+  } = useOptions({ id, pinned, styles });
+
   return (
-    <div className={styles.optionsContent} onClick={(e) => e.stopPropagation()}>
-      <div className={styles.style}>
+    <div className={contentStyle} onClick={(e) => e.stopPropagation()}>
+      <div className={optionsStyle}>
         <div
           role={"button"}
-          onClick={() => setDisplayPalette(!displayPalette)}
+          onClick={() => setDisplayPalette(true)}
           className={styles.option}
         >
           <IoMdColorPalette />
