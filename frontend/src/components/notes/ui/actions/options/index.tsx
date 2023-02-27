@@ -4,6 +4,7 @@ import { AiOutlineBell } from "react-icons/ai";
 import ColorPallete from "../colorPallete";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
+import Option from "./option";
 import styles from "../../../note.module.scss";
 
 const Options = ({ id, pinned }: OptionsProps) => {
@@ -12,7 +13,7 @@ const Options = ({ id, pinned }: OptionsProps) => {
     displayPalette,
     deleteHandler,
     outsideOptions,
-    outsidePalette,
+    // outsidePalette,
     setDisplay,
     setDisplayPalette,
     contentStyle,
@@ -20,49 +21,46 @@ const Options = ({ id, pinned }: OptionsProps) => {
   } = useOptions({ id, pinned, styles });
 
   return (
-    <div className={contentStyle} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={contentStyle}
+      onClick={(e) => e.stopPropagation()}
+      ref={outsideOptions}
+    >
       <div className={optionsStyle}>
-        <div
-          role={"button"}
-          onClick={() => setDisplayPalette(true)}
-          className={styles.option}
+        <Option
+          text="Background Options"
+          onClick={() => setDisplayPalette(!displayPalette)}
         >
           <IoMdColorPalette />
-          <h3>Background Options</h3>
-        </div>
-
-        <div className={styles.option} role={"button"}>
+        </Option>
+        <Option text="Upload Image">
           <BsImage />
-          <h3>Upload Image</h3>
-        </div>
-
-        <div className={styles.option} role={"button"}>
+        </Option>
+        <Option text="Remind me">
           <AiOutlineBell />
-          <h3>Remind me</h3>
-        </div>
-        <div
-          role={"button"}
-          className={styles.option}
+        </Option>
+        <Option
+          text="More Tools"
           onClick={(e) => {
             e.stopPropagation();
             setDisplay(!display);
           }}
+          textStyle={display ? styles.hide : undefined}
         >
           ...
-          <h3 className={display ? styles.hide : undefined}>More Tools</h3>
-        </div>
+        </Option>
       </div>
       {displayPalette && (
-        <div ref={outsidePalette}>
+        <div>
           <ColorPallete
-            closePalette={setDisplayPalette}
+            setDisplayPalette={setDisplayPalette}
             id={id}
             pinned={pinned}
           />
         </div>
       )}
       {display && (
-        <div className={styles.options} ref={outsideOptions}>
+        <div className={styles.options}>
           <h3 onClick={deleteHandler} role={"button"}>
             Delete
           </h3>

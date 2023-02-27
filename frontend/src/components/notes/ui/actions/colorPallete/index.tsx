@@ -3,9 +3,9 @@ import { ColorPalleteProps } from "./interfaces";
 import { useColorPallete } from "./useColorPallete";
 import styles from "./styles.module.scss";
 
-const ColorPallete = ({ closePalette, id, pinned }: ColorPalleteProps) => {
+const ColorPallete = ({ setDisplayPalette, id, pinned }: ColorPalleteProps) => {
   const { displayHandler, colors } = useColorPallete({
-    closePalette,
+    setDisplayPalette,
     id,
     pinned,
   });

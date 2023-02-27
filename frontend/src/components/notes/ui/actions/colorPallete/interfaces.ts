@@ -1,5 +1,5 @@
 export interface ColorPalleteProps {
-  closePalette: (value: boolean) => void;
+  setDisplayPalette: (value: boolean) => void;
   id: string;
   pinned: boolean;
 }

@@ -10,14 +10,11 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
   const dispatch = useDispatch();
   const [display, setDisplay] = useState<boolean>(false);
   const [displayPalette, setDisplayPalette] = useState<boolean>(false);
-  const outsideOptions = useOutsideClick(() => setDisplay(false));
-  const testing = (bl: boolean) => {
-    if (displayPalette) {
-      setDisplayPalette(!displayPalette);
-    }
-  };
+  const outsideOptions = useOutsideClick(() => {
+    setDisplay(false);
+    setDisplayPalette(false);
+  });
   // const outsidePalette = useOutsideClick(() => setDisplayPalette(false));
-  const outsidePalette = useOutsideClick(() => testing(displayPalette));
 
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
@@ -47,7 +44,7 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
     setDisplayPalette,
     setDisplay,
     outsideOptions,
-    outsidePalette,
+    // outsidePalette,
     deleteHandler,
     contentStyle,
     optionsStyle,
