@@ -20,6 +20,7 @@ export const editNoteHttp = async <T, E>({
   noteValue,
   titleValue,
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
+  console.log(pinned);
   try {
     const response = await axios.post<T, E>(
       `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`,

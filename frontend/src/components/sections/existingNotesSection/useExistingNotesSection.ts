@@ -71,6 +71,7 @@ export const useExistingNotesSection = () => {
   useEffect(() => {
     if (note.length === 0 && title.length === 0) return;
     const postNote = async () => {
+      console.log("IM POSTING A NOTE");
       const { processedNote, boolean } = await notePostHandler(title, note);
       console.log(boolean);
       boolean ? dispatch(addNote(processedNote)) : console.log("error");

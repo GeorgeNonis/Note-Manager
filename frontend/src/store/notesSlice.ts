@@ -32,8 +32,8 @@ const notes = createSlice({
       state.error = error;
     },
     editNote(state, { payload }) {
-      const pinned = payload.pinned;
-      const id = payload.noteId;
+      const { id, pinned } = payload;
+
       let noteIndex;
       if (pinned) {
         noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
@@ -46,8 +46,8 @@ const notes = createSlice({
       }
     },
     deleteNote(state, { payload }) {
-      const id = payload.id;
-      const pinned = payload.pinned;
+      const { id, pinned } = payload;
+
       let note;
       if (!pinned) {
         console.log(state.notes);
@@ -68,8 +68,7 @@ const notes = createSlice({
         state.notes = [...payload.arr];
       }
     },
-    restoreNote(state, { payload }) {
-      const id = payload;
+    restoreNote(state, { payload: id }) {
       const note = state.deletedNotes.find((n) => n.id === id);
       state.deletedNotes = [...state.deletedNotes.filter((n) => n.id !== id)];
       state.notes = [...state.notes, { ...note! }];
@@ -93,8 +92,7 @@ const notes = createSlice({
     },
     setColor(state, { payload }) {
       const color = payload.value;
-      const id = payload.id;
-      const pinned = payload.pinned;
+      const { id, pinned } = payload;
 
       let noteIndex;
       if (pinned) {
@@ -104,6 +102,15 @@ const notes = createSlice({
         noteIndex = state.notes.findIndex((n) => n.id === id);
         state.notes[noteIndex].color = color;
       }
+    },
+    copyNote(state, { payload }) {
+      const { id, sharedId, pinned: isItPinned } = payload;
+
+      const note = !isItPinned
+        ? state.notes.find((n) => n.id === id)!
+        : state.pinnedNotes.find((n) => n.id === id)!;
+      console.log(note);
+      state.notes = [...state.notes, { ...note, id: sharedId }];
     },
   },
 });
@@ -119,6 +126,7 @@ export const {
   removeNote,
   pinHandler,
   setColor,
+  copyNote,
 } = notes.actions;
 
 export default notes.reducer;

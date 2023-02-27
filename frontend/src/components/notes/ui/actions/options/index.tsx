@@ -13,11 +13,11 @@ const Options = ({ id, pinned }: OptionsProps) => {
     displayPalette,
     deleteHandler,
     outsideOptions,
-    // outsidePalette,
     setDisplay,
     setDisplayPalette,
     contentStyle,
     optionsStyle,
+    copyNoteHandler,
   } = useOptions({ id, pinned, styles });
 
   return (
@@ -65,7 +65,7 @@ const Options = ({ id, pinned }: OptionsProps) => {
             Delete
           </h3>
           <h3>Add Label</h3>
-          <h3>Make Copy</h3>
+          <h3 onClick={() => copyNoteHandler(id, pinned)}>Make Copy</h3>
           <h3>Show Checkboxes</h3>
         </div>
       )}

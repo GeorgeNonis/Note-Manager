@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useOutsideClick } from "../../../../../hooks/useOutsideClick";
 import { deleteNoteHttp } from "../../../../../services";
-import { deleteNote } from "../../../../../store/notesSlice";
+import { copyNote, deleteNote } from "../../../../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils/utils";
 import { OptionsProps } from "./interfaces";
+import { copyNoteHttp } from "../../../../../services/postNote";
 
 export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
   const dispatch = useDispatch();
@@ -14,7 +15,19 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
     setDisplay(false);
     setDisplayPalette(false);
   });
-  // const outsidePalette = useOutsideClick(() => setDisplayPalette(false));
+
+  const copyNoteHandler = async (id: string, pinned: boolean) => {
+    const sharedId = crypto.randomUUID();
+    const response = await copyNoteHttp({ noteId: id, pinned, sharedId });
+
+    const sucessfullRequest = isThereError(response);
+    console.log(sucessfullRequest);
+    sucessfullRequest
+      ? dispatch(copyNote({ id, pinned, sharedId }))
+      : console.log(response[1]?.message);
+
+    setDisplay(false);
+  };
 
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
@@ -44,9 +57,9 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
     setDisplayPalette,
     setDisplay,
     outsideOptions,
-    // outsidePalette,
     deleteHandler,
     contentStyle,
     optionsStyle,
+    copyNoteHandler,
   };
 };

@@ -52,7 +52,7 @@ const Note = ({
         <Pin pinned={pinned} pinNoteHandler={pinNoteHandler} styles={styles} />
         <Title title={note.title} titleRef={title} editable={true} />
         <NoteDetails note={note.note} noteRef={noteDetails} editable={true} />
-        <Options id={note.id} pinned={pinned} />
+        <Options id={note.id} pinned={pinned} styles={styles} />
       </NoteWrapper>
     </>
   );

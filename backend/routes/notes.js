@@ -46,6 +46,7 @@ router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;
   const prevState = await readData();
   console.log(data);
+  console.log("Posting note");
   try {
     const response = await writeData([...prevState, { ...data }]);
     console.log("theres NOT error");
@@ -61,35 +62,35 @@ router.post("/v1/notes", async (req, res, next) => {
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const { noteValue, titleValue } = req.body;
-  const isNotePined = req.params.isnotepined;
-
+  const isItPinned = req.query.isnotepined;
+  console.log({ isItPinned });
   const pinnedNotes = await readDataPinned();
   const unPinnedNotes = await readData();
   let noteIndex;
 
-  if (isNotePined === "true") {
+  if (isItPinned === "true") {
     noteIndex = pinnedNotes.findIndex((n) => n.id === id);
     pinnedNotes[noteIndex].title = titleValue;
     pinnedNotes[noteIndex].note = noteValue;
 
     await writePinned([...pinnedNotes])
       .then((response) => {
-        res.status(200).json({ message: "Sucessfully edited note" });
+        return res.status(200).json({ message: "Sucessfully edited note" });
       })
       .catch((error) => {
-        res.status(500).json({ message: "Internal error", error });
+        return res.status(500).json({ message: "Internal error", error });
       });
   } else {
     noteIndex = unPinnedNotes.findIndex((n) => n.id === id);
+    console.log(unPinnedNotes[noteIndex]);
     unPinnedNotes[noteIndex].title = titleValue;
     unPinnedNotes[noteIndex].note = noteValue;
-    await writeData([...unPinnedNotes])
-      .then((response) => {
-        res.status(200).json({ message: "Sucessfully edited note" });
-      })
-      .catch((error) => {
-        res.status(500).json({ message: "Internal error", error });
-      });
+    try {
+      await writeData([...unPinnedNotes]);
+      return res.status(200).json({ message: "Sucessfully edited note" });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal error", error });
+    }
   }
 });
 
@@ -217,6 +218,30 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
       .catch((error) => {
         res.status(500).json({ message: "Internal error", error });
       });
+  }
+});
+
+router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
+  const id = req.params.id.split(":")[1];
+  const isItPinned = req.query.isnotepined;
+  console.log(id);
+  console.log(isItPinned);
+  let note;
+
+  const pinnedNotes = await readDataPinned();
+  const unPinnedNotes = await readData();
+
+  if (isItPinned === "true") {
+    note = pinnedNotes.find((n) => n.id === id);
+  } else {
+    note = unPinnedNotes.find((n) => n.id === id);
+  }
+
+  try {
+    await writeData([...unPinnedNotes, { ...note, id: crypto.randomUUID() }]);
+    return res.status(200).json({ message: "Sucessfully copied note" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
   }
 });
 

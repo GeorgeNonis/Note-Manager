@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { NoteObj } from "../interfaces/interfaces";
 import { BASE_URL } from "../config";
+import { CopyNoteProps } from "./interfaces";
 
 export const addNoteHttp = async (data: NoteObj) => {
   try {
@@ -43,6 +44,24 @@ export const restoreNoteHttp = async <T, E>(
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(`${BASE_URL}trashbin/:${id}`);
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+
+export const copyNoteHttp = async <T, E>({
+  noteId,
+  sharedId,
+  pinned,
+}: CopyNoteProps): Promise<[T | E | null, AxiosError | null]> => {
+  console.log(noteId);
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}`
+    );
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
