@@ -3,11 +3,11 @@ import { useOutsideHover } from "./hooks/useOutsideHover";
 import { useDispatch } from "react-redux";
 import { deleteNote } from "./store/notesSlice";
 import { onDropBin } from "./utils/utils";
-import { Deleted, NotesSecion } from "./components";
+import { DeletedNotesSection, ExistinNotesSection } from "./components";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
 import { FaRegLightbulb } from "react-icons/fa";
-import styles from "./styles/content.module.scss";
+import styles from "./styles/App.module.scss";
 
 const App = () => {
   const [mouseOverTrash, setMouseOverTrash] = useState(false);
@@ -54,8 +54,8 @@ const App = () => {
             <h3>Trash</h3>
           </div>
         </div>
-        {display && <NotesSecion />}
-        {!display && <Deleted />}
+        {display && <ExistinNotesSection />}
+        {!display && <DeletedNotesSection />}
       </main>
     </>
   );

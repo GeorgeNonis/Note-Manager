@@ -1,39 +1,21 @@
-import { useState } from "react";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
-import { deleteNoteHttp } from "../../../api/api";
-import { deleteNote } from "../../../store/notesSlice";
-import { useDispatch } from "react-redux/es/exports";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
 import { AiOutlineBell } from "react-icons/ai";
-import ColorPallete from "./colorPallete";
-import styles from "../../../styles/note.module.scss";
-import { isThereError } from "../../../utils/utils";
+import ColorPallete from "../colorPallete";
+import { OptionsProps } from "./interfaces";
+import { useOptions } from "./useOptions";
+import styles from "../../../note.module.scss";
 
-type Id = {
-  id: string;
-  pinned: boolean;
-};
-
-const Options = ({ id, pinned }: Id) => {
-  const dispatch = useDispatch();
-  const [display, setDisplay] = useState<boolean>(false);
-  const [displayPalette, setDisplayPalette] = useState<boolean>(false);
-  const outsideOptions = useOutsideClick(() => setDisplay(false));
-  const outsidePalette = useOutsideClick(() => setDisplayPalette(false));
-
-  const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
-    e.stopPropagation();
-
-    const response = await deleteNoteHttp(id, pinned);
-    const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
-    sucessfullRequest
-      ? dispatch(deleteNote({ id, pinned }))
-      : console.log(response[1]?.message);
-
-    setDisplay(false);
-  };
+const Options = ({ id, pinned }: OptionsProps) => {
+  const {
+    display,
+    displayPalette,
+    deleteHandler,
+    outsideOptions,
+    outsidePalette,
+    setDisplay,
+    setDisplayPalette,
+  } = useOptions({ id, pinned });
   return (
     <div className={styles.optionsContent} onClick={(e) => e.stopPropagation()}>
       <div className={styles.style}>

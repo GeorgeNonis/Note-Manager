@@ -1,16 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import { NoteObj } from "../../../interfaces/interfaces";
-import { colorLogic, onReviewingNote } from "../../../utils/utilsStyling";
-import styles from "../../../styles/note.module.scss";
-
-interface Props {
-  children: React.ReactNode;
-  review: boolean;
-  note: NoteObj;
-  zIndex: number;
-  setReview: Dispatch<SetStateAction<boolean>>;
-  clickOutsideNote: React.MutableRefObject<any>;
-}
+import { colorLogic, onReviewingNote } from "../../../../utils/utilsStyling";
+import { DeletedNoteWrapperProps } from "./interfaces";
+import styles from "../../note.module.scss";
 
 const DeletedNoteWrapper = ({
   children,
@@ -19,7 +9,7 @@ const DeletedNoteWrapper = ({
   review,
   note,
   setReview,
-}: Props) => {
+}: DeletedNoteWrapperProps) => {
   return (
     <div
       ref={clickOutsideNote}

@@ -1,6 +1,6 @@
 import Input from "./inputText";
 import styles from "./styles.module.scss";
-import { FormProps } from "./interface";
+import { FormProps } from "./interfaces";
 
 const Form = ({
   display,

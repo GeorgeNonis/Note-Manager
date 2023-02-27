@@ -1,0 +1,71 @@
+@import "../../../styles/mixins.module.scss";
+
+.mainSection {
+  display: grid;
+  width: 50%;
+  margin-inline: auto;
+  position: relative;
+
+  .pin {
+    position: absolute;
+    inset: 5px -30px auto auto;
+
+    &:hover {
+      .icon {
+        color: gray;
+      }
+
+      .span {
+        display: block;
+      }
+    }
+  }
+
+  .span {
+    position: absolute;
+    inset: 2rem 0rem auto auto;
+    width: 4rem;
+    text-align: center;
+    display: none;
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    margin-inline: auto;
+    transform: rotate(315deg);
+    position: absolute;
+    right: 14px;
+  }
+}
+
+.notes {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  margin: 1rem;
+}
+
+.allNotes {
+  display: grid;
+  gap: 1rem;
+  p {
+    color: gray;
+  }
+}
+
+.title {
+  text-align: center;
+  font-family: monospace;
+}
+
+.noteInput {
+  @include baseStyle();
+}
+
+.noteBorders {
+  border-top: none;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+}

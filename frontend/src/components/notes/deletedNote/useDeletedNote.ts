@@ -4,7 +4,7 @@ import { removeNoteHttp, restoreNoteHttp } from "../../../api/api";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../../../store/notesSlice";
 import { isThereError } from "../../../utils/utils";
-import { Props } from "./interface";
+import { Props } from "./interfaces";
 
 export const useDeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);

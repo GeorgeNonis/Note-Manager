@@ -5,7 +5,7 @@ import { editNoteHttp, pinNoteHandlerHttp } from "../../../api/api";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { editNote, pinHandler } from "../../../store/notesSlice";
 import { isThereError } from "../../../utils/utils";
-import { CustomHook } from "./interface";
+import { CustomHook } from "./interfaces";
 
 export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const [review, setReview] = useState<boolean>(false);

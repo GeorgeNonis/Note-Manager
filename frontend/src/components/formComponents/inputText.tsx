@@ -1,4 +1,4 @@
-import { InputTextProps } from "./interface";
+import { InputTextProps } from "./interfaces";
 
 const Input = (props: InputTextProps) => {
   return (

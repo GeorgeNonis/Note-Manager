@@ -1,5 +1,5 @@
 import { BiTrash } from "react-icons/bi";
-import styles from "../../styles/emptytrash.module.scss";
+import styles from "./styles.module.scss";
 
 const EmptyTrash = () => {
   return (

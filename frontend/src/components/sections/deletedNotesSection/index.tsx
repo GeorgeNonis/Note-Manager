@@ -1,10 +1,9 @@
-import { IRootState } from "../../store/store";
-import { useSelector } from "react-redux";
-import { EmptyTrash, DeletedNote } from "../index";
-import styles from "../../styles/trashSection.module.scss";
+import { EmptyTrash, DeletedNote } from "../../index";
+import { useDeletedNotesSection } from "./useDeletedNotesSection";
+import styles from "./styles.module.scss";
 
-const Deleted = () => {
-  const state = useSelector((state: IRootState) => state.notes);
+const DeletedNotesSection = () => {
+  const { state } = useDeletedNotesSection();
 
   let zindex = 1000;
 
@@ -30,4 +29,4 @@ const Deleted = () => {
   );
 };
 
-export default Deleted;
+export default DeletedNotesSection;

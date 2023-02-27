@@ -6,7 +6,7 @@ import {
   DeletedNoteWrapper,
 } from "../../index";
 import styles from "./styles.module.scss";
-import { Props } from "./interface";
+import { Props } from "./interfaces";
 import { useDeletedNote } from "./useDeletedNote";
 
 const DeletedNote = ({ note, zindex }: Props) => {

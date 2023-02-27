@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { NoteProps } from "./interface";
+import { NoteProps } from "./interfaces";
 import {
   Options,
   ReviewModal,
@@ -8,7 +8,7 @@ import {
   Pin,
   NoteWrapper,
 } from "../../index";
-import styles from "../../../styles/note.module.scss";
+import styles from "../note.module.scss";
 import { useNote } from "./useNote";
 
 const Note = ({

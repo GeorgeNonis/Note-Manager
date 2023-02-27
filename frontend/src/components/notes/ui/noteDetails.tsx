@@ -1,12 +1,6 @@
-import { MutableRefObject } from "react";
+import { NoteDetailsProps } from "./interfaces";
 
-interface Props {
-  noteRef?: MutableRefObject<HTMLParagraphElement | null>;
-  note: string;
-  editable?: boolean;
-}
-
-const NoteDetails = ({ noteRef, note, editable }: Props) => {
+const NoteDetails = ({ noteRef, note, editable }: NoteDetailsProps) => {
   return (
     <p
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}

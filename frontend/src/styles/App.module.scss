@@ -1,100 +1,46 @@
-@mixin errorStyle {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-}
-
-@mixin baseStyle {
-  padding: 0.6rem 1rem;
-  border-radius: 5px;
-  width: 100%;
-  background-color: transparent;
-  color: gray;
-  border: 1px solid gray;
-  margin-inline: auto;
-  outline: none;
-  color: white;
-}
-
-.title {
-  text-align: center;
-  font-family: monospace;
-}
-
-.mainSection {
+.main {
   display: grid;
-  width: 50%;
-  margin-inline: auto;
-  position: relative;
+  grid-template-columns: 2fr 10fr;
 
-  .pin {
-    position: absolute;
-    inset: 5px -30px auto auto;
-
-    &:hover {
-      .icon {
-        color: gray;
+  .div {
+    div {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 2fr 6fr;
+      place-items: center;
+      border-radius: 0 10px 10px 0;
+      height: 4rem;
+      &:hover {
+        background-color: #28292c;
       }
-
-      .span {
-        display: block;
+      h3 {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+      }
+      svg {
+        height: 1.5rem;
+        width: 1.5rem;
       }
     }
   }
+}
 
-  .span {
-    position: absolute;
-    inset: 2rem 0rem auto auto;
-    width: 4rem;
-    text-align: center;
-    display: none;
+.active {
+  color: white;
+  background-color: #41331c;
+}
+
+.inactive {
+  color: gray;
+}
+
+.BiTrash {
+  position: absolute;
+  inset: 1rem 1rem auto auto;
+
+  svg {
+    width: 3rem;
+    height: 3rem;
   }
-
-  .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: block;
-    margin-inline: auto;
-    transform: rotate(315deg);
-    position: absolute;
-    right: 14px;
-  }
-}
-
-.noteTitle {
-  @include baseStyle();
-  border-bottom: none;
-  border-bottom-left-radius: 0%;
-  border-bottom-right-radius: 0%;
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.noteInput {
-  @include baseStyle();
-}
-
-.noteBorders {
-  border-top: none;
-  border-top-left-radius: 0%;
-  border-top-right-radius: 0%;
-}
-
-.notes {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(4, minmax(100px, 1fr));
-  margin: 1rem;
-}
-
-.allNotes {
-  display: grid;
-  gap: 1rem;
-  p {
-    color: gray;
-  }
-}
-
-.error {
-  @include errorStyle;
 }

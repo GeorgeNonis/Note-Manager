@@ -1,8 +1,8 @@
-import styles from "../../styles/loadingSpinner.module.scss";
+import styles from "./styles.module.scss";
 
 const LoadingSpinner = () => {
   return (
-    <div className={styles.content}>
+    <div className={styles.loadingSpinner}>
       {[...Array(4).keys()].map((e, i) => {
         return <span key={i}></span>;
       })}

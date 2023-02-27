@@ -1,12 +1,6 @@
-import { MutableRefObject } from "react";
+import { NoteTitleProps } from "./interfaces";
 
-interface Props {
-  titleRef?: MutableRefObject<HTMLHeadingElement | null>;
-  title: string;
-  editable?: boolean;
-}
-
-const Title = ({ titleRef, title, editable }: Props) => {
+const NoteTitle = ({ titleRef, title, editable }: NoteTitleProps) => {
   return (
     <h3
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
@@ -21,4 +15,4 @@ const Title = ({ titleRef, title, editable }: Props) => {
   );
 };
 
-export default Title;
+export default NoteTitle;

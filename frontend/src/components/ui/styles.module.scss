@@ -1,4 +1,34 @@
+/*
+EmptyTrash styling
+*/
+
 .content {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  color: gray;
+  svg {
+    width: 9rem;
+    height: 9rem;
+  }
+}
+
+/*
+Error Comp Styling
+*/
+
+.error {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+Loading Spinner Styling
+*/
+.loadingSpinner {
   display: grid;
   grid-auto-flow: column;
   height: 3rem;

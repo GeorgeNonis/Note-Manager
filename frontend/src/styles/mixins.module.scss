@@ -1,3 +1,9 @@
+@mixin errorStyle {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+}
+
 @mixin baseStyle {
   padding: 0.6rem 1rem;
   border-radius: 5px;
