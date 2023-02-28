@@ -39,19 +39,27 @@ export const DragEndUtil = async ({
   pinned,
 }: DragEndProps) => {
   const notesPrevState = !pinned ? [...state.notes] : [...state.pinnedNotes];
-  const note = notesPrevState.find((n, i) => i === indexOf);
 
-  notesPrevState.splice(indexOf, 1);
-  const rest = notesPrevState.splice(index);
+  const swapElements = ({ arr, i1, i2 }: any) => {
+    // Step 1
+    let temp = arr[i1];
+    // Step 2
+    arr[i1] = arr[i2];
+    // Step 3
+    arr[i2] = temp;
+    return arr;
+  };
 
-  indexOf !== 0 ? rest.unshift(note!) : rest.splice(0, 0, note!);
-  const response = await sortNotesHttp([...notesPrevState, ...rest], pinned);
-  console.log(response);
+  const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
+
+  const response = await sortNotesHttp([...b], pinned);
+
   const [, error] = response;
   if (!error === undefined) {
     cb(error);
   } else {
-    cb([...notesPrevState, ...rest]);
+    // cb([...notesPrevState, ...rest]);
+    cb([...b]);
   }
 };
 

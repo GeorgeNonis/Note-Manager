@@ -39,7 +39,7 @@ FrontEnd
 
 1. Better file namings and maybe subfolders -- DONE
 2. Make my components smaller for better readability -- DONE
-3. Each component should fetch its own state from the backend
+3. Each component should fetch its own state from the backend -- DONE
 
 BackEnd
 
