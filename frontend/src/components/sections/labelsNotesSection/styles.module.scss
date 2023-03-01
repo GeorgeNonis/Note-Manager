@@ -1,0 +1,21 @@
+@import "../../../styles/mixins.module.scss";
+
+.warning {
+  position: absolute;
+  inset: 4rem auto auto 50%;
+  transform: translateX(-49%);
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.notes {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  margin: 1rem;
+  padding-top: 4rem;
+}
+
+.error {
+  @include errorStyle;
+}

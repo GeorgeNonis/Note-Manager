@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { deleteNote } from "../store/notesSlice";
 import { onDropBin } from "../utils/utils";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
+import { BsPencilSquare } from "react-icons/bs";
 import { BiTrash } from "react-icons/bi";
 import styles from "../styles/App.module.scss";
 
@@ -56,9 +57,11 @@ const RootLayout = () => {
             <BiTrash />
             <h3>Trash</h3>
           </NavLink>
+          <a className={styles.inactive} tabIndex={1}>
+            <BsPencilSquare />
+            <h3>Trash</h3>
+          </a>
         </div>
-        {/* {display && <ExistinNotesSection />}
-        {!display && <DeletedNotesSection />} */}
         <Outlet />
       </main>
     </>

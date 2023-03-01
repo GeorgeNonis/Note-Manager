@@ -63,6 +63,33 @@ export const writePinned = async (data) => {
   });
 };
 
+export const getIdPinnedStatus = (req) => {
+  const isNotePined = req.query.isnotepined;
+  const id = req.params.id.split(":")[1];
+
+  return {
+    isNotePined,
+    id,
+  };
+};
+
+export const getAllNotes = async () => {
+  const pinnedNotes = await readDataPinned();
+  const unPinnedNotes = await readData();
+
+  return { pinnedNotes, unPinnedNotes };
+};
+
+export const findNote = (arr, id) => {
+  const note = arr.find((n) => n.id === id);
+  return note;
+};
+
+export const findNoteIndex = (arr, id) => {
+  const index = arr.findIndex((n) => n.id === id);
+  return index;
+};
+
 // export {
 //   writePinned,
 //   writeData,

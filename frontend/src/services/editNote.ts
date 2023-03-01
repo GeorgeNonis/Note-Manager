@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { BASE_URL } from "../config";
 import { EditNoteArgs, NoteObj } from "../interfaces/interfaces";
+import { AddLabelHttpProp } from "./interfaces";
 
 export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
   try {
@@ -47,6 +48,26 @@ export const updateNoteColorHttp = async <T, E>(
       `${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`,
       {
         color,
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+
+export const addLabelHttp = async <T, E>({
+  label,
+  id,
+  pinned,
+}: AddLabelHttpProp): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/addlabel/:${id}?isnotepined=${pinned}`,
+      {
+        label,
       }
     );
     return [response, null];

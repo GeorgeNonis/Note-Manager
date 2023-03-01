@@ -9,6 +9,7 @@ const router = createBrowserRouter([
     children: [
       { path: "notes", element: <ExistinNotesSection /> },
       { path: "deletednotes", element: <DeletedNotesSection /> },
+      { path: "labelsnotesection", element: <DeletedNotesSection /> },
       { errorElement: <p>Something went wrong</p> },
     ],
   },

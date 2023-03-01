@@ -1,0 +1,32 @@
+.content {
+  visibility: visible;
+  position: absolute;
+  right: 0rem;
+  top: -6rem;
+  background-color: #2d2e30;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 60%), 0 2px 6px 2px rgb(0 0 0 / 30%);
+  width: 14rem;
+}
+
+.labelfieldset {
+  border: none;
+  display: grid;
+  grid-auto-flow: row;
+  input {
+    all: unset;
+    font-size: 0.8rem;
+  }
+}
+
+.labeladdicon {
+  justify-self: center;
+  align-self: center;
+}
+
+.labelcreatecheckbox {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 2fr 8fr;
+  padding: 0.3rem;
+}

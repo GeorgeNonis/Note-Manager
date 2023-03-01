@@ -3,6 +3,7 @@ export interface NoteObj {
   note: string;
   id: string;
   color: string;
+  labels: string[];
 }
 
 export interface EditNoteArgs {

@@ -6,6 +6,10 @@ import {
   readDataDel,
   writePinned,
   readDataPinned,
+  getIdPinnedStatus,
+  getAllNotes,
+  findNote,
+  findNoteIndex,
 } from "../utils/utils.js";
 const router = express.Router();
 
@@ -242,6 +246,25 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
     return res.status(200).json({ message: "Sucessfully copied note" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.post(`/v1/notes/addlabel/:id`, async (req, res, next) => {
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const { label } = req.body;
+  let noteIndex;
+  console.log(id);
+  console.log(isNotePined);
+  if (isNotePined === "true") {
+    noteIndex = findNoteIndex(pinnedNotes, id);
+    pinnedNotes[noteIndex].labels.push(label);
+    console.log(pinnedNotes);
+  } else {
+    noteIndex = findNoteIndex(unPinnedNotes, id);
+    console.log(unPinnedNotes[noteIndex]);
+    unPinnedNotes[noteIndex].labels.push(label);
+    console.log(unPinnedNotes);
   }
 });
 

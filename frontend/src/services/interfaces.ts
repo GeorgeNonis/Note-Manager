@@ -3,3 +3,9 @@ export interface CopyNoteProps {
   sharedId: string;
   pinned: boolean;
 }
+
+export interface AddLabelHttpProp {
+  id: string;
+  label: string;
+  pinned: boolean;
+}

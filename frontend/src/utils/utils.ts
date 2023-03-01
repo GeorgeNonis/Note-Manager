@@ -87,6 +87,7 @@ export const notePostHandler = async (
     note: "",
     id: "0",
     color: "transparent",
+    labels: [],
   };
   processedNote.title = titleValue;
   processedNote.note = noteValue;

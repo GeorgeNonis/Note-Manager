@@ -6,30 +6,25 @@ import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
 import styles from "../../../note.module.scss";
+import AddLabel from "../addLabel";
 
 const Options = ({ id, pinned }: OptionsProps) => {
-  const {
-    display,
-    displayPalette,
-    deleteHandler,
-    outsideOptions,
-    setDisplay,
-    setDisplayPalette,
-    contentStyle,
-    optionsStyle,
-    copyNoteHandler,
-  } = useOptions({ id, pinned, styles });
+  const { handlers, outsideOptions, state, useStyles } = useOptions({
+    id,
+    pinned,
+    styles,
+  });
 
   return (
     <div
-      className={contentStyle}
+      className={useStyles.contentStyle}
       onClick={(e) => e.stopPropagation()}
       ref={outsideOptions}
     >
-      <div className={optionsStyle}>
+      <div className={useStyles.optionsStyle}>
         <Option
           text="Background Options"
-          onClick={() => setDisplayPalette(!displayPalette)}
+          onClick={() => state.setDisplayPalette(!state.displayPalette)}
         >
           <IoMdColorPalette />
         </Option>
@@ -43,29 +38,32 @@ const Options = ({ id, pinned }: OptionsProps) => {
           text="More Tools"
           onClick={(e) => {
             e.stopPropagation();
-            setDisplay(!display);
+            handlers.openDotOptions();
           }}
-          textStyle={display ? styles.hide : undefined}
+          textStyle={state.display ? styles.hide : undefined}
         >
           ...
         </Option>
       </div>
-      {displayPalette && (
+      {state.displayPalette && (
         <div>
           <ColorPallete
-            setDisplayPalette={setDisplayPalette}
+            setDisplayPalette={state.setDisplayPalette}
             id={id}
             pinned={pinned}
           />
         </div>
       )}
-      {display && (
+      {state.displayAddLabel && <AddLabel id={id} pinned={pinned} />}
+      {state.display && (
         <div className={styles.options}>
-          <h3 onClick={deleteHandler} role={"button"}>
+          <h3 onClick={handlers.deleteHandler} role={"button"}>
             Delete
           </h3>
-          <h3>Add Label</h3>
-          <h3 onClick={() => copyNoteHandler(id, pinned)}>Make Copy</h3>
+          <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
+          <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>
+            Make Copy
+          </h3>
           <h3>Show Checkboxes</h3>
         </div>
       )}
