@@ -1,10 +1,14 @@
 import { AiOutlinePlus } from "react-icons/ai";
+import { CheckBox } from "./checkBox";
 import { AddLabelProps } from "./interfaces";
 import styles from "./styles.module.scss";
-import { useAddLabel } from "./useTest";
+import { useAddLabel } from "./useAddLabel";
 
 const AddLabel = ({ id, pinned }: AddLabelProps) => {
-  const { value, setValue, addNoteHandler } = useAddLabel({ id, pinned });
+  const { doesLabelExist, value, setValue, handlers, labels } = useAddLabel({
+    id,
+    pinned,
+  });
   return (
     <main className={styles.content}>
       <fieldset className={styles.labelfieldset}>
@@ -17,13 +21,22 @@ const AddLabel = ({ id, pinned }: AddLabelProps) => {
         />
       </fieldset>
       {/* {HERE I SHOULD RENDER THE ALREADY LABELS THAT EXIST} */}
-      {value && (
+      {labels && (
+        <ul className={styles.labelsUl}>
+          {labels.map((obj) => {
+            return (
+              <CheckBox handlers={handlers} id={id} obj={obj} key={obj.label} />
+            );
+          })}
+        </ul>
+      )}
+      {value && !doesLabelExist && (
         <div
           className={styles.labelcreatecheckbox}
           /**
            * With the http post request to send the id and the pin status of the note
            */
-          onClick={() => addNoteHandler()}
+          onClick={() => handlers.addLabelHandler()}
         >
           <div className={styles.labeladdicon}>
             <AiOutlinePlus />

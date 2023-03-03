@@ -1,3 +1,10 @@
+@mixin checkbox {
+  width: 2rem;
+  height: 2rem;
+  place-self: center;
+  background-repeat: no-repeat;
+}
+
 .content {
   visibility: visible;
   position: absolute;
@@ -19,6 +26,18 @@
   }
 }
 
+.labelsUl {
+  padding: 0;
+}
+
+.label {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 2fr 10fr;
+  padding: 0.3rem;
+  gap: 1rem;
+}
+
 .labeladdicon {
   justify-self: center;
   align-self: center;
@@ -29,4 +48,14 @@
   grid-auto-flow: column;
   grid-template-columns: 2fr 8fr;
   padding: 0.3rem;
+}
+
+.checked {
+  @include checkbox;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmZmZmIj48cGF0aCBkPSJNMTkgM0g1Yy0xLjEgMC0yIC45LTIgMnYxNGMwIDEuMS45IDIgMiAyaDE0YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bTAgMTZINVY1aDE0djE0eiIvPgogIDxwYXRoIGQ9Ik0xOCA5bC0xLjQtMS40LTYuNiA2LjYtMi42LTIuNkw2IDEzbDQgNHoiLz4KPC9zdmc+Cg==);
+}
+
+.unChecked {
+  @include checkbox;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmZmZmIj4KICA8cGF0aCBkPSJNMTkgNXYxNEg1VjVoMTRtMC0ySDVjLTEuMSAwLTIgLjktMiAydjE0YzAgMS4xLjkgMiAyIDJoMTRjMS4xIDAgMi0uOSAyLTJWNWMwLTEuMS0uOS0yLTItMnoiLz4KPC9zdmc+Cg==);
 }

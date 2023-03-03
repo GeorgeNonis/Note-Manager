@@ -9,3 +9,14 @@ export interface AddLabelHttpProp {
   label: string;
   pinned: boolean;
 }
+
+interface Label {
+  id: string;
+  pinned: boolean;
+  checked: boolean;
+}
+
+export interface Labels {
+  label: string;
+  notes: Label[];
+}

@@ -20,6 +20,12 @@ const databasePinned = path.join(
   "pinnedNotes.json"
 );
 
+const databaseLabels = path.join(
+  path.dirname(process.argv[1]),
+  "data",
+  "labels.json"
+);
+
 export const readData = async () => {
   const data = await fs.readFile(database, (err, data) => {
     if (err) return err;
@@ -43,6 +49,21 @@ export const readDataPinned = async () => {
   });
 
   return JSON.parse(data);
+};
+
+export const readDataLabels = async () => {
+  const data = await fs.readFile(databaseLabels, (err, data) => {
+    if (err) return err;
+    return data;
+  });
+
+  return JSON.parse(data);
+};
+
+export const writeDataLabels = async (data) => {
+  return await fs.writeFile(databaseLabels, JSON.stringify(data), (err) => {
+    if (err) return err;
+  });
 };
 
 export const writeData = async (data) => {
@@ -89,12 +110,3 @@ export const findNoteIndex = (arr, id) => {
   const index = arr.findIndex((n) => n.id === id);
   return index;
 };
-
-// export {
-//   writePinned,
-//   writeData,
-//   writeDeleted,
-//   readData,
-//   readDataDel,
-//   readDataPinned,
-// };

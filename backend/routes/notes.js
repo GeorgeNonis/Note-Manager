@@ -10,6 +10,8 @@ import {
   getAllNotes,
   findNote,
   findNoteIndex,
+  readDataLabels,
+  writeDataLabels,
 } from "../utils/utils.js";
 const router = express.Router();
 
@@ -42,6 +44,15 @@ router.get("/v1/trashbin", async (req, res, next) => {
     });
 });
 
+router.get("/v1/notes/labels", async (req, res, next) => {
+  try {
+    const labels = await readDataLabels();
+    res.status(200).json(labels);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
 /**
  * POST REQUESTS
  */
@@ -64,15 +75,12 @@ router.post("/v1/notes", async (req, res, next) => {
 });
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
-  const id = req.params.id.split(":")[1];
   const { noteValue, titleValue } = req.body;
-  const isItPinned = req.query.isnotepined;
-  console.log({ isItPinned });
-  const pinnedNotes = await readDataPinned();
-  const unPinnedNotes = await readData();
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   let noteIndex;
 
-  if (isItPinned === "true") {
+  if (isNotePined === "true") {
     noteIndex = pinnedNotes.findIndex((n) => n.id === id);
     pinnedNotes[noteIndex].title = titleValue;
     pinnedNotes[noteIndex].note = noteValue;
@@ -100,9 +108,9 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
-  const isItPinned = req.query.isnotepined;
-  console.log(isItPinned);
-  if (isItPinned === "true") {
+  const isNotePined = req.query.isnotepined;
+  console.log(isNotePined);
+  if (isNotePined === "true") {
     try {
       await writePinned(data);
       return res.status(200).json({
@@ -126,11 +134,11 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 router.post("/v1/trashbin/:id", async (req, res, next) => {
   const id = req.params.id.split(":")[1];
   const data = await readDataDel();
+  const pinnedNotes = await readData();
   const restoredNote = data.find((n) => n.id === id);
-  const currentState = await readData();
   await writeDeleted([...data.filter((n) => n.id !== id)])
     .then(async () => {
-      await writeData([...currentState, { ...restoredNote }]);
+      await writeData([...pinnedNotes, { ...restoredNote }]);
     })
     .catch((error) => {
       res.status(500).json({ message: "Internal error", error });
@@ -147,8 +155,7 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
 
 router.post("/v1/trashbin", async (req, res, next) => {
   const id = req.body.id;
-  console.log(id);
-  console.log("REMOVING");
+
   const data = await readDataDel();
   await writeDeleted([...data.filter((n) => n.id !== id)])
     .then((response) => {
@@ -192,16 +199,12 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
 });
 
 router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
-  const id = req.params.id.split(":")[1];
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const color = req.body.color;
-  const pinned = req.query.isnotepined;
-
-  const pinnedNotes = await readDataPinned();
-  const unPinnedNotes = await readData();
-
   let noteIndex;
 
-  if (pinned === "true") {
+  if (isNotePined === "true") {
     noteIndex = pinnedNotes.findIndex((n) => n.id === id);
     pinnedNotes[noteIndex].color = color;
 
@@ -226,16 +229,11 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 });
 
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
-  const id = req.params.id.split(":")[1];
-  const isItPinned = req.query.isnotepined;
-  console.log(id);
-  console.log(isItPinned);
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   let note;
 
-  const pinnedNotes = await readDataPinned();
-  const unPinnedNotes = await readData();
-
-  if (isItPinned === "true") {
+  if (isNotePined === "true") {
     note = pinnedNotes.find((n) => n.id === id);
   } else {
     note = unPinnedNotes.find((n) => n.id === id);
@@ -249,22 +247,42 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/addlabel/:id`, async (req, res, next) => {
+router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
-  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const pinned = isNotePined === "true" ? true : false;
+  // const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const { label } = req.body;
-  let noteIndex;
-  console.log(id);
-  console.log(isNotePined);
-  if (isNotePined === "true") {
-    noteIndex = findNoteIndex(pinnedNotes, id);
-    pinnedNotes[noteIndex].labels.push(label);
-    console.log(pinnedNotes);
-  } else {
-    noteIndex = findNoteIndex(unPinnedNotes, id);
-    console.log(unPinnedNotes[noteIndex]);
-    unPinnedNotes[noteIndex].labels.push(label);
-    console.log(unPinnedNotes);
+  const labels = await readDataLabels();
+
+  try {
+    await writeDataLabels([
+      ...labels,
+      { label, notes: [{ id, pinned, checked: true }] },
+    ]);
+    return res.status(200).json({ message: "Sucessfully created label" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.post(`/v1/notes/label/:id`, async (req, res, next) => {
+  console.log("Im being requested");
+  const { id } = getIdPinnedStatus(req);
+  const label = req.query.label;
+  const labels = await readDataLabels();
+  const findLabelIndex = labels.findIndex((lb) => lb.label === label);
+  const noteIndex = labels[findLabelIndex].notes.findIndex((n) => n.id === id);
+
+  labels[findLabelIndex].notes[noteIndex].checked =
+    !labels[findLabelIndex].notes[noteIndex].checked;
+
+  try {
+    await writeDataLabels([...labels]);
+    return res
+      .status(200)
+      .json({ message: "Sucessfully ticket/untickd label" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
   }
 });
 

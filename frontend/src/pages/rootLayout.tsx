@@ -59,7 +59,7 @@ const RootLayout = () => {
           </NavLink>
           <a className={styles.inactive} tabIndex={1}>
             <BsPencilSquare />
-            <h3>Trash</h3>
+            <h3>Labels</h3>
           </a>
         </div>
         <Outlet />
