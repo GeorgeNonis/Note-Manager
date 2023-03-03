@@ -6,7 +6,6 @@ export interface AddLabelProps {
 
 export interface Note {
   id: string;
-  pinned: boolean;
   checked: boolean;
 }
 

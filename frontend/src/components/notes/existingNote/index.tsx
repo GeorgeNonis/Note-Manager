@@ -19,6 +19,7 @@ const Note = ({
   onDragStart,
   zindex,
   pinned,
+  dragable,
 }: NoteProps) => {
   const {
     review,
@@ -38,6 +39,7 @@ const Note = ({
           document.getElementById("reviewModal")!
         )}
       <NoteWrapper
+        dragable={dragable}
         zIndex={zIndex}
         position={position}
         pinned={pinned}

@@ -10,13 +10,13 @@ export interface AddLabelHttpProp {
   pinned: boolean;
 }
 
-interface Label {
+interface Note {
   id: string;
-  pinned: boolean;
+
   checked: boolean;
 }
 
 export interface Labels {
   label: string;
-  notes: Label[];
+  notes: Note[];
 }

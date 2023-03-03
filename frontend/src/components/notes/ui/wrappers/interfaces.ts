@@ -8,6 +8,7 @@ export interface ExistingNoteWrapperProps {
   pinned: boolean;
   position: number;
   zIndex: number;
+  dragable: boolean;
   setReview: Dispatch<SetStateAction<boolean>>;
   onDragEnd: () => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;

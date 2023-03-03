@@ -14,6 +14,7 @@ const ExistingNoteWrapper = ({
   onDragStart,
   onDragEnter,
   onDragEnd,
+  dragable,
 }: ExistingNoteWrapperProps) => {
   return (
     <div
@@ -27,7 +28,7 @@ const ExistingNoteWrapper = ({
         e.stopPropagation();
         setReview(true);
       }}
-      draggable={true}
+      draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
       onDragEnd={onDragEnd}

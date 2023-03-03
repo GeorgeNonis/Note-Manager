@@ -36,7 +36,7 @@ const ExistinNotesSection = () => {
   if (state.error) return <ErrorFetching errorMessage={state.error} />;
 
   const pinnedNotes = state.pinnedNotes.length !== 0 && (
-    <PinnedNotesSection notes={[...state.pinnedNotes]} />
+    <PinnedNotesSection notes={[...state.pinnedNotes]} dragable={true} />
   );
   return (
     <Wrapper styles={styles}>
@@ -63,6 +63,7 @@ const ExistinNotesSection = () => {
               zIndex -= 1;
               return (
                 <Note
+                  dragable={true}
                   pinned={false}
                   zindex={zIndex}
                   note={note}

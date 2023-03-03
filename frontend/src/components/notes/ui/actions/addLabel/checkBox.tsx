@@ -9,14 +9,7 @@ export const CheckBox = ({ obj, handlers, id }: CheckBoxProps) => {
       role="menuitemcheckbox"
       key={label}
       aria-checked={string as any}
-      onClick={
-        (e) => handlers.tickLabelHandler(e, label, id)
-        // (e.currentTarget.ariaChecked = handlers.tickLabelHandler(
-        //   e.currentTarget.ariaChecked as string,
-        //   obj.label,
-        //   id
-        // ))
-      }
+      onClick={(e) => handlers.tickLabelHandler(e, label, id)}
     >
       <div className={style}></div>
       <div>{label}</div>

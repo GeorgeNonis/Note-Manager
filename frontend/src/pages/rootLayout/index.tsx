@@ -1,18 +1,14 @@
-import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { useOutsideHover } from "../hooks/useOutsideHover";
-import { useDispatch } from "react-redux";
-import { deleteNote } from "../store/notesSlice";
-import { onDropBin } from "../utils/utils";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import { BiTrash } from "react-icons/bi";
-import styles from "../styles/App.module.scss";
+import styles from "../../styles/App.module.scss";
+import { useRootLayout } from "./useRootLayout";
+import { MdOutlineLabel } from "react-icons/md";
 
 const RootLayout = () => {
-  const [mouseOverTrash, setMouseOverTrash] = useState(false);
-  const dispatch = useDispatch();
-  const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
+  const { hoverOutsideTrash, state } = useRootLayout();
+
   return (
     <>
       <h3 style={{ textAlign: "center" }}>Note Manager</h3>
@@ -21,19 +17,15 @@ const RootLayout = () => {
           ref={hoverOutsideTrash}
           className={styles.BiTrash}
           onMouseEnter={() => {
-            setMouseOverTrash(true);
+            state.actions.setMouseOverTrash(true);
           }}
           onDragEnter={() => {
-            setMouseOverTrash(true);
+            state.actions.setMouseOverTrash(true);
           }}
-          onDrop={async (e) => {
-            await onDropBin(e, (id, pinned) => {
-              dispatch(deleteNote({ id, pinned }));
-            });
-          }}
+          onDrop={state.actions.onDropHandler}
           onDragOver={(e) => e.preventDefault()}
         >
-          {!mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
+          {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
         </div>
         <div className={styles.div}>
           <NavLink
@@ -47,7 +39,6 @@ const RootLayout = () => {
             <h3>Your Note's</h3>
           </NavLink>
           <NavLink
-            end
             to={"deletednotes"}
             role={"button"}
             className={({ isActive }) => {
@@ -57,9 +48,25 @@ const RootLayout = () => {
             <BiTrash />
             <h3>Trash</h3>
           </NavLink>
+          {state.labels.map((l) => {
+            return (
+              <NavLink
+                key={l.label}
+                to={`labelsnotesection/:${l.label}`}
+                role={"button"}
+                className={({ isActive }) => {
+                  return isActive ? styles.active : styles.inactive;
+                }}
+              >
+                <MdOutlineLabel />
+                <h3>{l.label}</h3>
+              </NavLink>
+            );
+          })}
+
           <a className={styles.inactive} tabIndex={1}>
             <BsPencilSquare />
-            <h3>Labels</h3>
+            <h3>Edit Labels</h3>
           </a>
         </div>
         <Outlet />

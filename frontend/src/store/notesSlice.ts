@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NoteObj } from "../interfaces/interfaces";
+import { Labels } from "../services/interfaces";
 
 export interface InitialState {
   notes: NoteObj[];
   pinnedNotes: NoteObj[];
   deletedNotes: NoteObj[];
+  labels: Labels[];
   error: "";
 }
 
@@ -12,6 +14,7 @@ const initialState: InitialState = {
   notes: [],
   deletedNotes: [],
   pinnedNotes: [],
+  labels: [],
   error: "",
 };
 
@@ -23,6 +26,7 @@ const notes = createSlice({
       state.notes = [...payload.unpinned];
       state.pinnedNotes = [...payload.pinned];
       state.deletedNotes = [...payload.deleted];
+      state.labels = [...payload.labels];
     },
     addNote(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
@@ -112,6 +116,23 @@ const notes = createSlice({
       console.log(note);
       state.notes = [...state.notes, { ...note, id: sharedId }];
     },
+    addLabel(state, { payload }) {
+      const { id, label } = payload;
+
+      state.labels.push({ label, notes: [{ id, checked: true }] });
+    },
+    tickHandler(state, { payload }) {
+      const { id, label } = payload;
+      const findLabelIndex = state.labels.findIndex((l) => l.label === label);
+      const noteIndex = state.labels[findLabelIndex].notes.findIndex(
+        (n) => n.id === id
+      );
+      console.log(findLabelIndex);
+      console.log(noteIndex);
+      state.labels[findLabelIndex].notes[noteIndex].checked =
+        !state.labels[findLabelIndex].notes[noteIndex].checked;
+    },
+    removeLabel(state, { payload }) {},
   },
 });
 
@@ -127,6 +148,9 @@ export const {
   pinHandler,
   setColor,
   copyNote,
+  addLabel,
+  removeLabel,
+  tickHandler,
 } = notes.actions;
 
 export default notes.reducer;

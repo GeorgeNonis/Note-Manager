@@ -8,8 +8,6 @@ import {
   readDataPinned,
   getIdPinnedStatus,
   getAllNotes,
-  findNote,
-  findNoteIndex,
   readDataLabels,
   writeDataLabels,
 } from "../utils/utils.js";
@@ -19,12 +17,21 @@ const router = express.Router();
  * GET REQUESTS
  */
 router.get("/v1/notes", async (req, res, next) => {
-  await Promise.all([readDataPinned(), readData(), readDataDel()])
+  /**
+   * Improve this and use Promise.allSettled
+   */
+  await Promise.all([
+    readDataPinned(),
+    readData(),
+    readDataDel(),
+    readDataLabels(),
+  ])
     .then((val) => {
       res.status(200).json({
         pinned: [...val[0]],
         unpinned: [...val[1]],
         deleted: [...val[2]],
+        labels: [...val[3]],
       });
     })
     .catch((error) => {
@@ -250,7 +257,6 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
 router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
   const pinned = isNotePined === "true" ? true : false;
-  // const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const { label } = req.body;
   const labels = await readDataLabels();
 
@@ -269,12 +275,19 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
   console.log("Im being requested");
   const { id } = getIdPinnedStatus(req);
   const label = req.query.label;
+  const pinned = req.query.isnotepined === "true" ? true : false;
   const labels = await readDataLabels();
   const findLabelIndex = labels.findIndex((lb) => lb.label === label);
   const noteIndex = labels[findLabelIndex].notes.findIndex((n) => n.id === id);
-
-  labels[findLabelIndex].notes[noteIndex].checked =
-    !labels[findLabelIndex].notes[noteIndex].checked;
+  console.log(noteIndex);
+  if (noteIndex >= 0) {
+    console.log("index exist");
+    labels[findLabelIndex].notes[noteIndex].checked =
+      !labels[findLabelIndex].notes[noteIndex].checked;
+  } else {
+    console.log("index doesnt exist");
+    labels[findLabelIndex].notes.push({ id, checked: true, pinned });
+  }
 
   try {
     await writeDataLabels([...labels]);

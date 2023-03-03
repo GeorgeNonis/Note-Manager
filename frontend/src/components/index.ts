@@ -16,3 +16,4 @@ export { default as DeletedNote } from "./notes/deletedNote";
 export { default as DeletedNoteWrapper } from "./notes/ui/wrappers/deletedNoteWrapper";
 export { default as ExistinNotesSection } from "./sections/existingNotesSection";
 export { default as DeletedNotesSection } from "./sections/deletedNotesSection";
+export { default as NotesWithLabelsSection } from "./sections/notesWithLabelsSection";

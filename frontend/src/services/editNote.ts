@@ -80,15 +80,12 @@ export const addLabelHttp = async <T, E>({
 
 export const tickLabelHandlerHttp = async <T, E>(
   id: string,
-  label: string
+  label: string,
+  pinned: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
-  console.log("here as well");
-  console.log(id);
-  console.log(label);
-  console.log(`${BASE_URL}notes/label/:${id}?label=${label}`);
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/label/:${id}?label=${label}`
+      `${BASE_URL}notes/label/:${id}?label=${label}&isnotepined=${pinned}`
     );
     return [response, null];
   } catch (error) {
