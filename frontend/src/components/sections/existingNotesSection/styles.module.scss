@@ -2,18 +2,18 @@
 
 .mainSection {
   display: grid;
-  width: 50%;
+  width: 65%;
+  height: 3rem;
   margin-inline: auto;
   position: relative;
+  padding-top: 1rem;
 
   .pin {
     position: absolute;
     inset: 5px -30px auto auto;
 
     &:hover {
-      .icon {
-        color: gray;
-      }
+      color: white;
 
       .span {
         display: block;
@@ -61,7 +61,12 @@
 }
 
 .noteInput {
+  letter-spacing: 0.02625em;
+  font-size: 1rem;
   @include baseStyle();
+  &::placeholder {
+    color: #bcbdbe;
+  }
 }
 
 .noteBorders {

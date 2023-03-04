@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addLabelHttp } from "../../../../../services";
-import { tickLabelHandlerHttp } from "../../../../../services/editNote";
-import { getLabelsHttp } from "../../../../../services/getNote";
+import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
 import { tickHandler } from "../../../../../store/notesSlice";
 import { IRootState } from "../../../../../store/store";
 import { isThereError } from "../../../../../utils/utils";
@@ -37,18 +35,12 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     label: string,
     id: string
   ) => {
-    console.log("clicking");
     const response = await tickLabelHandlerHttp(id, label, pinned);
     const sucessfullRequest = isThereError(response);
 
     if (sucessfullRequest) {
-      // e.currentTarget.ariaChecked === "true"
-      //   ? (e.currentTarget.ariaChecked = "false")
-      //   : (e.currentTarget.ariaChecked = "true");
       dispatch(tickHandler({ id, label }));
-      console.log(`Sucess`);
     } else {
-      console.log("ERROR");
     }
   };
 
@@ -58,14 +50,6 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     addLabelHandler,
   };
 
-  // useEffect(() => {
-  //   const getLabels = async () => {
-  //     const response = await getLabelsHttp();
-  //     const labels = response[0]!;
-  //     setLabels(labels);
-  //   };
-  //   getLabels();
-  // }, []);
   return {
     doesLabelExist,
     value,

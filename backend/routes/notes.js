@@ -85,6 +85,7 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   const { noteValue, titleValue } = req.body;
   const { id, isNotePined } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  console.log({ noteValue, titleValue, id, isNotePined });
   let noteIndex;
 
   if (isNotePined === "true") {

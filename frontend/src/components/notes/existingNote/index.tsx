@@ -8,8 +8,8 @@ import {
   Pin,
   NoteWrapper,
 } from "../../index";
-import styles from "../note.module.scss";
 import { useNote } from "./useNote";
+import styles from "../note.module.scss";
 
 const Note = ({
   note,

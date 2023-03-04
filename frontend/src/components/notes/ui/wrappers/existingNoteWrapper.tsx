@@ -16,6 +16,8 @@ const ExistingNoteWrapper = ({
   onDragEnd,
   dragable,
 }: ExistingNoteWrapperProps) => {
+  // console.log(clickOutsideNote.current.clientHeight);
+  // console.log(clickOutsideNote.current.clientWidth);
   return (
     <div
       ref={clickOutsideNote}

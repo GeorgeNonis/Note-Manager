@@ -1,5 +1,5 @@
 export { default as Options } from "./notes/ui/actions/options";
-export { default as ReviewModal } from "./reviewModal";
+export { default as ReviewModal } from "./modals/reviewModal";
 export { default as Title } from "./notes/ui/noteTitle";
 export { default as NoteDetails } from "./notes/ui/noteDetails";
 export { default as Pin } from "./notes/ui/pin";
@@ -17,3 +17,4 @@ export { default as DeletedNoteWrapper } from "./notes/ui/wrappers/deletedNoteWr
 export { default as ExistinNotesSection } from "./sections/existingNotesSection";
 export { default as DeletedNotesSection } from "./sections/deletedNotesSection";
 export { default as NotesWithLabelsSection } from "./sections/notesWithLabelsSection";
+export { default as EditLabelsModal } from "./modals/editLabelsModal";

@@ -32,7 +32,7 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
 
       const sucessfullRequest = isThereError(response);
       sucessfullRequest
-        ? dispatch(editNote({ pinned, noteId, titleValue, noteValue }))
+        ? dispatch(editNote({ pinned, id: noteId, titleValue, noteValue }))
         : console.log(response[1]?.message);
     };
     editNoteHandler();

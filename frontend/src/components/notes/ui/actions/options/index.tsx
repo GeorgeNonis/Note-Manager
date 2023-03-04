@@ -5,8 +5,8 @@ import ColorPallete from "../colorPallete";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
-import styles from "../../../note.module.scss";
 import AddLabel from "../addLabel";
+import styles from "../../../note.module.scss";
 
 const Options = ({ id, pinned }: OptionsProps) => {
   const { handlers, outsideOptions, state, useStyles } = useOptions({

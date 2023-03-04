@@ -1,17 +1,19 @@
+import ReactDOM from "react-dom";
 import { Outlet, NavLink } from "react-router-dom";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import { BiTrash } from "react-icons/bi";
-import styles from "../../styles/App.module.scss";
 import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel } from "react-icons/md";
+import styles from "../../styles/App.module.scss";
+import { EditLabelsModal } from "../../components";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
 
   return (
     <>
-      <h3 style={{ textAlign: "center" }}>Note Manager</h3>
+      <h3 className={styles.appTitle}>Note Manager</h3>
       <main className={styles.main}>
         <div
           ref={hoverOutsideTrash}
@@ -36,18 +38,9 @@ const RootLayout = () => {
             }}
           >
             <FaRegLightbulb />
-            <h3>Your Note's</h3>
+            <h3>Notes</h3>
           </NavLink>
-          <NavLink
-            to={"deletednotes"}
-            role={"button"}
-            className={({ isActive }) => {
-              return isActive ? styles.active : styles.inactive;
-            }}
-          >
-            <BiTrash />
-            <h3>Trash</h3>
-          </NavLink>
+
           {state.labels.map((l) => {
             return (
               <NavLink
@@ -64,11 +57,30 @@ const RootLayout = () => {
             );
           })}
 
-          <a className={styles.inactive} tabIndex={1}>
+          <a
+            className={styles.inactive}
+            tabIndex={1}
+            onClick={() => state.actions.setEditLabelsModal(true)}
+          >
             <BsPencilSquare />
             <h3>Edit Labels</h3>
           </a>
+          <NavLink
+            to={"deletednotes"}
+            role={"button"}
+            className={({ isActive }) => {
+              return isActive ? styles.active : styles.inactive;
+            }}
+          >
+            <BiTrash />
+            <h3>Trash</h3>
+          </NavLink>
         </div>
+        {state.values.editLabelsModal &&
+          ReactDOM.createPortal(
+            <EditLabelsModal closeModal={state.actions.setEditLabelsModal} />,
+            document.getElementById("editLabelsModal")!
+          )}
         <Outlet />
       </main>
     </>

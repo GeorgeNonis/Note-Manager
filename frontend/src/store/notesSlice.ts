@@ -37,7 +37,8 @@ const notes = createSlice({
     },
     editNote(state, { payload }) {
       const { id, pinned } = payload;
-
+      console.log(payload);
+      console.log({ id, pinned });
       let noteIndex;
       if (pinned) {
         noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
@@ -115,6 +116,7 @@ const notes = createSlice({
         : state.pinnedNotes.find((n) => n.id === id)!;
       console.log(note);
       state.notes = [...state.notes, { ...note, id: sharedId }];
+      // console.log(state)
     },
     addLabel(state, { payload }) {
       const { id, label } = payload;
@@ -129,8 +131,12 @@ const notes = createSlice({
       );
       console.log(findLabelIndex);
       console.log(noteIndex);
-      state.labels[findLabelIndex].notes[noteIndex].checked =
-        !state.labels[findLabelIndex].notes[noteIndex].checked;
+      if (noteIndex >= 0) {
+        state.labels[findLabelIndex].notes[noteIndex].checked =
+          !state.labels[findLabelIndex].notes[noteIndex].checked;
+      } else {
+        state.labels[findLabelIndex].notes.push({ id, checked: true });
+      }
     },
     removeLabel(state, { payload }) {},
   },

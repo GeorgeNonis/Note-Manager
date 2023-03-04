@@ -4,11 +4,13 @@ export {
   sortNotesHttp,
   updateNoteColorHttp,
   addLabelHttp,
+  tickLabelHandlerHttp,
 } from "./editNote";
-export { getNotesHttp } from "./getNote";
+export { getNotesHttp, getLabelsHttp } from "./getNote";
 export {
   addNoteHttp,
   pinNoteHandlerHttp,
   removeNoteHttp,
   restoreNoteHttp,
+  copyNoteHttp,
 } from "./postNote";

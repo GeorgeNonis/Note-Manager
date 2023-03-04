@@ -26,7 +26,7 @@ const Form = ({
       <Input
         className={noteStlye}
         onChange={onChangeNote}
-        placeholder={"Tkae a note..."}
+        placeholder={"Take a note..."}
         value={note}
         onClick={() => {
           setDisplay(true);

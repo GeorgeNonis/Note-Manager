@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useOutsideClick } from "../../../../../hooks/useOutsideClick";
+import { useOutsideClick } from "../../../../../hooks";
 import { deleteNoteHttp } from "../../../../../services";
 import { copyNote, deleteNote } from "../../../../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils/utils";
 import { OptionsProps } from "./interfaces";
-import { copyNoteHttp } from "../../../../../services/postNote";
+import { copyNoteHttp } from "../../../../../services";
 
 export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
   const dispatch = useDispatch();
