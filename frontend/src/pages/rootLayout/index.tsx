@@ -5,8 +5,8 @@ import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
-import styles from "../../styles/App.module.scss";
 import { EditLabelsModal } from "../../components";
+import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();

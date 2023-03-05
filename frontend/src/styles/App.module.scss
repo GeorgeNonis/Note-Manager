@@ -25,6 +25,9 @@
         justify-self: start;
         color: white;
         font-weight: 400;
+        overflow: hidden;
+        width: 90%;
+        text-overflow: ellipsis;
       }
       svg {
         height: 1.5rem;
@@ -41,6 +44,9 @@
 
 .inactive {
   color: gray;
+  &:hover {
+    cursor: grab;
+  }
 }
 
 .BiTrash {

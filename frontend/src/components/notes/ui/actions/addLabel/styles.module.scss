@@ -41,6 +41,9 @@
 .labeladdicon {
   justify-self: center;
   align-self: center;
+  &:hover {
+    cursor: grab;
+  }
 }
 
 .labelcreatecheckbox {

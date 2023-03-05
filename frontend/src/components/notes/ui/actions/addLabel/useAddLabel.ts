@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
-import { tickHandler } from "../../../../../store/notesSlice";
+import { addLabel, tickHandler } from "../../../../../store/notesSlice";
 import { IRootState } from "../../../../../store/store";
 import { isThereError } from "../../../../../utils/utils";
 import { AddLabelProps, Labels } from "./interfaces";
@@ -14,7 +14,10 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
   // const [labels, setLabels] = useState<Labels[]>([]);
   const addLabelHandler = async () => {
     const response = await addLabelHttp({ id, pinned, label: value });
-    console.log(response);
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(addLabel({ id, pinned, label: value }))
+      : console.log(response[1]);
   };
 
   const doesLabelExist = labels.find((lb) => lb.label === value);

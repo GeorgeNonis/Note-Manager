@@ -12,8 +12,8 @@ export interface LabelProps {
       labels: Labels[];
     };
     actions: {
-      dispatch: ReduxDispatch<AnyAction>;
-      removeLabelHandler: (label: string) => void;
+      // dispatch: ReduxDispatch<AnyAction>;
+      // removeLabelHandler: (label: string) => void;
     };
   };
 }

@@ -111,9 +111,18 @@ const notes = createSlice({
       // console.log(state)
     },
     addLabel(state, { payload }) {
-      const { id, label } = payload;
+      console.log(payload);
+      if (payload.id) {
+        const { id, label } = payload;
 
-      state.labels.push({ label, notes: [{ id, checked: true }] });
+        console.log("im create a new object with id and label");
+        state.labels.push({ label, notes: [{ id, checked: true }] });
+      } else {
+        console.log("im create a new object with ONLY label");
+
+        const { label } = payload;
+        state.labels.push({ label, notes: [] });
+      }
     },
     tickHandler(state, { payload }) {
       const { id, label } = payload;
@@ -130,9 +139,17 @@ const notes = createSlice({
         state.labels[findLabelIndex].notes.push({ id, checked: true });
       }
     },
-    removeLabel(state, { payload }) {
+    deleteLabel(state, { payload }) {
       const label = payload as string;
       state.labels = [...state.labels.filter((l) => l.label !== label)];
+    },
+
+    editLabel(state, { payload }) {
+      const { label, newLabel } = payload;
+
+      const indexOfLabel = state.labels.findIndex((l) => l.label === label);
+
+      state.labels[indexOfLabel].label = newLabel;
     },
   },
 });
@@ -150,8 +167,9 @@ export const {
   setColor,
   copyNote,
   addLabel,
-  removeLabel,
+  deleteLabel,
   tickHandler,
+  editLabel,
 } = notes.actions;
 
 export default notes.reducer;

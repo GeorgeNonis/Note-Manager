@@ -85,6 +85,7 @@
   font-size: 14px;
   font-weight: 500;
   margin: 0 15px;
+  width: 80%;
   &::placeholder {
     color: #bcbec1;
   }
@@ -97,6 +98,10 @@
   &::placeholder {
     color: white;
   }
+
+  // &:focus {
+  //   background-color: blue;
+  // }
 }
 
 .modalLabelButtonDiv {

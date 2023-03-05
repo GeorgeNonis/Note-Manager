@@ -1,11 +1,12 @@
-export { deleteNoteHttp } from "./deleteNote";
+export { deleteNoteHttp, deleteLabelHttp } from "./delete";
 export {
+  editLabelHttp,
   editNoteHttp,
   sortNotesHttp,
   updateNoteColorHttp,
   addLabelHttp,
   tickLabelHandlerHttp,
-} from "./editNote";
+} from "./edit";
 export { getNotesHttp, getLabelsHttp } from "./getNote";
 export {
   addNoteHttp,

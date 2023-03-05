@@ -18,3 +18,4 @@ export { default as ExistinNotesSection } from "./sections/existingNotesSection"
 export { default as DeletedNotesSection } from "./sections/deletedNotesSection";
 export { default as NotesWithLabelsSection } from "./sections/notesWithLabelsSection";
 export { default as EditLabelsModal } from "./modals/editLabelsModal";
+export { default as DeleteLabelConfigModal } from "./modals/deleteLabelConfigModal";

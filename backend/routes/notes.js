@@ -260,12 +260,12 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   const pinned = isNotePined === "true" ? true : false;
   const { label } = req.body;
   const labels = await readDataLabels();
+  const newLabel = id
+    ? { label, notes: [{ id, pinned, checked: true }] }
+    : { label, notes: [] };
 
   try {
-    await writeDataLabels([
-      ...labels,
-      { label, notes: [{ id, pinned, checked: true }] },
-    ]);
+    await writeDataLabels([...labels, newLabel]);
     return res.status(200).json({ message: "Sucessfully created label" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
@@ -295,6 +295,34 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
     return res
       .status(200)
       .json({ message: "Sucessfully ticket/untickd label" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
+  const label = req.params.label.split(":")[1];
+
+  const labels = await readDataLabels();
+  try {
+    await writeDataLabels([...labels.filter((l) => l.label !== label)]);
+    return res.status(200).json({ message: "Sucessfully deleted label" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.post(`/v1/labels/:label`, async (req, res, next) => {
+  const label = req.params.label.split(":")[1];
+  const newLabel = req.body.newLabel;
+  const labels = await readDataLabels();
+  const newState = [...labels];
+  const indexOfLabel = newState.findIndex((l) => l.label === label);
+
+  newState[indexOfLabel].label = newLabel;
+  try {
+    await writeDataLabels([...newState]);
+    return res.status(200).json({ message: `Sucessfully edited ${label}` });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
   }

@@ -94,3 +94,20 @@ export const tickLabelHandlerHttp = async <T, E>(
     return [null, err];
   }
 };
+
+export const editLabelHttp = async <T, E>(
+  label: string,
+  newLabel: string
+): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    console.log(`Im hitting ${BASE_URL}labels/:${label}`);
+    const response = await axios.post<T, E>(`${BASE_URL}labels/:${label}`, {
+      newLabel,
+    });
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};

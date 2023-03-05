@@ -1,27 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
-import { removeLabel } from "../../../../store/notesSlice";
-import { HTMLAttributes, useEffect, useRef, useState } from "react";
+import { addLabel } from "../../../../store/notesSlice";
+import { Dispatch, useEffect, useRef, useState } from "react";
+import { addLabelHttp } from "../../../../services";
+import { isThereError } from "../../../../utils/utils";
 
-export const useEditLabelsModal = () => {
+export const useEditLabelsModal = (
+  cb: Dispatch<React.SetStateAction<boolean>>
+) => {
+  const labels = useSelector((state: IRootState) => {
+    return state.notes.labels;
+  });
   const [label, setLabel] = useState("");
   const [createLabel, setCreateLabel] = useState(false);
   const newLabelRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
-  const labels = useSelector((state: IRootState) => {
-    return state.notes.labels;
-  });
-
-  const removeLabelHandler = async (label: string) => {
-    dispatch(removeLabel(label));
-  };
-
-  // const plusAndxHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-  //   console.log(e.currentTarget.id);
-  //   setCreateLabel(!createLabel);
-  //   setLabel("");
-  //   if (createLabel) newLabelRef.current?.focus();
-  // };
 
   const onClickCreateLabelInputHandler = () => {
     setCreateLabel(false);
@@ -30,11 +23,19 @@ export const useEditLabelsModal = () => {
   const createLabelHandler = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setCreateLabel(!createLabel);
-    setLabel("");
     if (e.currentTarget.id === "x&plus") {
-      createLabel && newLabelRef.current?.focus();
+      setCreateLabel(!createLabel);
+      return createLabel && newLabelRef.current?.focus();
     }
+    setCreateLabel(!createLabel);
+    if (label.length === 0 || labels.some((l) => l.label === label)) return;
+    const response = await addLabelHttp({ label });
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(addLabel({ label }))
+      : console.log(response[1]);
+
+    setLabel("");
   };
 
   const state = {
@@ -45,14 +46,27 @@ export const useEditLabelsModal = () => {
       newLabelRef,
     },
     actions: {
-      dispatch,
-      removeLabelHandler,
       createLabelHandler,
       onClickCreateLabelInputHandler,
       setCreateLabel,
       setLabel,
     },
   };
+
+  // useEffect(() => {
+  //   const keyDownHandler = (event: any) => {
+  //     console.log("User pressed: ", event.key);
+
+  //     if (event.key === "Escape") {
+  //       event.preventDefault();
+  //       cb(false);
+  //     }
+  //   };
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
 
   useEffect(() => {
     newLabelRef.current?.focus();

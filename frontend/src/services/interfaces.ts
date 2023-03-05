@@ -5,9 +5,9 @@ export interface CopyNoteProps {
 }
 
 export interface AddLabelHttpProp {
-  id: string;
+  id?: string;
   label: string;
-  pinned: boolean;
+  pinned?: boolean;
 }
 
 interface Note {

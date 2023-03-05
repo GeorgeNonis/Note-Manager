@@ -1,8 +1,8 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import { CheckBox } from "./checkBox";
 import { AddLabelProps } from "./interfaces";
-import styles from "./styles.module.scss";
 import { useAddLabel } from "./useAddLabel";
+import styles from "./styles.module.scss";
 
 const AddLabel = ({ id, pinned }: AddLabelProps) => {
   const { doesLabelExist, value, setValue, handlers, labels } = useAddLabel({

@@ -4,7 +4,7 @@ import Label from "./label";
 import styles from "./style.module.scss";
 
 const EditLabelsModal = ({ closeModal }: Props) => {
-  const { state } = useEditLabelsModal();
+  const { state } = useEditLabelsModal(closeModal);
   return (
     <>
       <div className={styles.backdrop} onClick={() => closeModal(false)}></div>
@@ -36,7 +36,12 @@ const EditLabelsModal = ({ closeModal }: Props) => {
           })}
         </div>
         <div className={styles.modalLabelButtonDiv}>
-          <button className={styles.modalButton}>Done</button>
+          <button
+            className={styles.modalButton}
+            onClick={() => closeModal(false)}
+          >
+            Done
+          </button>
         </div>
       </div>
     </>

@@ -31,9 +31,9 @@ const Options = ({ id, pinned }: OptionsProps) => {
         <Option text="Upload Image">
           <BsImage />
         </Option>
-        <Option text="Remind me">
+        {/* <Option text="Remind me">
           <AiOutlineBell />
-        </Option>
+        </Option> */}
         <Option
           text="More Tools"
           onClick={(e) => {
@@ -62,7 +62,7 @@ const Options = ({ id, pinned }: OptionsProps) => {
           </h3>
           <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
           <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>
-            Make Copy
+            Make a Copy
           </h3>
           <h3>Show Checkboxes</h3>
         </div>
