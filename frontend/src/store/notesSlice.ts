@@ -1,14 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NoteObj } from "../interfaces/interfaces";
-import { Labels } from "../services/interfaces";
-
-export interface InitialState {
-  notes: NoteObj[];
-  pinnedNotes: NoteObj[];
-  deletedNotes: NoteObj[];
-  labels: Labels[];
-  error: "";
-}
+import { InitialState } from "./interfaces";
 
 const initialState: InitialState = {
   notes: [],
@@ -138,7 +130,10 @@ const notes = createSlice({
         state.labels[findLabelIndex].notes.push({ id, checked: true });
       }
     },
-    removeLabel(state, { payload }) {},
+    removeLabel(state, { payload }) {
+      const label = payload as string;
+      state.labels = [...state.labels.filter((l) => l.label !== label)];
+    },
   },
 });
 

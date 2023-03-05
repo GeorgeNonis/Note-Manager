@@ -1,4 +1,4 @@
-import { InitialState } from "../../../store/notesSlice";
+import { InitialState } from "../../../store/interfaces";
 
 interface Props {
   state: InitialState;

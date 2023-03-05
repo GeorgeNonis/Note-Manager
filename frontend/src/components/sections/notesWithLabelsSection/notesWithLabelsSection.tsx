@@ -1,15 +1,9 @@
-import {
-  LoadingSpinner,
-  Note,
-  PinnedNotesSection,
-  ErrorFetching,
-  NoNotesTitle,
-  OthersTitle,
-} from "../../index";
+import { Note, PinnedNotesSection, OthersTitle } from "../../index";
 import { useNotesWithLabelsSection } from "./useNotesWithLabelsSection";
 import { useParams } from "react-router-dom";
 import Wrapper from "./wrapper";
 import styles from "./styles.module.scss";
+import NoNotesMsg from "./noNotesMsg";
 
 const NotesWithLabelsSection = () => {
   const params = useParams();
@@ -19,10 +13,6 @@ const NotesWithLabelsSection = () => {
 
   let zIndex = 10000;
 
-  if (loading) return <LoadingSpinner />;
-
-  if (state.error) return <ErrorFetching errorMessage={state.error} />;
-
   const pinnedNotes = pnNotes.length !== 0 && (
     <PinnedNotesSection notes={[...pnNotes]} dragable={false} />
   );
@@ -31,8 +21,8 @@ const NotesWithLabelsSection = () => {
       <section className={styles.allNotes}>
         {pinnedNotes}
         <OthersTitle state={state} />
-        <NoNotesTitle state={state} />
         <section className={styles.notes}>
+          {unNotes.length == 0 && pnNotes.length === 0 && <NoNotesMsg />}
           {!loading &&
             unNotes.length !== 0 &&
             unNotes.map((note, i) => {

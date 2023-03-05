@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { BiTrash } from "react-icons/bi";
-import { MdLabel } from "react-icons/md";
-import { useOutsideHover } from "../../../hooks";
+import { LabelProps } from "./interfaces";
 import styles from "./style.module.scss";
+import { useLabel } from "./hooks";
 
-const Label = ({ label }: { label: string }) => {
-  const [mouseOverLabel, setMouseOverLabel] = useState(false);
-  const hoverOutsideLabel = useOutsideHover(() => setMouseOverLabel(false));
+const Label = ({ label }: LabelProps) => {
+  const { state } = useLabel();
+
   return (
     <div
-      ref={hoverOutsideLabel}
+      ref={state.values.hoverOutsideLabel}
       className={styles.modalDiv}
       key={label}
-      onMouseEnter={() => setMouseOverLabel(true)}
+      onMouseEnter={() =>
+        state.actions.setMouseOverLabel(!state.values.mouseOverLabel)
+      }
     >
-      {mouseOverLabel ? <BiTrash /> : <MdLabel />}
+      <div className={styles.label}></div>
       <input
         className={styles.modalEditInput}
         type="text"
@@ -22,6 +22,10 @@ const Label = ({ label }: { label: string }) => {
         id={label}
         placeholder={label}
       />
+      <div
+        className={!state.values.edit ? styles.pencil : styles.tick}
+        onClick={() => state.actions.setEdit(!state.values.edit)}
+      ></div>
     </div>
   );
 };

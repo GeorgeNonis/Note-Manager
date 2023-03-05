@@ -13,8 +13,6 @@ const storeType = () => {
   return store;
 };
 
-// export type StoreType = ReturnType<typeof storeType>;
-
 const rootReducer = combineReducers({ notes, displayState });
 export type IRootState = ReturnType<typeof rootReducer>;
 

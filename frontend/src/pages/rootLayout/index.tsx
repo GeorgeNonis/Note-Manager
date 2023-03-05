@@ -1,10 +1,10 @@
 import ReactDOM from "react-dom";
 import { Outlet, NavLink } from "react-router-dom";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
-import { BsPencilSquare } from "react-icons/bs";
+// import { BsPencilSquare } from "react-icons/bs";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
-import { MdOutlineLabel } from "react-icons/md";
+import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import styles from "../../styles/App.module.scss";
 import { EditLabelsModal } from "../../components";
 
@@ -62,7 +62,7 @@ const RootLayout = () => {
             tabIndex={1}
             onClick={() => state.actions.setEditLabelsModal(true)}
           >
-            <BsPencilSquare />
+            <MdOutlineModeEditOutline />
             <h3>Edit Labels</h3>
           </a>
           <NavLink

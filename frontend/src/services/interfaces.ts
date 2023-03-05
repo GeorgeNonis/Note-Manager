@@ -12,11 +12,17 @@ export interface AddLabelHttpProp {
 
 interface Note {
   id: string;
-
   checked: boolean;
 }
 
 export interface Labels {
   label: string;
   notes: Note[];
+}
+
+export interface EditNoteArgs {
+  noteId: string;
+  pinned: boolean;
+  noteValue?: string;
+  titleValue?: string;
 }

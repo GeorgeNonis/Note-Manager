@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { BASE_URL } from "../config";
-import { EditNoteArgs, NoteObj } from "../interfaces/interfaces";
-import { AddLabelHttpProp } from "./interfaces";
+import { NoteObj } from "../interfaces/interfaces";
+import { AddLabelHttpProp, EditNoteArgs } from "./interfaces";
 
 export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
   try {
