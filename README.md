@@ -24,3 +24,7 @@ Features to be added
 1. Upload image
 2. Show checkboxes and progress level
 3. Last time it was edited
+
+Enhancements
+
+1. Improve Error handling and how to make a better use of loaders and actions
