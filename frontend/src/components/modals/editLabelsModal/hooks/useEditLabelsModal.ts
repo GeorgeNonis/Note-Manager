@@ -29,10 +29,11 @@ export const useEditLabelsModal = (
     }
     setCreateLabel(!createLabel);
     if (label.length === 0 || labels.some((l) => l.label === label)) return;
-    const response = await addLabelHttp({ label });
+    const sharedId = crypto.randomUUID();
+    const response = await addLabelHttp({ label, labelId: sharedId });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
-      ? dispatch(addLabel({ label }))
+      ? dispatch(addLabel({ label, labelId: sharedId }))
       : console.log(response[1]);
 
     setLabel("");

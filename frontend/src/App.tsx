@@ -12,12 +12,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     errorElement: <Error />,
-    // loader: ''
     id: "initial-state",
     children: [
       { path: "notes", element: <ExistinNotesSection /> },
       { path: "deletednotes", element: <DeletedNotesSection /> },
-      { path: "labelsnotesection/:label", element: <NotesWithLabelsSection /> },
+      {
+        path: "labelsnotesection/:labelId",
+        element: <NotesWithLabelsSection />,
+      },
     ],
   },
 ]);

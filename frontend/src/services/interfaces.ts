@@ -7,6 +7,7 @@ export interface CopyNoteProps {
 export interface AddLabelHttpProp {
   id?: string;
   label: string;
+  labelId: string;
   pinned?: boolean;
 }
 
@@ -17,6 +18,7 @@ interface Note {
 
 export interface Labels {
   label: string;
+  labelId: string;
   notes: Note[];
 }
 

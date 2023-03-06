@@ -13,10 +13,16 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
   const [value, setValue] = useState<string>("");
   // const [labels, setLabels] = useState<Labels[]>([]);
   const addLabelHandler = async () => {
-    const response = await addLabelHttp({ id, pinned, label: value });
+    const sharedId = crypto.randomUUID();
+    const response = await addLabelHttp({
+      id,
+      pinned,
+      label: value,
+      labelId: sharedId,
+    });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
-      ? dispatch(addLabel({ id, pinned, label: value }))
+      ? dispatch(addLabel({ id, pinned, label: value, labelId: sharedId }))
       : console.log(response[1]);
   };
 

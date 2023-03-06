@@ -258,11 +258,11 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
 router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
   const pinned = isNotePined === "true" ? true : false;
-  const { label } = req.body;
+  const { label, labelId } = req.body;
   const labels = await readDataLabels();
   const newLabel = id
-    ? { label, notes: [{ id, pinned, checked: true }] }
-    : { label, notes: [] };
+    ? { label, labelId, notes: [{ id, pinned, checked: true }] }
+    : { label, labelId, notes: [] };
 
   try {
     await writeDataLabels([...labels, newLabel]);
@@ -300,24 +300,13 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
   }
 });
 
-router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
-  const label = req.params.label.split(":")[1];
-
-  const labels = await readDataLabels();
-  try {
-    await writeDataLabels([...labels.filter((l) => l.label !== label)]);
-    return res.status(200).json({ message: "Sucessfully deleted label" });
-  } catch (error) {
-    return res.status(500).json({ message: "Internal error", error });
-  }
-});
-
 router.post(`/v1/labels/:label`, async (req, res, next) => {
-  const label = req.params.label.split(":")[1];
+  const label = req.params.label.split(":")[1].trim();
   const newLabel = req.body.newLabel;
   const labels = await readDataLabels();
+
   const newState = [...labels];
-  const indexOfLabel = newState.findIndex((l) => l.label === label);
+  const indexOfLabel = newState.findIndex((l) => l.label.trim() === label);
 
   newState[indexOfLabel].label = newLabel;
   try {
@@ -354,6 +343,18 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
   }
   await writeDeleted([...prevStateDel, note]);
   res.status(200).json({ message: "Deleted note successfully" });
+});
+
+router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
+  const label = req.params.label.split(":")[1];
+
+  const labels = await readDataLabels();
+  try {
+    await writeDataLabels([...labels.filter((l) => l.label !== label)]);
+    return res.status(200).json({ message: "Sucessfully deleted label" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
 });
 
 export default router;

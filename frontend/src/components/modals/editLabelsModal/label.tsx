@@ -31,7 +31,6 @@ const Label = ({ label }: LabelProps) => {
           onClick={() => state.actions.setEdit(true)}
           onChange={(e) => {
             state.actions.setNewLabel(e.target.value);
-            console.log(e.target.value);
           }}
           ref={state.values.inputRef}
           className={styles.modalEditInput}

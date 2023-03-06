@@ -5,15 +5,18 @@ import { useHookProps } from "./interfaces";
 import { findPinnedNotes, findUnpinnedNotes } from "./utils";
 
 export const useNotesWithLabelsSection = ({ label }: useHookProps) => {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const state = useSelector((state: IRootState) => state.notes);
   const { notes, pinnedNotes, labels } = state;
+  state.labels.forEach((l) => {
+    console.log(label);
+    console.log(l.label);
+    l.label === label.split(":")[1];
+  });
 
   const currentLabel = state.labels.find(
-    (lb) => lb.label === label.split(":")[1]
+    (lb) => lb.labelId === label.split(":")[1]
   )!;
-
+  console.log({ currentLabel });
   const pnNotes = findPinnedNotes(pinnedNotes, currentLabel);
   const unNotes = findUnpinnedNotes(notes, currentLabel);
 
@@ -23,7 +26,7 @@ export const useNotesWithLabelsSection = ({ label }: useHookProps) => {
     pnNotes,
     unNotes,
     dummys,
-    loading,
+    // loading,
     state,
   };
 };

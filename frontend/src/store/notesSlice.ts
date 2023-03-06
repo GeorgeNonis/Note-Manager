@@ -113,15 +113,15 @@ const notes = createSlice({
     addLabel(state, { payload }) {
       console.log(payload);
       if (payload.id) {
-        const { id, label } = payload;
+        const { id, label, labelId } = payload;
 
         console.log("im create a new object with id and label");
-        state.labels.push({ label, notes: [{ id, checked: true }] });
+        state.labels.push({ label, labelId, notes: [{ id, checked: true }] });
       } else {
         console.log("im create a new object with ONLY label");
 
-        const { label } = payload;
-        state.labels.push({ label, notes: [] });
+        const { label, labelId } = payload;
+        state.labels.push({ label, labelId, notes: [] });
       }
     },
     tickHandler(state, { payload }) {
@@ -146,8 +146,10 @@ const notes = createSlice({
 
     editLabel(state, { payload }) {
       const { label, newLabel } = payload;
-
+      console.log({ label });
+      console.log({ newLabel });
       const indexOfLabel = state.labels.findIndex((l) => l.label === label);
+      console.log({ indexOfLabel });
 
       state.labels[indexOfLabel].label = newLabel;
     },

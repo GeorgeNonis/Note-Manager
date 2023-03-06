@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { onDropBin } from "../../utils";
 import { deleteNote } from "../../store/notesSlice";
 import { IRootState } from "../../store/store";
-import { useOutsideClick } from "../../hooks";
 
 export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
-  // const clickOutsideLabel = useOutsideClick(() => setEditLabelsModal(false));
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
   const dispatch = useDispatch();
   const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));

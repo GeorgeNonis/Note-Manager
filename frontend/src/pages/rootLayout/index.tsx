@@ -45,7 +45,7 @@ const RootLayout = () => {
             return (
               <NavLink
                 key={l.label}
-                to={`labelsnotesection/:${l.label}`}
+                to={`labelsnotesection/:${l.labelId}`}
                 role={"button"}
                 className={({ isActive }) => {
                   return isActive ? styles.active : styles.inactive;

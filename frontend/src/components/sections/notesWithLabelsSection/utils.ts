@@ -3,11 +3,15 @@ import { Labels } from "../../../services/interfaces";
 
 export const findPinnedNotes = (arr: NoteObj[], currentLabel: Labels) => {
   const pinnedNotes: NoteObj[] = [];
-  currentLabel.notes.forEach((vl) => {
-    arr.forEach((note) => {
-      note.id === vl.id && vl.checked && pinnedNotes.push(note);
+  console.log("Before error");
+  console.log(currentLabel);
+  console.log(currentLabel.notes);
+  currentLabel.notes &&
+    currentLabel.notes.forEach((vl) => {
+      arr.forEach((note) => {
+        note.id === vl.id && vl.checked && pinnedNotes.push(note);
+      });
     });
-  });
 
   return pinnedNotes;
 };

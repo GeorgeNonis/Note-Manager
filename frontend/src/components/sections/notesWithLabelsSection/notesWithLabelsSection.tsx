@@ -7,9 +7,10 @@ import NoNotesMsg from "./noNotesMsg";
 
 const NotesWithLabelsSection = () => {
   const params = useParams();
-  const label = params.label!;
-  const { loading, state, dummys, pnNotes, unNotes } =
-    useNotesWithLabelsSection({ label });
+  const label = params.labelId!;
+  const { state, dummys, pnNotes, unNotes } = useNotesWithLabelsSection({
+    label,
+  });
 
   let zIndex = 10000;
 
@@ -23,8 +24,7 @@ const NotesWithLabelsSection = () => {
         <OthersTitle state={state} />
         <section className={styles.notes}>
           {unNotes.length == 0 && pnNotes.length === 0 && <NoNotesMsg />}
-          {!loading &&
-            unNotes.length !== 0 &&
+          {unNotes.length !== 0 &&
             unNotes.map((note, i) => {
               zIndex -= 1;
               return (

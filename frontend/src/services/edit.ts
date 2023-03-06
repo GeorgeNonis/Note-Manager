@@ -62,12 +62,14 @@ export const addLabelHttp = async <T, E>({
   label,
   id,
   pinned,
+  labelId,
 }: AddLabelHttpProp): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
       `${BASE_URL}notes/labels/:${id}?isnotepined=${pinned}`,
       {
         label,
+        labelId,
       }
     );
     return [response, null];
@@ -100,7 +102,7 @@ export const editLabelHttp = async <T, E>(
   newLabel: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    console.log(`Im hitting ${BASE_URL}labels/:${label}`);
+    // console.log(`Im hitting ${BASE_URL}labels/:${label}`);
     const response = await axios.post<T, E>(`${BASE_URL}labels/:${label}`, {
       newLabel,
     });
