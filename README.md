@@ -24,6 +24,7 @@ Features to be added
 1. Upload image
 2. Show checkboxes and progress level
 3. Last time it was edited
+4. The app is not RESPONSIVE so it should become one.
 
 Enhancements
 

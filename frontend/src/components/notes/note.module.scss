@@ -23,6 +23,9 @@
   margin-inline: auto;
   outline: none;
   color: white;
+  max-height: 25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   /**
   trying to make the tetris effect
@@ -40,6 +43,8 @@
   }
 
   p {
+    white-space: pre-wrap;
+    word-wrap: break-word;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
     outline: none;
