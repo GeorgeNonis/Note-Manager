@@ -2,8 +2,9 @@ import { NoteDetailsProps } from "./interfaces";
 
 const NoteDetails = ({ noteRef, note, editable }: NoteDetailsProps) => {
   console.log(JSON.stringify(note).split(/\r\n|\r|\n/));
-  const findSetences = note.split(/\r\n|\r|\n/).map((el) => el.length > 0);
+  const findSetences = note.split(/\r\n|\r|\n/).filter((el) => el.length > 0);
   console.log(findSetences);
+  console.log(findSetences[2].trim());
   return (
     <p
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}

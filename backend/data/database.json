@@ -1,9 +1,1 @@
-[
-  {
-    "title": "one",
-    "note": "This is test to find out whenever there's a line break.\n\n\n But im pretty suire its goin to be difficult.\n\n\n\n\n\n\n\n     Just had a small breask\n",
-    "id": "6d89c481-be45-4647-8332-2adadc3d625a",
-    "color": "#40b67df9",
-    "labels": []
-  }
-]
+[{"title":"one","note":"This is test to find out whenever there's a line break.\n\n\n But im pretty suire its goin to be difficult.\n\n\n\n\n\n\n\n     Just had a small breask\n","id":"6d89c481-be45-4647-8332-2adadc3d625a","color":"#40b67df9","labels":[]}]
