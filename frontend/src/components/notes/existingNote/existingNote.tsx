@@ -21,40 +21,47 @@ const Note = ({
   pinned,
   dragable,
 }: NoteProps) => {
-  const {
-    review,
-    setReview,
-    zIndex,
-    clickOutsideNote,
-    pinNoteHandler,
-    title,
-    noteDetails,
-  } = useNote({ note, pinned, zindex });
+  const { state } = useNote({ note, pinned, zindex });
 
   return (
     <>
-      {review &&
+      {state.values.review &&
         ReactDOM.createPortal(
           <ReviewModal />,
           document.getElementById("reviewModal")!
         )}
       <NoteWrapper
         dragable={dragable}
-        zIndex={zIndex}
+        zIndex={state.values.zIndex}
         position={position}
         pinned={pinned}
-        review={review}
-        setReview={setReview}
-        clickOutsideNote={clickOutsideNote}
+        review={state.values.review}
+        setReview={state.actions.setReview}
+        clickOutsideNote={state.values.clickOutsideNote}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
         onDragStart={onDragStart}
       >
-        <Pin pinned={pinned} pinNoteHandler={pinNoteHandler} styles={styles} />
-        <Title title={note.title} titleRef={title} editable={true} />
-        <NoteDetails note={note.note} noteRef={noteDetails} editable={true} />
-        <Options id={note.id} pinned={pinned} styles={styles} />
+        <Pin
+          pinned={pinned}
+          pinNoteHandler={state.actions.pinNoteHandler}
+          styles={styles}
+        />
+        <Title
+          title={note.title}
+          titleRef={state.values.title}
+          editable={true}
+        />
+        <NoteDetails
+          pinned={pinned}
+          note={note}
+          setences={state.values.setences}
+          checkbox={note.checkbox}
+          noteRef={state.values.noteDetails}
+          editable={true}
+        />
+        <Options note={note} pinned={pinned} styles={styles} />
       </NoteWrapper>
     </>
   );

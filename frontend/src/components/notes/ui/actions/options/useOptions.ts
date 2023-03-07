@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useOutsideClick } from "../../../../../hooks";
-import { deleteNoteHttp } from "../../../../../services";
-import { copyNote, deleteNote } from "../../../../../store/notesSlice";
+import { deleteNoteHttp, copyNoteHttp } from "../../../../../services";
+import {
+  checkBoxesPinned,
+  checkBoxesUnPinned,
+  copyNote,
+  deleteNote,
+} from "../../../../../store/notesSlice";
 import { useDispatch } from "react-redux/es/exports";
-import { isThereError } from "../../../../../utils/utils";
-import { OptionsProps } from "./interfaces";
-import { copyNoteHttp } from "../../../../../services";
+import { isThereError } from "../../../../../utils";
+import { UseOptionsProps } from "./interfaces";
 
-export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
+export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
   const dispatch = useDispatch();
   const [display, setDisplay] = useState<boolean>(false);
   const [displayPalette, setDisplayPalette] = useState<boolean>(false);
@@ -34,11 +38,11 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
 
-    const response = await deleteNoteHttp(id, pinned);
+    const response = await deleteNoteHttp(note.id, pinned);
     const sucessfullRequest = isThereError(response);
     console.log(sucessfullRequest);
     sucessfullRequest
-      ? dispatch(deleteNote({ id, pinned }))
+      ? dispatch(deleteNote({ id: note.id, pinned }))
       : console.log(response[1]?.message);
 
     setDisplay(false);
@@ -52,6 +56,20 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
   const addLabelHandler = () => {
     setDisplayAddLabel(true);
     setDisplay(false);
+  };
+
+  const checkBoxesHandler = async () => {
+    // if (note.createCheckboxes) {
+
+    // } else {
+
+    // }
+
+    dispatch(
+      pinned
+        ? checkBoxesPinned({ id: note.id })
+        : checkBoxesUnPinned({ id: note.id })
+    );
   };
 
   const contentStyle =
@@ -78,6 +96,7 @@ export const useOptions = ({ id, pinned, styles }: OptionsProps) => {
     copyNoteHandler,
     addLabelHandler,
     openDotOptions,
+    checkBoxesHandler,
   };
   const useStyles = {
     contentStyle,

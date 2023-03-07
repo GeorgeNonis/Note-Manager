@@ -1,6 +1,15 @@
+import { NoteObj } from "../../../../../interfaces/interfaces";
+
 export interface OptionsProps {
-  id: string;
+  note: NoteObj;
   pinned: boolean;
+  styles: CSSModuleClasses;
+}
+
+export interface UseOptionsProps {
+  note: NoteObj;
+  pinned: boolean;
+  checkbox?: boolean;
   styles: CSSModuleClasses;
 }
 

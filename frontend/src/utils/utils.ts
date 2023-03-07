@@ -87,6 +87,8 @@ export const notePostHandler = async (
     note: "",
     id: "0",
     color: "transparent",
+    checkbox: false,
+    createCheckboxes: false,
     labels: [],
   };
   processedNote.title = titleValue;

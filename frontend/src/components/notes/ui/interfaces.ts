@@ -1,4 +1,5 @@
 import { MutableRefObject } from "react";
+import { NoteObj } from "../../../interfaces/interfaces";
 
 export interface NotePinProps {
   styles: CSSModuleClasses;
@@ -14,6 +15,9 @@ export interface NoteTitleProps {
 
 export interface NoteDetailsProps {
   noteRef?: MutableRefObject<HTMLParagraphElement | null>;
-  note: string;
+  note: NoteObj;
   editable?: boolean;
+  pinned: boolean;
+  checkbox: boolean;
+  setences: string[];
 }

@@ -49,14 +49,28 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       : console.log(response[1]?.message);
   };
   const zIndex = !review ? zindex : 10000;
+  // const setences = [""];
+  console.log(note);
+  const setences = note.note
+    ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
+    : [""];
+
+  const state = {
+    values: {
+      review,
+      clickOutsideNote,
+      zIndex,
+      title,
+      noteDetails,
+      setences,
+    },
+    actions: {
+      setReview,
+      pinNoteHandler,
+    },
+  };
 
   return {
-    review,
-    setReview,
-    clickOutsideNote,
-    pinNoteHandler,
-    zIndex,
-    title,
-    noteDetails,
+    state,
   };
 };
