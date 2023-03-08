@@ -16,20 +16,17 @@
   padding: 0.6rem 2rem 0.6rem 0.6rem;
   border-radius: 5px;
   width: 100%;
+  min-height: 15rem;
+  max-height: 25rem;
   box-sizing: border-box;
   background-color: transparent;
   color: gray;
   border: 1px solid gray;
   margin-inline: auto;
   outline: none;
+  // overflow-x: hidden;
   color: white;
-  max-height: 25rem;
   text-overflow: ellipsis;
-
-  /**
-  trying to make the tetris effect
-  */
-  min-height: 15rem;
   transition: all ease-in-out 500ms;
   overflow-wrap: anywhere;
   letter-spacing: 0.01785714em;

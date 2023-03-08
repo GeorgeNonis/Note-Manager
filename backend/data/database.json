@@ -1,1 +1,19 @@
-[{"title":"Brand new note","note":"jkhjkhkhd","id":"44f4f0b5-a5bf-450b-8fb1-cc9f9a0e15cc","color":"transparent","checkbox":false,"labels":[]},{"title":"Testing","note":"","id":"21d52267-06df-4eab-b0bc-0b8482c28195","color":"transparent","checkbox":false,"createCheckboxes":false,"labels":[]}]
+[
+  {
+    "title": "Brand new note",
+    "note": "jkhjkhkhcd",
+    "id": "44f4f0b5-a5bf-450b-8fb1-cc9f9a0e15cc",
+    "color": "transparent",
+    "checkbox": false,
+    "labels": []
+  },
+  {
+    "title": "Testing",
+    "note": "Big ass paragraph for testing purposes one two three priza laptop\n\n\n\n\nAnother big ass paragraph epidi etsi thelo ego grafo tounto programa oti thelo kamo\n",
+    "id": "21d52267-06df-4eab-b0bc-0b8482c28195",
+    "color": "transparent",
+    "checkbox": false,
+    "createCheckboxes": false,
+    "labels": []
+  }
+]

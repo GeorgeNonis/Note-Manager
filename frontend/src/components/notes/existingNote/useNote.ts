@@ -21,6 +21,7 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     const titleValue = title.current?.innerText;
     const noteValue = noteDetails.current?.innerText;
     if (note.note === noteValue && note.title === titleValue) return;
+    if (note.checkbox) return;
 
     const editNoteHandler = async () => {
       const response = await editNoteHttp({

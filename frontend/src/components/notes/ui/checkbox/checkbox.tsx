@@ -10,12 +10,20 @@ const Checkbox = ({ checkBoxDetails, checked, pinned, id }: CheckBoxProps) => {
     checked,
   });
   return (
-    <div className={styles.content}>
+    <div
+      className={styles.content}
+      contentEditable={"false"}
+      spellCheck="true"
+      aria-multiline="true"
+      suppressContentEditableWarning
+    >
       <div
-        className={checked ? styles.checked : styles.unchecked}
+        className={checked ? styles.checkedSvg : styles.uncheckedSvg}
         onClick={checkHandler}
       ></div>
-      <div>{checkBoxDetails.note}</div>
+      <div className={checked ? styles.checked : undefined}>
+        {checkBoxDetails.note}
+      </div>
       <div className={styles.xmark}></div>
     </div>
   );
