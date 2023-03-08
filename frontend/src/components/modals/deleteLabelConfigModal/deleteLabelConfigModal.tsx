@@ -1,6 +1,6 @@
 import { Props } from "./interfaces";
-import styles from "./styles.module.scss";
 import { useDeleteLabelConfigModal } from "./useDeleteLabelConfigModal";
+import styles from "./styles.module.scss";
 
 const DeleteLabelConfigModal = ({ state }: Props) => {
   useDeleteLabelConfigModal(state.actions.setDeleteConfig);

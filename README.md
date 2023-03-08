@@ -29,3 +29,5 @@ Features to be added
 Enhancements
 
 1. Improve Error handling and how to make a better use of loaders and actions
+2. How modals should be working and place them outside components . Pass the values that should be displayed
+   to a Redux slice

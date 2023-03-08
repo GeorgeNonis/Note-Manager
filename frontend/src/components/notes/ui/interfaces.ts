@@ -17,7 +17,6 @@ export interface NoteDetailsProps {
   noteRef?: MutableRefObject<HTMLParagraphElement | null>;
   note: NoteObj;
   editable?: boolean;
-  pinned: boolean;
-  checkbox: boolean;
-  setences: string[];
+  pinned?: boolean;
+  checkbox?: boolean;
 }

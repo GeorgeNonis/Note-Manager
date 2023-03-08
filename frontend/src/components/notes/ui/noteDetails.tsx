@@ -1,5 +1,7 @@
 import { NoteDetailsProps } from "./interfaces";
 import { Checkbox } from "../../index";
+import CompleteItems from "./checkbox/completeItems";
+import styles from "../note.module.scss";
 
 const NoteDetails = ({
   noteRef,
@@ -9,7 +11,8 @@ const NoteDetails = ({
   pinned,
 }: NoteDetailsProps) => {
   return (
-    <p
+    <div
+      className={styles.notedetails}
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
       ref={noteRef}
       contentEditable={editable ? "true" : "false"}
@@ -17,7 +20,6 @@ const NoteDetails = ({
       aria-multiline="true"
       suppressContentEditableWarning
     >
-      {/* {note} */}
       {!checkbox && note.note}
       {checkbox &&
         note.unChecked?.length! > 0 &&
@@ -28,25 +30,18 @@ const NoteDetails = ({
               checkBoxDetails={info}
               checked={false}
               key={info.id}
-              pinned={pinned}
+              pinned={pinned!}
             />
           );
         })}
-
-      {checkbox &&
-        note.checked?.length! > 0 &&
-        note.checked!.map((info) => {
-          return (
-            <Checkbox
-              id={note.id}
-              checkBoxDetails={info}
-              checked={true}
-              key={info.id}
-              pinned={pinned}
-            />
-          );
-        })}
-    </p>
+      {checkbox && note.checked?.length! > 0 && (
+        <CompleteItems
+          completedItems={note.checked!}
+          id={note.id}
+          pinned={pinned!}
+        />
+      )}
+    </div>
   );
 };
 

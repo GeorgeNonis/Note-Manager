@@ -1,12 +1,13 @@
+import ReactDOM from "react-dom";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
-// import { AiOutlineBell } from "react-icons/ai";
 import ColorPallete from "../colorPallete";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
 import AddLabel from "../addLabel";
 import styles from "../../../note.module.scss";
+import DiscardBoxes from "../../../../modals/discardBoxes";
 
 const Options = ({ note, pinned }: OptionsProps) => {
   const { checkbox, id } = note;
@@ -66,10 +67,15 @@ const Options = ({ note, pinned }: OptionsProps) => {
             Make a Copy
           </h3>
           <h3 onClick={handlers.checkBoxesHandler}>
-            {!checkbox ? "Show checkboxes" : "Hide checkboxes"}
+            {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
           </h3>
         </div>
       )}
+      {state.discardBoxes &&
+        ReactDOM.createPortal(
+          <DiscardBoxes handler={handlers.discardBoxesHandler} />,
+          document.getElementById("discardBoxes")!
+        )}
     </div>
   );
 };

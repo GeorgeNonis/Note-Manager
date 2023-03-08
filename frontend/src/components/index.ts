@@ -20,3 +20,4 @@ export { default as NotesWithLabelsSection } from "./sections/notesWithLabelsSec
 export { default as EditLabelsModal } from "./modals/editLabelsModal";
 export { default as DeleteLabelConfigModal } from "./modals/deleteLabelConfigModal";
 export { default as Checkbox } from "./notes/ui/checkbox";
+export { default as DiscardBoxes } from "./modals/discardBoxes";

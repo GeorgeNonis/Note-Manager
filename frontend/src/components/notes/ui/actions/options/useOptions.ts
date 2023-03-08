@@ -13,6 +13,7 @@ import { UseOptionsProps } from "./interfaces";
 
 export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
   const dispatch = useDispatch();
+  const [discardBoxes, setDiscardBoxes] = useState(false);
   const [display, setDisplay] = useState<boolean>(false);
   const [displayPalette, setDisplayPalette] = useState<boolean>(false);
   const [displayAddLabel, setDisplayAddLabel] = useState<boolean>();
@@ -58,18 +59,23 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
     setDisplay(false);
   };
 
+  const discardBoxesHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    console.log(e.currentTarget.id);
+    setDiscardBoxes(false);
+  };
+
   const checkBoxesHandler = async () => {
-    // if (note.createCheckboxes) {
-
-    // } else {
-
-    // }
-
-    dispatch(
-      pinned
-        ? checkBoxesPinned({ id: note.id })
-        : checkBoxesUnPinned({ id: note.id })
-    );
+    if (note.createCheckboxes) {
+      setDiscardBoxes(true);
+    } else {
+      dispatch(
+        pinned
+          ? checkBoxesPinned({ id: note.id })
+          : checkBoxesUnPinned({ id: note.id })
+      );
+    }
   };
 
   const contentStyle =
@@ -84,9 +90,11 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
 
   const state = {
     displayAddLabel,
-    setDisplayAddLabel,
     display,
     displayPalette,
+    discardBoxes,
+    setDiscardBoxes,
+    setDisplayAddLabel,
     setDisplayPalette,
     setDisplay,
   };
@@ -97,6 +105,7 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
     addLabelHandler,
     openDotOptions,
     checkBoxesHandler,
+    discardBoxesHandler,
   };
   const useStyles = {
     contentStyle,

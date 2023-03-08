@@ -34,7 +34,7 @@ const DeletedNote = ({ note, zindex }: Props) => {
         zIndex={zIndex}
       >
         <Title title={note.title} />
-        <NoteDetails note={note.note} />
+        <NoteDetails note={note} />
         <div className={styles.actions}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>

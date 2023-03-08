@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { checkPinned, checkUnPinned } from "../../../../store/notesSlice";
-import { UseCheckBox } from "./interfaces";
+import { checkPinned, checkUnPinned } from "../../../../../store/notesSlice";
+import { UseCheckBox } from "../interfaces";
 
 export const useCheckBox = ({
   checked,
@@ -10,7 +10,6 @@ export const useCheckBox = ({
 }: UseCheckBox) => {
   const dispatch = useDispatch();
   const checkHandler = async () => {
-    console.log("wtf");
     dispatch(
       pinned
         ? checkPinned({ id: noteId, boxid, checked })

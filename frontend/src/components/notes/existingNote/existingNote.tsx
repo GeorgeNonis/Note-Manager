@@ -56,7 +56,6 @@ const Note = ({
         <NoteDetails
           pinned={pinned}
           note={note}
-          setences={state.values.setences}
           checkbox={note.checkbox}
           noteRef={state.values.noteDetails}
           editable={true}

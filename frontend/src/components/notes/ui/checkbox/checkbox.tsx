@@ -1,5 +1,5 @@
 import { CheckBoxProps } from "./interfaces";
-import { useCheckBox } from "./useCheckBox";
+import { useCheckBox } from "./hooks/useCheckBox";
 import styles from "./styles.module.scss";
 
 const Checkbox = ({ checkBoxDetails, checked, pinned, id }: CheckBoxProps) => {
