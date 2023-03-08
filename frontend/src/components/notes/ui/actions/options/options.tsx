@@ -66,14 +66,17 @@ const Options = ({ note, pinned }: OptionsProps) => {
           <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>
             Make a Copy
           </h3>
-          <h3 onClick={handlers.checkBoxesHandler}>
+          <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
             {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
           </h3>
         </div>
       )}
       {state.discardBoxes &&
         ReactDOM.createPortal(
-          <DiscardBoxes handler={handlers.discardBoxesHandler} />,
+          <DiscardBoxes
+            closeModal={handlers.closeModal}
+            checkboxhandler={handlers.checkBoxesHandler}
+          />,
           document.getElementById("discardBoxes")!
         )}
     </div>

@@ -162,6 +162,10 @@ const notes = createSlice({
         pinnedNote.checked = [];
 
         pinnedNote.createCheckboxes = true;
+      } else {
+        pinnedNote.unChecked = [];
+        pinnedNote.checked = [];
+        pinnedNote.createCheckboxes = false;
       }
 
       pinnedNote.checkbox = !pinnedNote.checkbox;
@@ -184,6 +188,10 @@ const notes = createSlice({
         UnPinnedNote.checked = [];
 
         UnPinnedNote.createCheckboxes = true;
+      } else {
+        UnPinnedNote.unChecked = [];
+        UnPinnedNote.checked = [];
+        UnPinnedNote.createCheckboxes = false;
       }
 
       UnPinnedNote.checkbox = !UnPinnedNote.checkbox;
@@ -192,36 +200,29 @@ const notes = createSlice({
       const { id, boxid, checked } = payload;
       const noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
       const pinnedNote = state.pinnedNotes[noteIndex];
-      console.log("Here");
       if (checked) {
-        console.log("In process to uncheck");
         pinnedNote.unChecked = [
           ...pinnedNote.unChecked?.filter((n) => n.id !== boxid)!,
         ];
       } else {
-        console.log("In process to check");
         pinnedNote.checked = [
           ...pinnedNote.checked?.filter((n) => n.id !== boxid)!,
         ];
       }
     },
     checkUnPinned(state, { payload }) {
-      console.log("Here");
       const { id, boxid, checked } = payload;
       const noteIndex = state.notes.findIndex((n) => n.id === id);
       const pinnedNote = state.notes[noteIndex];
       let checkbox;
 
       if (checked) {
-        console.log("Im checked");
-
         checkbox = pinnedNote.checked?.find((b) => b.id === boxid);
         pinnedNote.checked = [
           ...pinnedNote.checked?.filter((n) => n.id !== boxid)!,
         ];
         pinnedNote.unChecked?.push(checkbox!);
       } else {
-        console.log("Im not cheked");
         checkbox = pinnedNote.unChecked?.find((b) => b.id === boxid);
         pinnedNote.unChecked = [
           ...pinnedNote.unChecked?.filter((n) => n.id !== boxid)!,

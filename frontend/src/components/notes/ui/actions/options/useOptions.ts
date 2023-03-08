@@ -66,15 +66,28 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
     setDiscardBoxes(false);
   };
 
-  const checkBoxesHandler = async () => {
-    if (note.createCheckboxes) {
-      setDiscardBoxes(true);
-    } else {
+  const closeModal = () => {
+    setDiscardBoxes(false);
+  };
+
+  const checkBoxesHandler = async (e: React.MouseEvent<HTMLElement>) => {
+    if (e.currentTarget.id === "discard") {
       dispatch(
         pinned
           ? checkBoxesPinned({ id: note.id })
           : checkBoxesUnPinned({ id: note.id })
       );
+      setDiscardBoxes(!discardBoxes);
+    } else {
+      if (note.createCheckboxes === true) {
+        setDiscardBoxes(!discardBoxes);
+      } else {
+        dispatch(
+          pinned
+            ? checkBoxesPinned({ id: note.id })
+            : checkBoxesUnPinned({ id: note.id })
+        );
+      }
     }
   };
 
@@ -106,6 +119,7 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
     openDotOptions,
     checkBoxesHandler,
     discardBoxesHandler,
+    closeModal,
   };
   const useStyles = {
     contentStyle,
