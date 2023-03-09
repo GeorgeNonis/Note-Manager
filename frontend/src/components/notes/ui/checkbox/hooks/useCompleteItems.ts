@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const useCompleteItems = () => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(true);
 
   const showItemsHandler = () => {
     setState(!state);

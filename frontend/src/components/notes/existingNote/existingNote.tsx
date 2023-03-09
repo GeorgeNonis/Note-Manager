@@ -61,6 +61,9 @@ const Note = ({
           editable={true}
         />
         <Options note={note} pinned={pinned} styles={styles} />
+        {/* Testing Purposes */}
+        {/* <button className={styles.testing}>Save</button> */}
+        {/* Testing Purposes */}
       </NoteWrapper>
     </>
   );

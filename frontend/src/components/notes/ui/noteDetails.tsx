@@ -13,6 +13,8 @@ const NoteDetails = ({
   return (
     <div
       className={styles.notedetails}
+      onKeyDown={(e) => console.log(e.currentTarget.innerText)}
+      // onChange={(e) => console.log(e.)}
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
       ref={noteRef}
       contentEditable={editable ? "true" : "false"}
@@ -20,6 +22,7 @@ const NoteDetails = ({
       aria-multiline="true"
       suppressContentEditableWarning
     >
+      {/* {note} */}
       {!checkbox && note.note}
       {checkbox &&
         note.unChecked?.length! > 0 &&
@@ -30,7 +33,7 @@ const NoteDetails = ({
               checkBoxDetails={info}
               checked={false}
               key={info.id}
-              pinned={pinned!}
+              pinned={pinned}
             />
           );
         })}
@@ -38,7 +41,7 @@ const NoteDetails = ({
         <CompleteItems
           completedItems={note.checked!}
           id={note.id}
-          pinned={pinned!}
+          pinned={pinned}
         />
       )}
     </div>
