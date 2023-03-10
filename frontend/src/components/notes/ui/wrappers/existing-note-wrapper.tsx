@@ -24,8 +24,9 @@ const ExistingNoteWrapper = ({
         backgroundColor: colorLogic({ review, note }),
       }}
       className={onReviewingNote({ review, styles })}
-      onClick={() => {
-        setReview(true);
+      onClick={(e) => {
+        e.stopPropagation();
+        setReview(!review);
       }}
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}

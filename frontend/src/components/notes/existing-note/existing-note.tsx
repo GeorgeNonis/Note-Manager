@@ -22,10 +22,6 @@ const Note = ({
   dragable,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
-  const test = state.values.noteValue === note.note;
-  // console.log(state.values.noteValue === note.note);
-  console.log(state.values.noteValue);
-  console.log(note.note);
   return (
     <>
       {state.values.review &&
@@ -56,19 +52,14 @@ const Note = ({
           titleRef={state.values.title}
           editable={true}
         />
-        <textarea
-          name="notedetails"
-          id="notedetails"
-          defaultValue={note.note}
-          onChange={(e) => state.actions.setNotedetails(e.target.value)}
-        />
-        {/* <NoteDetails
+        <NoteDetails
+          setNotedetails={state.actions.setNotedetails}
           pinned={pinned}
           note={note}
           checkbox={note.checkbox}
           noteRef={state.values.noteDetails}
           editable={true}
-        /> */}
+        />
         {state.values.review && (
           <div className={styles.actions}>
             <button
@@ -77,7 +68,9 @@ const Note = ({
               }
               // className={styles.reviewNoteButton}
               className={
-                test ? styles.reviewNoteButtonDisabled : styles.reviewNoteButton
+                state.values.disableBtn
+                  ? styles.reviewNoteButtonDisabled
+                  : styles.reviewNoteButton
               }
               onClick={state.actions.saveChanges}
             >
@@ -85,9 +78,8 @@ const Note = ({
             </button>
             <button
               className={styles.reviewNoteButton}
-              onClick={() => {
-                console.log("clicking");
-                state.actions.setReview(false);
+              onClick={(e) => {
+                state.actions.setReview(!state.values.review);
               }}
             >
               Close
@@ -95,9 +87,6 @@ const Note = ({
           </div>
         )}
         <Options note={note} pinned={pinned} styles={styles} />
-        {/* Testing Purposes */}
-
-        {/* Testing Purposes */}
       </NoteWrapper>
     </>
   );

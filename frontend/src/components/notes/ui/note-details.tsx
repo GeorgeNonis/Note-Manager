@@ -5,44 +5,48 @@ import styles from "../note.module.scss";
 
 const NoteDetails = ({
   noteRef,
-  note,
   editable,
+  setNotedetails,
+  note,
   checkbox,
   pinned,
 }: NoteDetailsProps) => {
   return (
-    <div
-      className={styles.notedetails}
-      style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
-      ref={noteRef}
-      contentEditable={editable ? "true" : "false"}
-      spellCheck="true"
-      aria-multiline="true"
-      suppressContentEditableWarning
-      placeholder={"Empty note"}
-    >
-      {!checkbox && note.note}
-      {checkbox &&
-        note.unChecked?.length! > 0 &&
-        note.unChecked!.map((info) => {
-          return (
-            <Checkbox
-              id={note.id}
-              checkBoxDetails={info}
-              checked={false}
-              key={info.id}
-              pinned={pinned}
-            />
-          );
-        })}
-      {checkbox && note.checked?.length! > 0 && (
-        <CompleteItems
-          completedItems={note.checked!}
-          id={note.id}
-          pinned={pinned}
+    <>
+      {!checkbox && (
+        <textarea
+          className={styles.textArea}
+          name="notedetails"
+          id="notedetails"
+          spellCheck="true"
+          placeholder="Empty note"
+          defaultValue={note.note}
+          onChange={(e) => setNotedetails(e.target.value)}
         />
       )}
-    </div>
+      <div className={styles.notedetails}>
+        {checkbox &&
+          note.unChecked?.length! > 0 &&
+          note.unChecked!.map((info) => {
+            return (
+              <Checkbox
+                id={note.id}
+                checkBoxDetails={info}
+                checked={false}
+                key={info.id}
+                pinned={pinned}
+              />
+            );
+          })}
+        {checkbox && note.checked?.length! > 0 && (
+          <CompleteItems
+            completedItems={note.checked!}
+            id={note.id}
+            pinned={pinned}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

@@ -30,14 +30,7 @@ const Options = ({ note, pinned }: OptionsProps) => {
         >
           <IoMdColorPalette />
         </Option>
-        {/* Upcoming features */}
-        {/* <Option text="Upload Image">
-          <BsImage />
-        </Option> */}
-        {/* <Option text="Remind me">
-          <AiOutlineBell />
-        </Option> */}
-        {/* Upcoming features */}
+
         <Option
           text="More Tools"
           onClick={(e) => {
@@ -86,3 +79,20 @@ const Options = ({ note, pinned }: OptionsProps) => {
 };
 
 export default Options;
+
+{
+  /* Upcoming features */
+}
+{
+  /* <Option text="Upload Image">
+          <BsImage />
+        </Option> */
+}
+{
+  /* <Option text="Remind me">
+          <AiOutlineBell />
+        </Option> */
+}
+{
+  /* Upcoming features */
+}

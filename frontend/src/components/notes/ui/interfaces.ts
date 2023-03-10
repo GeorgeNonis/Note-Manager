@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { NoteObj } from "../../../interfaces/interfaces";
 
 export interface NotePinProps {
@@ -15,6 +15,7 @@ export interface NoteTitleProps {
 
 export interface NoteDetailsProps {
   noteRef?: MutableRefObject<HTMLParagraphElement | null>;
+  setNotedetails: Dispatch<SetStateAction<string>>;
   note: NoteObj;
   editable?: boolean;
   pinned: boolean;

@@ -48,6 +48,15 @@
     font-size: 0.875rem;
   }
 
+  .textArea {
+    all: unset;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    color: white;
+    font-weight: 400;
+  }
+
   &:hover {
     background-color: red;
     .optionsContent {
@@ -227,6 +236,7 @@
   }
 }
 .actions {
+  grid-row: 3;
   & button:nth-of-type(2) {
     float: right;
   }

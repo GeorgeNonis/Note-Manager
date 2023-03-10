@@ -9,7 +9,7 @@ import { CustomHook } from "./interfaces";
 
 export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const [review, setReview] = useState<boolean>(false);
-  const [noteValue, setNotedetails] = useState<string>("");
+  const [noteValue, setNotedetails] = useState<string>(note.note);
   const dispatch = useDispatch();
   // const clickOutsideNote = useOutsideClick(() => setReview(false));
   const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
@@ -43,7 +43,6 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const saveChanges = async () => {
     console.log("saving changes");
     const titleValue = title.current?.innerText;
-    const noteValue = noteDetails.current?.innerText;
     const response = await editNoteHttp({
       noteId,
       pinned,
@@ -68,11 +67,17 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       : console.log(response[1]?.message);
   };
   const zIndex = !review ? zindex : 10000;
+  const disableBtn = noteValue === note.note;
+  console.log(noteValue);
+  console.log(note.note);
 
+  console.log(noteValue.length);
+  console.log(note.note.length);
   const state = {
     values: {
       review,
       // clickOutsideNote,
+      disableBtn,
       zIndex,
       title,
       noteDetails,
