@@ -1,31 +1,32 @@
+import { useNotesContenxt } from "../sections/existing-notes-section/existing-notes-store";
 import Input from "./inputText";
 import { FormProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
-const Form = ({
-  display,
-  onChangeNote,
-  onChangeTitle,
-  note,
-  setDisplay,
-  title,
-}: FormProps) => {
+const Form = () => {
+  const store = useNotesContenxt();
   return (
     <>
-      {display && (
+      {store?.values.display && (
         <>
-          <Input onChange={onChangeTitle} value={title} placeholder={"Title"} />
+          <Input
+            onChange={store.actions.onChangeTitle}
+            value={store.values.title}
+            placeholder={"Title"}
+          />
         </>
       )}
       <Input
-        onChange={onChangeNote}
+        onChange={store?.actions.onChangeNote!}
         placeholder={"Take a note..."}
-        value={note}
+        value={store?.values.note!}
         onClick={() => {
-          setDisplay(true);
+          store?.actions.setDisplay(true);
         }}
       />
-      {display && <button className={styles.closeFormButton}>Close</button>}
+      {store?.values.display && (
+        <button className={styles.closeFormButton}>Close</button>
+      )}
     </>
   );
 };

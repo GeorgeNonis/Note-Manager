@@ -10,6 +10,7 @@ import {
   LoadingSpinner,
 } from "../../components";
 import styles from "../../styles/App.module.scss";
+import { ExistingNotesStoreProvider } from "../../components/sections/existing-notes-section/existing-notes-store";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
@@ -91,7 +92,11 @@ const RootLayout = () => {
         {loadingInitialState && <LoadingSpinner />}
         {error && <ErrorFetching errorMessage={error} />}
 
-        {!loadingInitialState && <Outlet />}
+        {!loadingInitialState && (
+          <ExistingNotesStoreProvider>
+            <Outlet />
+          </ExistingNotesStoreProvider>
+        )}
       </main>
     </>
   );

@@ -7,23 +7,25 @@ import {
   NoNotesTitle,
   OthersTitle,
 } from "../../index";
-import { useExistingNotesSection } from "./useExistingNotesSection";
 import Wrapper from "./wrapper";
 import styles from "./styles.module.scss";
+import { useNotesContenxt } from "./existing-notes-store";
 
 const ExistinNotesSection = () => {
-  const { useStore } = useExistingNotesSection();
+  // const { useStore } = useExistingNotesSection();
+  const useStore = useNotesContenxt();
+  console.log(useStore);
 
   let zIndex = 10000;
 
-  if (useStore.values.loading) return <LoadingSpinner />;
+  if (useStore?.values.loading) return <LoadingSpinner />;
 
-  if (useStore.values.error)
+  if (useStore?.values.error)
     return <ErrorFetching errorMessage={useStore.values.error} />;
 
-  const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
+  const pinnedNotes = useStore?.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection
-      notes={[...useStore.values.state.pinnedNotes]}
+      notes={[...useStore?.values.state.pinnedNotes!]}
       dragable={true}
     />
   );
@@ -31,26 +33,18 @@ const ExistinNotesSection = () => {
     <Wrapper styles={styles}>
       <main
         className={styles.mainSection}
-        ref={useStore.values.clickOutsideNote}
+        ref={useStore?.values.clickOutsideNote}
       >
-        <Form
-          display={useStore.values.display}
-          note={useStore.values.note}
-          onChangeNote={useStore.actions.onChangeNote}
-          onChangeTitle={useStore.actions.onChangeTitle}
-          setDisplay={useStore.actions.setDisplay}
-          title={useStore.values.title}
-          key={100}
-        />
+        <Form key={100} />
       </main>
       <section className={styles.allNotes}>
         {pinnedNotes}
-        <OthersTitle state={useStore.values.state} />
-        <NoNotesTitle state={useStore.values.state} />
+        <OthersTitle state={useStore?.values.state!} />
+        <NoNotesTitle />
         <section className={styles.notes}>
-          {!useStore.values.loading &&
-            useStore.values.state.notes.length !== 0 &&
-            useStore.values.state.notes.map((note, i) => {
+          {!useStore?.values.loading &&
+            useStore?.values.state.notes.length !== 0 &&
+            useStore?.values.state.notes.map((note, i) => {
               zIndex -= 1;
               return (
                 <Note

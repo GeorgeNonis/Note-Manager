@@ -1,15 +1,13 @@
-import { InitialState } from "../../../store/interfaces";
+import { useNotesContenxt } from "../existing-notes-section/existing-notes-store";
 
-interface Props {
-  state: InitialState;
-}
-
-const NoNotesTitle = ({ state }: Props) => {
+const NoNotesTitle = () => {
+  const store = useNotesContenxt();
   return (
     <>
-      {state.notes.length === 0 && state.pinnedNotes.length === 0 && (
-        <p style={{ textAlign: "center" }}>No notes</p>
-      )}
+      {store?.values.state.notes.length === 0 &&
+        store?.values.state.pinnedNotes.length === 0 && (
+          <p style={{ textAlign: "center" }}>No notes</p>
+        )}
     </>
   );
 };
