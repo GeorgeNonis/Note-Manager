@@ -9,7 +9,6 @@ const ExistingNoteWrapper = ({
   position,
   zIndex,
   pinned,
-  clickOutsideNote,
   setReview,
   onDragStart,
   onDragEnter,
@@ -20,14 +19,12 @@ const ExistingNoteWrapper = ({
   // console.log(clickOutsideNote.current.clientWidth);
   return (
     <div
-      ref={clickOutsideNote}
       style={{
         zIndex: zIndex,
         backgroundColor: colorLogic({ review, note }),
       }}
       className={onReviewingNote({ review, styles })}
-      onClick={(e) => {
-        e.stopPropagation();
+      onClick={() => {
         setReview(true);
       }}
       draggable={dragable}

@@ -23,5 +23,7 @@ export interface Store {
     ) => void;
     onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onChangeNote: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    saveNote: () => Promise<void>;
+    clearInputs: () => void;
   };
 }

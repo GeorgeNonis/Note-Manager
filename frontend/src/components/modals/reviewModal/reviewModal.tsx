@@ -1,7 +1,19 @@
+import { Dispatch, SetStateAction } from "react";
 import styles from "./style.module.scss";
 
-const ReviewModal = () => {
-  return <div className={styles.backdrop}></div>;
+interface Props {
+  setReview: Dispatch<SetStateAction<boolean>>;
+}
+
+const ReviewModal = ({ setReview }: Props) => {
+  return (
+    <div
+      className={styles.backdrop}
+      onClick={() => {
+        setReview(false);
+      }}
+    ></div>
+  );
 };
 
 export default ReviewModal;

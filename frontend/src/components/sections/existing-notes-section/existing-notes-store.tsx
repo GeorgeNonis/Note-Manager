@@ -45,17 +45,18 @@ export const ExistingNotesStoreProvider = ({
     setNote(e.target.value);
   };
 
-  useEffect(() => {
-    if (note.length === 0 && title.length === 0) return;
-    const postNote = async () => {
-      const { processedNote, boolean } = await notePostHandler(title, note);
-      boolean ? dispatch(addNote(processedNote)) : console.log("error");
+  const saveNote = async () => {
+    const { processedNote, boolean } = await notePostHandler(title, note);
+    boolean ? dispatch(addNote(processedNote)) : console.log("error");
 
-      setTitle("");
-      setNote("");
-    };
-    postNote();
-  }, [display]);
+    setTitle("");
+    setNote("");
+  };
+
+  const clearInputs = () => {
+    setTitle("");
+    setNote("");
+  };
 
   const useStore = {
     values: {
@@ -74,6 +75,8 @@ export const ExistingNotesStoreProvider = ({
       onDragEnter,
       onChangeTitle,
       onChangeNote,
+      saveNote,
+      clearInputs,
     },
   };
   return (

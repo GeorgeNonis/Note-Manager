@@ -12,7 +12,6 @@ import styles from "./styles.module.scss";
 import { useNotesContenxt } from "./existing-notes-store";
 
 const ExistinNotesSection = () => {
-  // const { useStore } = useExistingNotesSection();
   const useStore = useNotesContenxt();
   console.log(useStore);
 

@@ -22,12 +22,15 @@ const Note = ({
   dragable,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
-
+  const test = state.values.noteValue === note.note;
+  // console.log(state.values.noteValue === note.note);
+  console.log(state.values.noteValue);
+  console.log(note.note);
   return (
     <>
       {state.values.review &&
         ReactDOM.createPortal(
-          <ReviewModal />,
+          <ReviewModal setReview={state.actions.setReview} />,
           document.getElementById("reviewModal")!
         )}
       <NoteWrapper
@@ -37,7 +40,7 @@ const Note = ({
         pinned={pinned}
         review={state.values.review}
         setReview={state.actions.setReview}
-        clickOutsideNote={state.values.clickOutsideNote}
+        // clickOutsideNote={state.values.clickOutsideNote}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
@@ -53,16 +56,47 @@ const Note = ({
           titleRef={state.values.title}
           editable={true}
         />
-        <NoteDetails
+        <textarea
+          name="notedetails"
+          id="notedetails"
+          defaultValue={note.note}
+          onChange={(e) => state.actions.setNotedetails(e.target.value)}
+        />
+        {/* <NoteDetails
           pinned={pinned}
           note={note}
           checkbox={note.checkbox}
           noteRef={state.values.noteDetails}
           editable={true}
-        />
+        /> */}
+        {state.values.review && (
+          <div className={styles.actions}>
+            <button
+              disabled={
+                state.values.noteDetails.current?.innerText === note.note
+              }
+              // className={styles.reviewNoteButton}
+              className={
+                test ? styles.reviewNoteButtonDisabled : styles.reviewNoteButton
+              }
+              onClick={state.actions.saveChanges}
+            >
+              Save Changes
+            </button>
+            <button
+              className={styles.reviewNoteButton}
+              onClick={() => {
+                console.log("clicking");
+                state.actions.setReview(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        )}
         <Options note={note} pinned={pinned} styles={styles} />
         {/* Testing Purposes */}
-        {/* <button className={styles.testing}>Save</button> */}
+
         {/* Testing Purposes */}
       </NoteWrapper>
     </>

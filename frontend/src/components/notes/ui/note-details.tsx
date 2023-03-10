@@ -13,7 +13,6 @@ const NoteDetails = ({
   return (
     <div
       className={styles.notedetails}
-      onKeyUp={(e) => console.log(e.currentTarget.innerHTML)}
       style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
       ref={noteRef}
       contentEditable={editable ? "true" : "false"}

@@ -18,7 +18,7 @@ export interface ExistingNoteWrapperProps {
     pinned: boolean,
     id: string
   ) => void;
-  clickOutsideNote: React.MutableRefObject<any>;
+  // clickOutsideNote: React.MutableRefObject<any>;
 }
 
 export interface DeletedNoteWrapperProps {

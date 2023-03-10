@@ -6,8 +6,8 @@ import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
 import AddLabel from "../add-label";
-import styles from "../../../note.module.scss";
 import DiscardBoxes from "../../../../modals/discard-boxes";
+import styles from "../../../note.module.scss";
 
 const Options = ({ note, pinned }: OptionsProps) => {
   const { checkbox, id } = note;

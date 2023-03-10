@@ -1,10 +1,11 @@
 import { useNotesContenxt } from "../sections/existing-notes-section/existing-notes-store";
 import Input from "./inputText";
-import { FormProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
 const Form = () => {
   const store = useNotesContenxt();
+  const disableBtn =
+    store?.values.title.length == 0 && store?.values.note.length == 0;
   return (
     <>
       {store?.values.display && (
@@ -24,9 +25,48 @@ const Form = () => {
           store?.actions.setDisplay(true);
         }}
       />
-      {store?.values.display && (
-        <button className={styles.closeFormButton}>Close</button>
-      )}
+      <div className={styles.actions}>
+        {store?.values.display && (
+          <button
+            disabled={disableBtn}
+            className={
+              disableBtn
+                ? styles.closeFormButtonDisabled
+                : styles.closeFormButton
+            }
+            onClick={() => {
+              console.log("clicking");
+              store.actions.saveNote();
+              store.actions.setDisplay(false);
+            }}
+          >
+            Create Note
+          </button>
+        )}
+        {store?.values.display && (
+          <button
+            disabled={disableBtn}
+            className={
+              disableBtn
+                ? styles.closeFormButtonDisabled
+                : styles.closeFormButton
+            }
+            onClick={store.actions.clearInputs}
+          >
+            Clear Inputs
+          </button>
+        )}
+        {store?.values.display && (
+          <button
+            className={styles.closeFormButton}
+            onClick={() => {
+              store?.actions.setDisplay(false);
+            }}
+          >
+            Close
+          </button>
+        )}
+      </div>
     </>
   );
 };
