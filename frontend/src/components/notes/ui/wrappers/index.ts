@@ -1,3 +1,3 @@
-export { default as DeletedNoteWrapper } from "./deletedNoteWrapper";
-export { default as ExistingNoteWrapper } from "./existingNoteWrapper";
+export { default as DeletedNoteWrapper } from "./deleted-note-wrapper";
+export { default as ExistingNoteWrapper } from "./existing-note-wrapper";
 export * from "./interfaces";

@@ -6,5 +6,11 @@ export interface InitialState {
   pinnedNotes: NoteObj[];
   deletedNotes: NoteObj[];
   labels: Labels[];
-  error: "";
+  // error: "";
+}
+
+export interface DisplayStateInitialState {
+  error: string;
+  review: boolean;
+  loadingInitialState: boolean;
 }

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useOutsideHover } from "../../../../hooks";
 import { deleteLabelHttp } from "../../../../services";
 import { editLabelHttp } from "../../../../services/";
-import { deleteLabel, editLabel } from "../../../../store/notesSlice";
+import { deleteLabel, editLabel } from "../../../../store/notes-slice";
 import { isThereError } from "../../../../utils";
 
 export const useLabel = (label: string) => {

@@ -6,7 +6,7 @@ import {
   checkBoxesUnPinned,
   copyNote,
   deleteNote,
-} from "../../../../../store/notesSlice";
+} from "../../../../../store/notes-slice";
 import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils";
 import { UseOptionsProps } from "./interfaces";

@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect, RefObject, MutableRefObject, useRef } from "react";
 import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../services";
-import { ErrorMessages } from "../errors/ErrorMessags";
+import { ErrorMessages } from "../errors/error-messages";
 import { DragEndProps } from "./interfaces";
 
 export const onDropBin = async (

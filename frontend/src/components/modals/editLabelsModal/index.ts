@@ -1,2 +1,2 @@
-export { default } from "./editLabelsModal";
+export { default } from "./edit-labels-modal";
 export * from "./interfaces";

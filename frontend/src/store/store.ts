@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import displayState from "./displayState";
-import notes from "./notesSlice";
+import displayState from "./display-state-slice";
+import notes from "./notes-slice";
 
 const store = configureStore({
   reducer: {

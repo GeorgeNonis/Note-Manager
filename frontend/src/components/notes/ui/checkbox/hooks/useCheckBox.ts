@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { checkPinned, checkUnPinned } from "../../../../../store/notesSlice";
+import { checkPinned, checkUnPinned } from "../../../../../store/notes-slice";
 import { UseCheckBox } from "../interfaces";
 
 export const useCheckBox = ({

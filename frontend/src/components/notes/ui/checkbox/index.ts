@@ -1,2 +1,2 @@
-export { default } from "./checkbox";
+export { default } from "./check-box";
 export * from "./interfaces";

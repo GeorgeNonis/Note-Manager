@@ -49,6 +49,14 @@
   }
 }
 
+.disable {
+  color: gray;
+  pointer-events: none;
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
 .BiTrash {
   position: absolute;
   inset: 1rem 1rem auto auto;

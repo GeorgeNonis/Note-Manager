@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
-import { addLabel } from "../../../../store/notesSlice";
+import { addLabel } from "../../../../store/notes-slice";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { addLabelHttp } from "../../../../services";
 import { isThereError } from "../../../../utils/utils";

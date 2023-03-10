@@ -1,4 +1,4 @@
-import { InitialState } from "../store/notesSlice";
+import { InitialState } from "../store/interfaces";
 
 export interface DragEndProps {
   indexOf: number;

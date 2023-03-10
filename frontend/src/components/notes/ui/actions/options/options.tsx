@@ -1,13 +1,13 @@
 import ReactDOM from "react-dom";
 import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
-import ColorPallete from "../colorPallete";
+import ColorPallete from "../color-pallete";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
-import AddLabel from "../addLabel";
+import AddLabel from "../add-label";
 import styles from "../../../note.module.scss";
-import DiscardBoxes from "../../../../modals/discardBoxes";
+import DiscardBoxes from "../../../../modals/discard-boxes";
 
 const Options = ({ note, pinned }: OptionsProps) => {
   const { checkbox, id } = note;
@@ -30,12 +30,14 @@ const Options = ({ note, pinned }: OptionsProps) => {
         >
           <IoMdColorPalette />
         </Option>
-        <Option text="Upload Image">
+        {/* Upcoming features */}
+        {/* <Option text="Upload Image">
           <BsImage />
-        </Option>
+        </Option> */}
         {/* <Option text="Remind me">
           <AiOutlineBell />
         </Option> */}
+        {/* Upcoming features */}
         <Option
           text="More Tools"
           onClick={(e) => {
