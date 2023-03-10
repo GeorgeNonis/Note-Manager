@@ -1,4 +1,4 @@
-import { formBorders } from "../../../utils";
+// import { formBorders } from "../../../utils";
 import {
   LoadingSpinner,
   Note,
@@ -28,7 +28,6 @@ const ExistinNotesSection = () => {
       dragable={true}
     />
   );
-  const { display } = useStore.values;
   return (
     <Wrapper styles={styles}>
       <main
@@ -38,7 +37,6 @@ const ExistinNotesSection = () => {
         <Form
           display={useStore.values.display}
           note={useStore.values.note}
-          noteStlye={formBorders({ styles, display })}
           onChangeNote={useStore.actions.onChangeNote}
           onChangeTitle={useStore.actions.onChangeTitle}
           setDisplay={useStore.actions.setDisplay}

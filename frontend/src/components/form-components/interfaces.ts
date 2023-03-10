@@ -1,6 +1,6 @@
 export interface FormProps {
   display: boolean;
-  noteStlye: string;
+  // noteStlye: string;
   onChangeNote: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   note: string;
@@ -12,7 +12,7 @@ export interface InputTextProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   onClick?: () => void;
-  className: string;
+  // className: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }

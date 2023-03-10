@@ -1,10 +1,9 @@
 import Input from "./inputText";
-import styles from "./styles.module.scss";
 import { FormProps } from "./interfaces";
+import styles from "./styles.module.scss";
 
 const Form = ({
   display,
-  noteStlye,
   onChangeNote,
   onChangeTitle,
   note,
@@ -15,16 +14,10 @@ const Form = ({
     <>
       {display && (
         <>
-          <Input
-            className={styles.noteTitle}
-            onChange={onChangeTitle}
-            value={title}
-            placeholder={"Title"}
-          />
+          <Input onChange={onChangeTitle} value={title} placeholder={"Title"} />
         </>
       )}
       <Input
-        className={noteStlye}
         onChange={onChangeNote}
         placeholder={"Take a note..."}
         value={note}
@@ -32,6 +25,7 @@ const Form = ({
           setDisplay(true);
         }}
       />
+      {display && <button className={styles.closeFormButton}>Close</button>}
     </>
   );
 };

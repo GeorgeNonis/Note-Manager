@@ -5,7 +5,28 @@
   width: 65%;
   margin-inline: auto;
   position: relative;
-  padding-top: 1rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 0.5rem;
+
+  input {
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: transparent;
+    outline: none;
+    color: white;
+    padding: 0.5rem 0;
+  }
+
+  & input:nth-of-type(1) {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+  & input:nth-of-type(2) {
+    letter-spacing: 0.02625em;
+    font-size: 1rem;
+  }
 
   .pin {
     position: absolute;
@@ -57,19 +78,4 @@
 .title {
   text-align: center;
   font-family: monospace;
-}
-
-.noteInput {
-  letter-spacing: 0.02625em;
-  font-size: 1rem;
-  @include baseStyle();
-  &::placeholder {
-    color: #bcbdbe;
-  }
-}
-
-.noteBorders {
-  border-top: none;
-  border-top-left-radius: 0%;
-  border-top-right-radius: 0%;
 }
