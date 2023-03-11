@@ -27,5 +27,4 @@ export interface DeletedNoteWrapperProps {
   note: NoteObj;
   zIndex: number;
   setReview: Dispatch<SetStateAction<boolean>>;
-  clickOutsideNote: React.MutableRefObject<any>;
 }

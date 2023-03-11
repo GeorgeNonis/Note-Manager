@@ -17,6 +17,9 @@ const ExistingNoteWrapper = ({
 }: ExistingNoteWrapperProps) => {
   // console.log(clickOutsideNote.current.clientHeight);
   // console.log(clickOutsideNote.current.clientWidth);
+  console.log(zIndex);
+  console.log(review ? console.log(20002) : console.log(zIndex));
+  console.log("HELLO");
   return (
     <div
       style={{
@@ -26,7 +29,7 @@ const ExistingNoteWrapper = ({
       className={onReviewingNote({ review, styles })}
       onClick={(e) => {
         e.stopPropagation();
-        setReview(!review);
+        setReview(true);
       }}
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}

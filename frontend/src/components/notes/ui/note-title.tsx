@@ -1,17 +1,22 @@
 import { NoteTitleProps } from "./interfaces";
+import styles from "../note.module.scss";
 
-const NoteTitle = ({ titleRef, title, editable }: NoteTitleProps) => {
+const NoteTitle = ({ title, setNoteTitle, editable }: NoteTitleProps) => {
   return (
-    <h3
-      style={{ overflowWrap: `${editable ? "unset" : "anywhere"}` }}
-      ref={titleRef}
-      contentEditable={editable ? "true" : "false"}
+    <textarea
+      readOnly={editable}
+      className={styles.noteTitle}
+      name="notedetails"
+      id="notedetails"
       spellCheck="true"
-      aria-multiline="true"
-      suppressContentEditableWarning
-    >
-      {title}
-    </h3>
+      placeholder="Empty note"
+      defaultValue={title}
+      onChange={(e) => {
+        if (setNoteTitle) {
+          setNoteTitle(e.target.value);
+        }
+      }}
+    />
   );
 };
 

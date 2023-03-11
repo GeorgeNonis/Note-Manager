@@ -18,23 +18,22 @@ const DeletedNote = ({ note, zindex }: Props) => {
     removeProcess,
     zIndex,
   } = useDeletedNote({ note, zindex });
-
   return (
     <>
       {review &&
         ReactDOM.createPortal(
-          <ReviewModal />,
+          <ReviewModal setReview={setReview} />,
           document.getElementById("reviewModal")!
         )}
       <DeletedNoteWrapper
-        clickOutsideNote={clickOutsideNote}
+        // clickOutsideNote={clickOutsideNote}
         note={note}
         setReview={setReview}
         review={review}
         zIndex={zIndex}
       >
-        <Title title={note.title} />
-        <NoteDetails note={note} />
+        <Title title={note.title} editable={true} />
+        <NoteDetails note={note} editable={true} />
         <div className={styles.actions}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>

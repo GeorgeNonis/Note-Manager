@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
 import { IRootState } from "../../../store/store";
@@ -76,3 +82,9 @@ export const useExistingNotesSection = () => {
     useStore,
   };
 };
+
+// const { useStore } = useExistingNotesSection();
+
+// export const ExistingNotesStore = createContext(useStore);
+
+// export const useNotesContenxtTesting = () => useContext(ExistingNotesStore);

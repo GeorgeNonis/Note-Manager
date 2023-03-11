@@ -47,25 +47,23 @@ const Note = ({
           pinNoteHandler={state.actions.pinNoteHandler}
           styles={styles}
         />
+
         <Title
+          editable={false}
           title={note.title}
-          titleRef={state.values.title}
-          editable={true}
+          setNoteTitle={state.actions.setNoteTitle}
         />
         <NoteDetails
+          editable={false}
           setNotedetails={state.actions.setNotedetails}
           pinned={pinned}
           note={note}
           checkbox={note.checkbox}
-          noteRef={state.values.noteDetails}
-          editable={true}
         />
         {state.values.review && (
           <div className={styles.actions}>
             <button
-              disabled={
-                state.values.noteDetails.current?.innerText === note.note
-              }
+              disabled={state.values.disableBtn}
               // className={styles.reviewNoteButton}
               className={
                 state.values.disableBtn
@@ -79,6 +77,7 @@ const Note = ({
             <button
               className={styles.reviewNoteButton}
               onClick={(e) => {
+                e.stopPropagation();
                 state.actions.setReview(!state.values.review);
               }}
             >
@@ -86,7 +85,12 @@ const Note = ({
             </button>
           </div>
         )}
-        <Options note={note} pinned={pinned} styles={styles} />
+        <Options
+          review={state.values.review}
+          note={note}
+          pinned={pinned}
+          styles={styles}
+        />
       </NoteWrapper>
     </>
   );

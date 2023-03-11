@@ -8,8 +8,8 @@ import {
   OthersTitle,
 } from "../../index";
 import Wrapper from "./wrapper";
-import styles from "./styles.module.scss";
 import { useNotesContenxt } from "./existing-notes-store";
+import styles from "./styles.module.scss";
 
 const ExistinNotesSection = () => {
   const useStore = useNotesContenxt();

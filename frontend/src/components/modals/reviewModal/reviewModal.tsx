@@ -2,14 +2,16 @@ import { Dispatch, SetStateAction } from "react";
 import styles from "./style.module.scss";
 
 interface Props {
-  setReview: Dispatch<SetStateAction<boolean>>;
+  setReview?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ReviewModal = ({ setReview }: Props) => {
   return (
     <div
       className={styles.backdrop}
-      onClick={() => {
+      onClick={(e) => {
+        if (!setReview) return;
+        e.stopPropagation();
         setReview(false);
       }}
     ></div>

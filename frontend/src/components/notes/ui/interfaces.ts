@@ -8,16 +8,15 @@ export interface NotePinProps {
 }
 
 export interface NoteTitleProps {
-  titleRef?: MutableRefObject<HTMLHeadingElement | null> | undefined;
+  editable: boolean;
+  setNoteTitle?: Dispatch<SetStateAction<string>>;
   title: string;
-  editable?: boolean;
 }
 
 export interface NoteDetailsProps {
-  noteRef?: MutableRefObject<HTMLParagraphElement | null>;
-  setNotedetails: Dispatch<SetStateAction<string>>;
+  editable: boolean;
+  setNotedetails?: Dispatch<SetStateAction<string>>;
   note: NoteObj;
-  editable?: boolean;
-  pinned: boolean;
-  checkbox: boolean;
+  pinned?: boolean;
+  checkbox?: boolean;
 }

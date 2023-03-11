@@ -35,7 +35,7 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     setReview(false);
   };
 
-  const zIndex = !review ? zindex : 10000;
+  const zIndex = !review ? zindex : 20001;
 
   return {
     review,

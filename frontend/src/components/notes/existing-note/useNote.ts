@@ -1,8 +1,6 @@
-import React, { useState, useRef, MutableRefObject, useEffect } from "react";
-
+import React, { useState, useRef, MutableRefObject } from "react";
 import { useDispatch } from "react-redux";
 import { editNoteHttp, pinNoteHandlerHttp } from "../../../services";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { editNote, pinHandler } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
 import { CustomHook } from "./interfaces";
@@ -10,49 +8,26 @@ import { CustomHook } from "./interfaces";
 export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const [review, setReview] = useState<boolean>(false);
   const [noteValue, setNotedetails] = useState<string>(note.note);
+  const [noteTitle, setNoteTitle] = useState<string>(note.title);
   const dispatch = useDispatch();
-  // const clickOutsideNote = useOutsideClick(() => setReview(false));
-  const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
-  const noteDetails = useRef(
-    null
-  ) as MutableRefObject<HTMLParagraphElement | null>;
+  // const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
   const noteId = note.id;
-
-  // useEffect(() => {
-  //   const titleValue = title.current?.innerText;
-  //   const noteValue = noteDetails.current?.innerText;
-  //   if (note.note === noteValue && note.title === titleValue) return;
-  //   if (note.checkbox) return;
-
-  //   const editNoteHandler = async () => {
-  //     const response = await editNoteHttp({
-  //       noteId,
-  //       pinned,
-  //       titleValue,
-  //       noteValue,
-  //     });
-
-  //     const sucessfullRequest = isThereError(response);
-  //     sucessfullRequest
-  //       ? dispatch(editNote({ pinned, id: noteId, titleValue, noteValue }))
-  //       : console.log(response[1]?.message);
-  //   };
-  //   editNoteHandler();
-  // }, [review]);
 
   const saveChanges = async () => {
     console.log("saving changes");
-    const titleValue = title.current?.innerText;
+    // const titleValue = title.current?.innerText;
     const response = await editNoteHttp({
       noteId,
       pinned,
-      titleValue,
+      titleValue: noteTitle,
       noteValue,
     });
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
-      ? dispatch(editNote({ pinned, id: noteId, titleValue, noteValue }))
+      ? dispatch(
+          editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
+        )
       : console.log(response[1]?.message);
   };
 
@@ -66,28 +41,25 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       ? dispatch(pinHandler(note.id))
       : console.log(response[1]?.message);
   };
-  const zIndex = !review ? zindex : 10000;
-  const disableBtn = noteValue === note.note;
-  console.log(noteValue);
-  console.log(note.note);
+  const zIndex = !review ? zindex : 20002;
+  const disableBtn = noteValue === note.note && noteTitle === note.title;
 
-  console.log(noteValue.length);
-  console.log(note.note.length);
   const state = {
     values: {
       review,
       // clickOutsideNote,
       disableBtn,
       zIndex,
-      title,
-      noteDetails,
+      title: noteTitle,
       noteValue,
+      noteTitle,
     },
     actions: {
       setReview,
       pinNoteHandler,
       saveChanges,
       setNotedetails,
+      setNoteTitle,
     },
   };
 

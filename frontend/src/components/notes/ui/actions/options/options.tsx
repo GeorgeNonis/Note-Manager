@@ -9,12 +9,13 @@ import AddLabel from "../add-label";
 import DiscardBoxes from "../../../../modals/discard-boxes";
 import styles from "../../../note.module.scss";
 
-const Options = ({ note, pinned }: OptionsProps) => {
+const Options = ({ note, pinned, review }: OptionsProps) => {
   const { checkbox, id } = note;
   const { handlers, outsideOptions, state, useStyles } = useOptions({
     note,
     pinned,
     styles,
+    review,
   });
 
   return (
@@ -43,7 +44,7 @@ const Options = ({ note, pinned }: OptionsProps) => {
         </Option>
       </div>
       {state.displayPalette && (
-        <div>
+        <div className={styles.colorPallete}>
           <ColorPallete
             setDisplayPalette={state.setDisplayPalette}
             id={id}

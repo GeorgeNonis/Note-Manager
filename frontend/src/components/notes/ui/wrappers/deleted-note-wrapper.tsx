@@ -4,7 +4,7 @@ import styles from "../../note.module.scss";
 
 const DeletedNoteWrapper = ({
   children,
-  clickOutsideNote,
+  // clickOutsideNote,
   zIndex,
   review,
   note,
@@ -12,7 +12,7 @@ const DeletedNoteWrapper = ({
 }: DeletedNoteWrapperProps) => {
   return (
     <div
-      ref={clickOutsideNote}
+      // ref={clickOutsideNote}
       style={{
         zIndex: zIndex,
         backgroundColor: colorLogic({ review, note }),

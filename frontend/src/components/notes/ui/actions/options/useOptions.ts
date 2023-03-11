@@ -11,7 +11,12 @@ import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils";
 import { UseOptionsProps } from "./interfaces";
 
-export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
+export const useOptions = ({
+  note,
+  pinned,
+  styles,
+  review,
+}: UseOptionsProps) => {
   const dispatch = useDispatch();
   const [discardBoxes, setDiscardBoxes] = useState(false);
   const [display, setDisplay] = useState<boolean>(false);
@@ -92,7 +97,7 @@ export const useOptions = ({ note, pinned, styles }: UseOptionsProps) => {
   };
 
   const contentStyle =
-    display || displayPalette
+    display || displayPalette || review
       ? `${styles.optionsContent} ${styles.visible}`
       : `${styles.optionsContent} `;
 
