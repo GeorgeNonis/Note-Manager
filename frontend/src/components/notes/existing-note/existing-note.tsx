@@ -19,7 +19,7 @@ const Note = ({
   onDragStart,
   zindex,
   pinned = true,
-  dragable,
+  dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
   return (

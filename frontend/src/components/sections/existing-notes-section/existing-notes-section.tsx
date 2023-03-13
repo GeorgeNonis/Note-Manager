@@ -43,7 +43,6 @@ const ExistinNotesSection = () => {
               zIndex -= 1;
               return (
                 <Note
-                  dragable={true}
                   pinned={false}
                   zindex={zIndex}
                   note={note}

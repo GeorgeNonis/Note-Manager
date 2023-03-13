@@ -10,12 +10,9 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const [noteValue, setNotedetails] = useState<string>(note.note);
   const [noteTitle, setNoteTitle] = useState<string>(note.title);
   const dispatch = useDispatch();
-  // const title = useRef(null) as MutableRefObject<HTMLHeadingElement | null>;
   const noteId = note.id;
 
   const saveChanges = async () => {
-    console.log("saving changes");
-    // const titleValue = title.current?.innerText;
     const response = await editNoteHttp({
       noteId,
       pinned,
@@ -47,7 +44,6 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const state = {
     values: {
       review,
-      // clickOutsideNote,
       disableBtn,
       zIndex,
       title: noteTitle,

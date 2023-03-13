@@ -66,16 +66,11 @@
 .allNotes {
   display: grid;
   gap: 1rem;
+  margin: 0 1rem;
   p {
     color: gray;
   }
 }
-
-// .title {
-//   text-align: center;
-//   font-family: monospace;
-// }
-
 .pin {
   position: absolute;
   inset: 5px -30px auto auto;
