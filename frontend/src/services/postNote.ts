@@ -60,7 +60,8 @@ export const copyNoteHttp = async <T, E>({
   console.log(noteId);
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}`
+      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}`,
+      { sharedId }
     );
     return [response, null];
   } catch (error) {

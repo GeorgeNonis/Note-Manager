@@ -239,16 +239,15 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const { sharedId } = req.body;
+  console.log(sharedId);
+  const notes = isNotePined === "true" ? pinnedNotes : unPinnedNotes;
   let note;
 
-  if (isNotePined === "true") {
-    note = pinnedNotes.find((n) => n.id === id);
-  } else {
-    note = unPinnedNotes.find((n) => n.id === id);
-  }
+  note = notes.find((n) => n.id === id);
 
   try {
-    await writeData([...unPinnedNotes, { ...note, id: crypto.randomUUID() }]);
+    await writeData([...notes, { ...note, id: sharedId }]);
     return res.status(200).json({ message: "Sucessfully copied note" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
