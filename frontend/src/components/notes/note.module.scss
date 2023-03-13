@@ -187,7 +187,7 @@
   display: grid;
   grid-auto-flow: column;
   place-items: center;
-  background-color: #242424;
+  background-color: #202124;
 
   & .option:nth-of-type(3) {
     background-color: yellow;
@@ -198,7 +198,7 @@
       position: absolute;
       visibility: hidden;
       bottom: -1.7rem;
-      bottom: -4rem;
+      bottom: -3rem;
       right: -4rem;
       font-size: 0.7rem;
       background-color: gray;
@@ -283,7 +283,7 @@
 }
 .actions {
   grid-row: 3;
-  background-color: #242424;
+  background-color: #202124;
   & button:nth-of-type(2) {
     float: right;
   }
