@@ -68,6 +68,9 @@ const Note = ({
                   ? styles.reviewNoteButtonDisabled
                   : styles.reviewNoteButton
               }
+              onKeyDown={(e) => {
+                e.key === "Enter" && state.actions.saveChanges();
+              }}
               onClick={state.actions.saveChanges}
             >
               Save Changes

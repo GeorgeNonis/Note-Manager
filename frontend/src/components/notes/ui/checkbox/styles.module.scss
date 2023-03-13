@@ -27,17 +27,14 @@
   background-repeat: no-repeat;
   background-position: center;
   @include svgBox;
-  &:hover {
-    opacity: 0.84;
-  }
 }
 
 .content {
   position: relative;
   padding: 0.5rem 0 0.5rem 2rem;
   &:hover {
-    .xmark {
-      visibility: visible;
+    svg {
+      opacity: 0.84;
     }
     cursor: grab;
   }

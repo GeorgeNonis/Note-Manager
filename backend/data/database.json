@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "title": "hey",
+    "note": "Im editing again",
+    "id": "e93aab36-bca5-46dc-93b0-be9dc1bff381",
+    "color": "transparent",
+    "checkbox": false,
+    "createCheckboxes": false,
+    "labels": []
+  }
+]

@@ -320,6 +320,14 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
   const noteIndex = notes.findIndex((n) => n.id === id);
   const note = notes[noteIndex];
   let checkbox;
+  console.log({ notes });
+  console.log({ noteIndex });
+  console.log({ pinned });
+  console.log({ id });
+  console.log({ boxid });
+  console.log({ checkbox });
+  console.log({ checked });
+  console.log({ note });
   if (checked) {
     checkbox = note.checked.find((b) => b.id === boxid);
     note.checked = [...note.checked.filter((b) => b.id !== boxid)];
