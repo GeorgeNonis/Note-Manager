@@ -1,32 +1,33 @@
-import { useNotesContenxt } from "../sections/existing-notes-section/existing-notes-store";
+// import { useNotesContenxt } from "../sections/existing-notes-section/existing-notes-store";
 import Input from "./inputText";
+import { FormProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
-const Form = () => {
-  const store = useNotesContenxt();
+const Form = ({ useStore }: FormProps) => {
   const disableBtn =
-    store?.values.title.length == 0 && store?.values.note.length == 0;
+    useStore.values.title.length == 0 && useStore.values.note.length == 0;
+  console.log(typeof useStore.actions.saveNote);
   return (
     <>
-      {store?.values.display && (
+      {useStore.values.display && (
         <>
           <Input
-            onChange={store.actions.onChangeTitle}
-            value={store.values.title}
+            onChange={useStore.actions.onChangeTitle}
+            value={useStore.values.title}
             placeholder={"Title"}
           />
         </>
       )}
       <Input
-        onChange={store?.actions.onChangeNote!}
+        onChange={useStore.actions.onChangeNote!}
         placeholder={"Take a note..."}
-        value={store?.values.note!}
+        value={useStore.values.note!}
         onClick={() => {
-          store?.actions.setDisplay(true);
+          useStore.actions.setDisplay(true);
         }}
       />
       <div className={styles.actions}>
-        {store?.values.display && (
+        {useStore.values.display && (
           <button
             disabled={disableBtn}
             className={
@@ -36,14 +37,14 @@ const Form = () => {
             }
             onClick={() => {
               console.log("clicking");
-              store.actions.saveNote();
-              store.actions.setDisplay(false);
+              useStore.actions.saveNote();
+              useStore.actions.setDisplay(false);
             }}
           >
             Create Note
           </button>
         )}
-        {store?.values.display && (
+        {useStore.values.display && (
           <button
             disabled={disableBtn}
             className={
@@ -51,16 +52,16 @@ const Form = () => {
                 ? styles.closeFormButtonDisabled
                 : styles.closeFormButton
             }
-            onClick={store.actions.clearInputs}
+            onClick={useStore.actions.clearInputs}
           >
             Clear Inputs
           </button>
         )}
-        {store?.values.display && (
+        {useStore.values.display && (
           <button
             className={styles.closeFormButton}
             onClick={() => {
-              store?.actions.setDisplay(false);
+              useStore.actions.setDisplay(false);
             }}
           >
             Close

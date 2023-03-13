@@ -36,14 +36,14 @@
   grid-template-columns: 2fr 10fr;
   padding: 0.3rem;
   gap: 1rem;
+  &:hover {
+    cursor: grab;
+  }
 }
 
 .labeladdicon {
   justify-self: center;
   align-self: center;
-  &:hover {
-    cursor: grab;
-  }
 }
 
 .labelcreatecheckbox {
@@ -51,6 +51,9 @@
   grid-auto-flow: column;
   grid-template-columns: 2fr 8fr;
   padding: 0.3rem;
+  &:hover {
+    cursor: grab;
+  }
 }
 
 .checked {

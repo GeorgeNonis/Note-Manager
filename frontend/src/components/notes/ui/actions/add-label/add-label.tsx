@@ -5,7 +5,7 @@ import { useAddLabel } from "./useAddLabel";
 import styles from "./styles.module.scss";
 
 const AddLabel = ({ id, pinned }: AddLabelProps) => {
-  const { doesLabelExist, value, setValue, handlers, labels } = useAddLabel({
+  const { state } = useAddLabel({
     id,
     pinned,
   });
@@ -14,34 +14,40 @@ const AddLabel = ({ id, pinned }: AddLabelProps) => {
       <fieldset className={styles.labelfieldset}>
         <label htmlFor="label">Label note</label>
         <input
+          ref={state.values.inputRef}
           type="text"
           id="label"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => state.actions.setValue(e.target.value)}
           placeholder="Enter label name"
         />
       </fieldset>
       {/* {HERE I SHOULD RENDER THE ALREADY LABELS THAT EXIST} */}
-      {labels && (
+      {state.values.labels && (
         <ul className={styles.labelsUl}>
-          {labels.map((obj) => {
+          {state.values.labels.map((obj) => {
             return (
-              <CheckBox handlers={handlers} id={id} obj={obj} key={obj.label} />
+              <CheckBox
+                handlers={state.actions}
+                id={id}
+                obj={obj}
+                key={obj.label}
+              />
             );
           })}
         </ul>
       )}
-      {value && !doesLabelExist && (
+      {state.values.value && !state.values.doesLabelExist && (
         <div
           className={styles.labelcreatecheckbox}
           /**
            * With the http post request to send the id and the pin status of the note
            */
-          onClick={() => handlers.addLabelHandler()}
+          onClick={() => state.actions.addLabelHandler()}
         >
           <div className={styles.labeladdicon}>
             <AiOutlinePlus />
           </div>
-          <div>{`Create "${value}"`}</div>
+          <div>{`Create "${state.values.value}"`}</div>
         </div>
       )}
     </main>

@@ -1,13 +1,11 @@
-import { useNotesContenxt } from "../existing-notes-section/existing-notes-store";
+import { NoNotesTitleProps } from "./interfaces";
 
-const NoNotesTitle = () => {
-  const store = useNotesContenxt();
+const NoNotesTitle = ({ state }: NoNotesTitleProps) => {
   return (
     <>
-      {store?.values.state.notes.length === 0 &&
-        store?.values.state.pinnedNotes.length === 0 && (
-          <p style={{ textAlign: "center" }}>No notes</p>
-        )}
+      {state.notes.length === 0 && state.pinnedNotes.length === 0 && (
+        <p style={{ textAlign: "center" }}>No notes</p>
+      )}
     </>
   );
 };

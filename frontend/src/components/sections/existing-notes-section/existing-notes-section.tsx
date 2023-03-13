@@ -8,16 +8,15 @@ import {
   OthersTitle,
 } from "../../index";
 import Wrapper from "./wrapper";
-import { useNotesContenxt } from "./existing-notes-store";
+import { useExistingNotesSection } from "./useExistingNotesSection";
 import styles from "./styles.module.scss";
 
 const ExistinNotesSection = () => {
-  const useStore = useNotesContenxt();
-  console.log(useStore);
+  const { useStore } = useExistingNotesSection();
 
   let zIndex = 10000;
 
-  if (useStore?.values.loading) return <LoadingSpinner />;
+  if (useStore.values.loading) return <LoadingSpinner />;
 
   if (useStore?.values.error)
     return <ErrorFetching errorMessage={useStore.values.error} />;
@@ -34,12 +33,12 @@ const ExistinNotesSection = () => {
         className={styles.mainSection}
         ref={useStore?.values.clickOutsideNote}
       >
-        <Form key={100} />
+        <Form key={100} useStore={useStore} />
       </main>
       <section className={styles.allNotes}>
         {pinnedNotes}
         <OthersTitle state={useStore?.values.state!} />
-        <NoNotesTitle />
+        <NoNotesTitle state={useStore.values.state} />
         <section className={styles.notes}>
           {!useStore?.values.loading &&
             useStore?.values.state.notes.length !== 0 &&

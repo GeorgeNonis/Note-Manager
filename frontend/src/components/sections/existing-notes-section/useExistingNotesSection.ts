@@ -13,10 +13,10 @@ import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
 
 export const useExistingNotesSection = () => {
-  const { error, loadingInitialState } = useSelector(
-    (state: IRootState) => state.displayState
+  const { notes: state, displayState } = useSelector(
+    (state: IRootState) => state
   );
-  const state = useSelector((state: IRootState) => state.notes);
+  const { error, loadingInitialState } = displayState;
   const [display, setDisplay] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -36,27 +36,26 @@ export const useExistingNotesSection = () => {
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };
 
-  const onChangeTitle = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      setTitle(e.target.value);
-    },
-    []
-  );
-  const onChangeNote = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setTitle(e.target.value);
+  };
+
+  const onChangeNote = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNote(e.target.value);
-  }, []);
+  };
 
-  useEffect(() => {
-    if (note.length === 0 && title.length === 0) return;
-    const postNote = async () => {
-      const { processedNote, boolean } = await notePostHandler(title, note);
-      boolean ? dispatch(addNote(processedNote)) : console.log("error");
+  const saveNote = async () => {
+    const { processedNote, boolean } = await notePostHandler(title, note);
+    boolean ? dispatch(addNote(processedNote)) : console.log("error");
 
-      setTitle("");
-      setNote("");
-    };
-    postNote();
-  }, [display]);
+    setTitle("");
+    setNote("");
+  };
+
+  const clearInputs = () => {
+    setTitle("");
+    setNote("");
+  };
 
   const useStore = {
     values: {
@@ -70,11 +69,13 @@ export const useExistingNotesSection = () => {
     },
     actions: {
       setDisplay,
-      onDragEnd,
       onDragStart,
+      onDragEnd,
       onDragEnter,
       onChangeTitle,
       onChangeNote,
+      saveNote,
+      clearInputs,
     },
   };
 
@@ -82,9 +83,3 @@ export const useExistingNotesSection = () => {
     useStore,
   };
 };
-
-// const { useStore } = useExistingNotesSection();
-
-// export const ExistingNotesStore = createContext(useStore);
-
-// export const useNotesContenxtTesting = () => useContext(ExistingNotesStore);

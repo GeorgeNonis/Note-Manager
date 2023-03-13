@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
 import { addLabel, tickHandler } from "../../../../../store/notes-slice";
@@ -9,9 +9,9 @@ import styles from "./styles.module.scss";
 
 export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
-  // const [labels, setLabels] = useState<Labels[]>([]);
   const addLabelHandler = async () => {
     const sharedId = crypto.randomUUID();
     const response = await addLabelHttp({
@@ -53,17 +53,26 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     }
   };
 
-  const handlers = {
-    isLabelChecked,
-    tickLabelHandler,
-    addLabelHandler,
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const state = {
+    actions: {
+      isLabelChecked,
+      tickLabelHandler,
+      addLabelHandler,
+      setValue,
+    },
+    values: {
+      value,
+      doesLabelExist,
+      labels,
+      inputRef,
+    },
   };
 
   return {
-    doesLabelExist,
-    value,
-    setValue,
-    handlers,
-    labels,
+    state,
   };
 };
