@@ -38,7 +38,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       ? dispatch(pinHandler(note.id))
       : console.log(response[1]?.message);
   };
-  const zIndex = !review ? zindex : 20002;
+  // const zIndex = !review ? zindex : 20002;
+  const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;
 
   const state = {

@@ -7,7 +7,7 @@ export interface ExistingNoteWrapperProps {
   note: NoteObj;
   pinned: boolean;
   position: number;
-  zIndex: number;
+  zIndex: number | string;
   dragable: boolean;
   setReview: Dispatch<SetStateAction<boolean>>;
   onDragEnd: () => void;
@@ -18,7 +18,6 @@ export interface ExistingNoteWrapperProps {
     pinned: boolean,
     id: string
   ) => void;
-  // clickOutsideNote: React.MutableRefObject<any>;
 }
 
 export interface DeletedNoteWrapperProps {
