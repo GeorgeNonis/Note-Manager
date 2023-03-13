@@ -10,7 +10,7 @@ const Error = () => {
         your understanding
       </h3>
 
-      <Link to={"/notes"}>Head back to the main page</Link>
+      <Link to={"/"}>Head back to the main page</Link>
     </div>
   );
 };
