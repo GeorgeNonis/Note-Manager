@@ -238,13 +238,11 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
+  const pinned = isNotePined === "true";
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const { sharedId } = req.body;
-  console.log(sharedId);
-  const notes = isNotePined === "true" ? pinnedNotes : unPinnedNotes;
-  let note;
-
-  note = notes.find((n) => n.id === id);
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  let note = notes.find((n) => n.id === id);
 
   try {
     await writeData([...notes, { ...note, id: sharedId }]);
@@ -256,7 +254,7 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
 
 router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   const { id, isNotePined } = getIdPinnedStatus(req);
-  const pinned = isNotePined === "true" ? true : false;
+  const pinned = isNotePined === "true";
   const { label, labelId } = req.body;
   const labels = await readDataLabels();
   const newLabel = id
@@ -272,10 +270,9 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/label/:id`, async (req, res, next) => {
-  console.log("Im being requested");
   const { id } = getIdPinnedStatus(req);
   const label = req.query.label;
-  const pinned = req.query.isnotepined === "true" ? true : false;
+  const pinned = req.query.isnotepined === "true";
   const labels = await readDataLabels();
   const findLabelIndex = labels.findIndex((lb) => lb.label === label);
   const noteIndex = labels[findLabelIndex].notes.findIndex((n) => n.id === id);
@@ -311,6 +308,70 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
   try {
     await writeDataLabels([...newState]);
     return res.status(200).json({ message: `Sucessfully edited ${label}` });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const pinned = isNotePined === "true";
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  let note = notes.find((n) => n.id === id);
+
+  if (!note.createCheckboxes) {
+    const setences = note.note
+      ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
+      : [""];
+    const uncheckednote = [
+      ...setences.map((s) => {
+        return { note: s, id: crypto.randomUUID() };
+      }),
+    ];
+    note.unChecked = [...uncheckednote];
+    note.checked = [];
+
+    note.createCheckboxes = true;
+  } else {
+    note.unChecked = [];
+    note.checked = [];
+    note.createCheckboxes = false;
+  }
+
+  note.checkbox = !note.checkbox;
+  try {
+    pinned ? await writePinned([...notes]) : await writeData([...notes]);
+    return res.status(200).json({ message: "Sucessfully handled checkboxes" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
+  }
+});
+
+router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
+  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const { boxid, checked } = req.body;
+  const pinned = isNotePined === "true";
+
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  const noteIndex = notes.findIndex((n) => n.id === id);
+  const note = notes[noteIndex];
+  let checkbox;
+  if (checked) {
+    checkbox = note.checked.find((b) => b.id === boxid);
+    note.checked = [...note.checked.filter((b) => b.id !== boxid)];
+    note.unChecked?.push(checkbox);
+  } else {
+    checkbox = note.unChecked?.find((b) => b.id === boxid);
+    note.unChecked = [...note.unChecked?.filter((b) => b.id !== boxid)];
+    note.checked?.push(checkbox);
+  }
+
+  try {
+    pinned ? await writePinned([...notes]) : await writeData([...notes]);
+
+    return res.status(200).json({ message: "Sucessfully handled checkboxes" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
   }

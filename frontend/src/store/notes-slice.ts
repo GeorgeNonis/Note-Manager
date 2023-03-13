@@ -140,90 +140,48 @@ const notes = createSlice({
 
       state.labels[indexOfLabel].label = newLabel;
     },
-    checkBoxesPinned(state, { payload }) {
-      const { id } = payload;
-      let noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
-      const pinnedNote = state.pinnedNotes[noteIndex];
-
-      if (!pinnedNote.createCheckboxes) {
-        const setences = pinnedNote.note
-          ? pinnedNote.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
-          : [""];
-        const uncheckednote = [
-          ...setences.map((s) => {
-            return { note: s, id: crypto.randomUUID() };
-          }),
-        ];
-        pinnedNote.unChecked = [...uncheckednote];
-        pinnedNote.checked = [];
-
-        pinnedNote.createCheckboxes = true;
-      } else {
-        pinnedNote.unChecked = [];
-        pinnedNote.checked = [];
-        pinnedNote.createCheckboxes = false;
-      }
-
-      pinnedNote.checkbox = !pinnedNote.checkbox;
-    },
-    checkBoxesUnPinned(state, { payload }) {
-      const { id } = payload;
+    checkBoxes(state, { payload }) {
+      const { id, pinned } = payload;
+      const notes = pinned ? state.pinnedNotes : state.notes;
       let noteIndex = state.notes.findIndex((n) => n.id === id);
-      const UnPinnedNote = state.notes[noteIndex];
+      const note = notes[noteIndex];
 
-      if (!UnPinnedNote.createCheckboxes) {
-        const setences = UnPinnedNote.note
-          ? UnPinnedNote.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
+      if (!note.createCheckboxes) {
+        const setences = note.note
+          ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
           : [""];
         const uncheckednote = [
           ...setences.map((s) => {
             return { note: s, id: crypto.randomUUID() };
           }),
         ];
-        UnPinnedNote.unChecked = [...uncheckednote];
-        UnPinnedNote.checked = [];
+        note.unChecked = [...uncheckednote];
+        note.checked = [];
 
-        UnPinnedNote.createCheckboxes = true;
+        note.createCheckboxes = true;
       } else {
-        UnPinnedNote.unChecked = [];
-        UnPinnedNote.checked = [];
-        UnPinnedNote.createCheckboxes = false;
+        note.unChecked = [];
+        note.checked = [];
+        note.createCheckboxes = false;
       }
 
-      UnPinnedNote.checkbox = !UnPinnedNote.checkbox;
+      note.checkbox = !note.checkbox;
     },
-    checkPinned(state, { payload }) {
-      const { id, boxid, checked } = payload;
-      const noteIndex = state.pinnedNotes.findIndex((n) => n.id === id);
-      const pinnedNote = state.pinnedNotes[noteIndex];
-      if (checked) {
-        pinnedNote.unChecked = [
-          ...pinnedNote.unChecked?.filter((n) => n.id !== boxid)!,
-        ];
-      } else {
-        pinnedNote.checked = [
-          ...pinnedNote.checked?.filter((n) => n.id !== boxid)!,
-        ];
-      }
-    },
-    checkUnPinned(state, { payload }) {
-      const { id, boxid, checked } = payload;
-      const noteIndex = state.notes.findIndex((n) => n.id === id);
-      const pinnedNote = state.notes[noteIndex];
+    checkBox(state, { payload }) {
+      const { id, boxid, checked, pinned } = payload;
+      console.log({ id, boxid, checked, pinned });
+      const notes = pinned ? state.pinnedNotes : state.notes;
+      const noteIndex = notes.findIndex((n) => n.id === id);
+      const note = notes[noteIndex];
       let checkbox;
-
       if (checked) {
-        checkbox = pinnedNote.checked?.find((b) => b.id === boxid);
-        pinnedNote.checked = [
-          ...pinnedNote.checked?.filter((n) => n.id !== boxid)!,
-        ];
-        pinnedNote.unChecked?.push(checkbox!);
+        checkbox = note.checked?.find((b) => b.id === boxid)!;
+        note.checked = [...note.checked?.filter((b) => b.id !== boxid)!];
+        note.unChecked?.push(checkbox);
       } else {
-        checkbox = pinnedNote.unChecked?.find((b) => b.id === boxid);
-        pinnedNote.unChecked = [
-          ...pinnedNote.unChecked?.filter((n) => n.id !== boxid)!,
-        ];
-        pinnedNote.checked?.push(checkbox!);
+        checkbox = note.unChecked?.find((b) => b.id === boxid)!;
+        note.unChecked = [...note.unChecked?.filter((b) => b.id !== boxid)!];
+        note.checked?.push(checkbox);
       }
     },
   },
@@ -244,10 +202,8 @@ export const {
   deleteLabel,
   tickHandler,
   editLabel,
-  checkBoxesPinned,
-  checkBoxesUnPinned,
-  checkPinned,
-  checkUnPinned,
+  checkBoxes,
+  checkBox,
 } = notes.actions;
 
 export default notes.reducer;

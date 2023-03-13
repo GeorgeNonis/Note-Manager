@@ -28,3 +28,15 @@ export interface EditNoteArgs {
   noteValue?: string;
   titleValue?: string;
 }
+
+export interface CheckBoxesProps {
+  noteId: string;
+  pinned: boolean;
+}
+
+export interface CheckBoxProps {
+  noteId: string;
+  boxid: string;
+  checked: boolean;
+  pinned: boolean;
+}

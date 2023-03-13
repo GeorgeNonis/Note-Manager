@@ -14,4 +14,6 @@ export {
   removeNoteHttp,
   restoreNoteHttp,
   copyNoteHttp,
+  checkBoxesHandlerHttp,
+  checkBoxHandlerHttp,
 } from "./postNote";

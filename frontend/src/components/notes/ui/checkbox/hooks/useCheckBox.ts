@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
-import { checkPinned, checkUnPinned } from "../../../../../store/notes-slice";
+import { checkBoxHandlerHttp } from "../../../../../services";
+import { checkBox } from "../../../../../store/notes-slice";
+import { isThereError } from "../../../../../utils";
 import { UseCheckBox } from "../interfaces";
 
 export const useCheckBox = ({
@@ -10,11 +12,17 @@ export const useCheckBox = ({
 }: UseCheckBox) => {
   const dispatch = useDispatch();
   const checkHandler = async () => {
-    dispatch(
-      pinned
-        ? checkPinned({ id: noteId, boxid, checked })
-        : checkUnPinned({ id: noteId, boxid, checked })
-    );
+    const response = await checkBoxHandlerHttp({
+      noteId,
+      boxid,
+      checked,
+      pinned,
+    });
+    const sucessfullRequest = isThereError(response);
+    console.log(sucessfullRequest);
+    sucessfullRequest
+      ? dispatch(checkBox({ id: noteId, boxid, checked, pinned }))
+      : console.log(response[1]?.message);
   };
   return {
     checkHandler,

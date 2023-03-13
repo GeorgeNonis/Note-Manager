@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useOutsideClick } from "../../../../../hooks";
-import { deleteNoteHttp, copyNoteHttp } from "../../../../../services";
 import {
-  checkBoxesPinned,
-  checkBoxesUnPinned,
+  deleteNoteHttp,
+  copyNoteHttp,
+  checkBoxesHandlerHttp,
+} from "../../../../../services";
+import {
+  checkBoxes,
   copyNote,
   deleteNote,
 } from "../../../../../store/notes-slice";
@@ -77,21 +80,26 @@ export const useOptions = ({
 
   const checkBoxesHandler = async (e: React.MouseEvent<HTMLElement>) => {
     if (e.currentTarget.id === "discard") {
-      dispatch(
-        pinned
-          ? checkBoxesPinned({ id: note.id })
-          : checkBoxesUnPinned({ id: note.id })
-      );
+      const response = await checkBoxesHandlerHttp({ noteId: note.id, pinned });
+      const sucessfullRequest = isThereError(response);
+      if (sucessfullRequest) {
+        dispatch(checkBoxes({ id: note.id, pinned }));
+      } else {
+        console.log(response[1]?.message);
+      }
       setDiscardBoxes(!discardBoxes);
     } else {
       if (note.createCheckboxes === true) {
         setDiscardBoxes(!discardBoxes);
       } else {
-        dispatch(
-          pinned
-            ? checkBoxesPinned({ id: note.id })
-            : checkBoxesUnPinned({ id: note.id })
-        );
+        const response = await checkBoxesHandlerHttp({
+          noteId: note.id,
+          pinned,
+        });
+        const sucessfullRequest = isThereError(response);
+        sucessfullRequest
+          ? dispatch(checkBoxes({ id: note.id, pinned }))
+          : console.log(response[1]?.message);
       }
     }
   };
