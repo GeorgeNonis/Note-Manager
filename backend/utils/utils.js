@@ -85,9 +85,9 @@ export const writePinned = async (data) => {
 };
 
 export const getIdPinnedStatus = (req) => {
-  const isNotePined = req.query.isnotepined;
+  const pinned = req.query.isnotepined;
   const id = req.params.id.split(":")[1];
-
+  const isNotePined = pinned === "true";
   return {
     isNotePined,
     id,

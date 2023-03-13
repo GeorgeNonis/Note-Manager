@@ -143,9 +143,12 @@ const notes = createSlice({
     checkBoxes(state, { payload }) {
       const { id, pinned } = payload;
       const notes = pinned ? state.pinnedNotes : state.notes;
-      let noteIndex = state.notes.findIndex((n) => n.id === id);
+      const noteIndex = notes.findIndex((n) => n.id === id);
       const note = notes[noteIndex];
-
+      console.log(note);
+      console.log(id);
+      console.log(pinned);
+      console.log(noteIndex);
       if (!note.createCheckboxes) {
         const setences = note.note
           ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)

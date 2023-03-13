@@ -9,7 +9,6 @@ import {
   ErrorFetching,
   LoadingSpinner,
 } from "../../components";
-import { ExistingNotesStoreProvider } from "../../components/sections/existing-notes-section/existing-notes-store";
 import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
@@ -92,11 +91,7 @@ const RootLayout = () => {
         {loadingInitialState && <LoadingSpinner />}
         {error && <ErrorFetching errorMessage={error} />}
 
-        {!loadingInitialState && (
-          <ExistingNotesStoreProvider>
-            <Outlet />
-          </ExistingNotesStoreProvider>
-        )}
+        {!loadingInitialState && <Outlet />}
       </main>
     </>
   );

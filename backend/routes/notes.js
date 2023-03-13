@@ -83,42 +83,26 @@ router.post("/v1/notes", async (req, res, next) => {
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   const { noteValue, titleValue } = req.body;
-  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
-  console.log({ noteValue, titleValue, id, isNotePined });
-  let noteIndex;
 
-  if (isNotePined === "true") {
-    noteIndex = pinnedNotes.findIndex((n) => n.id === id);
-    pinnedNotes[noteIndex].title = titleValue;
-    pinnedNotes[noteIndex].note = noteValue;
-
-    await writePinned([...pinnedNotes])
-      .then((response) => {
-        return res.status(200).json({ message: "Sucessfully edited note" });
-      })
-      .catch((error) => {
-        return res.status(500).json({ message: "Internal error", error });
-      });
-  } else {
-    noteIndex = unPinnedNotes.findIndex((n) => n.id === id);
-    console.log(unPinnedNotes[noteIndex]);
-    unPinnedNotes[noteIndex].title = titleValue;
-    unPinnedNotes[noteIndex].note = noteValue;
-    try {
-      await writeData([...unPinnedNotes]);
-      return res.status(200).json({ message: "Sucessfully edited note" });
-    } catch (error) {
-      return res.status(500).json({ message: "Internal error", error });
-    }
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  const noteIndex = notes.findIndex((n) => n.id === id);
+  const note = notes[noteIndex];
+  note.title = titleValue;
+  note.note = noteValue;
+  try {
+    pinned ? await writePinned([...notes]) : await writeData([...notes]);
+    return res.status(200).json({ message: "Sucessfully edited note" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
   }
 });
 
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
-  const isNotePined = req.query.isnotepined;
-  console.log(isNotePined);
-  if (isNotePined === "true") {
+  const { isNotePined } = getIdPinnedStatus(req);
+  if (isNotePined) {
     try {
       await writePinned(data);
       return res.status(200).json({
@@ -175,77 +159,59 @@ router.post("/v1/trashbin", async (req, res, next) => {
 });
 
 router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
-  const pinned = await readDataPinned();
-  const unpinned = await readData();
-  const id = req.params.id.split(":")[1];
-  const isItPinned = pinned.find((n) => n.id === id);
-  const pinNote = unpinned.find((n) => n.id === id);
-  console.log("pining note");
-  if (isItPinned === undefined) {
-    await writePinned([...pinned, { ...pinNote }])
+  let { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  const noteIndex = notes.findIndex((n) => n.id === id);
+  const note = notes[noteIndex];
+  if (pinned) {
+    pinnedNotes = [...pinnedNotes.filter((n) => n.id !== id)];
+    unPinnedNotes = [...unPinnedNotes, { ...note }];
+  } else {
+    unPinnedNotes = [...unPinnedNotes.filter((n) => n.id !== id)];
+    pinnedNotes = [...pinnedNotes, { ...note }];
+  }
+
+  try {
+    await writeData([...unPinnedNotes])
       .then(async () => {
-        await writeData([...unpinned.filter((n) => n.id !== id)]);
+        await writePinned([...pinnedNotes]);
       })
       .then(() => {
         return res.status(200).json({ message: "Successfully pinned" });
-      })
-      .catch((error) => {
-        return res.status(500).json({ message: "Internal error", error });
       });
-  } else {
-    await writePinned([...pinned.filter((n) => n.id !== id)])
-      .then(async () => {
-        await writeData([...unpinned, { ...isItPinned }]);
-      })
-      .then(() => {
-        return res.status(200).json({ message: "Successfully unpinned" });
-      })
-      .catch((error) => {
-        return res.status(500).json({ message: "Something went wrong", error });
-      });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
   }
 });
 
 router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
-  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
+  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  const noteIndex = notes.findIndex((n) => n.id === id);
+  const note = notes[noteIndex];
   const color = req.body.color;
-  let noteIndex;
 
-  if (isNotePined === "true") {
-    noteIndex = pinnedNotes.findIndex((n) => n.id === id);
-    pinnedNotes[noteIndex].color = color;
+  note.color = color;
 
-    await writePinned([...pinnedNotes])
-      .then((response) => {
-        res.status(200).json({ message: "Sucessfully added color" });
-      })
-      .catch((error) => {
-        res.status(500).json({ message: "Internal error", error });
-      });
-  } else {
-    noteIndex = unPinnedNotes.findIndex((n) => n.id === id);
-    unPinnedNotes[noteIndex].color = color;
-    await writeData([...unPinnedNotes])
-      .then((response) => {
-        res.status(200).json({ message: "Sucessfully added color" });
-      })
-      .catch((error) => {
-        res.status(500).json({ message: "Internal error", error });
-      });
+  try {
+    pinned ? await writePinned([...notes]) : await writeData([...notes]);
+    return res.status(200).json({ message: "Sucessfully updated note color" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal error", error });
   }
 });
 
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
-  const { id, isNotePined } = getIdPinnedStatus(req);
-  const pinned = isNotePined === "true";
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const { sharedId } = req.body;
   const notes = pinned ? pinnedNotes : unPinnedNotes;
-  let note = notes.find((n) => n.id === id);
+  const note = notes.find((n) => n.id === id);
 
   try {
-    await writeData([...notes, { ...note, id: sharedId }]);
+    await writeData([...unPinnedNotes, { ...note, id: sharedId }]);
     return res.status(200).json({ message: "Sucessfully copied note" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
@@ -253,8 +219,7 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
-  const { id, isNotePined } = getIdPinnedStatus(req);
-  const pinned = isNotePined === "true";
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { label, labelId } = req.body;
   const labels = await readDataLabels();
   const newLabel = id
@@ -270,9 +235,8 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/label/:id`, async (req, res, next) => {
-  const { id } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
-  const pinned = req.query.isnotepined === "true";
   const labels = await readDataLabels();
   const findLabelIndex = labels.findIndex((lb) => lb.label === label);
   const noteIndex = labels[findLabelIndex].notes.findIndex((n) => n.id === id);
@@ -314,9 +278,8 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
-  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
-  const pinned = isNotePined === "true";
   const notes = pinned ? pinnedNotes : unPinnedNotes;
   let note = notes.find((n) => n.id === id);
 
@@ -349,10 +312,9 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
-  const { id, isNotePined } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { pinnedNotes, unPinnedNotes } = await getAllNotes();
   const { boxid, checked } = req.body;
-  const pinned = isNotePined === "true";
 
   const notes = pinned ? pinnedNotes : unPinnedNotes;
   const noteIndex = notes.findIndex((n) => n.id === id);
@@ -371,7 +333,7 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
   try {
     pinned ? await writePinned([...notes]) : await writeData([...notes]);
 
-    return res.status(200).json({ message: "Sucessfully handled checkboxes" });
+    return res.status(200).json({ message: "Sucessfully handled checkbox" });
   } catch (error) {
     return res.status(500).json({ message: "Internal error", error });
   }
@@ -382,14 +344,13 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
  */
 
 router.delete("/v1/notes/:id", async (req, res, next) => {
-  const id = req.params.id.split(":")[1];
-  const isNotePined = req.query.isnotepined;
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+
   const prevStateDel = await readDataDel();
   let prevState;
   let note;
-  console.log(id);
-  console.log(typeof isNotePined);
-  if (isNotePined === "false") {
+
+  if (!pinned) {
     prevState = await readData();
     note = prevState.find((n) => n.id === id);
     console.log(note);
