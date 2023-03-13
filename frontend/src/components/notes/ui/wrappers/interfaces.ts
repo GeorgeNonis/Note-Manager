@@ -10,7 +10,7 @@ export interface ExistingNoteWrapperProps {
   zIndex: number | string;
   dragable: boolean;
   setReview: Dispatch<SetStateAction<boolean>>;
-  onDragEnd: () => void;
+  onDragEnd: (e: React.DragEvent) => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;
   onDragStart: (
     e: React.DragEvent,

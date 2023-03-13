@@ -31,7 +31,7 @@ const ExistingNoteWrapper = ({
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
-      onDragEnd={onDragEnd}
+      onDragEnd={(e) => onDragEnd(e)}
     >
       {children}
     </div>

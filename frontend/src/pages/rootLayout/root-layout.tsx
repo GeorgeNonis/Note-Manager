@@ -13,14 +13,19 @@ import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const { error, loadingInitialState } = state.values.displayState;
+  const { error, loadingInitialState, httpReqResLoading } =
+    state.values.displayState;
 
   return (
     <>
       <h3 className={styles.appTitle}>Note Manager</h3>
-      <main className={styles.main}>
+      <main
+        className={styles.main}
+        style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
+      >
         <div
           ref={hoverOutsideTrash}
+          id="trashbin"
           className={styles.BiTrash}
           onMouseEnter={() => {
             state.actions.setMouseOverTrash(true);

@@ -12,6 +12,8 @@ export const onDropBin = async (
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
   console.log(id);
   console.log(pinned);
+  console.log(typeof id);
+  console.log(id.length);
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
     const response = await deleteNoteHttp(id, pinned);

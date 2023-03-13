@@ -10,6 +10,7 @@ import {
   copyNote,
   deleteNote,
 } from "../../../../../store/notes-slice";
+import { httpReqResLoading } from "../../../../../store/display-state-slice";
 import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils";
 import { UseOptionsProps } from "./interfaces";
@@ -34,13 +35,17 @@ export const useOptions = ({
   const copyNoteHandler = async (id: string, pinned: boolean) => {
     const sharedId = crypto.randomUUID();
     const response = await copyNoteHttp({ noteId: id, pinned, sharedId });
+    dispatch(httpReqResLoading());
 
     const sucessfullRequest = isThereError(response);
     console.log(sucessfullRequest);
-    sucessfullRequest
-      ? dispatch(copyNote({ id, pinned, sharedId }))
-      : console.log(response[1]?.message);
+    if (sucessfullRequest) {
+      dispatch(copyNote({ id, pinned, sharedId }));
+    } else {
+      console.log(response[1]?.message);
+    }
 
+    dispatch(httpReqResLoading());
     setDisplay(false);
   };
 

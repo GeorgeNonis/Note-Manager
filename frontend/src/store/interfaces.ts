@@ -13,4 +13,5 @@ export interface DisplayStateInitialState {
   error: string;
   review: boolean;
   loadingInitialState: boolean;
+  httpReqResLoading: boolean;
 }

@@ -32,7 +32,7 @@ export interface FormProps {
     };
     actions: {
       setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-      onDragEnd: () => Promise<void>;
+      onDragEnd: (e: React.DragEvent) => Promise<void>;
       onDragStart: (
         e: React.DragEvent<Element>,
         position: number,

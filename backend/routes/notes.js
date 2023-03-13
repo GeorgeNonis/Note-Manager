@@ -101,25 +101,15 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
-  const { isNotePined } = getIdPinnedStatus(req);
-  if (isNotePined) {
-    try {
-      await writePinned(data);
-      return res.status(200).json({
-        message: "Sorted your items Successfully",
-      });
-    } catch (error) {
-      return res.status(500).json({ message: "Internal error", error });
-    }
-  } else {
-    try {
-      await writeData(data);
-      res.status(200).json({
-        message: "Sorted your items Successfully",
-      });
-    } catch (error) {
-      res.status(500).json({ message: "Internal error", error });
-    }
+  const pinned = req.query.isnotepined === "true";
+
+  try {
+    pinned ? await writePinned(data) : await writeData(data);
+    res.status(200).json({
+      message: "Sorted your items Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
   }
 });
 
@@ -353,7 +343,7 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
 
 router.delete("/v1/notes/:id", async (req, res, next) => {
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
-
+  console.log("deleteing");
   const prevStateDel = await readDataDel();
   let prevState;
   let note;

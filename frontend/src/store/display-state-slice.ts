@@ -5,6 +5,7 @@ const initialState: DisplayStateInitialState = {
   review: false,
   loadingInitialState: true,
   error: "",
+  httpReqResLoading: false,
 };
 
 const displayState = createSlice({
@@ -18,9 +19,14 @@ const displayState = createSlice({
       console.log(error);
       state.error = error;
     },
+    httpReqResLoading(state) {
+      state.httpReqResLoading = !state.httpReqResLoading;
+      console.log("Changing");
+    },
   },
 });
 
-export const { loadingInitialState, errorState } = displayState.actions;
+export const { loadingInitialState, errorState, httpReqResLoading } =
+  displayState.actions;
 
 export default displayState.reducer;

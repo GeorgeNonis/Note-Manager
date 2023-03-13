@@ -5,6 +5,8 @@ export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
+  console.log(id);
+  console.log(pinned);
   try {
     const response = await axios.delete<T, E>(
       `${BASE_URL}notes/:${id}?isnotepined=${pinned}`
