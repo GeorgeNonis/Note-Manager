@@ -8,7 +8,7 @@ const NoteDetails = ({
   note,
   checkbox,
   pinned,
-  editable,
+  editable = true,
 }: NoteDetailsProps) => {
   return (
     <>

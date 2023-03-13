@@ -3,7 +3,10 @@ import { PinnedNotesSectionProps } from "./interfaces";
 import { usePinnedNotesSection } from "./usePinnedNotesSection";
 import styles from "./styles.module.scss";
 
-const PinnedNotesSection = ({ notes, dragable }: PinnedNotesSectionProps) => {
+const PinnedNotesSection = ({
+  notes,
+  dragable = true,
+}: PinnedNotesSectionProps) => {
   const { onDragEnter, onDragStart, onDragEnd } = usePinnedNotesSection();
   let zIndex = 1000;
   return (
@@ -15,7 +18,7 @@ const PinnedNotesSection = ({ notes, dragable }: PinnedNotesSectionProps) => {
           return (
             <Note
               dragable={dragable}
-              pinned={true}
+              // pinned={true}
               position={i}
               zindex={zIndex}
               note={n}

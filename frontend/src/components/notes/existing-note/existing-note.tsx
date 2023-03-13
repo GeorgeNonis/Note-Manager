@@ -18,7 +18,7 @@ const Note = ({
   onDragEnter,
   onDragStart,
   zindex,
-  pinned,
+  pinned = true,
   dragable,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
@@ -36,7 +36,6 @@ const Note = ({
         pinned={pinned}
         review={state.values.review}
         setReview={state.actions.setReview}
-        // clickOutsideNote={state.values.clickOutsideNote}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
@@ -64,7 +63,6 @@ const Note = ({
           <div className={styles.actions}>
             <button
               disabled={state.values.disableBtn}
-              // className={styles.reviewNoteButton}
               className={
                 state.values.disableBtn
                   ? styles.reviewNoteButtonDisabled

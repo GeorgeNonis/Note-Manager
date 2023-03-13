@@ -18,31 +18,28 @@ const ExistinNotesSection = () => {
 
   if (useStore.values.loading) return <LoadingSpinner />;
 
-  if (useStore?.values.error)
+  if (useStore.values.error)
     return <ErrorFetching errorMessage={useStore.values.error} />;
 
-  const pinnedNotes = useStore?.values.state.pinnedNotes.length !== 0 && (
-    <PinnedNotesSection
-      notes={[...useStore?.values.state.pinnedNotes!]}
-      dragable={true}
-    />
+  const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
+    <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
   );
   return (
     <Wrapper styles={styles}>
       <main
         className={styles.mainSection}
-        ref={useStore?.values.clickOutsideNote}
+        ref={useStore.values.clickOutsideNote}
       >
         <Form key={100} useStore={useStore} />
       </main>
       <section className={styles.allNotes}>
         {pinnedNotes}
-        <OthersTitle state={useStore?.values.state!} />
+        <OthersTitle state={useStore.values.state!} />
         <NoNotesTitle state={useStore.values.state} />
         <section className={styles.notes}>
-          {!useStore?.values.loading &&
-            useStore?.values.state.notes.length !== 0 &&
-            useStore?.values.state.notes.map((note, i) => {
+          {!useStore.values.loading &&
+            useStore.values.state.notes.length !== 0 &&
+            useStore.values.state.notes.map((note, i) => {
               zIndex -= 1;
               return (
                 <Note

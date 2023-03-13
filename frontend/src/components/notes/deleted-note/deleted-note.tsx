@@ -26,14 +26,13 @@ const DeletedNote = ({ note, zindex }: Props) => {
           document.getElementById("reviewModal")!
         )}
       <DeletedNoteWrapper
-        // clickOutsideNote={clickOutsideNote}
         note={note}
         setReview={setReview}
         review={review}
         zIndex={zIndex}
       >
-        <Title title={note.title} editable={true} />
-        <NoteDetails note={note} editable={true} />
+        <Title title={note.title} />
+        <NoteDetails note={note} />
         <div className={styles.actions}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>

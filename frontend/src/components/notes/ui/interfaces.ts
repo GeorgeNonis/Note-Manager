@@ -8,13 +8,13 @@ export interface NotePinProps {
 }
 
 export interface NoteTitleProps {
-  editable: boolean;
+  editable?: boolean;
   setNoteTitle?: Dispatch<SetStateAction<string>>;
   title: string;
 }
 
 export interface NoteDetailsProps {
-  editable: boolean;
+  editable?: boolean;
   setNotedetails?: Dispatch<SetStateAction<string>>;
   note: NoteObj;
   pinned?: boolean;

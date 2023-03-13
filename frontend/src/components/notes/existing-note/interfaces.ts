@@ -4,7 +4,7 @@ export interface NoteProps {
   note: NoteObj;
   zindex: number;
   position: number;
-  pinned: boolean;
+  pinned?: boolean;
   dragable: boolean;
   onDragEnd: () => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;

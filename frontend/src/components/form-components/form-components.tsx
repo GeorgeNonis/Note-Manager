@@ -1,4 +1,3 @@
-// import { useNotesContenxt } from "../sections/existing-notes-section/existing-notes-store";
 import Input from "./inputText";
 import { FormProps } from "./interfaces";
 import styles from "./styles.module.scss";
