@@ -145,10 +145,7 @@ const notes = createSlice({
       const notes = pinned ? state.pinnedNotes : state.notes;
       const noteIndex = notes.findIndex((n) => n.id === id);
       const note = notes[noteIndex];
-      console.log(note);
-      console.log(id);
-      console.log(pinned);
-      console.log(noteIndex);
+
       if (!note.createCheckboxes) {
         const setences = note.note
           ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)

@@ -12,6 +12,10 @@
     no-repeat center;
 }
 
+@mixin svgBox {
+  top: 0.6rem;
+  left: 5px;
+}
 @mixin svgStyle {
   position: absolute;
 
@@ -22,8 +26,8 @@
   -webkit-background-size: 18px 18px;
   background-repeat: no-repeat;
   background-position: center;
+  @include svgBox;
   &:hover {
-    cursor: grab;
     opacity: 0.84;
   }
 }
@@ -35,15 +39,17 @@
     .xmark {
       visibility: visible;
     }
-    &:hover {
-      cursor: grab;
-    }
+    cursor: grab;
+  }
+}
+
+.invalid {
+  &:hover {
+    cursor: not-allowed;
   }
 }
 
 .checkedSvg {
-  top: 0.6rem;
-  left: 5px;
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmZmZmIj48cGF0aCBkPSJNMTkgM0g1Yy0xLjEgMC0yIC45LTIgMnYxNGMwIDEuMS45IDIgMiAyaDE0YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bTAgMTZINVY1aDE0djE0eiIvPgogIDxwYXRoIGQ9Ik0xOCA5bC0xLjQtMS40LTYuNiA2LjYtMi42LTIuNkw2IDEzbDQgNHoiLz4KPC9zdmc+Cg==);
   @include svgStyle;
 }
@@ -53,8 +59,6 @@
   color: gray;
 }
 .uncheckedSvg {
-  top: 0.6rem;
-  left: 5px;
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmZmZmIj4KICA8cGF0aCBkPSJNMTkgNXYxNEg1VjVoMTRtMC0ySDVjLTEuMSAwLTIgLjktMiAydjE0YzAgMS4xLjkgMiAyIDJoMTRjMS4xIDAgMi0uOSAyLTJWNWMwLTEuMS0uOS0yLTItMnoiLz4KPC9zdmc+Cg==);
   @include svgStyle;
 }

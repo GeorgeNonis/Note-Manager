@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { checkBoxHandlerHttp } from "../../../../../services";
 import { checkBox } from "../../../../../store/notes-slice";
@@ -11,7 +12,9 @@ export const useCheckBox = ({
   boxid,
 }: UseCheckBox) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const checkHandler = async () => {
+    setLoading(true);
     const response = await checkBoxHandlerHttp({
       noteId,
       boxid,
@@ -19,12 +22,15 @@ export const useCheckBox = ({
       pinned,
     });
     const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
-    sucessfullRequest
-      ? dispatch(checkBox({ id: noteId, boxid, checked, pinned }))
-      : console.log(response[1]?.message);
+    if (sucessfullRequest) {
+      dispatch(checkBox({ id: noteId, boxid, checked, pinned }));
+    } else {
+      console.log(response[1]?.message);
+    }
+    setLoading(false);
   };
   return {
     checkHandler,
+    loading,
   };
 };

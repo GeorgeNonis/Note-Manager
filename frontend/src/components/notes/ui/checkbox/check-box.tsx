@@ -3,7 +3,7 @@ import { useCheckBox } from "./hooks/useCheckBox";
 import styles from "./styles.module.scss";
 
 const Checkbox = ({ checkBoxDetails, checked, pinned, id }: CheckBoxProps) => {
-  const { checkHandler } = useCheckBox({
+  const { checkHandler, loading } = useCheckBox({
     pinned,
     boxid: checkBoxDetails.id,
     noteId: id,
@@ -11,16 +11,16 @@ const Checkbox = ({ checkBoxDetails, checked, pinned, id }: CheckBoxProps) => {
   });
   return (
     <div
-      className={styles.content}
+      className={
+        !loading ? styles.content : `${styles.content} ${styles.invalid}`
+      }
       contentEditable={"false"}
       spellCheck="true"
       aria-multiline="true"
       suppressContentEditableWarning
+      onClick={!loading ? checkHandler : undefined}
     >
-      <div
-        className={checked ? styles.checkedSvg : styles.uncheckedSvg}
-        onClick={checkHandler}
-      ></div>
+      <div className={checked ? styles.checkedSvg : styles.uncheckedSvg}></div>
       <div className={checked ? styles.checked : undefined}>
         {checkBoxDetails.note}
       </div>

@@ -1,1 +1,11 @@
-[{"title":"Title","note":"HEHEHE","id":"e8faa8ca-3f3b-4296-90cb-daf4a9b98eb4","color":"#179306f9","checkbox":false,"createCheckboxes":false,"labels":[]}]
+[
+  {
+    "title": "Title",
+    "note": "HEHEHE",
+    "id": "e8faa8ca-3f3b-4296-90cb-daf4a9b98eb4",
+    "color": "#179306f9",
+    "checkbox": false,
+    "createCheckboxes": false,
+    "labels": []
+  }
+]
