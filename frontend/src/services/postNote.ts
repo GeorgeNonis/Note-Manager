@@ -14,10 +14,13 @@ export const addNoteHttp = async (data: NoteObj) => {
 };
 
 export const pinNoteHandlerHttp = async <T, E>(
-  id: string
+  id: string,
+  pinned: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(`${BASE_URL}notes/pinnote/:${id}`);
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/pinnote/:${id}?isnotepined=${pinned}`
+    );
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

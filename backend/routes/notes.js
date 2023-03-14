@@ -154,6 +154,17 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   const notes = pinned ? pinnedNotes : unPinnedNotes;
   const noteIndex = notes.findIndex((n) => n.id === id);
   const note = notes[noteIndex];
+  /**
+   * PREPI NA TO PIASO POU TO ARRAY POU EINAI JAI NA TO VALO STO ANTISTROFO(UNPINNED)
+   * ARA AN EINAI PINNED VRISKO TO ARRAY. VRISKO TO NOTE. AFERO TO POU TO ARRAY TOU
+   * JE VALO TO STO ANTISTROFO ARRAY (UNPINNED)
+   */
+  console.log(id);
+  console.log(pinned);
+  console.log(typeof pinned);
+  console.log(notes);
+  console.log(noteIndex);
+  console.log(note);
   if (pinned) {
     pinnedNotes = [...pinnedNotes.filter((n) => n.id !== id)];
     unPinnedNotes = [...unPinnedNotes, { ...note }];
