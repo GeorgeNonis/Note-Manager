@@ -11,9 +11,16 @@ const AddLabel = ({ id, pinned }: AddLabelProps) => {
   });
   return (
     <main className={styles.content}>
-      <fieldset className={styles.labelfieldset}>
+      <fieldset
+        className={styles.labelfieldset}
+        onKeyDown={(e) => {
+          if (e.key !== "Enter") return;
+          state.actions.addLabelHandler();
+        }}
+      >
         <label htmlFor="label">Label note</label>
         <input
+          value={state.values.value}
           ref={state.values.inputRef}
           type="text"
           id="label"

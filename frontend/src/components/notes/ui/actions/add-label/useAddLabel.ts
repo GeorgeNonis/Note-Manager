@@ -13,6 +13,8 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
   const addLabelHandler = async () => {
+    if (value.length === 0) return;
+    if (labels.find((l) => l.label === value)) return;
     const sharedId = crypto.randomUUID();
     const response = await addLabelHttp({
       id,
@@ -24,6 +26,7 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     sucessfullRequest
       ? dispatch(addLabel({ id, pinned, label: value, labelId: sharedId }))
       : console.log(response[1]);
+    setValue("");
   };
 
   const doesLabelExist = labels.find((lb) => lb.label === value);
