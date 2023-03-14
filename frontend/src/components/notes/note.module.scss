@@ -121,6 +121,22 @@
   position: absolute;
   inset: 7px -5px auto auto;
   color: gray;
+  // @include for-phone-only {
+  //   font-size: 0.5rem;
+  //   // right: -1rem;
+  //   // width: 5rem;
+  // }
+
+  // @media (max-width: 1200px) {
+  //   right: -1rem;
+  //   width: 5rem;
+  // }
+  // @media (min-width: 599px) {
+  //   font-size: 0.6rem;
+  // }
+  // @include for-desktop-up {
+  //   font-size: 0.7rem;
+  // }
   &:hover {
     cursor: grab;
 
@@ -143,7 +159,8 @@
   }
   @media (min-width: 599px) {
     font-size: 0.7rem;
-    left: -3rem;
+    right: -1rem;
+    width: 5rem;
   }
   @include for-desktop-up {
     left: -4rem;
