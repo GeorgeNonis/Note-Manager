@@ -1,13 +1,21 @@
-export interface CopyNoteProps {
+interface StandartProps {
   noteId: string;
-  sharedId: string;
+  boxid: string;
+  checked: boolean;
   pinned: boolean;
-}
-
-export interface AddLabelHttpProp {
-  id?: string;
   label: string;
   labelId: string;
+  id: string;
+}
+
+export interface CopyNoteProps
+  extends Pick<StandartProps, "noteId" | "pinned"> {
+  sharedId: string;
+}
+
+export interface AddLabelHttpProp
+  extends Pick<StandartProps, "label" | "labelId"> {
+  id?: string;
   pinned?: boolean;
 }
 
@@ -16,27 +24,17 @@ interface Note {
   checked: boolean;
 }
 
-export interface Labels {
-  label: string;
-  labelId: string;
+export interface Labels extends Pick<StandartProps, "label" | "labelId"> {
   notes: Note[];
 }
 
-export interface EditNoteArgs {
-  noteId: string;
-  pinned: boolean;
+export interface EditNoteArgs extends Pick<StandartProps, "noteId" | "pinned"> {
   noteValue?: string;
   titleValue?: string;
 }
 
-export interface CheckBoxesProps {
-  noteId: string;
-  pinned: boolean;
-}
+export interface CheckBoxesProps
+  extends Pick<StandartProps, "noteId" | "pinned"> {}
 
-export interface CheckBoxProps {
-  noteId: string;
-  boxid: string;
-  checked: boolean;
-  pinned: boolean;
-}
+export interface CheckBoxProps
+  extends Pick<StandartProps, "noteId" | "pinned" | "boxid" | "checked"> {}

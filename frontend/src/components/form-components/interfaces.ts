@@ -14,7 +14,6 @@ export interface InputTextProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   onClick?: () => void;
-  // className: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }

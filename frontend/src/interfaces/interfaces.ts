@@ -3,10 +3,8 @@ interface Checkbox {
   id: string;
 }
 
-export interface NoteObj {
+export interface NoteObj extends Checkbox {
   title: string;
-  note: string;
-  id: string;
   color: string;
   checkbox: boolean;
   createCheckboxes: boolean;

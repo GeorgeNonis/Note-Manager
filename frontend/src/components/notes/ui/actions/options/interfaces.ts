@@ -7,12 +7,8 @@ export interface OptionsProps {
   styles: CSSModuleClasses;
 }
 
-export interface UseOptionsProps {
-  review: boolean;
-  note: NoteObj;
-  pinned: boolean;
+export interface UseOptionsProps extends OptionsProps {
   checkbox?: boolean;
-  styles: CSSModuleClasses;
 }
 
 export interface OptionProps extends React.HTMLAttributes<HTMLDivElement> {

@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { NoteObj } from "../interfaces/interfaces";
 import { InitialState } from "./interfaces";
 
-const initialState: InitialState = {
+const initialState = {
   notes: [],
   deletedNotes: [],
   pinnedNotes: [],
   labels: [],
-};
+} as InitialState;
 
 const notes = createSlice({
   name: "notes",
@@ -46,6 +46,8 @@ const notes = createSlice({
     },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
+      console.log({ pinned });
+      console.log({ arr });
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
     },
     restoreNote(state, { payload: id }) {

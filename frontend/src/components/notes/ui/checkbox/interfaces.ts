@@ -9,15 +9,13 @@ export interface CheckBoxProps {
   id: string;
   checkBoxDetails: CheckBoxDetails;
 }
-export interface UseCheckBox {
-  checked: boolean;
-  pinned: boolean;
+export interface UseCheckBox
+  extends Omit<CheckBoxProps, "id" | "checkBoxDetails"> {
   noteId: string;
   boxid: string;
 }
 
-export interface CompletedItems {
+export interface CompletedItems
+  extends Omit<CheckBoxProps, "checked" | "checkBoxDetails"> {
   completedItems: CheckBoxDetails[];
-  pinned: boolean;
-  id: string;
 }

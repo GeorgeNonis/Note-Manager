@@ -102,6 +102,8 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const data = req.body;
   const pinned = req.query.isnotepined === "true";
+  console.log({ data });
+  console.log({ pinned });
 
   try {
     pinned ? await writePinned(data) : await writeData(data);
@@ -159,12 +161,7 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
    * ARA AN EINAI PINNED VRISKO TO ARRAY. VRISKO TO NOTE. AFERO TO POU TO ARRAY TOU
    * JE VALO TO STO ANTISTROFO ARRAY (UNPINNED)
    */
-  console.log(id);
-  console.log(pinned);
-  console.log(typeof pinned);
-  console.log(notes);
-  console.log(noteIndex);
-  console.log(note);
+  console.log("blablasdasds");
   if (pinned) {
     pinnedNotes = [...pinnedNotes.filter((n) => n.id !== id)];
     unPinnedNotes = [...unPinnedNotes, { ...note }];

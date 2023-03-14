@@ -37,8 +37,6 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     sucessfullRequest
       ? dispatch(pinHandler(note.id))
       : console.log(response[1]?.message);
-    // if (review) setReview(true);
-    // console.log(`review is ${review}`);
   };
   // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;

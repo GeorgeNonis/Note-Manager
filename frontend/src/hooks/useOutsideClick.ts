@@ -8,7 +8,7 @@ export const useOutsideClick = (callback: () => void) => {
      *
      * couldnt figure out the type ...
      */
-    const handleClick = (event: any) => {
+    const handleClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }

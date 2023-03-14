@@ -20,10 +20,8 @@ export interface ExistingNoteWrapperProps {
   ) => void;
 }
 
-export interface DeletedNoteWrapperProps {
-  children: React.ReactNode;
-  review: boolean;
-  note: NoteObj;
-  zIndex: number;
-  setReview: Dispatch<SetStateAction<boolean>>;
-}
+export interface DeletedNoteWrapperProps
+  extends Pick<
+    ExistingNoteWrapperProps,
+    "children" | "review" | "note" | "zIndex" | "setReview"
+  > {}

@@ -16,8 +16,6 @@ export interface NoteProps {
   ) => void;
 }
 
-export interface CustomHook {
+export interface CustomHook extends Pick<NoteProps, "note" | "zindex"> {
   pinned: boolean;
-  note: NoteObj;
-  zindex: number;
 }
