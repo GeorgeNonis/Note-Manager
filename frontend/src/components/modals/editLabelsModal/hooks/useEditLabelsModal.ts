@@ -4,6 +4,7 @@ import { addLabel } from "../../../../store/notes-slice";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { addLabelHttp } from "../../../../services";
 import { isThereError } from "../../../../utils/utils";
+import { errorState } from "../../../../store/display-state-slice";
 
 export const useEditLabelsModal = (
   cb: Dispatch<React.SetStateAction<boolean>>
@@ -34,7 +35,7 @@ export const useEditLabelsModal = (
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(addLabel({ label, labelId: sharedId }))
-      : console.log(response[1]);
+      : dispatch(errorState(response[1]?.message));
 
     setLabel("");
   };

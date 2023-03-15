@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { checkBoxHandlerHttp } from "../../../../../services";
+import { errorState } from "../../../../../store/display-state-slice";
 import { checkBox } from "../../../../../store/notes-slice";
 import { isThereError } from "../../../../../utils";
 import { UseCheckBox } from "../interfaces";
@@ -25,7 +26,7 @@ export const useCheckBox = ({
     if (sucessfullRequest) {
       dispatch(checkBox({ id: noteId, boxid, checked, pinned }));
     } else {
-      console.log(response[1]?.message);
+      dispatch(errorState(response[1]?.message));
     }
     setLoading(false);
   };

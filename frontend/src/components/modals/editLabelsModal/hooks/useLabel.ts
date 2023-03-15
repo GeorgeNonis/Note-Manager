@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useOutsideHover } from "../../../../hooks";
 import { deleteLabelHttp } from "../../../../services";
 import { editLabelHttp } from "../../../../services/";
+import { errorState } from "../../../../store/display-state-slice";
 import { deleteLabel, editLabel } from "../../../../store/notes-slice";
 import { isThereError } from "../../../../utils";
 
@@ -25,7 +26,7 @@ export const useLabel = (label: string) => {
       params.labelId?.split(":")[1] && navigate("/notes");
       dispatch(deleteLabel(label));
     } else {
-      console.log(response[1]);
+      dispatch(errorState(response[1]?.message));
     }
   };
 
@@ -43,7 +44,7 @@ export const useLabel = (label: string) => {
     if (sucessfullRequest) {
       dispatch(editLabel({ label, newLabel }));
     }
-    console.log(response[1]?.message);
+    dispatch(errorState(response[1]?.message));
   };
 
   const state = {

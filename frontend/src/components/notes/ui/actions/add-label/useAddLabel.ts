@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
+import { errorState } from "../../../../../store/display-state-slice";
 import { addLabel, tickHandler } from "../../../../../store/notes-slice";
 import { IRootState } from "../../../../../store/store";
 import { isThereError } from "../../../../../utils/utils";
@@ -25,7 +26,7 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(addLabel({ id, pinned, label: value, labelId: sharedId }))
-      : console.log(response[1]);
+      : dispatch(errorState(response[1]?.message));
     setValue("");
   };
 

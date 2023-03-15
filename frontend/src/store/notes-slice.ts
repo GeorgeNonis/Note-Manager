@@ -123,20 +123,12 @@ const notes = createSlice({
       state.labels[indexOfLabel].label = newLabel;
     },
     checkBoxes(state, { payload }) {
-      const { id, pinned } = payload;
+      const { id, pinned, uncheckednote } = payload;
       const notes = pinned ? state.pinnedNotes : state.notes;
       const noteIndex = notes.findIndex((n) => n.id === id);
       const note = notes[noteIndex];
 
       if (!note.createCheckboxes) {
-        const setences = note.note
-          ? note.note.split(/\r\n|\r|\n/).filter((el) => el.length > 0)
-          : [""];
-        const uncheckednote = [
-          ...setences.map((s) => {
-            return { note: s, id: crypto.randomUUID() };
-          }),
-        ];
         note.unChecked = [...uncheckednote];
         note.checked = [];
 

@@ -10,10 +10,14 @@ import {
   copyNote,
   deleteNote,
 } from "../../../../../store/notes-slice";
-import { httpReqResLoading } from "../../../../../store/display-state-slice";
+import {
+  errorState,
+  httpReqResLoading,
+} from "../../../../../store/display-state-slice";
 import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils";
 import { UseOptionsProps } from "./interfaces";
+import { CreateCheckBoxes } from "./utils";
 
 export const useOptions = ({
   note,
@@ -42,7 +46,7 @@ export const useOptions = ({
     if (sucessfullRequest) {
       dispatch(copyNote({ id, pinned, sharedId }));
     } else {
-      console.log(response[1]?.message);
+      dispatch(errorState(response[1]?.message));
     }
 
     dispatch(httpReqResLoading());
@@ -57,7 +61,7 @@ export const useOptions = ({
     console.log(sucessfullRequest);
     sucessfullRequest
       ? dispatch(deleteNote({ id: note.id, pinned }))
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
 
     setDisplay(false);
   };
@@ -84,13 +88,18 @@ export const useOptions = ({
   };
 
   const checkBoxesHandler = async (e: React.MouseEvent<HTMLElement>) => {
+    const { uncheckednote } = CreateCheckBoxes({ note });
     if (e.currentTarget.id === "discard") {
-      const response = await checkBoxesHandlerHttp({ noteId: note.id, pinned });
+      const response = await checkBoxesHandlerHttp({
+        noteId: note.id,
+        pinned,
+        uncheckednote,
+      });
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
         dispatch(checkBoxes({ id: note.id, pinned }));
       } else {
-        console.log(response[1]?.message);
+        dispatch(errorState(response[1]?.message));
       }
       setDiscardBoxes(!discardBoxes);
     } else {
@@ -100,11 +109,12 @@ export const useOptions = ({
         const response = await checkBoxesHandlerHttp({
           noteId: note.id,
           pinned,
+          uncheckednote,
         });
         const sucessfullRequest = isThereError(response);
         sucessfullRequest
-          ? dispatch(checkBoxes({ id: note.id, pinned }))
-          : console.log(response[1]?.message);
+          ? dispatch(checkBoxes({ id: note.id, pinned, uncheckednote }))
+          : dispatch(errorState(response[1]?.message));
       }
     }
   };

@@ -22,11 +22,12 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     });
 
     const sucessfullRequest = isThereError(response);
+    console.log(response);
     sucessfullRequest
       ? dispatch(
           editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
         )
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
@@ -38,7 +39,6 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     sucessfullRequest
       ? dispatch(pinHandler(note.id))
       : dispatch(errorState(response[1]?.message));
-    // : console.log(response[1]?.message);
   };
   // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;

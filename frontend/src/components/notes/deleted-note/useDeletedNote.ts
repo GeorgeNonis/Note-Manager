@@ -5,6 +5,7 @@ import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
 import { Props } from "./interfaces";
+import { errorState } from "../../../store/display-state-slice";
 
 export const useDeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
@@ -20,7 +21,7 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(restoreNote(note.id))
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
   };
 
   const removeProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,7 +31,7 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(removeNote(note.id))
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
 
     setReview(false);
   };

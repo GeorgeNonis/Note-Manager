@@ -6,7 +6,6 @@ const NoteTitle = ({
   setNoteTitle,
   editable = true,
 }: NoteTitleProps) => {
-  console.log(title);
   return (
     <textarea
       readOnly={editable}

@@ -113,7 +113,7 @@ const RootLayout = () => {
           )}
 
         {loadingInitialState && <LoadingSpinner />}
-        {state.values.networkError && <ErrorFetching errorMessage={error} />}
+        {/* {state.values.networkError && <ErrorFetching errorMessage={error} />} */}
 
         {!loadingInitialState && <Outlet />}
       </main>

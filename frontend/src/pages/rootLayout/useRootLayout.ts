@@ -37,7 +37,7 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      dispatch(errorState(""));
+      // dispatch(errorState(""));
       const response = await getNotesHttp();
       console.log(response);
 
@@ -56,7 +56,8 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     if (!displayState.error) return;
-
+    if (displayState.error === "Network Error") return;
+    // console.log(displayState.error === ErrorMessages.networkdown);
     const timer = setTimeout(() => {
       dispatch(errorState(""));
     }, 500);

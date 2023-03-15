@@ -34,7 +34,12 @@ export interface EditNoteArgs extends Pick<StandartProps, "noteId" | "pinned"> {
 }
 
 export interface CheckBoxesProps
-  extends Pick<StandartProps, "noteId" | "pinned"> {}
+  extends Pick<StandartProps, "noteId" | "pinned"> {
+  uncheckednote: {
+    note: string;
+    id: string;
+  }[];
+}
 
 export interface CheckBoxProps
   extends Pick<StandartProps, "noteId" | "pinned" | "boxid" | "checked"> {}

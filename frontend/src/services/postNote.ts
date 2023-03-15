@@ -77,10 +77,12 @@ export const copyNoteHttp = async <T, E>({
 export const checkBoxesHandlerHttp = async <T, E>({
   noteId,
   pinned,
+  uncheckednote,
 }: CheckBoxesProps): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/checkboxes/:${noteId}?isnotepined=${pinned}`
+      `${BASE_URL}notes/checkboxes/:${noteId}?isnotepined=${pinned}`,
+      { uncheckednote }
     );
     return [response, null];
   } catch (error) {

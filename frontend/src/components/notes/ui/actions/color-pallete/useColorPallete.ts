@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../../../../services";
+import { errorState } from "../../../../../store/display-state-slice";
 import { setColor } from "../../../../../store/notes-slice";
 import { isThereError } from "../../../../../utils/utils";
 import { ColorPalleteProps } from "./interfaces";
@@ -18,7 +19,7 @@ export const useColorPallete = ({
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(setColor({ value, id, pinned }))
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
 
     setDisplayPalette(false);
   };
