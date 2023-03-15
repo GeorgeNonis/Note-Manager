@@ -1,6 +1,7 @@
 import React, { useState, useRef, MutableRefObject } from "react";
 import { useDispatch } from "react-redux";
 import { editNoteHttp, pinNoteHandlerHttp } from "../../../services";
+import { errorState } from "../../../store/display-state-slice";
 import { editNote, pinHandler } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
 import { CustomHook } from "./interfaces";
@@ -36,7 +37,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(pinHandler(note.id))
-      : console.log(response[1]?.message);
+      : dispatch(errorState(response[1]?.message));
+    // : console.log(response[1]?.message);
   };
   // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;

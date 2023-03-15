@@ -6,7 +6,8 @@ const initialState = {
   loadingInitialState: true,
   error: "",
   httpReqResLoading: false,
-  displaySideBar: false,
+  displaySideBar: true,
+  isThereError: false,
 } as DisplayStateInitialState;
 
 const displayState = createSlice({

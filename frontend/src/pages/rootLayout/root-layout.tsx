@@ -9,13 +9,19 @@ import {
   ErrorFetching,
   LoadingSpinner,
   MenuThreeLines,
+  ErrorWithFeature,
 } from "../../components";
 import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const { error, loadingInitialState, displaySideBar, httpReqResLoading } =
-    state.values.displayState;
+  const {
+    isThereError,
+    error,
+    loadingInitialState,
+    displaySideBar,
+    httpReqResLoading,
+  } = state.values.displayState;
 
   return (
     <>
@@ -29,6 +35,7 @@ const RootLayout = () => {
         style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
       >
         <MenuThreeLines />
+        {error && <ErrorWithFeature message={error} />}
         <div
           ref={hoverOutsideTrash}
           id="trashbin"
@@ -106,7 +113,7 @@ const RootLayout = () => {
           )}
 
         {loadingInitialState && <LoadingSpinner />}
-        {error && <ErrorFetching errorMessage={error} />}
+        {state.values.networkError && <ErrorFetching errorMessage={error} />}
 
         {!loadingInitialState && <Outlet />}
       </main>

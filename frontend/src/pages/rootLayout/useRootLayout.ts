@@ -9,6 +9,7 @@ import {
   errorState,
   loadingInitialState,
 } from "../../store/display-state-slice";
+import { ErrorMessages } from "../../errors/error-messages";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
@@ -22,9 +23,11 @@ export const useRootLayout = () => {
       dispatch(deleteNote({ id, pinned }));
     });
   };
+
+  const networkError = displayState.error === ErrorMessages.networkdown;
   const state = {
     labels,
-    values: { mouseOverTrash, editLabelsModal, displayState },
+    values: { mouseOverTrash, editLabelsModal, displayState, networkError },
     actions: {
       setEditLabelsModal,
       setMouseOverTrash,
@@ -50,6 +53,18 @@ export const useRootLayout = () => {
     };
     fetch();
   }, []);
+
+  useEffect(() => {
+    if (!displayState.error) return;
+
+    const timer = setTimeout(() => {
+      dispatch(errorState(""));
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [displayState.error]);
 
   return {
     hoverOutsideTrash,

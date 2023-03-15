@@ -1,0 +1,10 @@
+.errorWithFeature {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 400;
+  background-color: red($color: #fa7373);
+  padding: 0.7rem;
+}

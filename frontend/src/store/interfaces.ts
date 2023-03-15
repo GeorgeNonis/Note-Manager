@@ -6,7 +6,6 @@ export interface InitialState {
   pinnedNotes: NoteObj[];
   deletedNotes: NoteObj[];
   labels: Labels[];
-  // error: "";
 }
 
 export interface DisplayStateInitialState {
@@ -15,4 +14,5 @@ export interface DisplayStateInitialState {
   loadingInitialState: boolean;
   httpReqResLoading: boolean;
   displaySideBar: boolean;
+  isThereError: boolean;
 }
