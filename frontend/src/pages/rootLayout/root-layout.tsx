@@ -8,21 +8,27 @@ import {
   EditLabelsModal,
   ErrorFetching,
   LoadingSpinner,
+  MenuThreeLines,
 } from "../../components";
 import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const { error, loadingInitialState, httpReqResLoading } =
+  const { error, loadingInitialState, displaySideBar, httpReqResLoading } =
     state.values.displayState;
 
   return (
     <>
       <h3 className={styles.appTitle}>Note Manager</h3>
       <main
-        className={styles.main}
+        className={
+          displaySideBar
+            ? styles.main
+            : `${styles.main} ${styles.isSideBarClosed}`
+        }
         style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
       >
+        <MenuThreeLines />
         <div
           ref={hoverOutsideTrash}
           id="trashbin"
@@ -38,7 +44,13 @@ const RootLayout = () => {
         >
           {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
         </div>
-        <div className={styles.div}>
+        <div
+          className={
+            displaySideBar
+              ? styles.div
+              : `${styles.div} ${styles.isSideBarClosedLinks}`
+          }
+        >
           <NavLink
             to={"notes"}
             role={"button"}

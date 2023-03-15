@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DisplayStateInitialState } from "./interfaces";
 
-const initialState: DisplayStateInitialState = {
+const initialState = {
   review: false,
   loadingInitialState: true,
   error: "",
   httpReqResLoading: false,
-};
+  displaySideBar: false,
+} as DisplayStateInitialState;
 
 const displayState = createSlice({
   name: "displayManagment",
@@ -23,10 +24,18 @@ const displayState = createSlice({
       state.httpReqResLoading = !state.httpReqResLoading;
       console.log("Changing");
     },
+    displaySideBar(state) {
+      state.displaySideBar = !state.displaySideBar;
+      console.log("MAMA GUEVO");
+    },
   },
 });
 
-export const { loadingInitialState, errorState, httpReqResLoading } =
-  displayState.actions;
+export const {
+  loadingInitialState,
+  errorState,
+  httpReqResLoading,
+  displaySideBar,
+} = displayState.actions;
 
 export default displayState.reducer;

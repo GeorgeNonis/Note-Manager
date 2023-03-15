@@ -21,3 +21,4 @@ export { default as EditLabelsModal } from "./modals/editLabelsModal";
 export { default as DeleteLabelConfigModal } from "./modals/delete-label-config-modal";
 export { default as Checkbox } from "./notes/ui/checkbox";
 export { default as DiscardBoxes } from "./modals/discard-boxes";
+export { default as MenuThreeLines } from "./menuThreeLines";

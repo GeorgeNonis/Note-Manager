@@ -3,6 +3,7 @@
 .main {
   display: grid;
   grid-template-columns: 3fr 9fr;
+  transition: all ease-in-out 500ms;
 
   .div {
     @include for-phone-only {
@@ -55,10 +56,19 @@
         width: 90%;
         text-overflow: ellipsis;
       }
-      // svg {
-      //   height: 1.5rem;
-      //   width: 1.5rem;
-      // }
+    }
+  }
+}
+
+.isSideBarClosed {
+  grid-template-columns: 1fr 11fr;
+}
+
+.isSideBarClosedLinks {
+  a {
+    grid-template-columns: unset !important;
+    h3 {
+      display: none;
     }
   }
 }

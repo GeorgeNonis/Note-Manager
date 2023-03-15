@@ -14,4 +14,5 @@ export interface DisplayStateInitialState {
   review: boolean;
   loadingInitialState: boolean;
   httpReqResLoading: boolean;
+  displaySideBar: boolean;
 }
