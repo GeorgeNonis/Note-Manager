@@ -341,17 +341,11 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
     checkbox = note.checked.find((b) => b.id === boxid);
     note.checked = [...note.checked.filter((b) => b.id !== boxid)];
     note.unChecked?.push(checkbox);
-    console.log(note.checked);
-    console.log("I push the box into the Non-checked Array");
   } else {
     checkbox = note.unChecked?.find((b) => b.id === boxid);
-    console.log(note.unChecked);
     note.checked?.push(checkbox);
     note.unChecked = [...note.unChecked?.filter((b) => b.id !== boxid)];
-    console.log("I push the box into the Checked Array");
   }
-  console.log({ checked });
-  console.log({ note });
 
   try {
     const response = pinned
@@ -372,7 +366,6 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
 
 router.delete("/v1/notes/:id", async (req, res, next) => {
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
-  console.log("deleteing");
   const prevStateDel = await readDataDel();
   let prevState;
   let note;
