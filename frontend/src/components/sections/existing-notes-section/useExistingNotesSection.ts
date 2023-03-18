@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-  createContext,
-  useContext,
-} from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
 import { IRootState } from "../../../store/store";

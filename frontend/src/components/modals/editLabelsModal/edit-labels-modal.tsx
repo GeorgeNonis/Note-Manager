@@ -25,6 +25,10 @@ const EditLabelsModal = ({ closeModal }: Props) => {
               className={styles.modalInput}
               onChange={(e) => state.actions.setLabel(e.target.value)}
               onClick={state.actions.onClickCreateLabelInputHandler}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                state.actions.createLabelHandler(e);
+              }}
             />
             <div
               className={!state.values.createLabel ? styles.tick : undefined}
