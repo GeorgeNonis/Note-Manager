@@ -12,13 +12,12 @@ const PinnedNotesSection = ({
   return (
     <main className={styles.content}>
       <p>Pinned</p>
-      <div className={styles.notes}>
+      <div className={styles.notes} role="divwithnotes">
         {notes.map((n, i) => {
           zIndex -= 1;
           return (
             <Note
               dragable={dragable}
-              // pinned={true}
               position={i}
               zindex={zIndex}
               note={n}

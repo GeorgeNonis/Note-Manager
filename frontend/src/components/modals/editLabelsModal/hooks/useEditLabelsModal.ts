@@ -24,9 +24,8 @@ export const useEditLabelsModal = (
 
   const createLabelHandler = useCallback(
     async (
-      e:
-        | React.MouseEvent<HTMLDivElement, MouseEvent>
-        | React.KeyboardEvent<HTMLInputElement>
+      e: React.MouseEvent<HTMLDivElement, MouseEvent> &
+        React.KeyboardEvent<HTMLInputElement>
     ) => {
       console.log("clicking");
       if (e.currentTarget.id === "x&plus") {
