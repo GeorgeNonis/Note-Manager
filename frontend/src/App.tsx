@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: "*", element: <p>ESHI VILLO</p> },
+  { path: "*", element: <p>Page could not be found!</p> },
 ]);
 
 const App = () => {

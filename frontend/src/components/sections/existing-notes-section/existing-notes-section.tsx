@@ -18,7 +18,7 @@ const ExistinNotesSection = () => {
 
   if (useStore.values.loading) return <LoadingSpinner />;
 
-  if (useStore.values.error === "Network Error") return;
+  if (useStore.values.error === "Network Error") return <></>;
 
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />

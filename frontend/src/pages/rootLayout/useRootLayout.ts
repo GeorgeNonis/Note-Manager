@@ -16,15 +16,16 @@ export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
+  const { networkdown, requestFailed } = ErrorMessages;
+  const dispatch = useDispatch();
   const onDropHandler = async (e: React.DragEvent) => {
     await onDropBin(e, (id, pinned) => {
       dispatch(deleteNote({ id, pinned }));
     });
   };
 
-  const networkError = displayState.error === ErrorMessages.networkdown;
+  const networkError = displayState.error === networkdown;
   const state = {
     labels,
     values: { mouseOverTrash, editLabelsModal, displayState, networkError },
@@ -37,15 +38,18 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      // dispatch(errorState(""));
       const response = await getNotesHttp();
-      console.log(response);
+      // console.log(response);
 
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
         dispatch(initial(response[0]));
+        // console.log("Sucessfull");
       } else {
         const msg = response[1]?.message!;
+        // console.log("UN-Sucessfull");
+        // console.log(msg);
+
         dispatch(errorState(IfNetworkDown(msg)));
       }
 
@@ -55,12 +59,13 @@ export const useRootLayout = () => {
   }, []);
 
   useEffect(() => {
+    // console.log("triggering");
     if (!displayState.error) return;
-    if (displayState.error === "Network Error") return;
-    // console.log(displayState.error === ErrorMessages.networkdown);
+    // if (displayState.error === networkdown || requestFailed) return;
+
     const timer = setTimeout(() => {
       dispatch(errorState(""));
-    }, 500);
+    }, 1500);
 
     return () => {
       clearInterval(timer);

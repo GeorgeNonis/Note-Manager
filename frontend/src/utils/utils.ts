@@ -10,10 +10,10 @@ export const onDropBin = async (
 ) => {
   const id = e.dataTransfer.getData("id");
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
-  console.log(id);
-  console.log(pinned);
-  console.log(typeof id);
-  console.log(id.length);
+  // console.log(id);
+  // console.log(pinned);
+  // console.log(typeof id);
+  // console.log(id.length);
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
     const response = await deleteNoteHttp(id, pinned);
@@ -70,12 +70,12 @@ export const isThereError = <
 >(
   response: T
 ) => {
-  console.log(response);
+  // console.log(response);
   if (response[1] === null) {
-    console.log("true");
+    // console.log("true");
     return true;
   } else {
-    console.log("false");
+    // console.log("false");
     return false;
   }
 };
@@ -97,11 +97,11 @@ export const notePostHandler = async (
   processedNote.note = noteValue;
   processedNote.id = crypto.randomUUID();
   const response = await addNoteHttp(processedNote);
-  console.log(processedNote);
-  console.log(response);
+  // console.log(processedNote);
+  // console.log(response);
   const boolean = isThereError(response);
 
-  return { processedNote, boolean };
+  return { processedNote, boolean, response };
 };
 
 /**

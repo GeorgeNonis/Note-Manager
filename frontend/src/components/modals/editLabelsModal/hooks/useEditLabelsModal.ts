@@ -24,10 +24,11 @@ export const useEditLabelsModal = (
 
   const createLabelHandler = useCallback(
     async (
-      e: React.MouseEvent<HTMLDivElement, MouseEvent> &
-        React.KeyboardEvent<HTMLInputElement>
+      e:
+        | React.MouseEvent<HTMLDivElement, MouseEvent>
+        | React.KeyboardEvent<HTMLInputElement>
     ) => {
-      console.log("clicking");
+      // console.log("clicking");
       if (e.currentTarget.id === "x&plus") {
         setCreateLabel(!createLabel);
         return createLabel && newLabelRef.current?.focus();

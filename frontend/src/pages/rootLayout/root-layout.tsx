@@ -22,7 +22,7 @@ const RootLayout = () => {
     displaySideBar,
     httpReqResLoading,
   } = state.values.displayState;
-
+  // console.log(error);
   return (
     <>
       <h3 className={styles.appTitle}>Note Manager</h3>
@@ -35,7 +35,7 @@ const RootLayout = () => {
         style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
       >
         <MenuThreeLines />
-        {error && <ErrorWithFeature message={error} />}
+        {error.length > 0 && <ErrorWithFeature message={error} />}
         <div
           ref={hoverOutsideTrash}
           id="trashbin"

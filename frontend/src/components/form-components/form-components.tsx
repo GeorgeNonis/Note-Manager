@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 const Form = ({ useStore }: FormProps) => {
   const disableBtn =
     useStore.values.title.length == 0 && useStore.values.note.length == 0;
-  console.log(typeof useStore.actions.saveNote);
+  // console.log(typeof useStore.actions.saveNote);
   return (
     <>
       {useStore.values.display && (
@@ -35,7 +35,7 @@ const Form = ({ useStore }: FormProps) => {
                 : styles.closeFormButton
             }
             onClick={() => {
-              console.log("clicking");
+              // console.log("clicking");
               useStore.actions.saveNote();
               useStore.actions.setDisplay(false);
             }}

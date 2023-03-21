@@ -18,16 +18,16 @@ const displayState = createSlice({
       state.loadingInitialState = payload;
     },
     errorState(state, { payload: error }) {
-      console.log(error);
+      // console.log(error);
       state.error = error;
     },
     httpReqResLoading(state) {
       state.httpReqResLoading = !state.httpReqResLoading;
-      console.log("Changing");
+      // console.log("Changing");
     },
     displaySideBar(state) {
       state.displaySideBar = !state.displaySideBar;
-      console.log("MAMA GUEVO");
+      // console.log("MAMA GUEVO");
     },
   },
 });

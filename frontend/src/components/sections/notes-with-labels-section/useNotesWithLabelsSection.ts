@@ -8,15 +8,15 @@ export const useNotesWithLabelsSection = ({ label }: useHookProps) => {
   const state = useSelector((state: IRootState) => state.notes);
   const { notes, pinnedNotes, labels } = state;
   state.labels.forEach((l) => {
-    console.log(label);
-    console.log(l.label);
+    // console.log(label);
+    // console.log(l.label);
     l.label === label.split(":")[1];
   });
 
   const currentLabel = state.labels.find(
     (lb) => lb.labelId === label.split(":")[1]
   )!;
-  console.log({ currentLabel });
+  // console.log({ currentLabel });
   const pnNotes = findPinnedNotes(pinnedNotes, currentLabel);
   const unNotes = findUnpinnedNotes(notes, currentLabel);
 

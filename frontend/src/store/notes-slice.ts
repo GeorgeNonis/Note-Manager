@@ -46,8 +46,8 @@ const notes = createSlice({
     },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
-      console.log({ pinned });
-      console.log({ arr });
+      // console.log({ pinned });
+      // console.log({ arr });
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
     },
     restoreNote(state, { payload: id }) {
@@ -143,7 +143,7 @@ const notes = createSlice({
     },
     checkBox(state, { payload }) {
       const { id, boxid, checked, pinned } = payload;
-      console.log({ id, boxid, checked, pinned });
+      // console.log({ id, boxid, checked, pinned });
       const notes = pinned ? state.pinnedNotes : state.notes;
       const noteIndex = notes.findIndex((n) => n.id === id);
       const note = notes[noteIndex];

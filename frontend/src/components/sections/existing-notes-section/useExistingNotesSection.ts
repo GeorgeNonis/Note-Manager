@@ -5,6 +5,7 @@ import { IRootState } from "../../../store/store";
 import { addNote, sortNotes } from "../../../store/notes-slice";
 import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
+import { errorState } from "../../../store/display-state-slice";
 
 export const useExistingNotesSection = () => {
   const { notes: state, displayState } = useSelector(
@@ -39,8 +40,13 @@ export const useExistingNotesSection = () => {
   };
 
   const saveNote = async () => {
-    const { processedNote, boolean } = await notePostHandler(title, note);
-    boolean ? dispatch(addNote(processedNote)) : console.log("error");
+    const { processedNote, boolean, response } = await notePostHandler(
+      title,
+      note
+    );
+    boolean
+      ? dispatch(addNote(processedNote))
+      : dispatch(errorState(response[1]?.message));
 
     setTitle("");
     setNote("");

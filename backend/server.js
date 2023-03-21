@@ -8,6 +8,8 @@ app.use(express.json({ limit: "50mb" }));
 
 app.use(router);
 
-app.listen(8080, () => {
+app.listen(4569, () => {
   console.log("App is running on port 8080");
 });
+
+// https://noni.nextjs-shop.com/nodemanager-api

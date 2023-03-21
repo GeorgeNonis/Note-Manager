@@ -42,7 +42,7 @@ export const useOptions = ({
     dispatch(httpReqResLoading());
 
     const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
+    // console.log(sucessfullRequest);
     if (sucessfullRequest) {
       dispatch(copyNote({ id, pinned, sharedId }));
     } else {
@@ -58,7 +58,7 @@ export const useOptions = ({
 
     const response = await deleteNoteHttp(note.id, pinned);
     const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
+    // console.log(sucessfullRequest);
     sucessfullRequest
       ? dispatch(deleteNote({ id: note.id, pinned }))
       : dispatch(errorState(response[1]?.message));
@@ -79,7 +79,7 @@ export const useOptions = ({
   const discardBoxesHandler = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    console.log(e.currentTarget.id);
+    // console.log(e.currentTarget.id);
     setDiscardBoxes(false);
   };
 
