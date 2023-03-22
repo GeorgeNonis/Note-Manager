@@ -16,27 +16,27 @@ export const useDeletedNotesSection = () => {
     (state: IRootState) => state.displayState
   );
 
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await getNotesHttp();
-      // console.log(response);
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const response = await getNotesHttp();
+  //     // console.log(response);
 
-      const sucessfullRequest = isThereError(response);
-      if (sucessfullRequest) {
-        dispatch(initial(response[0]));
-        // console.log("Sucessfull");
-      } else {
-        const msg = response[1]?.message!;
-        // console.log("UN-Sucessfull");
-        // console.log(msg);
+  //     const sucessfullRequest = isThereError(response);
+  //     if (sucessfullRequest) {
+  //       dispatch(initial(response[0]));
+  //       // console.log("Sucessfull");
+  //     } else {
+  //       const msg = response[1]?.message!;
+  //       // console.log("UN-Sucessfull");
+  //       // console.log(msg);
 
-        dispatch(errorState(IfNetworkDown(msg)));
-      }
+  //       dispatch(errorState(IfNetworkDown(msg)));
+  //     }
 
-      dispatch(LoadInitialData(false));
-    };
-    fetch();
-  }, []);
+  //     dispatch(LoadInitialData(false));
+  //   };
+  //   fetch();
+  // }, []);
 
   const state = {
     notes: notesState,

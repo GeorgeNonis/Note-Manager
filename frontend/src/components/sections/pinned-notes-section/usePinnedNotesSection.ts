@@ -32,27 +32,27 @@ export const usePinnedNotesSection = () => {
     await DragEndUtil({ state, index, indexOf, cb, pinned: true });
   };
 
-  useEffect(() => {
-    const fetch = async () => {
-      const response = await getNotesHttp();
-      // console.log(response);
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const response = await getNotesHttp();
+  //     // console.log(response);
 
-      const sucessfullRequest = isThereError(response);
-      if (sucessfullRequest) {
-        dispatch(initial(response[0]));
-        // console.log("Sucessfull");
-      } else {
-        const msg = response[1]?.message!;
-        // console.log("UN-Sucessfull");
-        // console.log(msg);
+  //     const sucessfullRequest = isThereError(response);
+  //     if (sucessfullRequest) {
+  //       dispatch(initial(response[0]));
+  //       // console.log("Sucessfull");
+  //     } else {
+  //       const msg = response[1]?.message!;
+  //       // console.log("UN-Sucessfull");
+  //       // console.log(msg);
 
-        dispatch(errorState(IfNetworkDown(msg)));
-      }
+  //       dispatch(errorState(IfNetworkDown(msg)));
+  //     }
 
-      dispatch(loadingInitialState(false));
-    };
-    fetch();
-  }, []);
+  //     dispatch(loadingInitialState(false));
+  //   };
+  //   fetch();
+  // }, []);
 
   return {
     onDragEnter,

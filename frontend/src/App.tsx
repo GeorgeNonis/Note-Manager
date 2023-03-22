@@ -3,7 +3,11 @@ import {
   ExistinNotesSection,
   NotesWithLabelsSection,
 } from "./components";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  HashRouter,
+} from "react-router-dom";
 import Error from "./errors";
 import RootLayout from "./pages/rootLayout";
 
