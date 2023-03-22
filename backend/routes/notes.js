@@ -108,6 +108,7 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
   const pinned = req.query.isnotepined === "true";
   console.log({ data });
   console.log({ pinned });
+  console.log(typeof pinned);
 
   try {
     const response = pinned ? await writePinned(data) : await writeData(data);

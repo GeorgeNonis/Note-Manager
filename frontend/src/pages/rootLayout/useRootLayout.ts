@@ -19,6 +19,7 @@ export const useRootLayout = () => {
   const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
   const { networkdown, requestFailed } = ErrorMessages;
   const dispatch = useDispatch();
+
   const onDropHandler = async (e: React.DragEvent) => {
     await onDropBin(e, (id, pinned) => {
       dispatch(deleteNote({ id, pinned }));

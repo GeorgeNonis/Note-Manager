@@ -42,14 +42,14 @@ const ExistinNotesSection = () => {
               zIndex -= 1;
               return (
                 <Note
-                  pinned={false}
+                  position={i}
                   zindex={zIndex}
                   note={note}
-                  key={i}
-                  position={i}
+                  pinned={false}
                   onDragEnd={useStore.actions.onDragEnd}
                   onDragEnter={useStore.actions.onDragEnter}
                   onDragStart={useStore.actions.onDragStart}
+                  key={i}
                 />
               );
             })}

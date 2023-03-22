@@ -3,6 +3,6 @@ import react from "@vitejs/plugin-react";
 console.log();
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/Note-Manager/",
+  base: "./",
   plugins: [react()],
 });

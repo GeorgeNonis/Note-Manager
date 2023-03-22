@@ -5,6 +5,7 @@ export interface NoteDetailsProps {
   editable?: boolean;
   setNotedetails?: Dispatch<SetStateAction<string>>;
   note: NoteObj;
+  noteValue: string;
   pinned?: boolean;
   checkbox?: boolean;
 }

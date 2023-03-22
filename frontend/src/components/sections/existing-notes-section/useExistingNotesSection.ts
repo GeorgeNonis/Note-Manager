@@ -24,8 +24,9 @@ export const useExistingNotesSection = () => {
   });
 
   const onDragEnd = async (e: React.DragEvent) => {
+    // console.log("draggin");
     const cb = (arr: Iterable<NoteObj>[]) => {
-      console.log(arr);
+      // console.log(arr);
       dispatch(sortNotes({ arr, pinned: false }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });

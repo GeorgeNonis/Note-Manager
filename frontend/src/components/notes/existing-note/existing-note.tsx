@@ -22,6 +22,7 @@ const Note = ({
   dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
+
   return (
     <>
       {state.values.review &&
@@ -49,7 +50,7 @@ const Note = ({
 
         <Title
           editable={false}
-          title={note.title}
+          title={state.values.noteTitle}
           setNoteTitle={state.actions.setNoteTitle}
         />
         <NoteDetails
@@ -57,6 +58,7 @@ const Note = ({
           setNotedetails={state.actions.setNotedetails}
           pinned={pinned}
           note={note}
+          noteValue={state.values.noteValue}
           checkbox={note.checkbox}
         />
         {state.values.review && (

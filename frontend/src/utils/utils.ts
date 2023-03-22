@@ -10,10 +10,7 @@ export const onDropBin = async (
 ) => {
   const id = e.dataTransfer.getData("id");
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
-  // console.log(id);
-  // console.log(pinned);
-  // console.log(typeof id);
-  // console.log(id.length);
+
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
     const response = await deleteNoteHttp(id, pinned);
@@ -55,6 +52,7 @@ export const DragEndUtil = async ({
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
 
   const response = await sortNotesHttp([...b], pinned);
+  console.log(response);
 
   const [, error] = response;
   if (!error === undefined) {

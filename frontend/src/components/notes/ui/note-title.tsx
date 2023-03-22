@@ -14,7 +14,7 @@ const NoteTitle = ({
       id="notedetails"
       spellCheck="true"
       placeholder="Empty note"
-      defaultValue={title}
+      value={title}
       onChange={(e) => {
         if (setNoteTitle) {
           setNoteTitle(e.target.value);

@@ -22,30 +22,27 @@ export const useEditLabelsModal = (
     setCreateLabel(false);
   };
 
-  const createLabelHandler = useCallback(
-    async (
-      e:
-        | React.MouseEvent<HTMLDivElement, MouseEvent>
-        | React.KeyboardEvent<HTMLInputElement>
-    ) => {
-      // console.log("clicking");
-      if (e.currentTarget.id === "x&plus") {
-        setCreateLabel(!createLabel);
-        return createLabel && newLabelRef.current?.focus();
-      }
+  const createLabelHandler = async (
+    e:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    // console.log("clicking");
+    if (e.currentTarget.id === "x&plus") {
       setCreateLabel(!createLabel);
-      if (label.length === 0 || labels.some((l) => l.label === label)) return;
-      const sharedId = crypto.randomUUID();
-      const response = await addLabelHttp({ label, labelId: sharedId });
-      const sucessfullRequest = isThereError(response);
-      sucessfullRequest
-        ? dispatch(addLabel({ label, labelId: sharedId }))
-        : dispatch(errorState(response[1]?.message));
+      return createLabel && newLabelRef.current?.focus();
+    }
+    setCreateLabel(!createLabel);
+    if (label.length === 0 || labels.some((l) => l.label === label)) return;
+    const sharedId = crypto.randomUUID();
+    const response = await addLabelHttp({ label, labelId: sharedId });
+    const sucessfullRequest = isThereError(response);
+    sucessfullRequest
+      ? dispatch(addLabel({ label, labelId: sharedId }))
+      : dispatch(errorState(response[1]?.message));
 
-      setLabel("");
-    },
-    [createLabel, newLabelRef, label]
-  );
+    setLabel("");
+  };
 
   const state = {
     values: {

@@ -6,10 +6,12 @@ import styles from "../note.module.scss";
 const NoteDetails = ({
   setNotedetails,
   note,
+  noteValue,
   checkbox,
   pinned,
   editable = true,
 }: NoteDetailsProps) => {
+  console.log(note.note);
   return (
     <>
       {!checkbox && (
@@ -20,9 +22,10 @@ const NoteDetails = ({
           id="notedetails"
           spellCheck="true"
           placeholder="Empty note"
-          defaultValue={note.note}
+          value={noteValue}
           onChange={(e) => {
             if (setNotedetails) {
+              console.log("s");
               setNotedetails(e.target.value);
             }
           }}
