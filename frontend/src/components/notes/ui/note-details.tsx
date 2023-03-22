@@ -6,7 +6,7 @@ import styles from "../note.module.scss";
 const NoteDetails = ({
   setNotedetails,
   note,
-  noteValue,
+  noteValue = "",
   checkbox,
   pinned,
   editable = true,
@@ -22,7 +22,7 @@ const NoteDetails = ({
           id="notedetails"
           spellCheck="true"
           placeholder="Empty note"
-          value={noteValue}
+          value={editable ? note.note : noteValue}
           onChange={(e) => {
             if (setNotedetails) {
               console.log("s");
