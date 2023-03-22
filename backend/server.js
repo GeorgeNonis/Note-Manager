@@ -5,11 +5,12 @@ const app = express();
 
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
-
 app.use(router);
 
-app.listen(4569, () => {
-  console.log("App is running on port 8080");
+const PORT = process.env.PORT || 3030;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
 });
+console.log(process.env);
 
 // https://noni.nextjs-shop.com/nodemanager-api

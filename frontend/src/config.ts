@@ -1,6 +1,8 @@
-export const API_VERSION = `v1/`;
+export const API_VERSION = import.meta.env.VITE_API_VERSION;
+export const BASE_URL = `${import.meta.env.VITE_BASE_URL}${API_VERSION}`;
+
 export const BASE_UR1L = `http://localhost:8080/${API_VERSION}`;
-export const BASE_URL = `https://note-manager-api.nextjs-shop.com/${API_VERSION}`;
+
 /**
  * For Deployment
  */

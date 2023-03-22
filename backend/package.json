@@ -4,6 +4,9 @@
   "main": "server.js",
   "type": "module",
   "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=production PORT=3030 node server.js"
+  },
   "dependencies": {
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
