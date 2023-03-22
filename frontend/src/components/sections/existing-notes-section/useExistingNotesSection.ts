@@ -23,10 +23,21 @@ export const useExistingNotesSection = () => {
     setDisplay(false);
   });
 
-  const onDragEnd = async (e: React.DragEvent) => {
-    // console.log("draggin");
+  // const onDragEnd = async (e: React.DragEvent) => {
+  //   console.log("draggin");
+  //   const cb = (arr: Iterable<NoteObj>[]) => {
+  //     console.log(arr);
+  //     dispatch(sortNotes({ arr, pinned: false }));
+  //   };
+  //   await DragEndUtil({ state, index, indexOf, cb, pinned: false });
+  // };
+
+  const onDragEnd = async () => {
+    // console.log("Draggin");
     const cb = (arr: Iterable<NoteObj>[]) => {
-      // console.log(arr);
+      if (!Array.isArray(arr)) {
+        dispatch(errorState(arr));
+      }
       dispatch(sortNotes({ arr, pinned: false }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });

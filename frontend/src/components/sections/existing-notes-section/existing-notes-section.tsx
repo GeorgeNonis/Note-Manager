@@ -23,6 +23,7 @@ const ExistinNotesSection = () => {
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
   );
+  console.log(useStore.values.state.notes);
   return (
     <Wrapper styles={styles}>
       <main

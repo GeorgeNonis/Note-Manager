@@ -27,7 +27,6 @@ export const usePinnedNotesSection = () => {
         dispatch(errorState(arr));
       }
       dispatch(sortNotes({ arr, pinned: true }));
-      // console.log(state.notes);
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: true });
   };

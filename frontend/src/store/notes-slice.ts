@@ -47,7 +47,7 @@ const notes = createSlice({
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
       // console.log(pinned);
-      // console.log(arr);
+      console.log(arr);
 
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
       // console.log("here");
