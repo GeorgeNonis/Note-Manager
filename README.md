@@ -40,14 +40,16 @@
 ### Features of Note Manager :wrench:
 
 <ul>
-   <li>Create Note</li>
-   <li>Edit Note</li>
-   <li>Drag and drop to the bin to delete note OR you can delete it throught it options (...)<li>
-   <li>Copy Note</li>
-   <li>Create checkboxe's and check/uncheck</li>
-   <li>Discard Checkboxes</li>
-   <li>Create label</li>
-   <li>Attach a Note to a label</li>
-   <li>Set a background color to your Note's</li>
-   <li>There's a trash section where you can restore a Note or delete it entirely</li>
+   <li>Create Note</li>:open_file_folder:
+   <li>Edit Note</li>:pencil2:
+   <li>Drag and drop to the bin to delete note OR you can delete it throught it options (...)<li>:raised_hand:
+   <li>Drag and drop to reorder the notes</li>:raised_hand:
+   <li>Copy Note</li>:scissors:
+   <li>Pin and Unpin Note's</li>:pushpin:
+   <li>Create checkboxe's and check/uncheck</li>:white_check_mark:
+   <li>Discard Checkboxes</li>:white_square_button:
+   <li>Create label</li>notebook:
+   <li>Attach a Note to a label</li>:bookmark:
+   <li>Set a background color to your Note's</li>:beginner:
+   <li>There's a trash section where you can restore a Note or delete it entirely</li>:anger:
 </ul>
