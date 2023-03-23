@@ -35,10 +35,7 @@
 
 ### Comments in the project :page_with_curl:
 
-<>
-
-<h3>Any further/additional comments or tips are very welcome:fire:</h3>
-<>
+<p>Any further/additional comments or tips are very welcome:fire:</p>
 
 ### Features of Note Manager :wrench:
 
