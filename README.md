@@ -3,11 +3,11 @@
 ### Target of Note Manager :triangular_flag_on_post:
 
 <p>
-      <h3>Fullstack project with Node.js and Express.js</h3>
-      <h3>This project by itself was a huge boost for my experience as I learned how to write backend code as well,</h3>
-      <h3>and what http request's are being handled and also how as Frontend dev's we receive response's from the Backend</h3>
-         <h3>No Css library's have been used or Javascript lib and the reason is I wanted this project to be a challenge</h3>
-         <h3>for me as I had to see how to think outside of the box to implement it's feature's</h3>
+      <h3>Fullstack project with Node.js & Express.js & React.js
+      This project by itself was a huge boost for my experience as I learned how to write backend code as well,
+      and what http request's are being handled and also how as Frontend dev's we receive response's from the Backend
+      No Css library's have been used or Javascript lib and the reason is I wanted this project to be a challenge
+      for me as I had to see how to think outside of the box to implement it's feature's</h3>
 
 </p>
 
@@ -27,7 +27,7 @@
   <img alt="html5" src="./readme_imgs/html5.png" width="50"/>
 </p>
 
-<h3>The app is fully responsive:iphone: as you can see it yourself through developer's tool's :wrench:</h3>
+<p>The app is fully responsive:iphone: as you can see it yourself through developer's tool's :wrench:</p>
 
 ### How to install node_modules :nut_and_bolt:
 
