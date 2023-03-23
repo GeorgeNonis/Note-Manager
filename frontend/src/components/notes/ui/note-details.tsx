@@ -21,8 +21,7 @@ const NoteDetails = ({
           id="notedetails"
           spellCheck="true"
           placeholder="Empty note"
-          // value={editable ? note.note : noteValue}
-          value={noteValue}
+          value={editable ? note.note : noteValue}
           // defaultValue={editable ? note.note : noteValue}
           onChange={(e) => {
             if (setNotedetails) {
