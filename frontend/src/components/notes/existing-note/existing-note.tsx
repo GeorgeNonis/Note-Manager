@@ -50,7 +50,7 @@ const Note = ({
 
         <Title
           editable={false}
-          title={note.title}
+          title={state.values.noteTitle}
           setNoteTitle={state.actions.setNoteTitle}
         />
         <NoteDetails

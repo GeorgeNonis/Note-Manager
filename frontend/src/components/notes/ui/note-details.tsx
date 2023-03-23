@@ -22,7 +22,7 @@ const NoteDetails = ({
           spellCheck="true"
           placeholder="Empty note"
           // value={editable ? note.note : noteValue}
-          value={note.note}
+          value={noteValue}
           // defaultValue={editable ? note.note : noteValue}
           onChange={(e) => {
             if (setNotedetails) {
