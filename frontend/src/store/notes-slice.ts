@@ -44,6 +44,13 @@ const notes = createSlice({
         state.notes = [...state.notes.filter((n) => n.id !== id)];
       }
     },
+    sortUnpinnedNotes(state, { payload }) {
+      const { arr } = payload;
+
+      console.log(arr);
+      //Testing purposes
+      state.notes = [...arr];
+    },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
       // console.log(pinned);
@@ -180,6 +187,7 @@ export const {
   editLabel,
   checkBoxes,
   checkBox,
+  sortUnpinnedNotes,
 } = notes.actions;
 
 export default notes.reducer;

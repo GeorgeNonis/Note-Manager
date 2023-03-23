@@ -23,6 +23,7 @@ const ExistinNotesSection = () => {
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
   );
+  const testGamoto = [...useStore.values.state.notes];
   console.log(useStore.values.state.notes);
   return (
     <Wrapper styles={styles}>
@@ -39,7 +40,7 @@ const ExistinNotesSection = () => {
         <section className={styles.notes}>
           {!useStore.values.loading &&
             useStore.values.state.notes.length !== 0 &&
-            useStore.values.state.notes.map((note, i) => {
+            testGamoto.map((note, i) => {
               zIndex -= 1;
               return (
                 <Note

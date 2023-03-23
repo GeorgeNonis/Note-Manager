@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
 import { IRootState } from "../../../store/store";
-import { addNote, sortNotes } from "../../../store/notes-slice";
+import {
+  addNote,
+  sortNotes,
+  sortUnpinnedNotes,
+} from "../../../store/notes-slice";
 import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
 import { errorState } from "../../../store/display-state-slice";
@@ -38,7 +42,7 @@ export const useExistingNotesSection = () => {
       if (!Array.isArray(arr)) {
         dispatch(errorState(arr));
       }
-      dispatch(sortNotes({ arr, pinned: false }));
+      dispatch(sortUnpinnedNotes({ arr }));
     };
     await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };
