@@ -10,6 +10,7 @@ import {
 import Wrapper from "./wrapper";
 import { useExistingNotesSection } from "./useExistingNotesSection";
 import styles from "./styles.module.scss";
+import NotesSection from "./notes-section/notes-section";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
@@ -23,7 +24,11 @@ const ExistinNotesSection = () => {
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
   );
-  const testGamoto = [...useStore.values.state.notes];
+  const notes = !useStore.values.loading &&
+    useStore.values.state.notes.length !== 0 && (
+      <NotesSection notes={[...useStore.values.state.notes]} />
+    );
+
   console.log(useStore.values.state.notes);
   return (
     <Wrapper styles={styles}>
@@ -37,25 +42,7 @@ const ExistinNotesSection = () => {
         {pinnedNotes}
         <OthersTitle state={useStore.values.state!} />
         <NoNotesTitle state={useStore.values.state} />
-        <section className={styles.notes}>
-          {!useStore.values.loading &&
-            useStore.values.state.notes.length !== 0 &&
-            testGamoto.map((note, i) => {
-              zIndex -= 1;
-              return (
-                <Note
-                  position={i}
-                  zindex={zIndex}
-                  note={note}
-                  pinned={false}
-                  onDragEnd={useStore.actions.onDragEnd}
-                  onDragEnter={useStore.actions.onDragEnter}
-                  onDragStart={useStore.actions.onDragStart}
-                  key={i}
-                />
-              );
-            })}
-        </section>
+        {notes}
       </section>
     </Wrapper>
   );

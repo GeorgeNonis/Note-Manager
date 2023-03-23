@@ -16,6 +16,34 @@
   color: white;
 }
 
+@mixin notesSectionStrcuture {
+  .content {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .notes {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem;
+
+    @include for-tablet-landscape-up {
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+    }
+
+    @include for-phone-only {
+      grid-auto-flow: rows;
+    }
+    @include for-desktop-up {
+      grid-template-columns: repeat(4, minmax(100px, 1fr));
+    }
+  }
+}
+
+/*
+  MEDIA QUERIES
+*/
+
 @mixin for-phone-only {
   @media (max-width: 599px) {
     @content;
