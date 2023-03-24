@@ -2,8 +2,8 @@ import { Note, PinnedNotesSection, OthersTitle } from "../../index";
 import { useNotesWithLabelsSection } from "./useNotesWithLabelsSection";
 import { useParams } from "react-router-dom";
 import Wrapper from "./wrapper";
-import styles from "./styles.module.scss";
 import NoNotesMsg from "./no-notes-msg";
+import styles from "./styles.module.scss";
 
 const NotesWithLabelsSection = () => {
   const params = useParams();
