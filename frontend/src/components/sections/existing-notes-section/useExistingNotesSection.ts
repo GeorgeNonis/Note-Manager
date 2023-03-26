@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
 import { IRootState } from "../../../store/store";
@@ -36,8 +36,10 @@ export const useExistingNotesSection = () => {
   //   await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   // };
 
-  const onDragEnd = async () => {
-    // console.log("Draggin");
+  const onDragEnd = async (e: React.DragEvent) => {
+    const id = e.dataTransfer.getData("id");
+    if (id.length === 0) return;
+
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
         dispatch(errorState(arr));

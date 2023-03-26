@@ -1,9 +1,7 @@
 import {
   LoadingSpinner,
-  Note,
   Form,
   PinnedNotesSection,
-  ErrorFetching,
   NoNotesTitle,
   OthersTitle,
 } from "../../index";

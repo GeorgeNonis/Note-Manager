@@ -21,6 +21,7 @@ export const useRootLayout = () => {
   const dispatch = useDispatch();
 
   const onDropHandler = async (e: React.DragEvent) => {
+    // console.log(e.dataTransfer.getData("id"));
     await onDropBin(e, (id, pinned) => {
       dispatch(deleteNote({ id, pinned }));
     });

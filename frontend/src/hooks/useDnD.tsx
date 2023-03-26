@@ -10,8 +10,8 @@ export const useDnd = () => {
     pinned: boolean,
     id: string
   ) => {
-    // console.log(pinned);
     e.dataTransfer.setData("id", `${id}`);
+
     e.dataTransfer.setData("pinned", `${pinned}`);
     setIndexOf(position);
   };

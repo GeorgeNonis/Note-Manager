@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../../../../hooks";
 import { NoteObj } from "../../../../interfaces/interfaces";
@@ -15,8 +16,14 @@ export const useNotesSection = () => {
    * Hook to detect outside click from the note's div
    * so you can close it
    */
-  const onDragEnd = async () => {
-    // console.log("Draggin");
+  const onDragEnd = async (e: React.DragEvent) => {
+    const id = e.dataTransfer.getData("id");
+    // console.log(id);
+
+    const draggable =
+      e.currentTarget.attributes.getNamedItem("draggable")?.value;
+    // console.log(draggable);
+    if (!draggable) return;
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
         dispatch(errorState(arr));
