@@ -9,6 +9,7 @@ import {
   NoteWrapper,
 } from "../../index";
 import { useNote } from "./useNote";
+import { Transition } from "react-transition-group";
 import styles from "../note.module.scss";
 
 const Note = ({
@@ -25,11 +26,25 @@ const Note = ({
 
   return (
     <>
-      {state.values.review &&
-        ReactDOM.createPortal(
-          <ReviewModal setReview={state.actions.setReview} />,
-          document.getElementById("reviewModal")!
-        )}
+      <Transition in={state.values.review} timeout={400}>
+        {
+          (transState) => (
+            <ReviewModal
+              setReview={state.actions.setReview}
+              transitionState={transState}
+            />
+          )
+
+          // state.values.review &&
+          // ReactDOM.createPortal(
+          //   <ReviewModal
+          //     setReview={state.actions.setReview}
+          //     transitionState={transState}
+          //   />,
+          //   document.getElementById("reviewModal")!
+          // )
+        }
+      </Transition>
       <NoteWrapper
         dragable={dragable}
         zIndex={state.values.zIndex}
