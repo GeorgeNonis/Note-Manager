@@ -11,6 +11,3 @@ const PORT = process.env.PORT || 4569;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
 });
-// console.log(process.env);
-
-// https://noni.nextjs-shop.com/nodemanager-api

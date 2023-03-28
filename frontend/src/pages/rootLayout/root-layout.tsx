@@ -6,7 +6,6 @@ import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import {
   EditLabelsModal,
-  ErrorFetching,
   LoadingSpinner,
   MenuThreeLines,
   ErrorWithFeature,
@@ -15,14 +14,8 @@ import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const {
-    isThereError,
-    error,
-    loadingInitialState,
-    displaySideBar,
-    httpReqResLoading,
-  } = state.values.displayState;
-  // console.log(error);
+  const { error, loadingInitialState, displaySideBar, httpReqResLoading } =
+    state.values.displayState;
   return (
     <>
       <h3 className={styles.appTitle}>Note Manager</h3>
