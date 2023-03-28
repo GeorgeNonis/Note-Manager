@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import { NoteProps } from "./interfaces";
 import {
   Options,
@@ -23,27 +22,20 @@ const Note = ({
   dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
-
   return (
     <>
-      <Transition in={state.values.review} timeout={400}>
-        {
-          (transState) => (
-            <ReviewModal
-              setReview={state.actions.setReview}
-              transitionState={transState}
-            />
-          )
-
-          // state.values.review &&
-          // ReactDOM.createPortal(
-          //   <ReviewModal
-          //     setReview={state.actions.setReview}
-          //     transitionState={transState}
-          //   />,
-          //   document.getElementById("reviewModal")!
-          // )
-        }
+      <Transition
+        in={state.values.review}
+        timeout={500}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(transState) => (
+          <ReviewModal
+            setReview={state.actions.setReview}
+            transitionState={transState}
+          />
+        )}
       </Transition>
       <NoteWrapper
         dragable={dragable}

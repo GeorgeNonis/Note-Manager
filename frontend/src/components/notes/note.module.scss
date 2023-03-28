@@ -43,22 +43,22 @@
   display: grid;
   grid-template-rows: 2fr 7.5fr 1.5fr 1.5fr;
   position: relative;
-  border-radius: 5px;
   width: 100%;
+  margin-inline: auto;
   min-height: 15rem;
   max-height: 20rem;
   box-sizing: border-box;
   background-color: transparent;
   color: gray;
   border: 1px solid gray;
-  margin-inline: auto;
+  border-radius: 5px;
   outline: none;
   color: white;
   text-overflow: ellipsis;
-  transition: all ease-in-out 500ms;
   overflow-wrap: anywhere;
   letter-spacing: 0.01785714em;
   font-family: "Google Sans", Roboto, Arial, sans-serif;
+  transition: all 700ms ease-in-out;
   .noteTitle {
     all: unset;
     padding: 0.5rem 1rem;
@@ -112,8 +112,9 @@
   z-index: 10065;
   background-color: #242424;
   inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
   display: grid;
+  transform: translate(-50%, -50%) rotate(360deg);
+  transform-origin: center;
 }
 
 .pin {

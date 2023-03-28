@@ -10,10 +10,4 @@
 
 .backdrop {
   @include bdrop;
-  opacity: 1;
-}
-
-.removeBackdrop {
-  @include bdrop;
-  opacity: 0;
 }
