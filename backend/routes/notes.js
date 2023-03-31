@@ -1,4 +1,5 @@
 import express from "express";
+import { getDB } from "../data/database.js";
 import {
   readData,
   writeData,
@@ -16,10 +17,72 @@ const router = express.Router();
 /**
  * GET REQUESTS
  */
+
+router.get("/v1/testing", async (req, res, next) => {
+  console.log("requesting");
+  const db = getDB();
+  console.log(db);
+  const initialStateUser = {
+    userId: 1995,
+    email: "georgenonis@gmail.com",
+    password: "Heyhey",
+    notes: [],
+    pinnedNotes: [],
+    deletedNotes: [],
+  };
+  db.collection("users")
+    .insertOne(initialStateUser)
+    .then((result) => {
+      console.log(result);
+      return res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.get("/v1/testing1", async (req, res, next) => {
+  const db = getDB();
+  db.collection("users")
+    .find({ userId: 1995 })
+    .next()
+    .then((result) => {
+      console.log(result);
+      return res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+router.get("/v1/testing2", async (req, res, next) => {
+  console.log("requesting");
+  const db = getDB();
+
+  const newData = {
+    userId: 1995,
+    email: "updatedEmail@gmail.com",
+    password: "Goodnight",
+    notes: [{ name: "Giorgos Nonis" }],
+    pinnedNotes: [],
+    deletedNotes: [],
+  };
+  db.collection("users")
+    .updateOne({ userId: 1995 }, { $set: newData })
+    .then((result) => {
+      console.log(result);
+      return res.status(200).json({ result });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 router.get("/v1/notes", async (req, res, next) => {
   /**
    * Improve this and use Promise.allSettled
    */
+
   await Promise.all([
     readDataPinned(),
     readData(),

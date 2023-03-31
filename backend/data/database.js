@@ -10,7 +10,7 @@ export const MongoConect = (callback) => {
   )
     .then((client) => {
       console.log(client);
-      _db = client.db;
+      _db = client.db();
       callback(client);
     })
     .catch((error) => {
@@ -19,6 +19,7 @@ export const MongoConect = (callback) => {
 };
 
 export const getDB = () => {
+  console.log(_db);
   if (_db) {
     return _db;
   }

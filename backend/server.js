@@ -11,6 +11,7 @@ app.use(router);
 const PORT = process.env.PORT || 4569;
 
 MongoConect((client) => {
+  console.log(client);
   app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`);
   });
