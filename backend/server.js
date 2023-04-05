@@ -15,7 +15,7 @@ mongoose
     "mongodb+srv://georgenonis:CnAmtWSronh96a4L@cluster0.o7z8bjc.mongodb.net/notes?retryWrites=true&w=majority"
   )
   .then((res) => {
-    console.log({ res });
+    // console.log({ res });
     app.listen(PORT, () => {
       console.log(`App is running on port ${PORT}`);
     });

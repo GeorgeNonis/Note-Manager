@@ -7,8 +7,8 @@ import {
 } from "../../index";
 import Wrapper from "./wrapper";
 import { useExistingNotesSection } from "./useExistingNotesSection";
-import styles from "./styles.module.scss";
 import NotesSection from "./notes-section/notes-section";
+import styles from "./styles.module.scss";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();

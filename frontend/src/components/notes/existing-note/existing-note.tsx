@@ -37,7 +37,13 @@ const Note = ({
           />
         )}
       </Transition>
-      <div className={styles.test}>
+      <div
+        className={
+          state.values.review
+            ? `${styles.test} ${styles.preview}`
+            : `${styles.test}`
+        }
+      >
         <NoteWrapper
           dragable={dragable}
           zIndex={state.values.zIndex}
