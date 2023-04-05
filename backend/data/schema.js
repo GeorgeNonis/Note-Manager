@@ -4,9 +4,10 @@ const userSchema = mongoose.Schema({
   userId: Number,
   passowrd: Number,
   email: String,
-  notes: [],
+  unPinnedNotes: [],
   pinnedNotes: [],
   deletedNotes: [],
+  labels: [],
 });
 
 export const userBluePrint = mongoose.model("User", userSchema);
