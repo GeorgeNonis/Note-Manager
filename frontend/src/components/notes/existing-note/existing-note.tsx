@@ -37,71 +37,73 @@ const Note = ({
           />
         )}
       </Transition>
-      <NoteWrapper
-        dragable={dragable}
-        zIndex={state.values.zIndex}
-        position={position}
-        pinned={pinned}
-        review={state.values.review}
-        setReview={state.actions.setReview}
-        note={note}
-        onDragEnd={onDragEnd}
-        onDragEnter={onDragEnter}
-        onDragStart={onDragStart}
-      >
-        <Pin
+      <div className={styles.test}>
+        <NoteWrapper
+          dragable={dragable}
+          zIndex={state.values.zIndex}
+          position={position}
           pinned={pinned}
-          pinNoteHandler={state.actions.pinNoteHandler}
-          styles={styles}
-        />
-
-        <Title
-          editable={false}
-          title={state.values.noteTitle}
-          setNoteTitle={state.actions.setNoteTitle}
-        />
-        <NoteDetails
-          editable={false}
-          setNotedetails={state.actions.setNotedetails}
-          pinned={pinned}
-          note={note}
-          noteValue={state.values.noteValue}
-          checkbox={note.checkbox}
-        />
-        {state.values.review && (
-          <div className={styles.actions}>
-            <button
-              disabled={state.values.disableBtn}
-              className={
-                state.values.disableBtn
-                  ? styles.reviewNoteButtonDisabled
-                  : styles.reviewNoteButton
-              }
-              onKeyDown={(e) => {
-                e.key === "Enter" && state.actions.saveChanges();
-              }}
-              onClick={state.actions.saveChanges}
-            >
-              Save Changes
-            </button>
-            <button
-              className={styles.reviewNoteButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                state.actions.setReview(!state.values.review);
-              }}
-            >
-              Close
-            </button>
-          </div>
-        )}
-        <Options
           review={state.values.review}
+          setReview={state.actions.setReview}
           note={note}
-          pinned={pinned}
-          styles={styles}
-        />
-      </NoteWrapper>
+          onDragEnd={onDragEnd}
+          onDragEnter={onDragEnter}
+          onDragStart={onDragStart}
+        >
+          <Pin
+            pinned={pinned}
+            pinNoteHandler={state.actions.pinNoteHandler}
+            styles={styles}
+          />
+
+          <Title
+            editable={false}
+            title={state.values.noteTitle}
+            setNoteTitle={state.actions.setNoteTitle}
+          />
+          <NoteDetails
+            editable={false}
+            setNotedetails={state.actions.setNotedetails}
+            pinned={pinned}
+            note={note}
+            noteValue={state.values.noteValue}
+            checkbox={note.checkbox}
+          />
+          {state.values.review && (
+            <div className={styles.actions}>
+              <button
+                disabled={state.values.disableBtn}
+                className={
+                  state.values.disableBtn
+                    ? styles.reviewNoteButtonDisabled
+                    : styles.reviewNoteButton
+                }
+                onKeyDown={(e) => {
+                  e.key === "Enter" && state.actions.saveChanges();
+                }}
+                onClick={state.actions.saveChanges}
+              >
+                Save Changes
+              </button>
+              <button
+                className={styles.reviewNoteButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  state.actions.setReview(!state.values.review);
+                }}
+              >
+                Close
+              </button>
+            </div>
+          )}
+          <Options
+            review={state.values.review}
+            note={note}
+            pinned={pinned}
+            styles={styles}
+          />
+        </NoteWrapper>
+      </div>
     </>
   );
 };

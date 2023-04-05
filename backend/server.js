@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import router from "./routes/notes.js";
-import { MongoConect } from "./data/database.js";
+import mongoose from "mongoose";
 const app = express();
 
 app.use(cors());
@@ -10,9 +10,16 @@ app.use(router);
 
 const PORT = process.env.PORT || 4569;
 
-MongoConect((client) => {
-  console.log(client);
-  app.listen(PORT, () => {
-    console.log(`App is running on port ${PORT}`);
+mongoose
+  .connect(
+    "mongodb+srv://georgenonis:CnAmtWSronh96a4L@cluster0.o7z8bjc.mongodb.net/notes?retryWrites=true&w=majority"
+  )
+  .then((res) => {
+    console.log({ res });
+    app.listen(PORT, () => {
+      console.log(`App is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
   });
-});

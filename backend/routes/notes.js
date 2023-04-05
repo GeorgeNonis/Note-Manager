@@ -1,5 +1,5 @@
 import express from "express";
-import { getDB } from "../data/database.js";
+// import { getDB } from "../data/database.js";
 import {
   readData,
   writeData,
@@ -12,6 +12,7 @@ import {
   readDataLabels,
   writeDataLabels,
 } from "../utils/utils.js";
+import { userBluePrint } from "../data/schema.js";
 const router = express.Router();
 
 /**
@@ -19,9 +20,9 @@ const router = express.Router();
  */
 
 router.get("/v1/testing", async (req, res, next) => {
-  console.log("requesting");
-  const db = getDB();
-  console.log(db);
+  // console.log("requesting");
+  // const db = getDB();
+  // console.log(db);
   const initialStateUser = {
     userId: 1995,
     email: "georgenonis@gmail.com",
@@ -30,8 +31,10 @@ router.get("/v1/testing", async (req, res, next) => {
     pinnedNotes: [],
     deletedNotes: [],
   };
-  db.collection("users")
-    .insertOne(initialStateUser)
+  // db.collection("users")
+  //   .insertOne(initialStateUser)
+  const user = new userBluePrint({ ...initialStateUser });
+  user
     .then((result) => {
       console.log(result);
       return res.status(200).json({ result });
@@ -68,7 +71,12 @@ router.get("/v1/testing2", async (req, res, next) => {
     deletedNotes: [],
   };
   db.collection("users")
-    .updateOne({ userId: 1995 }, { $set: newData })
+    // .updateOne({ userId: 1995 }, { $set: newData })
+    // .updateOne({ userId: 1995 }, { $set: { notes: [{ age: 28 }] } })
+    .updateMany(
+      { userId: 1995 },
+      { $set: { notes: [{ age: 28 }], pinnedNotes: [{ pinned: false }] } }
+    )
     .then((result) => {
       console.log(result);
       return res.status(200).json({ result });

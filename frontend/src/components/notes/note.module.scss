@@ -105,6 +105,27 @@
   }
 }
 
+.test {
+  position: relative;
+}
+
+.test::before {
+  all: unset;
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  background: url(https://cdn.discordapp.com/attachments/1056419450473152533/1091333485945434243/Neilyo77_Create_a_visually_appealing_background_image_that_feat_88d54b00-a99c-4e27-96ba-07d0074d7d37.png)
+    center center / 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 20rem;
+  background-position: center;
+}
+
 .review {
   position: absolute;
   width: 50dvw;
