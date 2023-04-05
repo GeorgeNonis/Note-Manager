@@ -22,7 +22,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     });
 
     const sucessfullRequest = isThereError(response);
-    console.log(response);
+    console.log(sucessfullRequest);
+    console.log("Hello");
     sucessfullRequest
       ? dispatch(
           editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })

@@ -23,6 +23,7 @@ export const editNoteHttp = async <T, E>({
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
   console.log(pinned);
   try {
+    console.log("Before response");
     const response = await axios.post<T, E>(
       `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`,
       {
@@ -30,6 +31,7 @@ export const editNoteHttp = async <T, E>({
         titleValue,
       }
     );
+    console.log("Hello from edit.ts");
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
   userId: Number,
   passowrd: Number,
   email: String,
-  unPinnedNotes: [],
-  pinnedNotes: [],
-  deletedNotes: [],
-  labels: [],
+  unPinnedNotes: { type: Array, default: [] },
+  pinnedNotes: { type: Array, default: [] },
+  deletedNotes: { type: Array, default: [] },
+  labels: { type: Array, default: [] },
 });
 
-export const userBluePrint = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);
