@@ -52,7 +52,7 @@ const RootLayout = () => {
           }
         >
           <NavLink
-            to={"notes"}
+            to={"/notes"}
             role={"button"}
             className={({ isActive }) => {
               return isActive ? styles.active : styles.inactive;
