@@ -37,79 +37,80 @@ const Note = ({
           />
         )}
       </Transition>
-      <div
+      {/* <div
+        style={{ background: `url(${note.color})` }}
         className={
           state.values.review
             ? `${styles.test} ${styles.preview}`
             : `${styles.test}`
         }
+      > */}
+      <NoteWrapper
+        dragable={dragable}
+        zIndex={state.values.zIndex}
+        position={position}
+        pinned={pinned}
+        review={state.values.review}
+        setReview={state.actions.setReview}
+        note={note}
+        onDragEnd={onDragEnd}
+        onDragEnter={onDragEnter}
+        onDragStart={onDragStart}
       >
-        <NoteWrapper
-          dragable={dragable}
-          zIndex={state.values.zIndex}
-          position={position}
+        <Pin
           pinned={pinned}
-          review={state.values.review}
-          setReview={state.actions.setReview}
-          note={note}
-          onDragEnd={onDragEnd}
-          onDragEnter={onDragEnter}
-          onDragStart={onDragStart}
-        >
-          <Pin
-            pinned={pinned}
-            pinNoteHandler={state.actions.pinNoteHandler}
-            styles={styles}
-          />
+          pinNoteHandler={state.actions.pinNoteHandler}
+          styles={styles}
+        />
 
-          <Title
-            editable={false}
-            title={state.values.noteTitle}
-            setNoteTitle={state.actions.setNoteTitle}
-          />
-          <NoteDetails
-            editable={false}
-            setNotedetails={state.actions.setNotedetails}
-            pinned={pinned}
-            note={note}
-            noteValue={state.values.noteValue}
-            checkbox={note.checkbox}
-          />
-          {state.values.review && (
-            <div className={styles.actions}>
-              <button
-                disabled={state.values.disableBtn}
-                className={
-                  state.values.disableBtn
-                    ? styles.reviewNoteButtonDisabled
-                    : styles.reviewNoteButton
-                }
-                onKeyDown={(e) => {
-                  e.key === "Enter" && state.actions.saveChanges();
-                }}
-                onClick={state.actions.saveChanges}
-              >
-                Save Changes
-              </button>
-              <button
-                className={styles.reviewNoteButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  state.actions.setReview(!state.values.review);
-                }}
-              >
-                Close
-              </button>
-            </div>
-          )}
-          <Options
-            review={state.values.review}
-            note={note}
-            pinned={pinned}
-            styles={styles}
-          />
-        </NoteWrapper>
-      </div>
+        <Title
+          editable={false}
+          title={state.values.noteTitle}
+          setNoteTitle={state.actions.setNoteTitle}
+        />
+        <NoteDetails
+          editable={false}
+          setNotedetails={state.actions.setNotedetails}
+          pinned={pinned}
+          note={note}
+          noteValue={state.values.noteValue}
+          checkbox={note.checkbox}
+        />
+        {state.values.review && (
+          <div className={styles.actions}>
+            <button
+              disabled={state.values.disableBtn}
+              className={
+                state.values.disableBtn
+                  ? styles.reviewNoteButtonDisabled
+                  : styles.reviewNoteButton
+              }
+              onKeyDown={(e) => {
+                e.key === "Enter" && state.actions.saveChanges();
+              }}
+              onClick={state.actions.saveChanges}
+            >
+              Save Changes
+            </button>
+            <button
+              className={styles.reviewNoteButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                state.actions.setReview(!state.values.review);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        )}
+        <Options
+          review={state.values.review}
+          note={note}
+          pinned={pinned}
+          styles={styles}
+        />
+      </NoteWrapper>
+      {/* </div> */}
     </>
   );
 };

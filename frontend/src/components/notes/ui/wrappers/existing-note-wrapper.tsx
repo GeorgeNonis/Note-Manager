@@ -21,7 +21,7 @@ const ExistingNoteWrapper = ({
     <div
       style={{
         zIndex: zIndex,
-        backgroundColor: colorLogic({ review, note }),
+        background: `url(${note.color})`,
       }}
       className={onReviewingNote({ review, styles })}
       onClick={(e) => {
