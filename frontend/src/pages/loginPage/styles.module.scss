@@ -50,3 +50,18 @@
   border: none;
   cursor: pointer;
 }
+
+.hide {
+  text-indent: -999em;
+}
+
+.show {
+  display: block;
+}
+
+.correct {
+  color: lime;
+}
+.xmark {
+  color: red;
+}
