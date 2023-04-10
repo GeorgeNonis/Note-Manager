@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { IoMdColorPalette } from "react-icons/io";
 import ColorPallete from "../color-pallete";
@@ -7,6 +8,7 @@ import Option from "./option";
 import AddLabel from "../add-label";
 import DiscardBoxes from "../../../../modals/discard-boxes";
 import styles from "../../../note.module.scss";
+import BackgroundImage from "../backgroundimage/backgroundImage";
 
 const Options = ({ note, pinned, review }: OptionsProps) => {
   const { checkbox, id } = note;
@@ -42,7 +44,7 @@ const Options = ({ note, pinned, review }: OptionsProps) => {
           ...
         </Option>
       </div>
-      {state.displayPalette && (
+      {/* {state.displayPalette && (
         <div className={styles.colorPallete}>
           <ColorPallete
             setDisplayPalette={state.setDisplayPalette}
@@ -50,7 +52,7 @@ const Options = ({ note, pinned, review }: OptionsProps) => {
             pinned={pinned}
           />
         </div>
-      )}
+      )} */}
       {state.displayAddLabel && <AddLabel id={id} pinned={pinned} />}
       {state.display && (
         <div className={styles.options}>
@@ -66,6 +68,17 @@ const Options = ({ note, pinned, review }: OptionsProps) => {
           </h3>
         </div>
       )}
+      {state.displayPalette &&
+        ReactDOM.createPortal(
+          <Suspense fallback={"...loading"}>
+            <BackgroundImage
+              setDisplayPalette={state.setDisplayPalette}
+              id={id}
+              pinned={pinned}
+            />
+          </Suspense>,
+          document.getElementById("backgroundimage")!
+        )}
       {state.discardBoxes &&
         ReactDOM.createPortal(
           <DiscardBoxes

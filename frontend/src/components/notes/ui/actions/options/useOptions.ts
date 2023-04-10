@@ -32,7 +32,7 @@ export const useOptions = ({
   const [displayAddLabel, setDisplayAddLabel] = useState<boolean>();
   const outsideOptions = useOutsideClick(() => {
     setDisplay(false);
-    setDisplayPalette(false);
+    // setDisplayPalette(false);
     setDisplayAddLabel(false);
   });
 

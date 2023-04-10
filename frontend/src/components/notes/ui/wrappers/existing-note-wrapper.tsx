@@ -17,11 +17,15 @@ const ExistingNoteWrapper = ({
 }: ExistingNoteWrapperProps) => {
   // console.log(clickOutsideNote.current.clientHeight);
   // console.log(clickOutsideNote.current.clientWidth);
+  console.log(note.color);
   return (
     <div
       style={{
         zIndex: zIndex,
-        background: `url(${note.color})`,
+        background:
+          note.color.includes("#") || note.color === "transparent"
+            ? "#202124"
+            : `url(${note.color})`,
       }}
       className={onReviewingNote({ review, styles })}
       onClick={(e) => {
