@@ -104,9 +104,9 @@ const LoginPage = () => {
             </span>
             <span
               className={
-                (values.confirmPasswordValues.confirmPassword &&
-                  !values.validMatch) ||
-                !values.passwordValues.passwordValid
+                !values.validMatch ||
+                (values.confirmPasswordValues.confirmPassword.length &&
+                  !values.passwordValues.passwordValid)
                   ? styles.show
                   : styles.hide
               }
@@ -141,7 +141,7 @@ const LoginPage = () => {
           </span>
         </fieldset>
         <button
-          className={styles.formloginbutton}
+          className={styles.formsignupbutton}
           disabled={
             !values.emailValues.emailValid ||
             !values.passwordValues.passwordValid ||
@@ -149,8 +149,14 @@ const LoginPage = () => {
           }
           style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
         >
-          Login
+          Sign Up
         </button>
+        <div className={styles.crossLine}>
+          <div></div>
+          <span>OR</span>
+          <div></div>
+        </div>
+        <button className={styles.formloginbutton}>Login In</button>
       </form>
     </main>
   );

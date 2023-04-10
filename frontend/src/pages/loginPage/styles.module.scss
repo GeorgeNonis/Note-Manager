@@ -1,4 +1,14 @@
+@mixin FormBtnStyle {
+  height: 2.5rem;
+  border-radius: 8px;
+  background: #f26716;
+  border: none;
+  cursor: pointer;
+  font-family: "CormorantGaramond";
+}
+
 .main {
+  font-family: "CormorantGaramond";
   box-sizing: border-box;
   height: 100dvh;
   width: 100dvw;
@@ -33,7 +43,7 @@
     }
   }
   input {
-    font-family: "Sedgwick Ave Display";
+    font-family: "CormorantGaramond";
     outline: none;
     border: none;
     border-radius: 4px;
@@ -43,12 +53,12 @@
   }
 }
 
+.formsignupbutton {
+  @include FormBtnStyle;
+}
+
 .formloginbutton {
-  height: 2.5rem;
-  border-radius: 8px;
-  background: #f26716;
-  border: none;
-  cursor: pointer;
+  @include FormBtnStyle;
 }
 
 .hide {
@@ -64,4 +74,15 @@
 }
 .xmark {
   color: red;
+}
+
+.crossLine {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 9fr 3fr 9fr;
+  place-items: center;
+  div {
+    border: 1px solid rgba(0, 0, 0, 0.4588235294);
+    width: 100%;
+  }
 }
