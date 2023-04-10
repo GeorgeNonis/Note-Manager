@@ -18,7 +18,6 @@ const RootLayout = () => {
     state.values.displayState;
   return (
     <>
-      <h3 className={styles.appTitle}>Note Manager</h3>
       <main
         className={
           displaySideBar

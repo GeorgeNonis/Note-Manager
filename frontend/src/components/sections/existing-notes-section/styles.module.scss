@@ -2,34 +2,51 @@
 
 .mainSection {
   display: grid;
-  width: 65%;
   margin-inline: auto;
   position: relative;
   border: 1px solid gray;
   border-radius: 5px;
   padding: 0.5rem;
+  // // & :not(._actions_196ge_81) {
+  // //   ._mainSection_1gaw9_4 {
+  // //     grid-gap: 2rem;
+  // //   }
+  // }
+
+  @include for-phone-only {
+    width: 80%;
+  }
+
+  @media (min-width: 599px) {
+    width: 70%;
+  }
+  @include for-desktop-up {
+    width: 50%;
+  }
 
   input {
+    margin-block: 0.5rem;
     border: none;
     width: 100%;
     box-sizing: border-box;
     background-color: transparent;
     outline: none;
     color: white;
-    padding: 0.5rem 0;
+    padding: 0.2rem 0;
   }
 
   & input:nth-of-type(1) {
     font-weight: 500;
+    margin: unset;
     @include for-phone-only {
       font-size: 0.9rem;
     }
 
     @media (min-width: 599px) {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
     @include for-desktop-up {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
   & input:nth-of-type(2) {

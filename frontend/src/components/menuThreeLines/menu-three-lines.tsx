@@ -5,10 +5,15 @@ import styles from "./styles.module.scss";
 const MenuThreeLines = () => {
   const { BarIsOn, toggleMenuThreeLines } = useMenuThreeLines();
   return (
-    <AiOutlineMenu
-      className={styles.menuThreeLines}
-      onClick={toggleMenuThreeLines}
-    />
+    <div className={styles.menuThreeLines}>
+      <AiOutlineMenu className={styles.burger} onClick={toggleMenuThreeLines} />
+      <img
+        src="../../../images/googlekeeplogo.png"
+        alt="notes_logo"
+        className={styles.logo}
+      />
+      <h3 className={styles.title}>Your Note's</h3>
+    </div>
   );
 };
 export default MenuThreeLines;

@@ -2,8 +2,11 @@
 
 .main {
   display: grid;
-  grid-template-columns: 3fr 9fr;
+  grid-template-columns: 2fr 8fr;
   transition: all ease-in-out 500ms;
+  border-top: 1px solid gray;
+  margin-top: 4.3rem;
+  padding-top: 1rem;
 
   .div {
     @include for-phone-only {
@@ -34,11 +37,11 @@
       display: grid;
       grid-auto-flow: column;
       grid-template-columns: 2fr 6fr;
+      grid-gap: 1dvw;
       place-items: center;
       border-radius: 0 25px 25px 0;
       height: 3.3rem;
       text-decoration: none;
-      gap: 1rem;
       letter-spacing: 0.01785714em;
       font-family: "Google Sans", Roboto, Arial, sans-serif;
       &:hover {
@@ -48,12 +51,12 @@
         text-align: center;
         padding: 0;
         margin: 0;
-        // font-size: 0.875rem;
         justify-self: start;
         color: white;
         font-weight: 400;
         overflow: hidden;
-        width: 90%;
+        width: 80%;
+        text-align: start;
         text-overflow: ellipsis;
       }
     }
@@ -101,13 +104,4 @@
     width: 2rem;
     height: 2rem;
   }
-}
-
-.appTitle {
-  text-align: center;
-  font-weight: 500;
-  font-size: 1rem;
-  border-bottom: 1px solid gray;
-  padding: 1.3rem 0;
-  margin-top: 0;
 }

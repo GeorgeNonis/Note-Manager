@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import { BsImage } from "react-icons/bs";
 import { IoMdColorPalette } from "react-icons/io";
 import ColorPallete from "../color-pallete";
 import { OptionsProps } from "./interfaces";

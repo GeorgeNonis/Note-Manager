@@ -2,6 +2,11 @@
   position: absolute;
   top: 0.5rem;
   left: 1rem;
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.burger {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -10,4 +15,13 @@
     cursor: grab;
     background-color: rgba(232, 234, 237, 0.08);
   }
+}
+
+.logo {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.title {
+  font-size: 1rem;
 }
