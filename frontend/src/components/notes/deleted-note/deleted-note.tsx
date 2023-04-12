@@ -5,9 +5,9 @@ import {
   NoteDetails,
   DeletedNoteWrapper,
 } from "../../index";
-import styles from "./styles.module.scss";
 import { Props } from "./interfaces";
 import { useDeletedNote } from "./useDeletedNote";
+import styles from "./styles.module.scss";
 
 const DeletedNote = ({ note, zindex }: Props) => {
   const {

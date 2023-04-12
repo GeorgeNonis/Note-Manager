@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useDnd, useOutsideClick } from "../../../hooks";
 import { IRootState } from "../../../store/store";
-import {
-  addNote,
-  sortNotes,
-  sortUnpinnedNotes,
-} from "../../../store/notes-slice";
+import { addNote, sortUnpinnedNotes } from "../../../store/notes-slice";
 import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
 import { errorState } from "../../../store/display-state-slice";
@@ -26,15 +22,6 @@ export const useExistingNotesSection = () => {
   const clickOutsideNote = useOutsideClick(() => {
     setDisplay(false);
   });
-
-  // const onDragEnd = async (e: React.DragEvent) => {
-  //   console.log("draggin");
-  //   const cb = (arr: Iterable<NoteObj>[]) => {
-  //     console.log(arr);
-  //     dispatch(sortNotes({ arr, pinned: false }));
-  //   };
-  //   await DragEndUtil({ state, index, indexOf, cb, pinned: false });
-  // };
 
   const onDragEnd = async (e: React.DragEvent) => {
     const id = e.dataTransfer.getData("id");

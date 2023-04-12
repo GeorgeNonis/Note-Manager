@@ -5,6 +5,7 @@ export interface InitialState {
   notes: NoteObj[];
   pinnedNotes: NoteObj[];
   deletedNotes: NoteObj[];
+  archivedNotes: NoteObj[];
   labels: Labels[];
 }
 

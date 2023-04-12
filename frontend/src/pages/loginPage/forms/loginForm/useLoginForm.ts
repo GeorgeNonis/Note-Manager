@@ -81,6 +81,7 @@ export const useLoginForm = () => {
       showPasswordHandler,
       setValidInputs,
       setLoginForm,
+      handleSumbit,
       emailHandlers: {
         setEmail,
         setEmailFocus,

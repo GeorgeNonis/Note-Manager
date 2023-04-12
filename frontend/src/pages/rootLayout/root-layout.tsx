@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import { Outlet, NavLink } from "react-router-dom";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
+import { MdOutlineArchive } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
@@ -52,6 +53,7 @@ const RootLayout = () => {
         >
           <NavLink
             to={"/notes"}
+            end
             role={"button"}
             className={({ isActive }) => {
               return isActive ? styles.active : styles.inactive;
@@ -87,6 +89,16 @@ const RootLayout = () => {
             <MdOutlineModeEditOutline />
             <h3>Edit Labels</h3>
           </a>
+          <NavLink
+            to={"archivenotes"}
+            role={"button"}
+            className={({ isActive }) => {
+              return isActive ? styles.active : styles.inactive;
+            }}
+          >
+            <MdOutlineArchive />
+            <h3>Archive</h3>
+          </NavLink>
           <NavLink
             to={"deletednotes"}
             role={"button"}

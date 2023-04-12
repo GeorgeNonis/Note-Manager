@@ -29,6 +29,11 @@ export interface Labels extends Pick<StandartProps, "label" | "labelId"> {
 }
 
 export interface EditNoteArgs extends Pick<StandartProps, "noteId" | "pinned"> {
+  archived?: boolean;
+  noteValue?: string;
+  titleValue?: string;
+}
+export interface EditArchiveNoteArgs extends Pick<StandartProps, "noteId"> {
   noteValue?: string;
   titleValue?: string;
 }

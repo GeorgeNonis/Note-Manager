@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 
 interface Props {
   setReview?: Dispatch<SetStateAction<boolean>>;
-  transitionState: string;
+  transitionState?: string;
 }
 
 const ReviewModal = ({ setReview, transitionState }: Props) => {

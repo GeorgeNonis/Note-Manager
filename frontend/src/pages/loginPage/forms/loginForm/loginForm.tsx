@@ -17,29 +17,12 @@ const LoginForm = ({
     showPasswordHandler,
     emailHandlers,
     passwordHandlers,
+    handleSumbit,
   } = handlers;
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSumbit}>
       <fieldset>
-        <legend>
-          E-Mail:
-          {/* <span
-            className={
-              values.emailValues.emailValid ? styles.show : styles.hide
-            }
-          >
-            <TbCircleCheck className={styles.correct} />
-          </span>
-          <span
-            className={
-              values.emailValues.email && !values.emailValues.emailValid
-                ? styles.show
-                : styles.hide
-            }
-          >
-            <TbCircleX className={styles.xmark} />
-          </span> */}
-        </legend>
+        <legend>E-Mail:</legend>
         <input
           className={styles.formEmailInput}
           onChange={(e) => emailHandlers.setEmail(e.target.value)}
@@ -94,18 +77,16 @@ const LoginForm = ({
           </span>
         </div>
       </fieldset>
-      <Link to={"/notes"}>
-        <button
-          className={styles.formLoginButton}
-          disabled={
-            !values.emailValues.emailValid ||
-            !values.passwordValues.passwordValid
-          }
-          style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
-        >
-          Login
-        </button>
-      </Link>
+
+      <button
+        className={styles.formLoginButton}
+        disabled={
+          !values.emailValues.emailValid || !values.passwordValues.passwordValid
+        }
+        style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
+      >
+        Login
+      </button>
       <div className={styles.crossLine}>
         <div></div>
         <span>OR</span>

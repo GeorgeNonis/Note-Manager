@@ -60,7 +60,12 @@
   overflow-wrap: anywhere;
   letter-spacing: 0.01785714em;
   font-family: "Google Sans", Roboto, Arial, sans-serif;
-  transition: all 700ms ease-in-out;
+  transition: all 700ms linear;
+  // transform-origin: center;
+  // transition-property: height, width, transform;
+  // transition-property: position;
+  // transition-duration: 700ms;
+  // transition-timing-function: ease-out;
   .noteTitle {
     all: unset;
     padding: 0.5rem 1rem;
@@ -107,12 +112,12 @@
   }
 }
 
-.preview {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100000;
-}
+// .preview {
+//   position: absolute;
+//   inset: 50% auto auto 50%;
+//   transform: translate(-50%, -50%);
+//   z-index: 100000;
+// }
 
 .review {
   position: absolute;

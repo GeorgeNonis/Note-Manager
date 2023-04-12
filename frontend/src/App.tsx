@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "./errors";
 import RootLayout from "./pages/rootLayout";
 import { lazy, Suspense } from "react";
-import { LoginPage } from "./components";
+// import { LoginPage } from "./components";
 
 const ExistinNotesSection = lazy(
   () => import("./components/sections/existing-notes-section")
@@ -14,10 +14,16 @@ const NotesWithLabelsSection = lazy(
   () => import("./components/sections/notes-with-labels-section")
 );
 
+const LoginPage = lazy(() => import("./pages/loginPage"));
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginPage />,
+    element: (
+      <Suspense fallback={"loading"}>
+        <LoginPage />
+      </Suspense>
+    ),
   },
   {
     path: "notes",

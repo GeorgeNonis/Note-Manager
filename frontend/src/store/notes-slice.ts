@@ -6,6 +6,7 @@ const initialState = {
   notes: [],
   deletedNotes: [],
   pinnedNotes: [],
+  archivedNotes: [],
   labels: [],
 } as InitialState;
 
@@ -24,40 +25,71 @@ const notes = createSlice({
     },
 
     editNote(state, { payload }) {
-      const { id, pinned, noteValue, titleValue } = payload;
-      const notes = pinned ? state.pinnedNotes : state.notes;
-      const noteIndex = notes.findIndex((n) => n.id === id);
-      const note = notes[noteIndex];
+      const { id, pinned, noteValue, titleValue, archived = false } = payload;
+      let note;
+      if (!archived) {
+        const notes = pinned ? state.pinnedNotes : state.notes;
+        const noteIndex = notes.findIndex((n) => n.id === id);
+        note = notes[noteIndex];
+      } else {
+        const noteIndex = state.archivedNotes.findIndex((n) => n.id === id);
+        note = state.archivedNotes[noteIndex];
+      }
 
       note.note = noteValue;
       note.title = titleValue;
     },
-    deleteNote(state, { payload }) {
-      const { id, pinned } = payload;
-      const notes = pinned ? state.pinnedNotes : state.notes;
-      const note = notes.find((n) => n.id === id) as NoteObj;
-      state.deletedNotes.push(note);
+    // editArchivedNote(state, { payload }) {
+    //   const { id, noteValue, titleValue } = payload;
 
-      if (pinned) {
-        state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
+    //   const noteIndex = state.archivedNotes.findIndex((n) => n.id === id);
+    //   const note = state.archivedNotes[noteIndex];
+
+    //   note.note = noteValue;
+    //   note.title = titleValue;
+    // },
+    // deleteArchivedNote(state, { payload }) {
+    //   const { id } = payload;
+    //   const noteIndex = state.archivedNotes.findIndex((n) => n.id === id);
+    //   const note = state.archivedNotes[noteIndex] as NoteObj;
+    //   state.deletedNotes.push(note);
+    //   state.archivedNotes = [...state.archivedNotes.filter((n) => n.id !== id)];
+    // },
+    deleteNote(state, { payload }) {
+      const { id, pinned, archived = false } = payload;
+      let note;
+      if (!archived) {
+        const notes = pinned ? state.pinnedNotes : state.notes;
+        note = notes.find((n) => n.id === id) as NoteObj;
+        pinned
+          ? (state.pinnedNotes = [
+              ...state.pinnedNotes.filter((n) => n.id !== id),
+            ])
+          : (state.notes = [...state.notes.filter((n) => n.id !== id)]);
+        // if (pinned) {
+        //   state.pinnedNotes = [...state.pinnedNotes.filter((n) => n.id !== id)];
+        // } else {
+        //   state.notes = [...state.notes.filter((n) => n.id !== id)];
+        // }
       } else {
-        state.notes = [...state.notes.filter((n) => n.id !== id)];
+        const noteIndex = state.archivedNotes.findIndex((n) => n.id === id);
+        note = state.archivedNotes[noteIndex] as NoteObj;
+        state.archivedNotes = [
+          ...state.archivedNotes.filter((n) => n.id !== id),
+        ];
       }
+      state.deletedNotes.push(note);
     },
     sortUnpinnedNotes(state, { payload }) {
       const { arr } = payload;
 
-      console.log(arr);
       //Testing purposes
       state.notes = [...arr];
     },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
-      // console.log(pinned);
-      console.log(arr);
 
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
-      // console.log("here");
     },
     restoreNote(state, { payload: id }) {
       const note = state.deletedNotes.find((n) => n.id === id);
@@ -173,6 +205,8 @@ const notes = createSlice({
 export const {
   addNote,
   editNote,
+  // editArchivedNote,
+  // deleteArchivedNote,
   deleteNote,
   sortNotes,
   initial,

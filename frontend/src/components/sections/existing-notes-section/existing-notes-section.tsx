@@ -13,8 +13,6 @@ import styles from "./styles.module.scss";
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
 
-  let zIndex = 10000;
-
   if (useStore.values.loading) return <LoadingSpinner />;
 
   if (useStore.values.error === "Network Error") return <></>;

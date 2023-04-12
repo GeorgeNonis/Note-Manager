@@ -17,21 +17,19 @@ export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
 
 export const editNoteHttp = async <T, E>({
   noteId,
-  pinned,
+  pinned = false,
+  archived = true,
   noteValue,
   titleValue,
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
-  console.log(pinned);
+  const archivedOrNot = archived
+    ? `${BASE_URL}notes/editarchivednote/:${noteId}`
+    : `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`;
   try {
-    console.log("Before response");
-    const response = await axios.post<T, E>(
-      `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`,
-      {
-        noteValue,
-        titleValue,
-      }
-    );
-    console.log("Hello from edit.ts");
+    const response = await axios.post<T, E>(archivedOrNot, {
+      noteValue,
+      titleValue,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
