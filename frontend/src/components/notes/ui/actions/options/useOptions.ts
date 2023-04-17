@@ -40,13 +40,18 @@ export const useOptions = ({
 
   const copyNoteHandler = async (id: string, pinned: boolean) => {
     const sharedId = crypto.randomUUID();
-    const response = await copyNoteHttp({ noteId: id, pinned, sharedId });
+    const response = await copyNoteHttp({
+      noteId: id,
+      pinned,
+      archive,
+      sharedId,
+    });
     dispatch(httpReqResLoading());
 
     const sucessfullRequest = isThereError(response);
     // console.log(sucessfullRequest);
     if (sucessfullRequest) {
-      dispatch(copyNote({ id, pinned, sharedId }));
+      dispatch(copyNote({ id, pinned, archive, sharedId }));
     } else {
       dispatch(errorState(response[1]?.message));
     }
@@ -58,13 +63,13 @@ export const useOptions = ({
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
 
-    const response = await deleteNoteHttp(note.id, pinned);
-    const sucessfullRequest = isThereError(response);
-    // console.log(sucessfullRequest);
-    sucessfullRequest
-      ? dispatch(deleteNote({ id: note.id, pinned }))
-      : dispatch(errorState(response[1]?.message));
+    // const response = await deleteNoteHttp(note.id, pinned, archive!);
+    // const sucessfullRequest = isThereError(response);
 
+    // sucessfullRequest
+    //   ? dispatch(deleteNote({ id: note.id, pinned, archive }))
+    //   : dispatch(errorState(response[1]?.message));
+    dispatch(deleteNote({ id: note.id, pinned, archive }));
     setDisplay(false);
   };
 
@@ -95,11 +100,12 @@ export const useOptions = ({
       const response = await checkBoxesHandlerHttp({
         noteId: note.id,
         pinned,
+        archive,
         uncheckednote,
       });
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
-        dispatch(checkBoxes({ id: note.id, pinned }));
+        dispatch(checkBoxes({ id: note.id, pinned, archive }));
       } else {
         dispatch(errorState(response[1]?.message));
       }
@@ -111,11 +117,14 @@ export const useOptions = ({
         const response = await checkBoxesHandlerHttp({
           noteId: note.id,
           pinned,
+          archive,
           uncheckednote,
         });
         const sucessfullRequest = isThereError(response);
         sucessfullRequest
-          ? dispatch(checkBoxes({ id: note.id, pinned, uncheckednote }))
+          ? dispatch(
+              checkBoxes({ id: note.id, pinned, archive, uncheckednote })
+            )
           : dispatch(errorState(response[1]?.message));
       }
     }

@@ -16,6 +16,7 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
   const saveChanges = async () => {
     const response = await editNoteHttp({
       pinned: false,
+      archive: true,
       noteId,
       titleValue: noteTitle,
       noteValue,

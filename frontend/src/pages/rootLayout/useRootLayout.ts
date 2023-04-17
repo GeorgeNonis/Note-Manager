@@ -46,11 +46,11 @@ export const useRootLayout = () => {
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
         dispatch(initial(response[0]));
-        // console.log("Sucessfull");
+        console.log("Sucessfull");
       } else {
         const msg = response[1]?.message!;
-        // console.log("UN-Sucessfull");
-        // console.log(msg);
+        console.log("UN-Sucessfull");
+        console.log(msg);
 
         dispatch(errorState(IfNetworkDown(msg)));
       }

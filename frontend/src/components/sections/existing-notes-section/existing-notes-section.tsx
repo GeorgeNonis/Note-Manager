@@ -12,6 +12,8 @@ import styles from "./styles.module.scss";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
+  console.log(`useStore.values.state`);
+  console.log(useStore.values.state);
 
   if (useStore.values.loading) return <LoadingSpinner />;
 

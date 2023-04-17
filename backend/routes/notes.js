@@ -1,5 +1,4 @@
 import express from "express";
-// import { getDB } from "../data/database.js";
 import { getIdPinnedStatus } from "../utils/utils.js";
 import UserBluePrint from "../data/schema.js";
 const router = express.Router();
@@ -14,9 +13,11 @@ router.get("/v1/notes", async (req, res, next) => {
    */
   UserBluePrint.findById("642d61213adbae2d3c5fd3ab")
     .then((user) => {
+      console.log(user);
       res.status(200).json({
         pinned: [...user.pinnedNotes],
         unpinned: [...user.unPinnedNotes],
+        archivedNotes: [...user.archivedNotes],
         deleted: [...user.deletedNotes],
         labels: [...user.labels],
       });
@@ -59,10 +60,7 @@ router.post("/v1/notes", async (req, res, next) => {
   console.log("requesting to post note");
   try {
     const userdata = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    // console.log({ response });
     const { unPinnedNotes } = userdata;
-    // response.unPinnedNotes = [...unPinnedNotes, { ...data }];
-    // response.save();
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
       { unPinnedNotes: [...unPinnedNotes, { ...data }] }
