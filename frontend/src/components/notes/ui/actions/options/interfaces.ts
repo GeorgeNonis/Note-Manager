@@ -1,6 +1,7 @@
 import { NoteObj } from "../../../../../interfaces/interfaces";
 
 export interface OptionsProps {
+  archive?: boolean;
   review: boolean;
   note: NoteObj;
   pinned: boolean;

@@ -1,18 +1,19 @@
 import { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { IoMdColorPalette } from "react-icons/io";
-import ColorPallete from "../color-pallete";
+import { BiArchiveOut, BiArchiveIn } from "react-icons/bi";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
 import AddLabel from "../add-label";
 import DiscardBoxes from "../../../../modals/discard-boxes";
-import styles from "../../../note.module.scss";
 import BackgroundImage from "../backgroundimage/backgroundImage";
+import styles from "../../../note.module.scss";
 
-const Options = ({ note, pinned, review }: OptionsProps) => {
+const Options = ({ note, pinned, review, archive = false }: OptionsProps) => {
   const { checkbox, id } = note;
   const { handlers, outsideOptions, state, useStyles } = useOptions({
+    archive,
     note,
     pinned,
     styles,
@@ -32,6 +33,12 @@ const Options = ({ note, pinned, review }: OptionsProps) => {
         >
           <IoMdColorPalette />
         </Option>
+        <Option
+          text={!archive ? "Archive Note" : "Unarchive Note"}
+          onClick={() => state.archiveNoteHandler()}
+        >
+          {archive ? <BiArchiveOut /> : <BiArchiveIn />}
+        </Option>
 
         <Option
           text="More Tools"
@@ -44,15 +51,6 @@ const Options = ({ note, pinned, review }: OptionsProps) => {
           ...
         </Option>
       </div>
-      {/* {state.displayPalette && (
-        <div className={styles.colorPallete}>
-          <ColorPallete
-            setDisplayPalette={state.setDisplayPalette}
-            id={id}
-            pinned={pinned}
-          />
-        </div>
-      )} */}
       {state.displayAddLabel && <AddLabel id={id} pinned={pinned} />}
       {state.display && (
         <div className={styles.options}>

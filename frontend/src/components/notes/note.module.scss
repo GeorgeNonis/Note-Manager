@@ -147,7 +147,7 @@
   inset: 7px -5px auto auto;
   color: gray;
   &:hover {
-    cursor: grab;
+    cursor: pointer;
 
     .span {
       color: white !important;
@@ -215,9 +215,6 @@
   place-items: center;
   background-color: #202124;
 
-  & .option:nth-of-type(3) {
-    background-color: yellow;
-  }
   .option {
     position: relative;
     h3 {
@@ -234,7 +231,7 @@
       text-align: center;
     }
     &:hover {
-      cursor: grab;
+      cursor: pointer;
       h3 {
         visibility: visible;
       }
@@ -279,7 +276,7 @@
     padding: 0.5rem;
     &:hover {
       background-color: gray;
-      cursor: grab;
+      cursor: pointer;
     }
   }
 }
@@ -304,7 +301,7 @@
   color: #dadce0;
   &:hover {
     background-color: rgba(138, 180, 248, 0.039);
-    cursor: grab;
+    cursor: pointer;
   }
 }
 .actions {
@@ -318,7 +315,7 @@
 .reviewNoteButton {
   @include btnStyle();
   &:hover {
-    cursor: grab;
+    cursor: pointer;
   }
 }
 

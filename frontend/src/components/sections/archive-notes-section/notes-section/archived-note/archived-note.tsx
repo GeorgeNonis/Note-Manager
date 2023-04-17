@@ -8,7 +8,7 @@ import {
 } from "../../../../index";
 import { useArchivedNote } from "./useArchivedNote";
 import { Transition } from "react-transition-group";
-import styles from "../note.module.scss";
+import styles from "../../../../notes/note.module.scss";
 
 const Note = ({ note, position, zindex }: NoteProps) => {
   const { state } = useArchivedNote({ note, zindex });
@@ -80,6 +80,7 @@ const Note = ({ note, position, zindex }: NoteProps) => {
           </div>
         )}
         <Options
+          archive={true}
           review={state.values.review}
           note={note}
           pinned={false}

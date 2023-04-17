@@ -1,4 +1,3 @@
-// import { useNotesSection } from "./useNotesSection";
 import { NoteObj } from "../../../../interfaces/interfaces";
 import ArchivedNote from "./archived-note";
 import styles from "./styles.module.scss";
@@ -6,7 +5,6 @@ import styles from "./styles.module.scss";
 /**
  * If archived following functionalitys
  * Remove Pinned functionality
- * Remove Add Label
  */
 
 const ArchivedNotesSection = ({ notes }: { notes: NoteObj[] }) => {

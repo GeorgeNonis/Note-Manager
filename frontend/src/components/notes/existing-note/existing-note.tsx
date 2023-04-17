@@ -102,7 +102,6 @@ const Note = ({
           styles={styles}
         />
       </NoteWrapper>
-      {/* </div> */}
     </>
   );
 };

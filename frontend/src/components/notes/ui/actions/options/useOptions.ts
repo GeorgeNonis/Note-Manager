@@ -6,9 +6,11 @@ import {
   checkBoxesHandlerHttp,
 } from "../../../../../services";
 import {
+  archiveNote,
   checkBoxes,
   copyNote,
   deleteNote,
+  unarchiveNote,
 } from "../../../../../store/notes-slice";
 import {
   errorState,
@@ -20,6 +22,7 @@ import { UseOptionsProps } from "./interfaces";
 import { CreateCheckBoxes } from "./utils";
 
 export const useOptions = ({
+  archive,
   note,
   pinned,
   styles,
@@ -32,7 +35,6 @@ export const useOptions = ({
   const [displayAddLabel, setDisplayAddLabel] = useState<boolean>();
   const outsideOptions = useOutsideClick(() => {
     setDisplay(false);
-    // setDisplayPalette(false);
     setDisplayAddLabel(false);
   });
 
@@ -119,6 +121,12 @@ export const useOptions = ({
     }
   };
 
+  const archiveNoteHandler = () => {
+    !archive
+      ? dispatch(archiveNote({ id: note.id }))
+      : dispatch(unarchiveNote({ id: note.id }));
+  };
+
   const contentStyle =
     display || displayPalette || review
       ? `${styles.optionsContent} ${styles.visible}`
@@ -138,6 +146,7 @@ export const useOptions = ({
     setDisplayAddLabel,
     setDisplayPalette,
     setDisplay,
+    archiveNoteHandler,
   };
 
   const handlers = {

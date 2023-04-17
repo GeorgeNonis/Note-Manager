@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "./errors";
 import RootLayout from "./pages/rootLayout";
 import { lazy, Suspense } from "react";
-// import { LoginPage } from "./components";
+import ArchiveNotesSection from "./components/sections/archive-notes-section";
 
 const ExistinNotesSection = lazy(
   () => import("./components/sections/existing-notes-section")
@@ -13,8 +13,8 @@ const DeletedNotesSection = lazy(
 const NotesWithLabelsSection = lazy(
   () => import("./components/sections/notes-with-labels-section")
 );
-
 const LoginPage = lazy(() => import("./pages/loginPage"));
+const NoPageFound = lazy(() => import("./pages/noPageFound"));
 
 const router = createBrowserRouter([
   {
@@ -47,6 +47,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "archivenotes",
+        element: (
+          <Suspense>
+            <ArchiveNotesSection />
+          </Suspense>
+        ),
+      },
+      {
         path: "labelsnotesection/:labelId",
         element: (
           <Suspense>
@@ -56,7 +64,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: "*", element: <p>Page could not be found!</p> },
+  { path: "*", element: <NoPageFound /> },
 ]);
 
 const App = () => {
