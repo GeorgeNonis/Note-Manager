@@ -4,13 +4,13 @@ import { BASE_URL } from "../config";
 export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean,
-  archive: boolean
+  archived: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
   console.log("requesting to delete");
   console.log({ id, pinned });
   try {
     const response = await axios.delete<T, E>(
-      `${BASE_URL}notes/:${id}?isnotepined=${pinned}&isarchived=${archive}`
+      `${BASE_URL}notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`
     );
     return [response, null];
   } catch (error) {

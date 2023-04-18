@@ -1,7 +1,12 @@
 import axios, { AxiosError } from "axios";
 import { NoteObj } from "../interfaces/interfaces";
 import { BASE_URL } from "../config";
-import { CopyNoteProps, CheckBoxProps, CheckBoxesProps } from "./interfaces";
+import {
+  CopyNoteProps,
+  CheckBoxProps,
+  CheckBoxesProps,
+  ArchiveNoteProps,
+} from "./interfaces";
 
 export const addNoteHttp = async <T, E>(
   data: NoteObj
@@ -112,6 +117,25 @@ export const checkBoxHandlerHttp = async <T, E>({
         boxid,
         checked,
       }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+
+export const archiveNoteHandlerHttp = async <T, E>({
+  noteId,
+  pinned,
+  archived,
+}: ArchiveNoteProps): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}notes/${
+        !archived ? "archivenote" : "unarchivenote"
+      }/:${noteId}?isnotepined=${pinned}`
     );
     return [response, null];
   } catch (error) {

@@ -13,7 +13,7 @@ export const onDropBin = async (
 
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
-    const response = await deleteNoteHttp(id, pinned);
+    const response = await deleteNoteHttp(id, pinned, false);
     if (response[1] === null) {
       cb(id, pinned);
     }

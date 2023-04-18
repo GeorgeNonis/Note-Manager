@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { IRootState } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { useHookProps } from "./interfaces";
@@ -6,7 +5,7 @@ import { findPinnedNotes, findUnpinnedNotes } from "./utils";
 
 export const useNotesWithLabelsSection = ({ label }: useHookProps) => {
   const state = useSelector((state: IRootState) => state.notes);
-  const { notes, pinnedNotes, labels } = state;
+  const { notes, pinnedNotes } = state;
   state.labels.forEach((l) => {
     // console.log(label);
     // console.log(l.label);

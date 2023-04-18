@@ -6,6 +6,7 @@ interface CheckBoxDetails {
 export interface CheckBoxProps {
   checked: boolean;
   pinned: boolean;
+  archived: boolean;
   id: string;
   checkBoxDetails: CheckBoxDetails;
 }

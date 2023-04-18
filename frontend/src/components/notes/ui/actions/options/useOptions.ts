@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { isThereError } from "../../../../../utils";
 import { UseOptionsProps } from "./interfaces";
 import { CreateCheckBoxes } from "./utils";
+import { archiveNoteHandlerHttp } from "../../../../../services/postNote";
 
 export const useOptions = ({
   archived,
@@ -130,10 +131,20 @@ export const useOptions = ({
     }
   };
 
-  const archiveNoteHandler = () => {
-    !archived
-      ? dispatch(archiveNote({ id: note.id }))
-      : dispatch(unarchiveNote({ id: note.id }));
+  const archiveNoteHandler = async () => {
+    const response = await archiveNoteHandlerHttp({
+      noteId: note.id,
+      pinned,
+      archived,
+    });
+
+    const sucessfullRequest = isThereError(response);
+
+    sucessfullRequest
+      ? !archived
+        ? dispatch(archiveNote({ id: note.id, pinned }))
+        : dispatch(unarchiveNote({ id: note.id }))
+      : dispatch(errorState(response[1]?.message));
   };
 
   const contentStyle =

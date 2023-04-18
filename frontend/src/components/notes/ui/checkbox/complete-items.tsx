@@ -4,7 +4,12 @@ import { NumberOfCompleteItems } from "./utils";
 import { Checkbox } from "../../../index";
 import styles from "./styles.module.scss";
 
-const CompleteItems = ({ completedItems, pinned, id }: CompletedItems) => {
+const CompleteItems = ({
+  completedItems,
+  pinned,
+  id,
+  archived,
+}: CompletedItems) => {
   const { showItemsHandler, state } = useCompleteItems();
   return (
     <>
@@ -23,6 +28,7 @@ const CompleteItems = ({ completedItems, pinned, id }: CompletedItems) => {
         completedItems.map((info) => {
           return (
             <Checkbox
+              archived={archived}
               id={id}
               checkBoxDetails={info}
               checked={true}

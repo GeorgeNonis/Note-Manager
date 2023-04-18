@@ -10,6 +10,7 @@ const NoteDetails = ({
   checkbox,
   pinned,
   editable = true,
+  archived = false,
 }: NoteDetailsProps) => {
   return (
     <>
@@ -22,7 +23,6 @@ const NoteDetails = ({
           spellCheck="true"
           placeholder="Empty note"
           value={editable ? note.note : noteValue}
-          // defaultValue={editable ? note.note : noteValue}
           onChange={(e) => {
             if (setNotedetails) {
               console.log("s");
@@ -38,6 +38,7 @@ const NoteDetails = ({
             note.unChecked!.map((info) => {
               return (
                 <Checkbox
+                  archived={archived}
                   id={note.id}
                   checkBoxDetails={info}
                   checked={false}
@@ -48,6 +49,7 @@ const NoteDetails = ({
             })}
           {checkbox && note.checked?.length! > 0 && (
             <CompleteItems
+              archived={archived}
               completedItems={note.checked!}
               id={note.id}
               pinned={pinned!}

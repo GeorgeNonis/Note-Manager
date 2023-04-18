@@ -19,7 +19,7 @@ export const useBackgroundimage = ({
     console.log(`${value} clicking`);
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
-      ? dispatch(setColor({ value, id, pinned }))
+      ? dispatch(setColor({ value, id, pinned, archived }))
       : dispatch(errorState(response[1]?.message));
 
     setDisplayPalette(false);

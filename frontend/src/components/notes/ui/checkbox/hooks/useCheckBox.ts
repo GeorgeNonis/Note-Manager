@@ -11,6 +11,7 @@ export const useCheckBox = ({
   pinned,
   noteId,
   boxid,
+  archived,
 }: UseCheckBox) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -21,10 +22,11 @@ export const useCheckBox = ({
       boxid,
       checked,
       pinned,
+      archived,
     });
     const sucessfullRequest = isThereError(response);
     if (sucessfullRequest) {
-      dispatch(checkBox({ id: noteId, boxid, checked, pinned }));
+      dispatch(checkBox({ id: noteId, boxid, checked, pinned, archived }));
     } else {
       dispatch(errorState(response[1]?.message));
     }

@@ -49,3 +49,6 @@ export interface CheckBoxProps
     StandartProps,
     "noteId" | "pinned" | "archived" | "boxid" | "checked"
   > {}
+
+export interface ArchiveNoteProps
+  extends Pick<StandartProps, "noteId" | "pinned" | "archived"> {}

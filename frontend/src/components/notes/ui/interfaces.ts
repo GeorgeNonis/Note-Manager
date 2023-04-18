@@ -7,6 +7,7 @@ export interface NoteDetailsProps {
   note: NoteObj;
   noteValue?: string;
   pinned?: boolean;
+  archived?: boolean;
   checkbox?: boolean;
 }
 

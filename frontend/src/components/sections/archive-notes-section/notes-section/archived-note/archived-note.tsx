@@ -45,6 +45,7 @@ const Note = ({ note, position, zindex }: NoteProps) => {
           setNoteTitle={state.actions.setNoteTitle}
         />
         <NoteDetails
+          archived={true}
           editable={false}
           setNotedetails={state.actions.setNotedetails}
           pinned={false}

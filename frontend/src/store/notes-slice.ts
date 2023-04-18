@@ -27,7 +27,7 @@ const notes = createSlice({
     },
 
     editNote(state, { payload }) {
-      const { id, pinned, archive: archived, noteValue, titleValue } = payload;
+      const { id, pinned, archived, noteValue, titleValue } = payload;
       const notes = archived
         ? state.archivedNotes
         : pinned
@@ -43,14 +43,14 @@ const notes = createSlice({
       const { id, pinned } = payload;
       const notes = pinned ? state.pinnedNotes : state.notes;
       const note = notes.find((n) => n.id === id) as NoteObj;
+      console.log({ id });
+      console.log({ notes });
+      console.log({ note });
+      pinned
+        ? (state.pinnedNotes = [...notes.filter((n) => n.id !== id)])
+        : (state.notes = [...notes.filter((n) => n.id !== id)]);
 
       state.archivedNotes.push(note);
-
-      pinned
-        ? (state.pinnedNotes = [
-            ...state.pinnedNotes.filter((n) => n.id !== id),
-          ])
-        : (state.notes = [...state.notes.filter((n) => n.id !== id)]);
     },
     unarchiveNote(state, { payload }) {
       const { id } = payload;
@@ -60,8 +60,8 @@ const notes = createSlice({
       state.notes.push(note);
     },
     deleteNote(state, { payload }) {
-      const { id, pinned, archive } = payload;
-      const notes = archive
+      const { id, pinned, archived } = payload;
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes
@@ -69,7 +69,7 @@ const notes = createSlice({
       const note = notes.find((n) => n.id === id) as NoteObj;
       state.deletedNotes.push(note);
 
-      archive
+      archived
         ? (state.archivedNotes = [
             ...state.archivedNotes.filter((n) => n.id !== id),
           ])
@@ -118,8 +118,8 @@ const notes = createSlice({
       }
     },
     setColor(state, { payload }) {
-      const { id, pinned, archive, value: color } = payload;
-      const notes = archive
+      const { id, pinned, archived, value: color } = payload;
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes
@@ -129,17 +129,15 @@ const notes = createSlice({
       note.color = color;
     },
     copyNote(state, { payload }) {
-      const { id, sharedId, pinned, archive } = payload;
-      const notes = archive
+      const { id, sharedId, pinned, archived } = payload;
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes
         : state.notes;
       const noteIndex = notes.findIndex((n) => n.id === id);
       const note = notes[noteIndex];
-      // const note = archive ? state.archivedNotes : !isItPinned
-      //   ? state.notes.find((n) => n.id === id)!
-      //   : state.pinnedNotes.find((n) => n.id === id)!;
+
       state.notes = [...state.notes, { ...note, id: sharedId }];
     },
     addLabel(state, { payload }) {
@@ -176,8 +174,8 @@ const notes = createSlice({
       state.labels[indexOfLabel].label = newLabel;
     },
     checkBoxes(state, { payload }) {
-      const { id, pinned, archive, uncheckednote } = payload;
-      const notes = archive
+      const { id, pinned, archived, uncheckednote } = payload;
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes
@@ -199,9 +197,9 @@ const notes = createSlice({
       note.checkbox = !note.checkbox;
     },
     checkBox(state, { payload }) {
-      const { id, boxid, checked, pinned, archive } = payload;
+      const { id, boxid, checked, pinned, archived } = payload;
       // console.log({ id, boxid, checked, pinned });
-      const notes = archive
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes

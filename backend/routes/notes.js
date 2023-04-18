@@ -97,12 +97,15 @@ router.post("/v1/notes", async (req, res, next) => {
 });
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
+  console.log(req.query);
   const { noteValue, titleValue } = req.body;
-  const archive = req.query.isarchived === "true";
+  const archived = req.query.isarchived === "true";
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-  const { pinnedNotes, unPinnedNotes } = data;
-  const notes = pinned ? pinnedNotes : unPinnedNotes;
+  const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+  console.log({ data });
+  console.log({ archivedNotes });
+  const notes = archived ? archivedNotes : pinned ? pinnedNotes : unPinnedNotes;
   const noteIndex = notes.findIndex((n) => n.id === id);
   const note = notes[noteIndex];
   note.title = titleValue;
@@ -111,7 +114,11 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   try {
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
-      pinned ? { pinnedNotes: [...notes] } : { unPinnedNotes: [...notes] }
+      archived
+        ? { archivedNotes: [...notes] }
+        : pinned
+        ? { pinnedNotes: [...notes] }
+        : { unPinnedNotes: [...notes] }
     );
     res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
@@ -206,14 +213,6 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
             unPinnedNotes: [...unPinnedNotes.filter((n) => n.id !== id)],
           }
     );
-    // if (pinned) {
-    //   response.pinnedNotes = [...pinnedNotes.filter((n) => n.id !== id)];
-    //   response.unPinnedNotes = [...unPinnedNotes, { ...note }];
-    // } else {
-    //   response.unPinnedNotes = [...unPinnedNotes.filter((n) => n.id !== id)];
-    //   response.pinnedNotes = [...pinnedNotes, { ...note }];
-    // }
-
     res.status(200).json({ message: "Successfully pinned" });
     return [response, null];
   } catch (error) {
@@ -223,11 +222,17 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
 });
 
 router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
-  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  // const archived = req.query.isarchived === "true";
+
+  const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes } = data;
-    const notes = pinned ? pinnedNotes : unPinnedNotes;
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+    const notes = archived
+      ? archivedNotes
+      : pinned
+      ? pinnedNotes
+      : unPinnedNotes;
     const noteIndex = notes.findIndex((n) => n.id === id);
     const note = notes[noteIndex];
     const color = req.body.color;
@@ -235,12 +240,13 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
     note.color = color;
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
-      pinned ? { pinnedNotes: [...notes] } : { unPinnedNotes: [...notes] }
+      archived
+        ? { archivedNotes: [...notes] }
+        : pinned
+        ? { pinnedNotes: [...notes] }
+        : { unPinnedNotes: [...notes] }
     );
-    // pinned
-    //   ? (response.pinnedNotes = notes)
-    //   : (response.unPinnedNotes = notes);
-    // response.save();
+
     res.status(200).json({ message: "Sucessfully updated note color" });
     return [response, null];
   } catch (error) {
@@ -250,12 +256,16 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 });
 
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
-  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes } = data;
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
     const { sharedId } = req.body;
-    const notes = pinned ? pinnedNotes : unPinnedNotes;
+    const notes = archived
+      ? archivedNotes
+      : pinned
+      ? pinnedNotes
+      : unPinnedNotes;
     const note = notes.find((n) => n.id === id);
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
@@ -362,12 +372,16 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
-  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes } = data;
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
     const { uncheckednote } = req.body;
-    const notes = pinned ? pinnedNotes : unPinnedNotes;
+    const notes = archived
+      ? archivedNotes
+      : pinned
+      ? pinnedNotes
+      : unPinnedNotes;
     const note = notes.find((n) => n.id === id);
 
     if (!note.createCheckboxes) {
@@ -384,18 +398,15 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
     note.checkbox = !note.checkbox;
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
-      pinned
+      archived
+        ? { archivedNotes: [...notes] }
+        : pinned
         ? {
             pinnedNotes: [...notes],
           }
         : { unPinnedNotes: [...notes] }
     );
-    // console.log({ note });
-    // console.log({ notes });
-    // pinned
-    //   ? (response.pinnedNotes = [...notes])
-    //   : (response.unPinnedNotes = [...notes]);
-    // response.save();
+
     res.status(200).json({ message: "Sucessfully handled checkboxes" });
     return [response, null];
   } catch (error) {
@@ -405,13 +416,17 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
-  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes } = data;
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
     const { boxid, checked } = req.body;
 
-    const notes = pinned ? pinnedNotes : unPinnedNotes;
+    const notes = archived
+      ? archivedNotes
+      : pinned
+      ? pinnedNotes
+      : unPinnedNotes;
     const note = notes.find((n) => n.id === id);
 
     let checkbox;
@@ -426,17 +441,71 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
     }
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
-      pinned
+      archived
+        ? { archivedNotes: [...notes] }
+        : pinned
         ? {
             pinnedNotes: [...notes],
           }
         : { unPinnedNotes: [...notes] }
     );
-    // pinned
-    //   ? (response.pinnedNotes = notes)
-    //   : (response.unPinnedNotes = notes);
-    // response.save();
+
     res.status(200).json({ message: "Sucessfully handled checkbox" });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
+router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
+  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+
+  try {
+    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
+    const { unPinnedNotes, pinnedNotes, archivedNotes } = data;
+    const notes = pinned ? pinnedNotes : unPinnedNotes;
+    const note = notes.find((n) => n.id === id);
+
+    const response = await UserBluePrint.updateOne(
+      { userId: 1995 },
+      pinned
+        ? {
+            archivedNotes: [...archivedNotes, { ...note }],
+            pinnedNotes: [...pinnedNotes.filter((n) => n.id !== id)],
+          }
+        : {
+            archivedNotes: [...archivedNotes, { ...note }],
+            unPinnedNotes: [...unPinnedNotes.filter((n) => n.id !== id)],
+          }
+    );
+
+    res.status(200).json({ message: "Archived note successfully" });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
+router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
+  const { id } = getIdPinnedStatus(req);
+
+  try {
+    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
+    const { unPinnedNotes, archivedNotes } = data;
+    const notes = archivedNotes;
+    const note = notes.find((n) => n.id === id);
+
+    const response = await UserBluePrint.updateOne(
+      { userId: 1995 },
+      {
+        archivedNotes: [...archivedNotes.filter((n) => n.id !== id)],
+        unPinnedNotes: [...unPinnedNotes, { ...note }],
+      }
+    );
+
+    res.status(200).json({ message: "Archived note successfully" });
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
@@ -449,21 +518,25 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
  */
 
 router.delete("/v1/notes/:id", async (req, res, next) => {
-  const { id, isNotePined: pinned } = getIdPinnedStatus(req);
+  const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { deletedNotes, unPinnedNotes, pinnedNotes } = data;
-    const prevState = pinned ? pinnedNotes : unPinnedNotes;
+    const { deletedNotes, unPinnedNotes, pinnedNotes, archivedNotes } = data;
+    const prevState = archived
+      ? archivedNotes
+      : pinned
+      ? pinnedNotes
+      : unPinnedNotes;
     const note = prevState.find((n) => n.id === id);
 
-    // if (!pinned) {
-    //   response.unPinnedNotes = [...prevState.filter((n) => n.id != id)];
-    // } else {
-    //   response.pinnedNotes = [...prevState.filter((n) => n.id != id)];
-    // }
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
-      pinned
+      archived
+        ? {
+            archivedNotes: [...prevState.filter((n) => n.id != id)],
+            deletedNotes: [...deletedNotes, { ...note }],
+          }
+        : pinned
         ? {
             pinnedNotes: [...prevState.filter((n) => n.id != id)],
             deletedNotes: [...deletedNotes, { ...note }],
@@ -473,8 +546,7 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
             deletedNotes: [...deletedNotes, { ...note }],
           }
     );
-    // response.deletedNotes = [...deletedNotes, { ...note }];
-    // response.save();
+
     res.status(200).json({ message: "Deleted note successfully" });
     return [response, null];
   } catch (error) {
@@ -488,12 +560,6 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
   try {
     const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
     const { labels } = data;
-    // console.log({ labels });
-    // console.log({ label });
-    // console.log([...labels.filter((l) => l.label !== label)]);
-    // response.labels = [...labels.filter((l) => l.label !== label)];
-
-    // response.save();
 
     const response = await UserBluePrint.updateOne(
       { userId: 1995 },
