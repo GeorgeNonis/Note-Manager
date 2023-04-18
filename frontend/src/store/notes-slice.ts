@@ -27,8 +27,8 @@ const notes = createSlice({
     },
 
     editNote(state, { payload }) {
-      const { id, pinned, archive, noteValue, titleValue } = payload;
-      const notes = archive
+      const { id, pinned, archive: archived, noteValue, titleValue } = payload;
+      const notes = archived
         ? state.archivedNotes
         : pinned
         ? state.pinnedNotes

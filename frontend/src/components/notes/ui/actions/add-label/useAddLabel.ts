@@ -8,7 +8,7 @@ import { isThereError } from "../../../../../utils/utils";
 import { AddLabelProps, Labels } from "./interfaces";
 import styles from "./styles.module.scss";
 
-export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
+export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
@@ -20,12 +20,15 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     const response = await addLabelHttp({
       id,
       pinned,
+      archived,
       label: value,
       labelId: sharedId,
     });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
-      ? dispatch(addLabel({ id, pinned, label: value, labelId: sharedId }))
+      ? dispatch(
+          addLabel({ id, pinned, archived, label: value, labelId: sharedId })
+        )
       : dispatch(errorState(response[1]?.message));
     setValue("");
   };
@@ -48,7 +51,7 @@ export const useAddLabel = ({ id, pinned }: AddLabelProps) => {
     label: string,
     id: string
   ) => {
-    const response = await tickLabelHandlerHttp(id, label, pinned);
+    const response = await tickLabelHandlerHttp(id, label, pinned, archived);
     const sucessfullRequest = isThereError(response);
 
     if (sucessfullRequest) {

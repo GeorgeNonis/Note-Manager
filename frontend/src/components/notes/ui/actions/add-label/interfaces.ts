@@ -1,6 +1,7 @@
 export interface AddLabelProps {
   id: string;
   pinned: boolean;
+  archived?: boolean;
   // styles: CSSModuleClasses;
 }
 

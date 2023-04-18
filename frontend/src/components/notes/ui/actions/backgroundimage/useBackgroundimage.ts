@@ -10,12 +10,12 @@ export const useBackgroundimage = ({
   setDisplayPalette,
   id,
   pinned,
+  archived,
 }: useBackgroundimageProps) => {
-  mobileVersion;
   const dispatch = useDispatch();
 
   const displayHandler = async (value: string) => {
-    const response = await updateNoteColorHttp(value, id, pinned);
+    const response = await updateNoteColorHttp(value, id, pinned, archived);
     console.log(`${value} clicking`);
     const sucessfullRequest = isThereError(response);
     sucessfullRequest

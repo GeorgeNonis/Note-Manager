@@ -20,12 +20,13 @@ export const editNoteHttp = async <T, E>({
   pinned,
   noteValue,
   titleValue,
+  archived = false,
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
   console.log(pinned);
   try {
     console.log("Before response");
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}`,
+      `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         noteValue,
         titleValue,
@@ -43,11 +44,12 @@ export const editNoteHttp = async <T, E>({
 export const updateNoteColorHttp = async <T, E>(
   color: string,
   id: string,
-  pinned: boolean
+  pinned: boolean,
+  archived: boolean = false
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}`,
+      `${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         color,
       }
@@ -65,10 +67,11 @@ export const addLabelHttp = async <T, E>({
   id,
   pinned,
   labelId,
+  archived = false,
 }: AddLabelHttpProp): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/labels/:${id}?isnotepined=${pinned}`,
+      `${BASE_URL}notes/labels/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         label,
         labelId,
@@ -85,11 +88,12 @@ export const addLabelHttp = async <T, E>({
 export const tickLabelHandlerHttp = async <T, E>(
   id: string,
   label: string,
-  pinned: boolean
+  pinned: boolean,
+  archived: boolean = false
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/label/:${id}?label=${label}&isnotepined=${pinned}`
+      `${BASE_URL}notes/label/:${id}?label=${label}&isnotepined=${pinned}&isarchived=${archived}`
     );
     return [response, null];
   } catch (error) {

@@ -4,10 +4,11 @@ import { AddLabelProps } from "./interfaces";
 import { useAddLabel } from "./useAddLabel";
 import styles from "./styles.module.scss";
 
-const AddLabel = ({ id, pinned }: AddLabelProps) => {
+const AddLabel = ({ id, pinned, archived }: AddLabelProps) => {
   const { state } = useAddLabel({
     id,
     pinned,
+    archived,
   });
   return (
     <main className={styles.content}>

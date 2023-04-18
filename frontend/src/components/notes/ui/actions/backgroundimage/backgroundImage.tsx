@@ -6,11 +6,13 @@ const BackgroundImage = ({
   setDisplayPalette,
   id,
   pinned,
+  archived,
 }: BackgroundImageProps) => {
   const { mobileVersion, displayHandler } = useBackgroundimage({
     setDisplayPalette,
     id,
     pinned,
+    archived,
   });
   return (
     <>

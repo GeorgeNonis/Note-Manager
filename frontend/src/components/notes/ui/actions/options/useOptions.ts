@@ -22,7 +22,7 @@ import { UseOptionsProps } from "./interfaces";
 import { CreateCheckBoxes } from "./utils";
 
 export const useOptions = ({
-  archive,
+  archived,
   note,
   pinned,
   styles,
@@ -43,7 +43,7 @@ export const useOptions = ({
     const response = await copyNoteHttp({
       noteId: id,
       pinned,
-      archive,
+      archived,
       sharedId,
     });
     dispatch(httpReqResLoading());
@@ -51,7 +51,7 @@ export const useOptions = ({
     const sucessfullRequest = isThereError(response);
     // console.log(sucessfullRequest);
     if (sucessfullRequest) {
-      dispatch(copyNote({ id, pinned, archive, sharedId }));
+      dispatch(copyNote({ id, pinned, archived, sharedId }));
     } else {
       dispatch(errorState(response[1]?.message));
     }
@@ -63,13 +63,13 @@ export const useOptions = ({
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
 
-    // const response = await deleteNoteHttp(note.id, pinned, archive!);
-    // const sucessfullRequest = isThereError(response);
+    const response = await deleteNoteHttp(note.id, pinned, archived!);
+    const sucessfullRequest = isThereError(response);
 
-    // sucessfullRequest
-    //   ? dispatch(deleteNote({ id: note.id, pinned, archive }))
-    //   : dispatch(errorState(response[1]?.message));
-    dispatch(deleteNote({ id: note.id, pinned, archive }));
+    sucessfullRequest
+      ? dispatch(deleteNote({ id: note.id, pinned, archived }))
+      : dispatch(errorState(response[1]?.message));
+    // dispatch(deleteNote({ id: note.id, pinned, archive }));
     setDisplay(false);
   };
 
@@ -100,12 +100,12 @@ export const useOptions = ({
       const response = await checkBoxesHandlerHttp({
         noteId: note.id,
         pinned,
-        archive,
+        archived,
         uncheckednote,
       });
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
-        dispatch(checkBoxes({ id: note.id, pinned, archive }));
+        dispatch(checkBoxes({ id: note.id, pinned, archived }));
       } else {
         dispatch(errorState(response[1]?.message));
       }
@@ -117,13 +117,13 @@ export const useOptions = ({
         const response = await checkBoxesHandlerHttp({
           noteId: note.id,
           pinned,
-          archive,
+          archived,
           uncheckednote,
         });
         const sucessfullRequest = isThereError(response);
         sucessfullRequest
           ? dispatch(
-              checkBoxes({ id: note.id, pinned, archive, uncheckednote })
+              checkBoxes({ id: note.id, pinned, archived, uncheckednote })
             )
           : dispatch(errorState(response[1]?.message));
       }
@@ -131,7 +131,7 @@ export const useOptions = ({
   };
 
   const archiveNoteHandler = () => {
-    !archive
+    !archived
       ? dispatch(archiveNote({ id: note.id }))
       : dispatch(unarchiveNote({ id: note.id }));
   };

@@ -7,6 +7,28 @@ const router = express.Router();
  * GET REQUESTS
  */
 
+/**
+ * Create user manually for testing purposes
+ */
+router.get(`/v1/testing`, async (req, res, next) => {
+  const user = {
+    userId: 6969,
+    xx: 6969,
+    email: "georgenonis@gmail.com",
+    notes: [],
+    deletedNotes: [],
+    pinnedNotes: [],
+    archivedNotes: [],
+    labels: [],
+  };
+  const newUser = new UserBluePrint({ ...user, xx: user.xx });
+
+  newUser
+    .save()
+    .then((res) => console.log(res))
+    .catch((error) => console.log(error));
+});
+
 router.get("/v1/notes", async (req, res, next) => {
   /**
    * Improve this and use Promise.allSettled
@@ -76,6 +98,7 @@ router.post("/v1/notes", async (req, res, next) => {
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   const { noteValue, titleValue } = req.body;
+  const archive = req.query.isarchived === "true";
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
   const { pinnedNotes, unPinnedNotes } = data;

@@ -80,7 +80,7 @@ const Note = ({ note, position, zindex }: NoteProps) => {
           </div>
         )}
         <Options
-          archive={true}
+          archived={true}
           review={state.values.review}
           note={note}
           pinned={false}

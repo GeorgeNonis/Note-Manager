@@ -3,19 +3,19 @@ interface StandartProps {
   boxid: string;
   checked: boolean;
   pinned: boolean;
-  archive?: boolean;
+  archived?: boolean;
   label: string;
   labelId: string;
   id: string;
 }
 
 export interface CopyNoteProps
-  extends Pick<StandartProps, "noteId" | "pinned" | "archive"> {
+  extends Pick<StandartProps, "noteId" | "pinned" | "archived"> {
   sharedId: string;
 }
 
 export interface AddLabelHttpProp
-  extends Pick<StandartProps, "label" | "labelId" | "archive"> {
+  extends Pick<StandartProps, "label" | "labelId" | "archived"> {
   id?: string;
   pinned?: boolean;
 }
@@ -26,18 +26,18 @@ interface Note {
 }
 
 export interface Labels
-  extends Pick<StandartProps, "label" | "labelId" | "archive"> {
+  extends Pick<StandartProps, "label" | "labelId" | "archived"> {
   notes: Note[];
 }
 
 export interface EditNoteArgs
-  extends Pick<StandartProps, "noteId" | "pinned" | "archive"> {
+  extends Pick<StandartProps, "noteId" | "pinned" | "archived"> {
   noteValue?: string;
   titleValue?: string;
 }
 
 export interface CheckBoxesProps
-  extends Pick<StandartProps, "noteId" | "pinned" | "archive"> {
+  extends Pick<StandartProps, "noteId" | "pinned" | "archived"> {
   uncheckednote: {
     note: string;
     id: string;
@@ -47,5 +47,5 @@ export interface CheckBoxesProps
 export interface CheckBoxProps
   extends Pick<
     StandartProps,
-    "noteId" | "pinned" | "archive" | "boxid" | "checked"
+    "noteId" | "pinned" | "archived" | "boxid" | "checked"
   > {}

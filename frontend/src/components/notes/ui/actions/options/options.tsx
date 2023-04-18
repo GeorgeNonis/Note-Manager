@@ -10,10 +10,10 @@ import DiscardBoxes from "../../../../modals/discard-boxes";
 import BackgroundImage from "../backgroundimage/backgroundImage";
 import styles from "../../../note.module.scss";
 
-const Options = ({ note, pinned, review, archive = false }: OptionsProps) => {
+const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
   const { checkbox, id } = note;
   const { handlers, outsideOptions, state, useStyles } = useOptions({
-    archive,
+    archived,
     note,
     pinned,
     styles,
@@ -34,10 +34,10 @@ const Options = ({ note, pinned, review, archive = false }: OptionsProps) => {
           <IoMdColorPalette />
         </Option>
         <Option
-          text={!archive ? "Archive Note" : "Unarchive Note"}
+          text={!archived ? "Archive Note" : "Unarchive Note"}
           onClick={() => state.archiveNoteHandler()}
         >
-          {archive ? <BiArchiveOut /> : <BiArchiveIn />}
+          {archived ? <BiArchiveOut /> : <BiArchiveIn />}
         </Option>
 
         <Option
@@ -51,7 +51,9 @@ const Options = ({ note, pinned, review, archive = false }: OptionsProps) => {
           ...
         </Option>
       </div>
-      {state.displayAddLabel && <AddLabel id={id} pinned={pinned} />}
+      {state.displayAddLabel && (
+        <AddLabel id={id} pinned={pinned} archived={archived} />
+      )}
       {state.display && (
         <div className={styles.options}>
           <h3 onClick={handlers.deleteHandler} role={"button"}>
@@ -70,6 +72,7 @@ const Options = ({ note, pinned, review, archive = false }: OptionsProps) => {
         ReactDOM.createPortal(
           <Suspense fallback={"...loading"}>
             <BackgroundImage
+              archived={archived}
               setDisplayPalette={state.setDisplayPalette}
               id={id}
               pinned={pinned}

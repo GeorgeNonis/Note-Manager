@@ -63,12 +63,12 @@ export const copyNoteHttp = async <T, E>({
   noteId,
   sharedId,
   pinned,
-  archive,
+  archived,
 }: CopyNoteProps): Promise<[T | E | null, AxiosError | null]> => {
   // console.log(noteId);
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archive}`,
+      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       { sharedId }
     );
     return [response, null];
@@ -83,11 +83,11 @@ export const checkBoxesHandlerHttp = async <T, E>({
   noteId,
   pinned,
   uncheckednote,
-  archive,
+  archived,
 }: CheckBoxesProps): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/checkboxes/:${noteId}?isnotepined=${pinned}&isarchived=${archive}`,
+      `${BASE_URL}notes/checkboxes/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       { uncheckednote }
     );
     return [response, null];
@@ -101,13 +101,13 @@ export const checkBoxesHandlerHttp = async <T, E>({
 export const checkBoxHandlerHttp = async <T, E>({
   noteId,
   pinned,
-  archive,
+  archived,
   boxid,
   checked,
 }: CheckBoxProps): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/checkbox/:${noteId}?isnotepined=${pinned}&isarchived=${archive}`,
+      `${BASE_URL}notes/checkbox/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         boxid,
         checked,

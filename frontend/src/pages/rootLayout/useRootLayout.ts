@@ -17,7 +17,7 @@ export const useRootLayout = () => {
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
   const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
-  const { networkdown, requestFailed } = ErrorMessages;
+  const { networkdown } = ErrorMessages;
   const dispatch = useDispatch();
 
   const onDropHandler = async (e: React.DragEvent) => {
