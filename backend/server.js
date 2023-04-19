@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/notes.js";
 import mongoose from "mongoose";
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "./env.js";
 const app = express();
 
 app.use(cors());
@@ -13,8 +12,9 @@ app.use(router);
 const PORT = process.env.PORT || 4569;
 console.log(PORT);
 console.log(process.env.DB_API);
-
+// console.log(typeof process.env.DB_API);
 mongoose
+  // .connect(process.env.DB_API)
   .connect(process.env.DB_API)
   .then((res) => {
     // console.log({ res });

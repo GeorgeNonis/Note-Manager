@@ -169,6 +169,7 @@ const notes = createSlice({
 
     editLabel(state, { payload }) {
       const { label, newLabel } = payload;
+      console.log({ payload });
       const indexOfLabel = state.labels.findIndex((l) => l.label === label);
 
       state.labels[indexOfLabel].label = newLabel;

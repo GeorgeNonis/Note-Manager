@@ -32,6 +32,12 @@ const Label = ({ label }: LabelProps) => {
           onChange={(e) => {
             state.actions.setNewLabel(e.target.value);
           }}
+          onKeyDown={(e) => {
+            console.log(e.key);
+            if (e.key !== "Enter") return;
+            console.log(e.key);
+            state.actions.OnEditHandler();
+          }}
           ref={state.values.inputRef}
           className={styles.modalEditInput}
           type="text"

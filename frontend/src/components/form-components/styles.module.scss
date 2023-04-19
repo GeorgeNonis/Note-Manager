@@ -14,7 +14,7 @@
   justify-self: flex-end;
   color: #dadce0;
   &:hover {
-    cursor: grab;
+    cursor: pointer;
   }
   @include for-phone-only {
     font-size: 0.6rem;
@@ -33,7 +33,7 @@
 .closeFormButton {
   @include btnStyle();
   &:hover {
-    cursor: grab;
+    cursor: pointer;
   }
 }
 

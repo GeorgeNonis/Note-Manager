@@ -59,7 +59,7 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           <h3 onClick={handlers.deleteHandler} role={"button"}>
             Delete
           </h3>
-          {archived && (
+          {!archived && (
             <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
           )}
           <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>

@@ -40,11 +40,13 @@ export const useLabel = (label: string) => {
     const response = await editLabelHttp(label, newLabel);
 
     const sucessfullRequest = isThereError(response);
+    console.log({ response });
 
     if (sucessfullRequest) {
       dispatch(editLabel({ label, newLabel }));
+    } else {
+      dispatch(errorState(response[1]?.message));
     }
-    dispatch(errorState(response[1]?.message));
   };
 
   const state = {
