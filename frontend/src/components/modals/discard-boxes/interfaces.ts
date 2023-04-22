@@ -10,6 +10,7 @@ export interface Props {
 }
 
 export interface DiscardBoxesProps {
+  transitionState: string;
   checkboxhandler: (e: React.MouseEvent<HTMLElement>) => void;
   closeModal: () => void;
 }

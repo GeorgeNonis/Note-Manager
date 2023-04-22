@@ -22,8 +22,6 @@ const Note = ({
   dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
-  // console.log(`Inside existing-note.tsx ${note}`);
-  // console.log(note);
   return (
     <>
       <Transition

@@ -7,20 +7,34 @@ const BackgroundImage = ({
   id,
   pinned,
   archived,
+  transitionState,
 }: BackgroundImageProps) => {
   const { mobileVersion, displayHandler } = useBackgroundimage({
     setDisplayPalette,
     id,
     pinned,
     archived,
+    transitionState,
   });
+
+  const cssClasses = [
+    styles.modalContent,
+    transitionState === "entering"
+      ? styles.openModal
+      : transitionState === "exiting"
+      ? styles.closeModal
+      : null,
+  ];
+
+  console.log(transitionState);
+
   return (
     <>
       <div
         className={styles.backdrop}
         onClick={(e) => setDisplayPalette((prev) => !prev)}
       ></div>
-      <div className={styles.modalContent}>
+      <div className={cssClasses.join(" ")}>
         <h3 className={styles.title}>Background Image</h3>
         <div className={styles.backgroundImages}>
           <div

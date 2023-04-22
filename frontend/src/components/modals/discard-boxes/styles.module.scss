@@ -8,6 +8,7 @@
 }
 
 .modalContent {
+  position: fixed !important;
   padding: 1rem 2.5rem 1rem 2.5rem;
   border-radius: 8px;
   position: absolute;
@@ -18,6 +19,44 @@
   z-index: 10000000;
   border: none;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 60%), 0 4px 8px 3px rgb(0 0 0 / 30%);
+}
+
+.openModal {
+  animation: openModal 0.4s ease-out forwards;
+}
+
+.closeModal {
+  animation: closeModal 0.4s ease-out forwards;
+}
+
+@keyframes openModal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes closeModal {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+  }
 }
 
 .actions {

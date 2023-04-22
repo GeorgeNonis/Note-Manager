@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Transition } from "react-transition-group";
 import ReactDOM from "react-dom";
 import { IoMdColorPalette } from "react-icons/io";
 import { BiArchiveOut, BiArchiveIn } from "react-icons/bi";
@@ -70,45 +70,44 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           </h3>
         </div>
       )}
-      {state.displayPalette &&
-        ReactDOM.createPortal(
-          <Suspense fallback={"...loading"}>
+      <Transition
+        in={state.displayPalette}
+        timeout={500}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(transState) =>
+          ReactDOM.createPortal(
             <BackgroundImage
+              transitionState={transState}
               archived={archived}
               setDisplayPalette={state.setDisplayPalette}
               id={id}
               pinned={pinned}
-            />
-          </Suspense>,
-          document.getElementById("backgroundimage")!
-        )}
-      {state.discardBoxes &&
-        ReactDOM.createPortal(
-          <DiscardBoxes
-            closeModal={handlers.closeModal}
-            checkboxhandler={handlers.checkBoxesHandler}
-          />,
-          document.getElementById("discardBoxes")!
-        )}
+            />,
+            document.getElementById("backgroundimage")!
+          )
+        }
+      </Transition>
+      <Transition
+        in={state.discardBoxes}
+        timeout={500}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(transState) =>
+          ReactDOM.createPortal(
+            <DiscardBoxes
+              transitionState={transState}
+              closeModal={handlers.closeModal}
+              checkboxhandler={handlers.checkBoxesHandler}
+            />,
+            document.getElementById("discardBoxes")!
+          )
+        }
+      </Transition>
     </div>
   );
 };
 
 export default Options;
-
-{
-  /* Upcoming features */
-}
-{
-  /* <Option text="Upload Image">
-          <BsImage />
-        </Option> */
-}
-{
-  /* <Option text="Remind me">
-          <AiOutlineBell />
-        </Option> */
-}
-{
-  /* Upcoming features */
-}
