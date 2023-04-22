@@ -12,6 +12,7 @@ import {
   MenuThreeLines,
   ErrorWithFeature,
 } from "../../components";
+import Account from "../../components/account";
 import styles from "../../styles/App.module.scss";
 
 const RootLayout = () => {
@@ -30,20 +31,23 @@ const RootLayout = () => {
       >
         <MenuThreeLines />
         {error.length > 0 && <ErrorWithFeature message={error} />}
-        <div
-          ref={hoverOutsideTrash}
-          id="trashbin"
-          className={styles.BiTrash}
-          onMouseEnter={() => {
-            state.actions.setMouseOverTrash(true);
-          }}
-          onDragEnter={() => {
-            state.actions.setMouseOverTrash(true);
-          }}
-          onDrop={state.actions.onDropHandler}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
+        <div className={styles.trashandusersettings}>
+          <div
+            ref={hoverOutsideTrash}
+            id="trashbin"
+            className={styles.BiTrash}
+            onMouseEnter={() => {
+              state.actions.setMouseOverTrash(true);
+            }}
+            onDragEnter={() => {
+              state.actions.setMouseOverTrash(true);
+            }}
+            onDrop={state.actions.onDropHandler}
+            onDragOver={(e) => e.preventDefault()}
+          >
+            {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
+          </div>
+          <Account />
         </div>
         <div
           className={

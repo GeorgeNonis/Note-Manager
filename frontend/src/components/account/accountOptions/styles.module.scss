@@ -1,0 +1,63 @@
+@mixin btnStyle {
+  all: unset;
+  background: #f26716;
+  border: none;
+  border-radius: 8px;
+  width: 80%;
+  height: 2rem;
+  text-align: center;
+  transition: all 230ms cubic-bezier(0, 0.77, 0.62, 1.12);
+  cursor: pointer;
+  &:hover {
+    width: 83%;
+    height: 2.3rem;
+  }
+}
+
+.mainContent {
+  position: absolute;
+  top: 3rem;
+  left: -13.5rem;
+  width: 15rem;
+  height: 15rem;
+  display: grid;
+  grid-auto-flow: row;
+  z-index: 2;
+  background: #4c4e52;
+  border-radius: 8px;
+  place-items: center;
+  font-family: "CormorantGaramond";
+  padding-bottom: 1rem;
+  &:before {
+    content: "";
+    position: absolute;
+    border-top: 30px solid transparent;
+    border-right: 13px solid #4c4e52;
+    border-bottom: 0px solid transparent;
+    top: -1rem;
+    right: 0;
+  }
+}
+
+.profpicture {
+  .profimg {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    cursor: pointer;
+    &:hover {
+      width: 3.4rem;
+      height: 3.4rem;
+    }
+  }
+}
+
+.manageaccount {
+  @include btnStyle;
+}
+
+.signoutbutton {
+  @include btnStyle;
+}
