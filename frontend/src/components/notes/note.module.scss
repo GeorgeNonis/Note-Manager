@@ -1,5 +1,10 @@
 @import "../../styles/mixins.module.scss";
 
+@mixin roundBgColor {
+  background-color: rgba(154, 160, 166, 0.157);
+  border-radius: 50%;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -61,11 +66,6 @@
   letter-spacing: 0.01785714em;
   font-family: "Google Sans", Roboto, Arial, sans-serif;
   transition: all 700ms linear;
-  // transform-origin: center;
-  // transition-property: height, width, transform;
-  // transition-property: position;
-  // transition-duration: 700ms;
-  // transition-timing-function: ease-out;
   .noteTitle {
     all: unset;
     padding: 0.5rem 1rem;
@@ -209,7 +209,17 @@
   place-items: center;
   background-color: #202124;
 
+  h2 {
+    all: unset;
+  }
   .option {
+    svg,
+    h2 {
+      padding: 0.5rem;
+      &:hover {
+        @include roundBgColor();
+      }
+    }
     position: relative;
     h3 {
       position: absolute;
@@ -255,10 +265,10 @@
 }
 
 .options {
+  z-index: 1;
   position: absolute;
-
   right: 0rem;
-  bottom: 1.2rem;
+  bottom: 2.2rem;
   background-color: #242424;
   border-radius: 5px;
   box-shadow: -1px -1px 14px -6px black;
@@ -268,6 +278,7 @@
   h3 {
     font-size: 0.75rem;
     padding: 0.5rem;
+    margin: 0;
     &:hover {
       background-color: gray;
       cursor: pointer;

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 
-import NoNotesTitle from "./no-notes-title";
+import NoNotesTitle from "./noNotesMsg";
 
 const state = {
   notes: [],

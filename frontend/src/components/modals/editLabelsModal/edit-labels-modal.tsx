@@ -3,12 +3,22 @@ import { useEditLabelsModal } from "./hooks";
 import Label from "./label";
 import styles from "./style.module.scss";
 
-const EditLabelsModal = ({ closeModal }: Props) => {
+const EditLabelsModal = ({ closeModal, transState }: Props) => {
   const { state } = useEditLabelsModal(closeModal);
+
+  const cssClasses = [
+    styles.modalContent,
+    transState === "entering"
+      ? styles.openModal
+      : transState === "exiting"
+      ? styles.closeModal
+      : null,
+  ];
+
   return (
     <>
       <div className={styles.backdrop} onClick={() => closeModal(false)}></div>
-      <div className={styles.modalContent}>
+      <div className={cssClasses.join(" ")}>
         <div className={styles.modalEditing}>
           <h3 className={styles.modalTitle}>Edit labels</h3>
           <div className={styles.modalDiv}>

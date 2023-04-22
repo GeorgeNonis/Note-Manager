@@ -5,6 +5,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"yarn server\" \"yarn client\"",
+    "server": "cd.. && cd backend && nodemon server",
+    "client": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -15,6 +18,7 @@
     "@reduxjs/toolkit": "^1.9.2",
     "color-name-list": "^10.3.0",
     "color-namer": "^1.4.0",
+    "concurrently": "^8.0.1",
     "font-awesome": "^4.7.0",
     "mongoose": "^7.0.3",
     "nearest-color": "^0.4.4",

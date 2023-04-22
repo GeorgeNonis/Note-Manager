@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import { Transition } from "react-transition-group";
 import { Outlet, NavLink } from "react-router-dom";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { MdOutlineArchive } from "react-icons/md";
@@ -110,11 +111,22 @@ const RootLayout = () => {
             <h3>Trash</h3>
           </NavLink>
         </div>
-        {state.values.editLabelsModal &&
-          ReactDOM.createPortal(
-            <EditLabelsModal closeModal={state.actions.setEditLabelsModal} />,
-            document.getElementById("editLabelsModal")!
-          )}
+        <Transition
+          in={state.values.editLabelsModal}
+          timeout={500}
+          mountOnEnter
+          unmountOnExit
+        >
+          {(transState) =>
+            ReactDOM.createPortal(
+              <EditLabelsModal
+                transState={transState}
+                closeModal={state.actions.setEditLabelsModal}
+              />,
+              document.getElementById("editLabelsModal")!
+            )
+          }
+        </Transition>
 
         {loadingInitialState && <LoadingSpinner />}
         {/* {state.values.networkError && <ErrorFetching errorMessage={error} />} */}

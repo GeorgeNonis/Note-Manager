@@ -4,6 +4,7 @@ import { useArchiveNotesSection } from "./useArchiveNotesSection";
 import { LoadingSpinner } from "../../index";
 import Wrapper from "./wrapper";
 import ArchivedNotesSection from "./notes-section/archived-notes-section";
+import NoArchievedNotesMsg from "./noArchivedNotes";
 
 const ArchiveNotesSection = () => {
   const { useStore } = useArchiveNotesSection();
@@ -21,7 +22,10 @@ const ArchiveNotesSection = () => {
 
   return (
     <Wrapper styles={styles}>
-      <section className={styles.allNotes}>{notes}</section>
+      <section className={styles.allNotes}>
+        {/* <NoArchievedNotesMsg /> */}
+        {archivedNotes.length > 0 ? notes : <NoArchievedNotesMsg />}
+      </section>
     </Wrapper>
   );
 };

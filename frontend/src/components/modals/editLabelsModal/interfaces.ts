@@ -1,7 +1,7 @@
-import { AnyAction, Dispatch as ReduxDispatch } from "@reduxjs/toolkit";
 import { Dispatch, SetStateAction } from "react";
 import { Labels } from "../../../services/interfaces";
 export interface Props {
+  transState: string;
   closeModal: Dispatch<SetStateAction<boolean>>;
 }
 

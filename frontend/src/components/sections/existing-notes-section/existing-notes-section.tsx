@@ -2,13 +2,13 @@ import {
   LoadingSpinner,
   Form,
   PinnedNotesSection,
-  NoNotesTitle,
   OthersTitle,
 } from "../../index";
 import Wrapper from "./wrapper";
 import { useExistingNotesSection } from "./useExistingNotesSection";
 import NotesSection from "./notes-section/notes-section";
 import styles from "./styles.module.scss";
+import NoNotesMsg from "../ui/noNotesMsg";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
@@ -39,7 +39,7 @@ const ExistinNotesSection = () => {
       <section className={styles.allNotes}>
         {pinnedNotes}
         <OthersTitle state={useStore.values.state!} />
-        <NoNotesTitle state={useStore.values.state} />
+        <NoNotesMsg state={useStore.values.state} />
         {notes}
       </section>
     </Wrapper>

@@ -8,7 +8,7 @@ export { default as LoadingSpinner } from "./ui/loading-spinner";
 export { default as Form } from "./form-components";
 export { default as PinnedNotesSection } from "./sections/pinned-notes-section";
 export { default as ErrorFetching } from "./ui/error-for-fetching-data";
-export { default as NoNotesTitle } from "./sections/ui/no-notes-title";
+export { default as NoNotesTitle } from "./sections/ui/noNotesMsg";
 export { default as OthersTitle } from "./sections/ui/others-title";
 export { default as EmptyTrash } from "./ui/empty-trash";
 export { default as Note } from "./notes/existing-note";

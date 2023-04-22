@@ -48,7 +48,7 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           }}
           textStyle={state.display ? styles.hide : undefined}
         >
-          ...
+          <h2>...</h2>
         </Option>
       </div>
       {state.displayAddLabel && (
