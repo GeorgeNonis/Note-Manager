@@ -31,24 +31,24 @@ const RootLayout = () => {
       >
         <MenuThreeLines />
         {error.length > 0 && <ErrorWithFeature message={error} />}
-        <div className={styles.trashandusersettings}>
-          <div
-            ref={hoverOutsideTrash}
-            id="trashbin"
-            className={styles.BiTrash}
-            onMouseEnter={() => {
-              state.actions.setMouseOverTrash(true);
-            }}
-            onDragEnter={() => {
-              state.actions.setMouseOverTrash(true);
-            }}
-            onDrop={state.actions.onDropHandler}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
-          </div>
-          <Account />
+        <div
+          ref={hoverOutsideTrash}
+          id="trashbin"
+          className={styles.BiTrash}
+          onMouseEnter={() => {
+            state.actions.setMouseOverTrash(true);
+          }}
+          onDragEnter={() => {
+            state.actions.setMouseOverTrash(true);
+          }}
+          onDrop={state.actions.onDropHandler}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
         </div>
+        {/* <div className={styles.trashandusersettings}>
+        </div> */}
+        <Account />
         <div
           className={
             displaySideBar

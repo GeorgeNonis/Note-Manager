@@ -100,16 +100,17 @@
   }
 }
 
-.trashandusersettings {
-  position: absolute;
-  inset: 1rem 1rem auto auto;
-  width: 15dvh;
-}
+// .trashandusersettings {
+//   position: absolute;
+//   inset: 1rem 1rem auto auto;
+//   width: 15dvh;
+// }
 
 .BiTrash {
-  position: absolute;
-  top: 0rem;
-  left: 0;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 18;
   svg {
     width: 2rem;
     height: 2rem;

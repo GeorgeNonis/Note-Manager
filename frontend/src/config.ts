@@ -15,3 +15,21 @@ export const mobileVersion = [
   `https://cdn.discordapp.com/attachments/1056419450473152533/1091333485945434243/Neilyo77_Create_a_visually_appealing_background_image_that_feat_88d54b00-a99c-4e27-96ba-07d0074d7d37.png`,
   `https://cdn.discordapp.com/attachments/1056419450473152533/1095091162538323998/Neilyo77_createa_a_Background-image_of_a_scene_with_flowers_wit_bb06ef6f-2982-4411-8989-37daffc0a9c1.png`,
 ];
+
+export const avatar_pictures = [
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023303927775244/Neilyo77_A_Japanese_poet_writer_avatar_.Lively_colors._Bright_C_2ea04cc1-8fd3-4a7d-a1c8-eea252cc7e45.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100008663697064058/Neilyo77_A_Japanese_female_Emperor_avatar.Lively_colors.Starsky_3c422cee-b5ad-46cb-a3ef-cc2f57dbb019.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023620610310276/Neilyo77_A_Japanese_poet_writer_.Lively_colors._Bright_Colors.__0bd73b96-26ca-4a6c-934d-a56ff7d1fd44.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023914962354227/Neilyo77_A_Japanese_poet_writer_.Lively_colors._Bright_Colors.__a328746e-00d7-41a4-ac2a-2b6bb1bd475f.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100012807489081434/Neilyo77_A_Japanese_Emperor_avatar.Lively_colors._Bright_Colors_862513a3-32ac-4d6e-a439-e46e39af2c5d.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100012826069848164/Neilyo77_A_Japanese_Emperor_avatar.Lively_colors._Bright_Colors_f43f85e8-6e3b-4454-ac65-4aa215cd6100.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100013162402689044/Neilyo77_A_Japanese_Emperor_avatar.Lively_colors._Bright_Colors_5ae0e6e4-d85b-4234-8402-0c490b9e6b0c.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100010638044041256/Neilyo77_A_Japanese_female_Emperor_avatar.Lively_colors.Starsky_4ed98694-3f90-4868-b13d-ddb406002cc4.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100013134862889021/Neilyo77_A_Japanese_Emperor_avatar.Lively_colors._Bright_Colors_a908cd48-a05c-4c55-8de7-9d69b0b84367.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100012813558222868/Neilyo77_A_Japanese_Emperor_avatar.Lively_colors._Bright_Colors_94208767-0765-41b2-9647-a6b642059adf.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023948491640874/Neilyo77_A_Japanese_poet_writer_.Lively_colors._Bright_Colors.__83a96392-2a68-4b10-86a7-d180b5b835cd.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023633604255796/Neilyo77_A_Japanese_poet_writer_.Lively_colors._Bright_Colors.__447a997a-672f-49b9-82cf-7473066cba53.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100018711106175026/Neilyo77_A_Japanese_poet_writer_.Lively_colors._Bright_Colors.__78f8cbb2-48c0-4353-8d4b-d70940510cfa.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023258872553493/Neilyo77_A_Japanese_poet_writer_avatar_.Lively_colors._Bright_C_8d95b777-8957-4ff5-abe8-4680887cfc0c.png`,
+  `https://cdn.discordapp.com/attachments/1056419450473152533/1100023269169573898/Neilyo77_A_Japanese_poet_writer_avatar_.Lively_colors._Bright_C_290b1bd0-0d56-4785-b545-397af9a5c98d.png`,
+];

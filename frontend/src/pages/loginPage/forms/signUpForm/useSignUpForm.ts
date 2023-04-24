@@ -31,6 +31,9 @@ export const useSignUpForm = () => {
   const [loginForm, setLoginForm] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [changeAvatar, setChangeAvatar] = useState(false);
+  const [avatar, setAvatar] = useState("");
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
     setPasswordHover(!passwordHover);
@@ -76,6 +79,7 @@ export const useSignUpForm = () => {
       validInputs,
       errRef,
       validMatch,
+      changeAvatar,
       emailValues: {
         email,
         emailFocus,
@@ -104,6 +108,8 @@ export const useSignUpForm = () => {
       setValidInputs,
       setLoginForm,
       handleSumbit,
+      setChangeAvatar,
+      setAvatar,
       emailHandlers: {
         setEmail,
         setEmailFocus,

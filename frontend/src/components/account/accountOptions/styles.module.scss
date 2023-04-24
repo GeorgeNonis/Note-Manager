@@ -40,18 +40,25 @@
 }
 
 .profpicture {
+  position: relative;
+  display: grid;
   .profimg {
     width: 4.5rem;
     height: 4.5rem;
     border-radius: 50%;
-    transition: all 0.5s ease-in-out;
     cursor: pointer;
-    cursor: pointer;
-    &:hover {
-      width: 3.4rem;
-      height: 3.4rem;
-    }
   }
+}
+
+.svg {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .manageaccount {
@@ -60,4 +67,5 @@
 
 .signoutbutton {
   @include btnStyle;
+  line-height: 2;
 }

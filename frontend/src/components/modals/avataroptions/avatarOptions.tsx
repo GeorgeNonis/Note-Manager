@@ -1,0 +1,42 @@
+import { GrPersonalComputer } from "react-icons/gr";
+import { avatar_pictures } from "../../../config";
+import { AvatarOptionsProps } from "./interfaces";
+import styles from "./styles.module.scss";
+
+const AvatarOptions = ({ closeModal, avatar }: AvatarOptionsProps) => {
+  return (
+    <>
+      <div
+        className={styles.backdrop}
+        onClick={() => closeModal((prev) => !prev)}
+      ></div>
+      <div className={styles.modalContent}>
+        <h1>Avatar Options</h1>
+        <div className={styles.actions}>
+          <div className={styles.fromcomputer}>
+            <button>
+              <GrPersonalComputer fill="black" stroke="gray" color="gray" />
+            </button>
+            <h3>From Computer</h3>
+            <input
+              onChange={(e) => {
+                console.log(e.target.value);
+                avatar(e.target.value);
+              }}
+              type="file"
+              id="file"
+              className={styles.input}
+              accept="image/png, image/jpeg"
+            />
+          </div>
+          <div className={styles.modalImages}>
+            {avatar_pictures.map((avatar) => {
+              return <img src={avatar} key={avatar} />;
+            })}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+export default AvatarOptions;
