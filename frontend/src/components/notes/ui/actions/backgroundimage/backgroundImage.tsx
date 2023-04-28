@@ -9,7 +9,7 @@ const BackgroundImage = ({
   archived,
   transitionState,
 }: BackgroundImageProps) => {
-  const { mobileVersion, displayHandler } = useBackgroundimage({
+  const { images: mobileVersion, displayHandler } = useBackgroundimage({
     setDisplayPalette,
     id,
     pinned,
@@ -51,12 +51,12 @@ const BackgroundImage = ({
               <img
                 loading="lazy"
                 style={{ pointerEvents: "all" }}
-                src={bg}
-                alt={bg}
-                key={bg}
+                src={bg.src}
+                alt={bg.src}
+                key={bg.src}
                 onClick={() => {
                   console.log("clicking");
-                  displayHandler(bg);
+                  displayHandler(bg.src);
                 }}
               />
             );

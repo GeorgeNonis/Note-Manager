@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useOutsideHover } from "../../../hooks";
 
-export const useAccountOptions = () => {
+interface useAccountOptionsProps {
+  openAccountModal: Dispatch<SetStateAction<boolean>>;
+}
+
+export const useAccountOptions = ({
+  openAccountModal,
+}: useAccountOptionsProps) => {
+  const [showModal, setShowModal] = useState(false);
   const [changePicutre, setChangePicture] = useState(false);
   const hoverOutsideImage = useOutsideHover(() => setChangePicture(false));
+
+  const accountSettingsHandler = () => {
+    openAccountModal(false);
+    setShowModal(true);
+  };
 
   const state = {
     handlers: {
       setChangePicture,
+      setShowModal,
+      accountSettingsHandler,
     },
     values: {
       changePicutre,
       hoverOutsideImage,
+      showModal,
     },
   };
 

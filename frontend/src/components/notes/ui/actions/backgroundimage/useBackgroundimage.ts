@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../../../../services";
 import { errorState } from "../../../../../store/display-state-slice";
@@ -13,6 +14,15 @@ export const useBackgroundimage = ({
   archived,
 }: useBackgroundimageProps) => {
   const dispatch = useDispatch();
+  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  useEffect(() => {
+    const preload_images = mobileVersion.map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+    setImages(preload_images);
+  }, []);
 
   const displayHandler = async (value: string) => {
     const response = await updateNoteColorHttp(value, id, pinned, archived);
@@ -25,5 +35,5 @@ export const useBackgroundimage = ({
     setDisplayPalette(false);
   };
 
-  return { displayHandler, mobileVersion };
+  return { displayHandler, images };
 };

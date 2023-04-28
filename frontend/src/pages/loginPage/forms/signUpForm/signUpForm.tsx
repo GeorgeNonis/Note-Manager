@@ -4,11 +4,8 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { TbCircleX, TbCircleCheck } from "react-icons/tb";
 import { useSignUpForm } from "./useSignUpForm";
 import AvatarOptions from "../../../../components/modals/avataroptions/avatarOptions";
+import default_avatar_pic from "../../../../../images/default_avatar.png";
 import styles from "./styles.module.scss";
-import { avatar_pictures } from "../../../../config";
-
-const random_picture =
-  avatar_pictures[Math.floor(Math.random() * avatar_pictures.length)];
 
 const SignUpForm = ({
   setShowLoginForm,
@@ -35,7 +32,7 @@ const SignUpForm = ({
         ReactDOM.createPortal(
           <AvatarOptions
             closeModal={handlers.setChangeAvatar}
-            avatar={handlers.setAvatar}
+            avatarHandler={handlers.avatarHandler}
           />,
           document.getElementById("avataroptions")!
         )}
@@ -171,15 +168,21 @@ const SignUpForm = ({
           </div>
         </fieldset>
         <fieldset className={styles.fieldsetimage}>
-          <img src={random_picture} alt="avatar_image" />
+          <img
+            src={!values.default_avatar ? values.avatar : default_avatar_pic}
+            alt="avatar_image"
+          />
           <div className={styles.fieldsetdiv}>
             <button onClick={() => handlers.setChangeAvatar(true)}>
               Change
             </button>
-            <button>Remove</button>
+            <button onClick={() => handlers.setDefaultAvatar(true)}>
+              Remove
+            </button>
           </div>
         </fieldset>
         <button
+          type="submit"
           className={styles.formSignUpButton}
           disabled={
             !values.emailValues.emailValid ||

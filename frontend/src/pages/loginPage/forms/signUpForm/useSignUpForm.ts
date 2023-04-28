@@ -1,3 +1,4 @@
+import { avatar_pictures } from "../../../../config";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,7 @@ export const useSignUpForm = () => {
 
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [avatar, setAvatar] = useState("");
+  const [default_avatar, setDefaultAvatar] = useState(false);
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -40,8 +42,25 @@ export const useSignUpForm = () => {
     setConfirmPasswordHover(!confirmPasswordHover);
   };
 
+  const avatarHandler = (avatar: string) => {
+    setAvatar(avatar);
+    setChangeAvatar(false);
+    setDefaultAvatar(false);
+  };
+
   useEffect(() => {
     emailRef.current?.focus();
+
+    const avtr_pictures = avatar_pictures.map((pic) => {
+      const img = new Image();
+      img.src = pic;
+      return img;
+    });
+
+    setAvatar(
+      avtr_pictures[Math.floor(Math.random() * avtr_pictures.length)].src
+    );
+    console.log();
   }, []);
 
   useEffect(() => {
@@ -70,6 +89,8 @@ export const useSignUpForm = () => {
       return;
     }
 
+    console.log("sumbiting");
+
     navigate("/notes");
   };
 
@@ -80,6 +101,8 @@ export const useSignUpForm = () => {
       errRef,
       validMatch,
       changeAvatar,
+      default_avatar,
+      avatar,
       emailValues: {
         email,
         emailFocus,
@@ -110,6 +133,8 @@ export const useSignUpForm = () => {
       handleSumbit,
       setChangeAvatar,
       setAvatar,
+      setDefaultAvatar,
+      avatarHandler,
       emailHandlers: {
         setEmail,
         setEmailFocus,

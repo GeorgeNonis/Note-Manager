@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-export interface AvatarOptionsProps {
+
+export interface useAccountSettingsProps {}
+
+export interface AccountSettingsProps {
   closeModal: Dispatch<SetStateAction<boolean>>;
-  avatarHandler: (avtr: string) => void;
 }

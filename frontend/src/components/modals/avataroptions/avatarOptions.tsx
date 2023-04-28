@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { GrPersonalComputer } from "react-icons/gr";
 import { avatar_pictures } from "../../../config";
 import { AvatarOptionsProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
-const AvatarOptions = ({ closeModal, avatar }: AvatarOptionsProps) => {
+const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
   return (
     <>
       <div
@@ -20,8 +21,11 @@ const AvatarOptions = ({ closeModal, avatar }: AvatarOptionsProps) => {
             <h3>From Computer</h3>
             <input
               onChange={(e) => {
-                console.log(e.target.value);
-                avatar(e.target.value);
+                console.log(e.target.files![0]);
+                console.log(e.target.files);
+                console.log(URL.createObjectURL(e.target.files![0]));
+                console.log(typeof URL.createObjectURL(e.target.files![0]));
+                avatarHandler(URL.createObjectURL(e.target.files![0]));
               }}
               type="file"
               id="file"
@@ -30,9 +34,19 @@ const AvatarOptions = ({ closeModal, avatar }: AvatarOptionsProps) => {
             />
           </div>
           <div className={styles.modalImages}>
-            {avatar_pictures.map((avatar) => {
-              return <img src={avatar} key={avatar} />;
-            })}
+            <Suspense fallback={"...loading"}>
+              {avatar_pictures.map((avtr) => {
+                return (
+                  <img
+                    src={avtr}
+                    key={avtr}
+                    onClick={() => {
+                      avatarHandler(avtr);
+                    }}
+                  />
+                );
+              })}
+            </Suspense>
           </div>
         </div>
       </div>

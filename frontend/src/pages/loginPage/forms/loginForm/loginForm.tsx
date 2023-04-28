@@ -1,9 +1,7 @@
 import { Dispatch } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { TbCircleX, TbCircleCheck } from "react-icons/tb";
-import styles from "./styles.module.scss";
 import { useLoginForm } from "./useLoginForm";
-import { Link } from "react-router-dom";
+import styles from "./styles.module.scss";
 
 const LoginForm = ({
   setShowLoginForm,
@@ -19,6 +17,8 @@ const LoginForm = ({
     passwordHandlers,
     handleSumbit,
   } = handlers;
+
+  console.log(values.validInputs);
   return (
     <form className={styles.form} onSubmit={handleSumbit}>
       <fieldset>
@@ -83,6 +83,7 @@ const LoginForm = ({
         disabled={
           !values.emailValues.emailValid || !values.passwordValues.passwordValid
         }
+        // style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
         style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
       >
         Login

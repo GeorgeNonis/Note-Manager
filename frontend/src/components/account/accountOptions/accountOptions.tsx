@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountOptions } from "./useAccountOptions";
 import styles from "./styles.module.scss";
+import { AccountOptionsProps } from "./interfaces";
 
-const AccountOptions = () => {
-  const { handlers, values } = useAccountOptions();
+const AccountOptions = ({ openAccountModal }: AccountOptionsProps) => {
+  const { handlers, values } = useAccountOptions({ openAccountModal });
   return (
     <div className={styles.mainContent}>
       <div
@@ -20,10 +21,12 @@ const AccountOptions = () => {
           alt="user_picture"
         />
       </div>
-      <button className={styles.manageaccount}>Manage your Account</button>
-      {/* <Link to={"/"}>
-        <button className={styles.signoutbutton}>Sign Out</button>
-      </Link> */}
+      <button
+        className={styles.manageaccount}
+        onClick={handlers.accountSettingsHandler}
+      >
+        Manage your Account
+      </button>
       <Link to={"/"} className={styles.signoutbutton}>
         Sign Out
       </Link>

@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useLoginForm = () => {
   const PWD_REGEX: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$/;
   const USER_REGEX: RegExp =
     /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+
+  const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -42,6 +45,8 @@ export const useLoginForm = () => {
   useEffect(() => {
     const result = PWD_REGEX.test(password);
     setPasswordValid(result);
+
+    setValidInputs(emailValid && result);
   }, [password, email]);
 
   const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +58,8 @@ export const useLoginForm = () => {
       setErrorMsg("Invalid Entry");
       return;
     }
+
+    navigate("/notes");
   };
 
   const state = {
