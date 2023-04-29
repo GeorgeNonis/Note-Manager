@@ -8,6 +8,7 @@ const initialState = {
   httpReqResLoading: false,
   displaySideBar: true,
   isThereError: false,
+  accountSettings: false,
 } as DisplayStateInitialState;
 
 const displayState = createSlice({
@@ -29,6 +30,10 @@ const displayState = createSlice({
       state.displaySideBar = !state.displaySideBar;
       // console.log("MAMA GUEVO");
     },
+    openAccountSettings(state) {
+      console.log("clicking");
+      state.accountSettings = !state.accountSettings;
+    },
   },
 });
 
@@ -37,6 +42,7 @@ export const {
   errorState,
   httpReqResLoading,
   displaySideBar,
+  openAccountSettings,
 } = displayState.actions;
 
 export default displayState.reducer;

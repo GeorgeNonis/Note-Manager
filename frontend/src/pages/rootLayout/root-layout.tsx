@@ -14,11 +14,17 @@ import {
 } from "../../components";
 import Account from "../../components/account";
 import styles from "../../styles/App.module.scss";
+import AccountSettings from "../../components/modals/accountSettings/accountSettings";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const { error, loadingInitialState, displaySideBar, httpReqResLoading } =
-    state.values.displayState;
+  const {
+    error,
+    loadingInitialState,
+    displaySideBar,
+    httpReqResLoading,
+    accountSettings,
+  } = state.values.displayState;
   return (
     <>
       <main
@@ -46,8 +52,11 @@ const RootLayout = () => {
         >
           {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
         </div>
-        {/* <div className={styles.trashandusersettings}>
-        </div> */}
+        {accountSettings &&
+          ReactDOM.createPortal(
+            <AccountSettings />,
+            document.getElementById("accountsettings")!
+          )}
         <Account />
         <div
           className={

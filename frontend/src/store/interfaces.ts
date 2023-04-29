@@ -16,4 +16,5 @@ export interface DisplayStateInitialState {
   httpReqResLoading: boolean;
   displaySideBar: boolean;
   isThereError: boolean;
+  accountSettings: boolean;
 }

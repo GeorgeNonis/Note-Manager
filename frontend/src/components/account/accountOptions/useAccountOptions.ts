@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useOutsideHover } from "../../../hooks";
+import { useDispatch } from "react-redux";
+import { openAccountSettings } from "../../../store/display-state-slice";
 
 interface useAccountOptionsProps {
   openAccountModal: Dispatch<SetStateAction<boolean>>;
@@ -11,10 +13,13 @@ export const useAccountOptions = ({
   const [showModal, setShowModal] = useState(false);
   const [changePicutre, setChangePicture] = useState(false);
   const hoverOutsideImage = useOutsideHover(() => setChangePicture(false));
+  const dispatch = useDispatch();
 
   const accountSettingsHandler = () => {
+    console.log("clicking");
+    dispatch(openAccountSettings());
     openAccountModal(false);
-    setShowModal(true);
+    console.log(showModal);
   };
 
   const state = {
