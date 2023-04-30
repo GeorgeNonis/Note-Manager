@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { GrPersonalComputer } from "react-icons/gr";
-import { avatar_pictures } from "../../../config";
+import { cached_avatar_pictures } from "../../../config";
 import { AvatarOptionsProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
@@ -34,14 +34,14 @@ const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
             />
           </div>
           <div className={styles.modalImages}>
-            <Suspense fallback={"...loading"}>
-              {avatar_pictures.map((avtr) => {
+            <Suspense fallback={"...loading avatars"}>
+              {cached_avatar_pictures.map((avtr) => {
                 return (
                   <img
-                    src={avtr}
-                    key={avtr}
+                    src={avtr.src}
+                    key={avtr.src}
                     onClick={() => {
-                      avatarHandler(avtr);
+                      avatarHandler(avtr.src);
                     }}
                   />
                 );

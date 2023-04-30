@@ -1,5 +1,9 @@
 export const API_VERSION = import.meta.env.VITE_API_VERSION;
 export const BASE_URL = `${import.meta.env.VITE_BASE_URL}${API_VERSION}`;
+export const DEFAULT_AVTR = "../images/default_avatar.png";
+
+export const USER_AVATAR =
+  "https://cdn.discordapp.com/attachments/1056419450473152533/1090660819492147310/Neilyo77_background_image_where_theres_a_person_looking_for_hes_8875f0c2-ec7f-4826-8465-9c71c09fc32e.png";
 
 export const mobileVersion = [
   `https://cdn.discordapp.com/attachments/1056419450473152533/1091697525381144636/Neilyo77_A_Japanese_Emperor_in_hes_palace_holding_a_notepad.Liv_5fd09af0-05bc-4eaa-8b87-ec72f2d01ad8.png`,
@@ -33,3 +37,10 @@ export const avatar_pictures = [
   `https://cdn.discordapp.com/attachments/1056419450473152533/1100023258872553493/Neilyo77_A_Japanese_poet_writer_avatar_.Lively_colors._Bright_C_8d95b777-8957-4ff5-abe8-4680887cfc0c.png`,
   `https://cdn.discordapp.com/attachments/1056419450473152533/1100023269169573898/Neilyo77_A_Japanese_poet_writer_avatar_.Lively_colors._Bright_C_290b1bd0-0d56-4785-b545-397af9a5c98d.png`,
 ];
+
+export const cached_avatar_pictures = avatar_pictures.map((pic) => {
+  const img = new Image();
+  img.src = pic;
+
+  return img;
+});

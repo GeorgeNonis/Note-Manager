@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Suspense fallback={"loading"}>
+      <Suspense fallback={"loading login page"}>
         <LoginPage />
       </Suspense>
     ),
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       {
         path: "/notes/",
         element: (
-          <Suspense fallback={"loading"}>
+          <Suspense fallback={"loading existing section"}>
             <ExistinNotesSection />
           </Suspense>
         ),

@@ -1,0 +1,23 @@
+.mainContent {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 5fr 2fr 1fr 3fr;
+  place-items: center;
+  text-align: center;
+  input {
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+  }
+  button {
+    // all: unset;
+    background: #f44f4f;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}

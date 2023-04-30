@@ -24,3 +24,8 @@ export { default as DiscardBoxes } from "./modals/discard-boxes";
 export { default as MenuThreeLines } from "./menuThreeLines";
 export { default as ErrorWithFeature } from "../errors/errorWithFeature";
 export { default as LoginPage } from "../pages/loginPage";
+export { default as AccountInfo } from "../components/modals/accountSettings/accountInfo";
+export { default as AccountAvatar } from "../components/modals/accountSettings/accountAvatar";
+export { default as AccountDelete } from "../components/modals/accountSettings/accountDelete";
+export { default as NavLinkCompo } from "./modals/accountSettings/navlink";
+export { default as AvatarOptions } from "./modals/avataroptions/avatarOptions";

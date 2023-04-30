@@ -1,11 +1,9 @@
 import { ReactElement, useState } from "react";
 import { AccountSettingsProps } from "./interfaces";
-import NavLinkCompo from "./navlink";
 import { useDispatch } from "react-redux";
 import { openAccountSettings } from "../../../store/display-state-slice";
 import styles from "./styles.module.scss";
-import AccountInfo from "./accountInfo";
-import AccountAvatar from "./accountAvatar";
+import * as Components from "../../index";
 
 const AccountSettings = ({}: AccountSettingsProps) => {
   const [option, setOption] = useState<string>("Info");
@@ -19,13 +17,13 @@ const AccountSettings = ({}: AccountSettingsProps) => {
 
   const options: Key = {
     Info: {
-      el: <AccountInfo />,
+      el: <Components.AccountInfo />,
     },
     Delete: {
-      el: <p>delete</p>,
+      el: <Components.AccountDelete />,
     },
     Avatar: {
-      el: <AccountAvatar />,
+      el: <Components.AccountAvatar />,
     },
     Password: {
       el: <p>password</p>,
@@ -44,28 +42,28 @@ const AccountSettings = ({}: AccountSettingsProps) => {
         <h1 className={styles.title}>Account Settings</h1>
         <div className={styles.content}>
           <div className={styles.col1}>
-            <NavLinkCompo
+            <Components.NavLinkCompo
               onClick={setOption}
               styles={styles}
               text="Info"
               active={option}
               key={1}
             />
-            <NavLinkCompo
+            <Components.NavLinkCompo
               onClick={setOption}
               styles={styles}
               text="Avatar"
               active={option}
               key={2}
             />
-            <NavLinkCompo
+            <Components.NavLinkCompo
               onClick={setOption}
               styles={styles}
               text="Password"
               active={option}
               key={3}
             />
-            <NavLinkCompo
+            <Components.NavLinkCompo
               onClick={setOption}
               styles={styles}
               text="Delete"

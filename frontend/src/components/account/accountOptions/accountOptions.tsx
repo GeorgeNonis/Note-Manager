@@ -1,10 +1,8 @@
-import ReactDom from "react-dom";
 import { Link } from "react-router-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountOptions } from "./useAccountOptions";
 import styles from "./styles.module.scss";
 import { AccountOptionsProps } from "./interfaces";
-import AccountSettings from "../../modals/accountSettings/accountSettings";
 
 const AccountOptions = ({ openAccountModal }: AccountOptionsProps) => {
   const { handlers, values } = useAccountOptions({ openAccountModal });
