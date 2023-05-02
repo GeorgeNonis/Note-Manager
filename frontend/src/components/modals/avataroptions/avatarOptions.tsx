@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { GrPersonalComputer } from "react-icons/gr";
 import { cached_avatar_pictures } from "../../../config";
 import { AvatarOptionsProps } from "./interfaces";
+import { HiXMark } from "react-icons/hi2";
 import styles from "./styles.module.scss";
 
 const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
@@ -12,6 +13,10 @@ const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
         onClick={() => closeModal((prev) => !prev)}
       ></div>
       <div className={styles.modalContent}>
+        <HiXMark
+          className={styles.xMark}
+          onClick={() => closeModal((prev) => !prev)}
+        />
         <h1>Avatar Options</h1>
         <div className={styles.actions}>
           <div className={styles.fromcomputer}>

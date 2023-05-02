@@ -1,0 +1,82 @@
+.mainContent {
+  form {
+    display: grid;
+    grid-template-rows: 3fr 3fr 3fr 1fr;
+    place-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    fieldset {
+      all: unset;
+      position: relative;
+      width: 50%;
+      legend {
+        margin-bottom: 0.4rem;
+        width: 100%;
+      }
+      span {
+        float: right;
+        width: 10%;
+        background: none;
+        border: none;
+        margin-top: 1vh;
+        cursor: pointer;
+      }
+    }
+
+    input {
+      font-family: "CormorantGaramond";
+      outline: none;
+      border: none;
+      border-radius: 8px;
+      width: 100%;
+      height: 2.3rem;
+      padding: 0.2rem 1rem;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+      background: rgba(0, 0, 0, 0.4588235294);
+    }
+  }
+
+  .updateButton {
+    border-radius: 8px;
+    background: #f26716;
+    border: none;
+    width: 10rem;
+    height: 2.3rem;
+    justify-self: center;
+    cursor: pointer;
+    transition: all 230ms ease-in-out;
+
+    &:hover {
+      width: 11rem;
+    }
+  }
+}
+
+.hide {
+  text-indent: -999em;
+  height: 2rem;
+  margin: 0;
+}
+
+.show {
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+  align-items: center;
+  height: 2rem;
+  margin: 0;
+  h3 {
+    font-size: 1rem;
+  }
+  svg {
+    place-self: center;
+  }
+}
+
+.correct {
+  color: lime;
+}
+.xmark {
+  color: red;
+}

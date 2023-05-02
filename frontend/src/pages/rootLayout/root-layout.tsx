@@ -6,15 +6,8 @@ import { MdOutlineArchive } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
-import {
-  EditLabelsModal,
-  LoadingSpinner,
-  MenuThreeLines,
-  ErrorWithFeature,
-} from "../../components";
-import Account from "../../components/account";
+import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
-import AccountSettings from "../../components/modals/accountSettings/accountSettings";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
@@ -35,8 +28,8 @@ const RootLayout = () => {
         }
         style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
       >
-        <MenuThreeLines />
-        {error.length > 0 && <ErrorWithFeature message={error} />}
+        <Comp.MenuThreeLines />
+        {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
         <div
           ref={hoverOutsideTrash}
           id="trashbin"
@@ -54,10 +47,10 @@ const RootLayout = () => {
         </div>
         {accountSettings &&
           ReactDOM.createPortal(
-            <AccountSettings />,
+            <Comp.AccountSettings />,
             document.getElementById("accountsettings")!
           )}
-        <Account />
+        <Comp.Account />
         <div
           className={
             displaySideBar
@@ -132,7 +125,7 @@ const RootLayout = () => {
         >
           {(transState) =>
             ReactDOM.createPortal(
-              <EditLabelsModal
+              <Comp.EditLabelsModal
                 transState={transState}
                 closeModal={state.actions.setEditLabelsModal}
               />,
@@ -141,7 +134,7 @@ const RootLayout = () => {
           }
         </Transition>
 
-        {loadingInitialState && <LoadingSpinner />}
+        {loadingInitialState && <Comp.LoadingSpinner />}
         {/* {state.values.networkError && <ErrorFetching errorMessage={error} />} */}
 
         {!loadingInitialState && <Outlet />}

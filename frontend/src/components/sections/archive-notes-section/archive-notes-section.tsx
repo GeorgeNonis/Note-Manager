@@ -1,10 +1,7 @@
-import styles from "./style.module.scss";
 import { useArchiveNotesSection } from "./useArchiveNotesSection";
-
-import { LoadingSpinner } from "../../index";
+import * as Comp from "../../index";
 import Wrapper from "./wrapper";
-import ArchivedNotesSection from "./notes-section/archived-notes-section";
-import NoArchievedNotesMsg from "./noArchivedNotes";
+import styles from "./style.module.scss";
 
 const ArchiveNotesSection = () => {
   const { useStore } = useArchiveNotesSection();
@@ -12,19 +9,19 @@ const ArchiveNotesSection = () => {
     values: { archivedNotes },
   } = useStore;
 
-  if (useStore.values.loading) return <LoadingSpinner />;
+  if (useStore.values.loading) return <Comp.LoadingSpinner />;
 
   if (useStore.values.error === "Network Error") return <></>;
 
   const notes = !useStore.values.loading && archivedNotes.length !== 0 && (
-    <ArchivedNotesSection notes={[...archivedNotes]} />
+    <Comp.ArchivedNotesSection notes={[...archivedNotes]} />
   );
 
   return (
     <Wrapper styles={styles}>
       <section className={styles.allNotes}>
         {/* <NoArchievedNotesMsg /> */}
-        {archivedNotes.length > 0 ? notes : <NoArchievedNotesMsg />}
+        {archivedNotes.length > 0 ? notes : <Comp.NoArchievedNotesMsg />}
       </section>
     </Wrapper>
   );

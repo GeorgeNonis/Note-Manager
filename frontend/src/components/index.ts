@@ -29,3 +29,8 @@ export { default as AccountAvatar } from "../components/modals/accountSettings/a
 export { default as AccountDelete } from "../components/modals/accountSettings/accountDelete";
 export { default as NavLinkCompo } from "./modals/accountSettings/navlink";
 export { default as AvatarOptions } from "./modals/avataroptions/avatarOptions";
+export { default as AccountPassword } from "./modals/accountSettings/accountPassword";
+export { default as NoArchievedNotesMsg } from "./sections/archive-notes-section/noArchivedNotes";
+export { default as ArchivedNotesSection } from "./sections/archive-notes-section/notes-section/archived-notes-section";
+export { default as Account } from "./account/account";
+export { default as AccountSettings } from "./modals/accountSettings/accountSettings";

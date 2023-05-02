@@ -1,13 +1,9 @@
-import { avatar_pictures } from "../../../../config";
+import { PWD_REGEX, USER_REGEX, avatar_pictures } from "../../../../config";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useSignUpForm = () => {
   const navigate = useNavigate();
-  const PWD_REGEX: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$/;
-  const USER_REGEX: RegExp =
-    /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
 

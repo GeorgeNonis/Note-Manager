@@ -2,8 +2,9 @@ import { ReactElement, useState } from "react";
 import { AccountSettingsProps } from "./interfaces";
 import { useDispatch } from "react-redux";
 import { openAccountSettings } from "../../../store/display-state-slice";
-import styles from "./styles.module.scss";
 import * as Components from "../../index";
+import { HiXMark } from "react-icons/hi2";
+import styles from "./styles.module.scss";
 
 const AccountSettings = ({}: AccountSettingsProps) => {
   const [option, setOption] = useState<string>("Info");
@@ -26,7 +27,7 @@ const AccountSettings = ({}: AccountSettingsProps) => {
       el: <Components.AccountAvatar />,
     },
     Password: {
-      el: <p>password</p>,
+      el: <Components.AccountPassword />,
     },
   };
 
@@ -39,6 +40,10 @@ const AccountSettings = ({}: AccountSettingsProps) => {
         onClick={() => dispatch(openAccountSettings())}
       ></div>
       <div className={styles.modalContent}>
+        <HiXMark
+          className={styles.xMark}
+          onClick={() => dispatch(openAccountSettings())}
+        />
         <h1 className={styles.title}>Account Settings</h1>
         <div className={styles.content}>
           <div className={styles.col1}>

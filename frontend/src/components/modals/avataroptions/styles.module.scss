@@ -87,3 +87,16 @@
     border-radius: 50%;
   }
 }
+
+.xMark {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: all 230ms ease-in-out;
+  &:hover {
+    transform: rotate(180deg);
+  }
+}

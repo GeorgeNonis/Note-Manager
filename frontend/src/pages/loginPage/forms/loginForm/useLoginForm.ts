@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PWD_REGEX, USER_REGEX } from "../../../../config";
 
 export const useLoginForm = () => {
-  const PWD_REGEX: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$/;
-  const USER_REGEX: RegExp =
-    /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-
   const navigate = useNavigate();
 
   const emailRef = useRef<HTMLInputElement>(null);

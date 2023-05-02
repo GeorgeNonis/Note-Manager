@@ -35,26 +35,7 @@ const LoginForm = ({
         />
       </fieldset>
       <fieldset>
-        <legend>
-          Password:
-          {/* <span
-            className={
-              values.passwordValues.passwordValid ? styles.show : styles.hide
-            }
-          >
-            <TbCircleCheck className={styles.correct} />
-          </span>
-          <span
-            className={
-              values.passwordValues.password &&
-              !values.passwordValues.passwordValid
-                ? styles.show
-                : styles.hide
-            }
-          >
-            <TbCircleX className={styles.xmark} />
-          </span> */}
-        </legend>
+        <legend>Password:</legend>
         <div className={styles.inputwrapper}>
           <input
             onChange={(e) => passwordHandlers.setPassword(e.target.value)}
