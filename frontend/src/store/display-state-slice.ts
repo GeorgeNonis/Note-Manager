@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DisplayStateInitialState } from "./interfaces";
+import { ErrorMessages } from "../errors/error-messages";
 
 const initialState = {
   review: false,
@@ -9,6 +10,7 @@ const initialState = {
   displaySideBar: true,
   isThereError: false,
   accountSettings: false,
+  emailAlreadyInUse: false,
 } as DisplayStateInitialState;
 
 const displayState = createSlice({
@@ -34,6 +36,12 @@ const displayState = createSlice({
       console.log("clicking");
       state.accountSettings = !state.accountSettings;
     },
+    emailAlreadyInUseHandler(state, { payload }) {
+      const response = payload;
+      const isTheEmailAlreadyInUse =
+        response.message === ErrorMessages.alreadyInUse;
+      state.emailAlreadyInUse = isTheEmailAlreadyInUse;
+    },
   },
 });
 
@@ -43,6 +51,7 @@ export const {
   httpReqResLoading,
   displaySideBar,
   openAccountSettings,
+  emailAlreadyInUseHandler,
 } = displayState.actions;
 
 export default displayState.reducer;

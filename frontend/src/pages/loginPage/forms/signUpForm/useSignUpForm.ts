@@ -1,8 +1,14 @@
 import { PWD_REGEX, USER_REGEX, avatar_pictures } from "../../../../config";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createUserHttp } from "../../../../services/postNote";
+import { isThereError } from "../../../../utils";
+import { getUsersHttp } from "../../../../services/getNote";
+import { useDispatch } from "react-redux";
+import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice";
 
 export const useSignUpForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -42,6 +48,9 @@ export const useSignUpForm = () => {
     setAvatar(avatar);
     setChangeAvatar(false);
     setDefaultAvatar(false);
+    const img = new Image();
+    img.src = avatar;
+    console.log({ img });
   };
 
   useEffect(() => {
@@ -59,10 +68,24 @@ export const useSignUpForm = () => {
     console.log();
   }, []);
 
+  const doesUserExists = async () => {
+    const response = await getUsersHttp(email);
+
+    dispatch(emailAlreadyInUseHandler(response[0]));
+  };
+
   useEffect(() => {
     if (!emailFocus) return;
     const result = USER_REGEX.test(email);
     setEmailValid(result);
+
+    const timeout = setTimeout(() => {
+      doesUserExists();
+    }, 250);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [email]);
 
   useEffect(() => {
@@ -75,7 +98,7 @@ export const useSignUpForm = () => {
     setValidInputs(validForm);
   }, [password, confirmPassword, email]);
 
-  const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const v1 = USER_REGEX.test(email);
     const v2 = PWD_REGEX.test(password);
@@ -85,9 +108,13 @@ export const useSignUpForm = () => {
       return;
     }
 
-    console.log("sumbiting");
+    console.log({ email, password, avatar });
 
-    navigate("/notes");
+    // const response = await createUserHttp(email, password);
+
+    // console.log(response);
+    // const sucessfullRequest = isThereError(response);
+    // sucessfullRequest ? navigate("/notes") : console.log(response[1]);
   };
 
   const state = {

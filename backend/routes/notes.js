@@ -1,5 +1,6 @@
 import express from "express";
-import { getIdPinnedStatus } from "../utils/utils.js";
+import bcrypt from "bcrypt";
+import { createUser, getIdPinnedStatus } from "../utils/utils.js";
 import UserBluePrint from "../data/schema.js";
 const router = express.Router();
 
@@ -10,18 +11,19 @@ const router = express.Router();
 /**
  * Create user manually for testing purposes
  */
+
 router.get(`/v1/testing`, async (req, res, next) => {
   const user = {
     userId: 6969,
-    xx: 6969,
     email: "georgenonis@gmail.com",
+    password: 0,
     notes: [],
     deletedNotes: [],
     pinnedNotes: [],
     archivedNotes: [],
     labels: [],
   };
-  const newUser = new UserBluePrint({ ...user, xx: user.xx });
+  const newUser = new UserBluePrint({ ...user });
 
   newUser
     .save()
@@ -35,7 +37,7 @@ router.get("/v1/notes", async (req, res, next) => {
    */
   UserBluePrint.findById("642d61213adbae2d3c5fd3ab")
     .then((user) => {
-      console.log(user);
+      // console.log(user);
       res.status(200).json({
         pinned: [...user.pinnedNotes],
         unpinned: [...user.unPinnedNotes],
@@ -76,6 +78,77 @@ router.get("/v1/notes/labels", async (req, res, next) => {
 /**
  * POST REQUESTS
  */
+
+router.get(`/v1/userexist`, async (req, res, next) => {
+  const email = req.query.email;
+  // console.log({ email });
+
+  const allUsers = await UserBluePrint.find({});
+  console.log({ allUsers });
+  const duplicate = allUsers.some((user) => {
+    // console.log(user.email);
+    return user.email.toLowerCase() === email.toLowerCase();
+  });
+
+  console.log({ duplicate, email });
+
+  try {
+    if (duplicate) {
+      console.log("Account with this email exists already");
+      return res
+        .status(201)
+        .json({ message: `Account with this email exist's already` });
+    } else {
+      console.log("No account associated with this email");
+      return res
+        .status(200)
+        .json({ message: `No account associated with this email` });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "something went wrong", error });
+  }
+});
+
+router.post("/v1/signup", async (req, res, next) => {
+  console.log("SIGNUP PROCESS");
+  const { email, pwd } = req.body;
+
+  if (!email || !pwd) {
+    return res.status(400).json({ message: "Email and Password are required" });
+  }
+
+  const users = await UserBluePrint.find({ email: email }).exec();
+  const duplicate = users.map((user) => {
+    return user.email.toLowerCase() === email.toLowerCase();
+  });
+  console.log({ duplicate, users });
+  // console.log(Array.isArray(duplicate));
+  /**
+   * Check for duplicates in Database
+   */
+  if (duplicate.length > 0) {
+    return res.sendStatus(409);
+  }
+  console.log({ duplicate, email, pwd });
+
+  try {
+    const hashedPwd = await bcrypt.hash(pwd, 10);
+
+    const user = createUser(email, hashedPwd);
+    const newUser = new UserBluePrint({ ...user });
+
+    const response = await newUser
+      .save()
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+
+    res.status(200).json(response);
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
 
 router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;

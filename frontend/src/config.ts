@@ -3,8 +3,9 @@ export const BASE_URL = `${import.meta.env.VITE_BASE_URL}${API_VERSION}`;
 export const DEFAULT_AVTR = "../images/default_avatar.png";
 
 export const PWD_REGEX: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$/;
-export const USER_REGEX: RegExp =
-  /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+// export const USER_REGEX: RegExp =
+//   /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+export const USER_REGEX: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/;
 
 export const USER_AVATAR =
   "https://cdn.discordapp.com/attachments/1056419450473152533/1090660819492147310/Neilyo77_background_image_where_theres_a_person_looking_for_hes_8875f0c2-ec7f-4826-8465-9c71c09fc32e.png";

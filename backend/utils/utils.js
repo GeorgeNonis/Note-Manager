@@ -114,3 +114,17 @@ export const findNoteIndex = (arr, id) => {
   const index = arr.findIndex((n) => n.id === id);
   return index;
 };
+
+export const createUser = (email, hashedPwd) => {
+  const user = {
+    userId: crypto.randomUUID(),
+    email,
+    password: hashedPwd,
+    notes: [],
+    deletedNotes: [],
+    pinnedNotes: [],
+    archivedNotes: [],
+    labels: [],
+  };
+  return user;
+};

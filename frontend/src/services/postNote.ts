@@ -8,6 +8,27 @@ import {
   ArchiveNoteProps,
 } from "./interfaces";
 
+export const createUserHttp = async <T, E>(
+  email: string,
+  pwd: string
+): Promise<[T | E | null, AxiosError | null]> => {
+  console.log("Creating User");
+  console.log({ email, pwd });
+  console.log(`${BASE_URL}signup`);
+  try {
+    const response = await axios.post<T, E>(`${BASE_URL}signup`, {
+      email,
+      pwd,
+    });
+    // console.log(response);
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+
 export const addNoteHttp = async <T, E>(
   data: NoteObj
 ): Promise<[T | E | null, AxiosError | null]> => {

@@ -17,4 +17,5 @@ export interface DisplayStateInitialState {
   displaySideBar: boolean;
   isThereError: boolean;
   accountSettings: boolean;
+  emailAlreadyInUse: boolean;
 }

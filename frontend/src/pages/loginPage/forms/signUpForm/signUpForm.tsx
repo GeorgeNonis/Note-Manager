@@ -1,11 +1,17 @@
 import ReactDOM from "react-dom";
 import { Dispatch } from "react";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import {
+  AiFillEyeInvisible,
+  AiFillEye,
+  AiOutlineInfoCircle,
+} from "react-icons/ai";
 import { TbCircleX, TbCircleCheck } from "react-icons/tb";
 import { useSignUpForm } from "./useSignUpForm";
 import AvatarOptions from "../../../../components/modals/avataroptions/avatarOptions";
 import default_avatar_pic from "../../../../../images/default_avatar.png";
 import styles from "./styles.module.scss";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../../../store/store";
 
 const SignUpForm = ({
   setShowLoginForm,
@@ -13,18 +19,15 @@ const SignUpForm = ({
   setShowLoginForm: Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { handlers, values } = useSignUpForm();
+  const { emailAlreadyInUse } = useSelector(
+    (state: IRootState) => state.displayState
+  );
+
+  console.log({ emailAlreadyInUse });
 
   const { confirmPasswordHover, passwordHover, showPassword } =
     values.passwordValues;
-  const {
-    setPasswordHover,
-    setConfirmPasswordHover,
-    showPasswordHandler,
-    emailHandlers,
-    passwordHandlers,
-    confirmPasswordHandlers,
-    handleSumbit,
-  } = handlers;
+  const { emailHandlers, passwordHandlers, confirmPasswordHandlers } = handlers;
 
   return (
     <>
@@ -36,20 +39,23 @@ const SignUpForm = ({
           />,
           document.getElementById("avataroptions")!
         )}
-      <form className={styles.form} onSubmit={handleSumbit}>
+      <form className={styles.form} onSubmit={handlers.handleSumbit}>
         <fieldset>
           <legend>
             E-Mail:
             <span
               className={
-                values.emailValues.emailValid ? styles.show : styles.hide
+                values.emailValues.emailValid && !emailAlreadyInUse
+                  ? styles.show
+                  : styles.hide
               }
             >
               <TbCircleCheck className={styles.correct} />
             </span>
             <span
               className={
-                values.emailValues.email && !values.emailValues.emailValid
+                (values.emailValues.email && !values.emailValues.emailValid) ||
+                emailAlreadyInUse
                   ? styles.show
                   : styles.hide
               }
@@ -67,6 +73,26 @@ const SignUpForm = ({
             name="email"
             ref={values.emailValues.emailRef}
           />
+          <p
+            style={{
+              opacity: `${
+                (!values.emailValues.emailValid &&
+                  values.emailValues.emailFocus &&
+                  values.emailValues.email) ||
+                emailAlreadyInUse
+                  ? 1
+                  : 0
+              }`,
+            }}
+            className={styles.show}
+          >
+            <AiOutlineInfoCircle />
+            <h3>
+              {!emailAlreadyInUse
+                ? `Must be a valid email`
+                : `Account already exists with this email`}
+            </h3>
+          </p>
         </fieldset>
         <fieldset>
           <legend>
@@ -97,11 +123,14 @@ const SignUpForm = ({
               type={showPassword ? "password" : "text"}
               id="password"
               name="password"
+              required
+              aria-invalid={values.passwordValues.passwordValid ? true : false}
+              aria-describedby="pwdnote"
             />
             <span
-              onClick={showPasswordHandler}
-              onMouseEnter={() => setPasswordHover(!passwordHover)}
-              onMouseLeave={() => setPasswordHover(!passwordHover)}
+              onClick={handlers.showPasswordHandler}
+              onMouseEnter={() => handlers.setPasswordHover(!passwordHover)}
+              onMouseLeave={() => handlers.setPasswordHover(!passwordHover)}
             >
               {passwordHover || showPassword ? (
                 <AiFillEye />
@@ -110,6 +139,26 @@ const SignUpForm = ({
               )}
             </span>
           </div>
+          <p
+            ref={values.errRef}
+            id="pwdnote"
+            style={{
+              opacity: `${
+                values.passwordValues.passwordFocus &&
+                !values.passwordValues.passwordValid &&
+                values.passwordValues.password
+                  ? 1
+                  : 0
+              }`,
+            }}
+            className={styles.show}
+          >
+            <AiOutlineInfoCircle />
+            <h3>
+              Minimum four characters, first one uppercase letter, least one
+              number
+            </h3>
+          </p>
         </fieldset>
         <fieldset>
           <legend>
@@ -149,14 +198,19 @@ const SignUpForm = ({
               type={showPassword ? "password" : "text"}
               id="password"
               name="password"
+              required
+              aria-invalid={
+                values.confirmPasswordValues.confirmPasswordValid ? true : false
+              }
+              aria-describedby="confirmpwd"
             />
             <span
-              onClick={showPasswordHandler}
+              onClick={handlers.showPasswordHandler}
               onMouseEnter={() =>
-                setConfirmPasswordHover(!confirmPasswordHover)
+                handlers.setConfirmPasswordHover(!confirmPasswordHover)
               }
               onMouseLeave={() =>
-                setConfirmPasswordHover(!confirmPasswordHover)
+                handlers.setConfirmPasswordHover(!confirmPasswordHover)
               }
             >
               {confirmPasswordHover || showPassword ? (
@@ -166,6 +220,24 @@ const SignUpForm = ({
               )}
             </span>
           </div>
+          <p
+            ref={values.errRef}
+            id="confirmpwd"
+            style={{
+              opacity: `${
+                (values.confirmPasswordValues.confirmPasswordFocus &&
+                  !values.validMatch) ||
+                (values.confirmPasswordValues.confirmPassword.length &&
+                  !values.passwordValues.passwordValid)
+                  ? 1
+                  : 0
+              }`,
+            }}
+            className={styles.show}
+          >
+            <AiOutlineInfoCircle />
+            <h3> Must match your New Password</h3>
+          </p>
         </fieldset>
         <fieldset className={styles.fieldsetimage}>
           <img
@@ -187,7 +259,8 @@ const SignUpForm = ({
           disabled={
             !values.emailValues.emailValid ||
             !values.passwordValues.passwordValid ||
-            !values.validMatch
+            !values.validMatch ||
+            emailAlreadyInUse
           }
           style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
         >

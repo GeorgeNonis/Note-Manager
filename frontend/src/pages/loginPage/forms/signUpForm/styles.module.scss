@@ -73,11 +73,24 @@
 }
 
 .hide {
-  text-indent: -999em;
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  align-items: center;
+  margin: 0;
+  opacity: 0;
 }
 
 .show {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  align-items: center;
+  margin: 0;
+  h3 {
+    font-size: 1rem;
+  }
+  svg {
+    place-self: center;
+  }
 }
 
 .correct {

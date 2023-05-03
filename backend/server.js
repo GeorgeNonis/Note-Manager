@@ -9,12 +9,11 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(router);
 
+console.log(process.env.ACCCESS_TOKEN_SECRET);
+
 const PORT = process.env.PORT || 4569;
-console.log(PORT);
-console.log(process.env.DB_API);
-// console.log(typeof process.env.DB_API);
 mongoose
-  // .connect(process.env.DB_API)
+
   .connect(process.env.DB_API)
   .then((res) => {
     // console.log({ res });

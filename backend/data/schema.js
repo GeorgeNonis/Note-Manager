@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  userId: Number,
-  xx: Number,
+  userId: String,
+  password: String,
   email: String,
   unPinnedNotes: { type: Array, default: [] },
   pinnedNotes: { type: Array, default: [] },
