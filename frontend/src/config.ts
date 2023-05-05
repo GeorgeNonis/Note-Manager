@@ -2,9 +2,9 @@ export const API_VERSION = import.meta.env.VITE_API_VERSION;
 export const BASE_URL = `${import.meta.env.VITE_BASE_URL}${API_VERSION}`;
 export const DEFAULT_AVTR = "../images/default_avatar.png";
 
+export const URL_REGEX =
+  /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
 export const PWD_REGEX: RegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,15}$/;
-// export const USER_REGEX: RegExp =
-//   /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 export const USER_REGEX: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/;
 
 export const USER_AVATAR =

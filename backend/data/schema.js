@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   userId: String,
   password: String,
+  date: String,
   email: String,
+  image: String,
   unPinnedNotes: { type: Array, default: [] },
   pinnedNotes: { type: Array, default: [] },
   archivedNotes: { type: Array, default: [] },

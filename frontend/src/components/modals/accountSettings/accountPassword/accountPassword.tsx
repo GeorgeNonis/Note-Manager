@@ -1,9 +1,14 @@
 import { TbCircleX, TbCircleCheck } from "react-icons/tb";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useAccountPassword } from "./useAccountPassword";
+import { InitialState } from "../../../../store/interfaces";
 import styles from "./styles.module.scss";
 
-const AccountPassword = () => {
+interface AccountPasswordProps {
+  initialState: InitialState;
+}
+
+const AccountPassword = ({ initialState }: AccountPasswordProps) => {
   const { handlers, values } = useAccountPassword();
   console.log(values.validInputs);
   return (

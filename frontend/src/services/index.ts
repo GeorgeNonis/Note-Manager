@@ -7,7 +7,7 @@ export {
   addLabelHttp,
   tickLabelHandlerHttp,
 } from "./edit";
-export { getNotesHttp, getLabelsHttp } from "./getNote";
+export { getNotesHttp, getLabelsHttp, getUsersHttp } from "./getNote";
 export {
   addNoteHttp,
   pinNoteHandlerHttp,
@@ -16,4 +16,7 @@ export {
   copyNoteHttp,
   checkBoxesHandlerHttp,
   checkBoxHandlerHttp,
+  archiveNoteHandlerHttp,
+  createUserHttp,
+  getUserHttp,
 } from "./postNote";

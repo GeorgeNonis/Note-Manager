@@ -115,11 +115,19 @@ export const findNoteIndex = (arr, id) => {
   return index;
 };
 
-export const createUser = (email, hashedPwd) => {
+export const createUser = (email, hashedPwd, image) => {
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const date = curr.toISOString().substring(0, 10);
+
+  console.log(date);
+
   const user = {
     userId: crypto.randomUUID(),
     email,
     password: hashedPwd,
+    date,
+    image,
     notes: [],
     deletedNotes: [],
     pinnedNotes: [],
@@ -128,3 +136,18 @@ export const createUser = (email, hashedPwd) => {
   };
   return user;
 };
+
+// export const convertImageToBase64 = (imgUrl, callback) => {
+//   const image = new Image();
+//   image.crossOrigin = "anonymous";
+//   image.onload = () => {
+//     const canvas = document.createElement("canvas");
+//     const ctx = canvas.getContext("2d");
+//     canvas.height = image.naturalHeight;
+//     canvas.width = image.naturalWidth;
+//     ctx.drawImage(image, 0, 0);
+//     const dataUrl = canvas.toDataURL();
+//     callback && callback(dataUrl);
+//   };
+//   image.src = imgUrl;
+// };

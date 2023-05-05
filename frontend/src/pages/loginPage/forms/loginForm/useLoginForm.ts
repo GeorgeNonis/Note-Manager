@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PWD_REGEX, USER_REGEX } from "../../../../config";
+import { getUserHttp } from "../../../../services";
+import { isThereError } from "../../../../utils";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../store/display-state-slice";
+import { initial } from "../../../../store/notes-slice";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -29,6 +35,29 @@ export const useLoginForm = () => {
     setPasswordHover(!passwordHover);
   };
 
+  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const v1 = USER_REGEX.test(email);
+    const v2 = PWD_REGEX.test(password);
+    if (!v1 || !v2) {
+      errRef.current?.focus();
+      setErrorMsg("Invalid Entry");
+      return;
+    }
+
+    const response = await getUserHttp({ email, pwd: password });
+    console.log({ response });
+    const successRequest = isThereError(response);
+    if (successRequest) {
+      dispatch(setUser(email));
+      console.log("Sucess");
+      console.log(response[0]);
+      navigate("/notes");
+    } else {
+      console.log(response[1]?.message);
+    }
+  };
+
   useEffect(() => {
     emailRef.current?.focus();
   }, []);
@@ -45,19 +74,6 @@ export const useLoginForm = () => {
 
     setValidInputs(emailValid && result);
   }, [password, email]);
-
-  const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const v1 = USER_REGEX.test(email);
-    const v2 = PWD_REGEX.test(password);
-    if (!v1 || !v2) {
-      errRef.current?.focus();
-      setErrorMsg("Invalid Entry");
-      return;
-    }
-
-    navigate("/notes");
-  };
 
   const state = {
     values: {

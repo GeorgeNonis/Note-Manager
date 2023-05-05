@@ -1,12 +1,15 @@
 import { ReactElement, useState } from "react";
 import { AccountSettingsProps } from "./interfaces";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openAccountSettings } from "../../../store/display-state-slice";
 import * as Components from "../../index";
 import { HiXMark } from "react-icons/hi2";
 import styles from "./styles.module.scss";
+import { IRootState } from "../../../store/store";
 
 const AccountSettings = ({}: AccountSettingsProps) => {
+  const { ...initialState } = useSelector((state: IRootState) => state.notes);
+  console.log({ initialState });
   const [option, setOption] = useState<string>("Info");
   const dispatch = useDispatch();
 
@@ -18,16 +21,16 @@ const AccountSettings = ({}: AccountSettingsProps) => {
 
   const options: Key = {
     Info: {
-      el: <Components.AccountInfo />,
+      el: <Components.AccountInfo initialState={initialState} />,
     },
     Delete: {
-      el: <Components.AccountDelete />,
+      el: <Components.AccountDelete initialState={initialState} />,
     },
     Avatar: {
-      el: <Components.AccountAvatar />,
+      el: <Components.AccountAvatar initialState={initialState} />,
     },
     Password: {
-      el: <Components.AccountPassword />,
+      el: <Components.AccountPassword initialState={initialState} />,
     },
   };
 

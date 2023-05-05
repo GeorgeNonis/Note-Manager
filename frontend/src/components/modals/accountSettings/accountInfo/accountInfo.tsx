@@ -1,32 +1,31 @@
 import { useState } from "react";
 import styles from "./styles.module.scss";
+import { InitialState } from "../../../../store/interfaces";
 
-const AccountInfo = () => {
+interface AccountInfoProps {
+  initialState: InitialState;
+}
+
+const AccountInfo = ({ initialState }: AccountInfoProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { email, date } = initialState;
   /*
    * Email
    * Password
    * Date of your account creation
    * Last time you edited a Note
    */
+
   return (
     <div className={styles.accountDetails}>
       <div className={styles.mainContent}>
         <fieldset>
           <legend>E-Mail</legend>
-          <input type="text" value={"Georgenonis@gmail.com"} readOnly />
-        </fieldset>
-        <fieldset>
-          <legend>Passowrd</legend>
-          <input
-            type={showPassword ? "password" : "text"}
-            value={"Georgenonis@gmail.com"}
-            readOnly
-          />
+          <input type="text" value={email} readOnly />
         </fieldset>
         <fieldset>
           <legend>Date of registration</legend>
-          <input type="text" value={"Georgenonis@gmail.com"} readOnly />
+          <input type="date" value={date} defaultValue={date} readOnly />
         </fieldset>
         <fieldset>
           <legend>Last time you edited a Note</legend>

@@ -11,12 +11,19 @@ const initialState = {
   isThereError: false,
   accountSettings: false,
   emailAlreadyInUse: false,
+  user: "",
 } as DisplayStateInitialState;
 
 const displayState = createSlice({
   name: "displayManagment",
   initialState,
   reducers: {
+    setUser(state, { payload }) {
+      console.log({ payload });
+      console.log("ss");
+      const email = payload;
+      state.user = email;
+    },
     loadingInitialState(state, { payload }) {
       state.loadingInitialState = payload;
     },
@@ -38,6 +45,7 @@ const displayState = createSlice({
     },
     emailAlreadyInUseHandler(state, { payload }) {
       const response = payload;
+      console.log(response);
       const isTheEmailAlreadyInUse =
         response.message === ErrorMessages.alreadyInUse;
       state.emailAlreadyInUse = isTheEmailAlreadyInUse;
@@ -46,6 +54,7 @@ const displayState = createSlice({
 });
 
 export const {
+  setUser,
   loadingInitialState,
   errorState,
   httpReqResLoading,

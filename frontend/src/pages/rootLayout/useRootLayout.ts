@@ -40,7 +40,7 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await getNotesHttp();
+      const response = await getNotesHttp(displayState.user);
       // console.log(response);
 
       const sucessfullRequest = isThereError(response);

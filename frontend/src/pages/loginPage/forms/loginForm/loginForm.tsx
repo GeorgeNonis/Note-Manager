@@ -41,7 +41,7 @@ const LoginForm = ({
             onChange={(e) => passwordHandlers.setPassword(e.target.value)}
             onFocus={() => passwordHandlers.setPasswordFocus(true)}
             onBlur={() => passwordHandlers.setPasswordFocus(false)}
-            type={showPassword ? "password" : "text"}
+            type={!showPassword ? "password" : "text"}
             id="password"
             name="password"
           />
@@ -60,6 +60,7 @@ const LoginForm = ({
       </fieldset>
 
       <button
+        type="submit"
         className={styles.formLoginButton}
         disabled={
           !values.emailValues.emailValid || !values.passwordValues.passwordValid
@@ -75,6 +76,7 @@ const LoginForm = ({
         <div></div>
       </div>
       <button
+        type="button"
         className={styles.formSignUpButton}
         onClick={() => setShowLoginForm(false)}
       >

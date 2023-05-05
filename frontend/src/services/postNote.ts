@@ -6,11 +6,13 @@ import {
   CheckBoxProps,
   CheckBoxesProps,
   ArchiveNoteProps,
+  UserDetailsProps,
 } from "./interfaces";
 
 export const createUserHttp = async <T, E>(
   email: string,
-  pwd: string
+  pwd: string,
+  image: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   console.log("Creating User");
   console.log({ email, pwd });
@@ -19,6 +21,7 @@ export const createUserHttp = async <T, E>(
     const response = await axios.post<T, E>(`${BASE_URL}signup`, {
       email,
       pwd,
+      image,
     });
     // console.log(response);
     return [response, null];
@@ -29,6 +32,28 @@ export const createUserHttp = async <T, E>(
   }
 };
 
+export const getUserHttp = async <T, E>({
+  email,
+  pwd,
+}: UserDetailsProps): Promise<[T | E | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<T, E>(
+      `${BASE_URL}login`,
+      { email, pwd },
+      {
+        headers: {
+          user: email,
+        },
+      }
+    );
+    console.log("Login");
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
 export const addNoteHttp = async <T, E>(
   data: NoteObj
 ): Promise<[T | E | null, AxiosError | null]> => {

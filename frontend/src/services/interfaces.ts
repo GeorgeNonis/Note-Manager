@@ -52,3 +52,8 @@ export interface CheckBoxProps
 
 export interface ArchiveNoteProps
   extends Pick<StandartProps, "noteId" | "pinned" | "archived"> {}
+
+export interface UserDetailsProps {
+  email: string;
+  pwd: string;
+}

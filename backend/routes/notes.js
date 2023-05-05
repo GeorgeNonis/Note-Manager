@@ -1,5 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { createUser, getIdPinnedStatus } from "../utils/utils.js";
 import UserBluePrint from "../data/schema.js";
 const router = express.Router();
@@ -8,53 +9,32 @@ const router = express.Router();
  * GET REQUESTS
  */
 
-/**
- * Create user manually for testing purposes
- */
-
 router.get(`/v1/testing`, async (req, res, next) => {
-  const user = {
-    userId: 6969,
-    email: "georgenonis@gmail.com",
-    password: 0,
-    notes: [],
-    deletedNotes: [],
-    pinnedNotes: [],
-    archivedNotes: [],
-    labels: [],
-  };
-  const newUser = new UserBluePrint({ ...user });
-
-  newUser
-    .save()
-    .then((res) => console.log(res))
-    .catch((error) => console.log(error));
+  res.cookie(`name`, "giorgos");
 });
 
 router.get("/v1/notes", async (req, res, next) => {
+  const { email } = req.query;
   /**
    * Improve this and use Promise.allSettled
    */
-  UserBluePrint.findById("642d61213adbae2d3c5fd3ab")
-    .then((user) => {
-      // console.log(user);
-      res.status(200).json({
-        pinned: [...user.pinnedNotes],
-        unpinned: [...user.unPinnedNotes],
-        archivedNotes: [...user.archivedNotes],
-        deleted: [...user.deletedNotes],
-        labels: [...user.labels],
-      });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: "Internal error", error });
+  try {
+    const [user] = await UserBluePrint.find({ email });
+    res.status(200).json({
+      ...user,
     });
+    return [user, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
 });
 
 // Promise.allSettled
 
 router.get("/v1/trashbin", async (req, res, next) => {
   UserBluePrint.findById("642d61213adbae2d3c5fd3ab")
+    .exec()
     .then((user) => {
       res.status(200).json(user.deletedNotes);
     })
@@ -65,7 +45,9 @@ router.get("/v1/trashbin", async (req, res, next) => {
 
 router.get("/v1/notes/labels", async (req, res, next) => {
   try {
-    const response = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
+    const response = await UserBluePrint.findById(
+      "642d61213adbae2d3c5fd3ab"
+    ).exec();
 
     res.status(200).json(response.labels);
     return [response, null];
@@ -79,12 +61,62 @@ router.get("/v1/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
+router.post(`/v1/login`, async (req, res, next) => {
+  const { email, pwd } = req.body;
+  console.log("Logging process");
+  console.log({ email, pwd });
+
+  if (!email || !pwd)
+    return (
+      res.status(400), json({ message: "Email and Password are required!" })
+    );
+
+  const user = await UserBluePrint.findOne({ email }).exec();
+
+  if (!user.password) return res.sendStatus(401);
+
+  try {
+    const response = bcrypt.compare(pwd, user.password);
+    const accessToken = jwt.sign(
+      {
+        user: user.email,
+      },
+      process.env.ACCCESS_TOKEN_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    const refreshToken = jwt.sign(
+      {
+        user: user.email,
+      },
+      process.env.ACCCESS_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    res.setHeader("Set-Cookie", `email=${user.email};`);
+    res
+      .status(200)
+      .json({ message: "Correct credentials", token: accessToken, user });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
 router.get(`/v1/userexist`, async (req, res, next) => {
   const email = req.query.email;
   // console.log({ email });
 
   const allUsers = await UserBluePrint.find({});
-  console.log({ allUsers });
+
+  const oneUser = await UserBluePrint.findOne({ email });
+  console.log({ oneUser });
+  console.log(oneUser === null);
+  console.log(typeof oneUser);
+  // console.log({ allUsers });
   const duplicate = allUsers.some((user) => {
     // console.log(user.email);
     return user.email.toLowerCase() === email.toLowerCase();
@@ -95,6 +127,7 @@ router.get(`/v1/userexist`, async (req, res, next) => {
   try {
     if (duplicate) {
       console.log("Account with this email exists already");
+
       return res
         .status(201)
         .json({ message: `Account with this email exist's already` });
@@ -111,30 +144,35 @@ router.get(`/v1/userexist`, async (req, res, next) => {
 
 router.post("/v1/signup", async (req, res, next) => {
   console.log("SIGNUP PROCESS");
-  const { email, pwd } = req.body;
+  const { email, pwd, image } = req.body;
+
+  // const urlToBase64 = convertImageToBase64(image, (img) => img);
+
+  // console.log({ urlToBase64 });
 
   if (!email || !pwd) {
     return res.status(400).json({ message: "Email and Password are required" });
   }
 
-  const users = await UserBluePrint.find({ email: email }).exec();
-  const duplicate = users.map((user) => {
+  const allUsers = await UserBluePrint.find({});
+  const duplicate = allUsers.some((user) => {
+    // console.log(user.email);
     return user.email.toLowerCase() === email.toLowerCase();
   });
-  console.log({ duplicate, users });
   // console.log(Array.isArray(duplicate));
   /**
    * Check for duplicates in Database
    */
-  if (duplicate.length > 0) {
+  if (duplicate) {
+    console.log("Duplicates");
     return res.sendStatus(409);
   }
-  console.log({ duplicate, email, pwd });
-
+  console.log({ duplicate, email, pwd, image });
+  // return;
   try {
     const hashedPwd = await bcrypt.hash(pwd, 10);
 
-    const user = createUser(email, hashedPwd);
+    const user = createUser(email, hashedPwd, image);
     const newUser = new UserBluePrint({ ...user });
 
     const response = await newUser
@@ -160,6 +198,8 @@ router.post("/v1/notes", async (req, res, next) => {
       { userId: 1995 },
       { unPinnedNotes: [...unPinnedNotes, { ...data }] }
     );
+    res.setHeader("Set-Cookie", `email=${user.email}`);
+
     res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
   } catch (error) {
@@ -640,6 +680,22 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
     );
 
     res.status(200).json({ message: "Sucessfully deleted label" });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
+router.get(`/v1/account`, async (req, res, next) => {
+  const email = req.query.email;
+
+  console.log("deleting account");
+  try {
+    const response = await UserBluePrint.findOneAndDelete({ email });
+    console.log(Array.isArray);
+    console.log({ response });
+    res.status(200).json({ message: "Sucessfully deleted account" });
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });

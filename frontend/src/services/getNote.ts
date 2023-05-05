@@ -17,11 +17,11 @@ export const getUsersHttp = async <T>(
   }
 };
 
-export const getNotesHttp = async <T>(): Promise<
-  [T | null, AxiosError | null]
-> => {
+export const getNotesHttp = async <T>(
+  email: string
+): Promise<[T | null, AxiosError | null]> => {
   try {
-    const response = await axios.get<T>(`${BASE_URL}notes`);
+    const response = await axios.get<T>(`${BASE_URL}notes?email=${email}`);
     return [response.data, null];
   } catch (error) {
     const err = error as AxiosError;

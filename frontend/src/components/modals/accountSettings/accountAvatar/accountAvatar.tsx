@@ -4,11 +4,15 @@ import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
 import { AvatarOptions } from "../../../index";
 import styles from "./styles.module.scss";
+import { InitialState } from "../../../../store/interfaces";
 
-const AccountAvatar = () => {
-  const { values, handlers } = useAccountAvatar();
-  console.log(values.changeAvatar);
-  console.log(values.userAvatar);
+interface AccountAvatarProps {
+  initialState: InitialState;
+}
+
+const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
+  const { values, handlers } = useAccountAvatar(initialState);
+  const {} = initialState;
   return (
     <>
       {values.changeAvatar &&

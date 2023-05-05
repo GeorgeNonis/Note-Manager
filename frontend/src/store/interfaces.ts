@@ -2,6 +2,10 @@ import { NoteObj } from "../interfaces/interfaces";
 import { Labels } from "../services/interfaces";
 
 export interface InitialState {
+  email: string;
+  password: string;
+  date: string;
+  image: string;
   notes: NoteObj[];
   pinnedNotes: NoteObj[];
   deletedNotes: NoteObj[];
@@ -18,4 +22,5 @@ export interface DisplayStateInitialState {
   isThereError: boolean;
   accountSettings: boolean;
   emailAlreadyInUse: boolean;
+  user: string;
 }

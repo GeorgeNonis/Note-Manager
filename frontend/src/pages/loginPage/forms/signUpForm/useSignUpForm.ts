@@ -1,11 +1,19 @@
-import { PWD_REGEX, USER_REGEX, avatar_pictures } from "../../../../config";
-import { useEffect, useRef, useState } from "react";
+import {
+  PWD_REGEX,
+  URL_REGEX,
+  USER_REGEX,
+  avatar_pictures,
+} from "../../../../config";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserHttp } from "../../../../services/postNote";
 import { isThereError } from "../../../../utils";
 import { getUsersHttp } from "../../../../services/getNote";
 import { useDispatch } from "react-redux";
-import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice";
+import {
+  emailAlreadyInUseHandler,
+  setUser,
+} from "../../../../store/display-state-slice";
 
 export const useSignUpForm = () => {
   const dispatch = useDispatch();
@@ -43,14 +51,71 @@ export const useSignUpForm = () => {
     setPasswordHover(!passwordHover);
     setConfirmPasswordHover(!confirmPasswordHover);
   };
+  const convertImageToBase64 = (
+    imgUrl: string,
+    callback: (arg: string) => void
+  ) => {
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d")!;
+      canvas.height = image.naturalHeight;
+      canvas.width = image.naturalWidth;
+      ctx.drawImage(image, 0, 0);
+      const dataUrl = canvas.toDataURL();
+      callback && callback(dataUrl);
+    };
+    image.src = imgUrl;
+  };
 
-  const avatarHandler = (avatar: string) => {
-    setAvatar(avatar);
+  const avatarHandler = (avatar: string | File) => {
+    if (!URL_REGEX.test(avatar as string)) {
+      const fileReader = new FileReader();
+
+      let base64: string | ArrayBuffer | null = "";
+      fileReader.addEventListener("load", () => {
+        const srcData = fileReader.result;
+
+        setAvatar(srcData as string);
+      });
+      fileReader.readAsDataURL(avatar as Blob);
+    } else {
+      convertImageToBase64(avatar as string, (avtr) => {
+        setAvatar(avtr);
+      });
+    }
+
+    // console.log({ avatar });
     setChangeAvatar(false);
     setDefaultAvatar(false);
-    const img = new Image();
-    img.src = avatar;
-    console.log({ img });
+  };
+
+  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const v1 = USER_REGEX.test(email);
+    const v2 = PWD_REGEX.test(password);
+    if (!v1 || !v2) {
+      errRef.current?.focus();
+      setErrorMsg("Invalid Entry");
+      return;
+    }
+
+    const response = await createUserHttp(email, password, avatar);
+    const successRequest = isThereError(response);
+    if (successRequest) {
+      dispatch(setUser(email));
+      console.log("Sucess");
+      navigate("/notes");
+    } else {
+      console.log(response[1]?.message);
+    }
+  };
+
+  const doesUserExists = async () => {
+    const response = await getUsersHttp(email);
+
+    dispatch(emailAlreadyInUseHandler(response[0]));
   };
 
   useEffect(() => {
@@ -68,12 +133,6 @@ export const useSignUpForm = () => {
     console.log();
   }, []);
 
-  const doesUserExists = async () => {
-    const response = await getUsersHttp(email);
-
-    dispatch(emailAlreadyInUseHandler(response[0]));
-  };
-
   useEffect(() => {
     if (!emailFocus) return;
     const result = USER_REGEX.test(email);
@@ -81,7 +140,7 @@ export const useSignUpForm = () => {
 
     const timeout = setTimeout(() => {
       doesUserExists();
-    }, 250);
+    }, 500);
 
     return () => {
       clearTimeout(timeout);
@@ -97,25 +156,6 @@ export const useSignUpForm = () => {
     const validForm = emailValid && match;
     setValidInputs(validForm);
   }, [password, confirmPassword, email]);
-
-  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const v1 = USER_REGEX.test(email);
-    const v2 = PWD_REGEX.test(password);
-    if (!v1 || !v2) {
-      errRef.current?.focus();
-      setErrorMsg("Invalid Entry");
-      return;
-    }
-
-    console.log({ email, password, avatar });
-
-    // const response = await createUserHttp(email, password);
-
-    // console.log(response);
-    // const sucessfullRequest = isThereError(response);
-    // sucessfullRequest ? navigate("/notes") : console.log(response[1]);
-  };
 
   const state = {
     values: {

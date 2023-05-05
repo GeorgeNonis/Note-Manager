@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { useAccountDelete } from "./useAccountDelete";
+import { InitialState } from "../../../../store/interfaces";
 import styles from "./style.module.scss";
-
-const AccountDelete = () => {
+interface AccountDeleteProps {
+  initialState: InitialState;
+}
+const AccountDelete = ({ initialState }: AccountDeleteProps) => {
+  const { email } = initialState;
   const { validMatch, setConfirmEmail, deleteAccountHandler } =
-    useAccountDelete();
+    useAccountDelete({ email });
   console.log(validMatch);
   return (
     <div className={styles.mainContent}>

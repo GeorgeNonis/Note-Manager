@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { GrPersonalComputer } from "react-icons/gr";
-import { cached_avatar_pictures } from "../../../config";
+import { URL_REGEX, cached_avatar_pictures } from "../../../config";
 import { AvatarOptionsProps } from "./interfaces";
 import { HiXMark } from "react-icons/hi2";
 import styles from "./styles.module.scss";
@@ -25,13 +25,16 @@ const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
             </button>
             <h3>From Computer</h3>
             <input
-              onChange={(e) => {
-                console.log(e.target.files![0]);
-                console.log(e.target.files);
-                console.log(URL.createObjectURL(e.target.files![0]));
-                console.log(typeof URL.createObjectURL(e.target.files![0]));
-                avatarHandler(URL.createObjectURL(e.target.files![0]));
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files) {
+                  avatarHandler(
+                    URL_REGEX.test(URL.createObjectURL(e.target.files![0]))
+                      ? URL.createObjectURL(e.target.files![0])
+                      : e.target.files![0]
+                  );
+                }
               }}
+              name="image"
               type="file"
               id="file"
               className={styles.input}
@@ -46,6 +49,7 @@ const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
                     src={avtr.src}
                     key={avtr.src}
                     onClick={() => {
+                      console.log(URL_REGEX.test(avtr.src));
                       avatarHandler(avtr.src);
                     }}
                   />

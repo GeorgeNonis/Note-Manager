@@ -23,8 +23,6 @@ const SignUpForm = ({
     (state: IRootState) => state.displayState
   );
 
-  console.log({ emailAlreadyInUse });
-
   const { confirmPasswordHover, passwordHover, showPassword } =
     values.passwordValues;
   const { emailHandlers, passwordHandlers, confirmPasswordHandlers } = handlers;
@@ -39,7 +37,11 @@ const SignUpForm = ({
           />,
           document.getElementById("avataroptions")!
         )}
-      <form className={styles.form} onSubmit={handlers.handleSumbit}>
+      <form
+        className={styles.form}
+        onSubmit={handlers.handleSumbit}
+        // encType="multipart/form-data"
+      >
         <fieldset>
           <legend>
             E-Mail:
@@ -120,7 +122,7 @@ const SignUpForm = ({
               onChange={(e) => passwordHandlers.setPassword(e.target.value)}
               onFocus={() => passwordHandlers.setPasswordFocus(true)}
               onBlur={() => passwordHandlers.setPasswordFocus(false)}
-              type={showPassword ? "password" : "text"}
+              type={!showPassword ? "password" : "text"}
               id="password"
               name="password"
               required
@@ -195,7 +197,7 @@ const SignUpForm = ({
               onBlur={() =>
                 confirmPasswordHandlers.setConfirmPasswordFocus(false)
               }
-              type={showPassword ? "password" : "text"}
+              type={!showPassword ? "password" : "text"}
               id="password"
               name="password"
               required
@@ -245,10 +247,16 @@ const SignUpForm = ({
             alt="avatar_image"
           />
           <div className={styles.fieldsetdiv}>
-            <button onClick={() => handlers.setChangeAvatar(true)}>
+            <button
+              onClick={() => handlers.setChangeAvatar(true)}
+              type="button"
+            >
               Change
             </button>
-            <button onClick={() => handlers.setDefaultAvatar(true)}>
+            <button
+              onClick={() => handlers.setDefaultAvatar(true)}
+              type="button"
+            >
               Remove
             </button>
           </div>
@@ -272,6 +280,7 @@ const SignUpForm = ({
           <div></div>
         </div>
         <button
+          type="button"
           className={styles.formLoginButton}
           onClick={() => setShowLoginForm(true)}
         >

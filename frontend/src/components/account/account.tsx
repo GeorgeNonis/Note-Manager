@@ -2,9 +2,12 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccount } from "./useAccount";
 import AccountOptions from "./accountOptions/accountOptions";
 import styles from "./styles.module.scss";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store/store";
 
 const Account = () => {
   const { handlers, values } = useAccount();
+  const { image } = useSelector((state: IRootState) => state.notes);
 
   return (
     <div className={styles.mainContent} ref={values.OnclickOutside}>
@@ -13,11 +16,14 @@ const Account = () => {
         onClick={() => {
           handlers.setAccountSettings(!values.accountSettings);
         }}
-        src="https://cdn.discordapp.com/attachments/1056419450473152533/1090660819492147310/Neilyo77_background_image_where_theres_a_person_looking_for_hes_8875f0c2-ec7f-4826-8465-9c71c09fc32e.png"
+        src={image}
         alt="user_picture"
       />
       {values.accountSettings && (
-        <AccountOptions openAccountModal={handlers.setAccountSettings} />
+        <AccountOptions
+          openAccountModal={handlers.setAccountSettings}
+          image={image}
+        />
       )}
     </div>
   );

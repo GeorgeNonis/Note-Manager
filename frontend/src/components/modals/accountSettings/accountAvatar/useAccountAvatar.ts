@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { DEFAULT_AVTR, USER_AVATAR } from "../../../../config";
+import { InitialState } from "../../../../store/interfaces";
 
-export const useAccountAvatar = () => {
+export const useAccountAvatar = (initialState: InitialState) => {
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [hoverOnAvatar, setHoverOnAvatar] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState(DEFAULT_AVTR);
-  const [userAvatar, setUserAvatar] = useState(USER_AVATAR);
+  const [userAvatar, setUserAvatar] = useState(initialState.image);
   const [saveAvatar, setSaveAvatar] = useState(false);
   const [twikZindex, setTwikZinedx] = useState(false);
 

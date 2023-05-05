@@ -3,6 +3,10 @@ import { NoteObj } from "../interfaces/interfaces";
 import { InitialState } from "./interfaces";
 
 const initialState = {
+  email: "",
+  password: "",
+  date: "",
+  image: "",
   notes: [],
   deletedNotes: [],
   pinnedNotes: [],
@@ -14,13 +18,17 @@ const notes = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    initial(state, { payload }) {
-      console.log(payload);
-      state.notes = [...payload.unpinned];
-      state.pinnedNotes = [...payload.pinned];
-      state.archivedNotes = [...payload.archivedNotes];
-      state.deletedNotes = [...payload.deleted];
-      state.labels = [...payload.labels];
+    initial(state, { payload: { _doc } }) {
+      console.log({ _doc });
+      state.email = _doc.email;
+      state.password = _doc.password;
+      state.date = _doc.date;
+      state.image = _doc.image;
+      state.notes = [..._doc.unPinnedNotes];
+      state.pinnedNotes = [..._doc.pinnedNotes];
+      state.archivedNotes = [..._doc.archivedNotes];
+      state.deletedNotes = [..._doc.deletedNotes];
+      state.labels = [..._doc.labels];
     },
     addNote(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
