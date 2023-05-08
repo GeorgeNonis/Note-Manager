@@ -10,6 +10,7 @@ import { errorState } from "../../../../store/display-state-slice";
 export const useEditLabelsModal = (
   cb: Dispatch<React.SetStateAction<boolean>>
 ) => {
+  const token = sessionStorage.getItem("auth-token")!;
   const labels = useSelector((state: IRootState) => {
     return state.notes.labels;
   });
@@ -35,7 +36,7 @@ export const useEditLabelsModal = (
     setCreateLabel(!createLabel);
     if (label.length === 0 || labels.some((l) => l.label === label)) return;
     const sharedId = crypto.randomUUID();
-    const response = await addLabelHttp({ label, labelId: sharedId });
+    const response = await addLabelHttp({ label, labelId: sharedId, token });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
       ? dispatch(addLabel({ label, labelId: sharedId }))

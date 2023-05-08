@@ -12,7 +12,7 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
   const [noteTitle, setNoteTitle] = useState<string>(note.title);
   const dispatch = useDispatch();
   const noteId = note.id;
-
+  const token = sessionStorage.getItem("auth-token")!;
   const saveChanges = async () => {
     const response = await editNoteHttp({
       pinned: false,
@@ -20,6 +20,7 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
       noteId,
       titleValue: noteTitle,
       noteValue,
+      token,
     });
 
     const sucessfullRequest = isThereError(response);

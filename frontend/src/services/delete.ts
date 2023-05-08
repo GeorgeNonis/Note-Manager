@@ -1,16 +1,23 @@
-import axios, { AxiosError } from "axios";
-import { BASE_URL } from "../config";
+import { AxiosError } from "axios";
+import axios from "./axios";
 
 export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean,
-  archived: boolean
+  archived: boolean,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  console.log("requesting to delete");
-  console.log({ id, pinned });
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.delete<T, E>(
-      `${BASE_URL}notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`
+      `notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -21,12 +28,18 @@ export const deleteNoteHttp = async <T, E>(
 };
 
 export const deleteLabelHttp = async <T, E>(
-  label: string
+  label: string,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
-    const response = await axios.delete<T, E>(
-      `${BASE_URL}notes/labels/:${label}`
-    );
+    const response = await axios.delete<T, E>(`notes/labels/:${label}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -36,10 +49,18 @@ export const deleteLabelHttp = async <T, E>(
 };
 
 export const deleteAccountHttp = async <T, E>(
-  email: string
+  email: string,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
-    const response = await axios.get<T, E>(`${BASE_URL}account?email=${email}`);
+    const response = await axios.get<T, E>(`account?email=${email}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

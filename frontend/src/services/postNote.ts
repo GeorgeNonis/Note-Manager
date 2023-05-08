@@ -1,28 +1,51 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError, AxiosHeaders, AxiosRequestConfig } from "axios";
+import axios from "./axios";
+
 import { NoteObj } from "../interfaces/interfaces";
-import { BASE_URL } from "../config";
 import {
   CopyNoteProps,
   CheckBoxProps,
   CheckBoxesProps,
   ArchiveNoteProps,
   UserDetailsProps,
+  UserAvatarProps,
+  UserPasswordProps,
 } from "./interfaces";
+export interface AxiosResponse<T = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: any;
+  config: AxiosRequestConfig;
+  request?: any;
+}
 
+type Responseheaders = {
+  headers: {
+    authorization: string;
+  };
+};
 export const createUserHttp = async <T, E>(
   email: string,
   pwd: string,
-  image: string
-): Promise<[T | E | null, AxiosError | null]> => {
-  console.log("Creating User");
-  console.log({ email, pwd });
-  console.log(`${BASE_URL}signup`);
+  image: string,
+  token: string
+): Promise<[Responseheaders | AxiosResponse | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(`${BASE_URL}signup`, {
-      email,
-      pwd,
-      image,
-    });
+    const response = await axios.post<Responseheaders>(
+      `signup`,
+      {
+        email,
+        pwd,
+        image,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     // console.log(response);
     return [response, null];
   } catch (error) {
@@ -35,18 +58,13 @@ export const createUserHttp = async <T, E>(
 export const getUserHttp = async <T, E>({
   email,
   pwd,
-}: UserDetailsProps): Promise<[T | E | null, AxiosError | null]> => {
+}: // token,
+UserDetailsProps): Promise<[AxiosResponse | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(
-      `${BASE_URL}login`,
-      { email, pwd },
-      {
-        headers: {
-          user: email,
-        },
-      }
-    );
-    console.log("Login");
+    const response = await axios.post<AxiosResponse>(`login`, {
+      email,
+      pwd,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -55,10 +73,22 @@ export const getUserHttp = async <T, E>({
   }
 };
 export const addNoteHttp = async <T, E>(
-  data: NoteObj
+  data: NoteObj,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(`${BASE_URL}notes`, { ...data });
+    const response = await axios.post<T, E>(
+      `notes`,
+      {
+        ...data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     // console.log(response);
     return [response, null];
   } catch (error) {
@@ -70,11 +100,20 @@ export const addNoteHttp = async <T, E>(
 
 export const pinNoteHandlerHttp = async <T, E>(
   id: string,
-  pinned: boolean
+  pinned: boolean,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/pinnote/:${id}?isnotepined=${pinned}`
+      `notes/pinnote/:${id}?isnotepined=${pinned}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -85,10 +124,24 @@ export const pinNoteHandlerHttp = async <T, E>(
 };
 
 export const removeNoteHttp = async <T, E>(
-  id: string
+  id: string,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
-    const response = await axios.post<T, E>(`${BASE_URL}trashbin`, { id });
+    const response = await axios.post<T, E>(
+      `trashbin`,
+      {
+        id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -98,10 +151,18 @@ export const removeNoteHttp = async <T, E>(
 };
 
 export const restoreNoteHttp = async <T, E>(
-  id: string
+  id: string,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
-    const response = await axios.post<T, E>(`${BASE_URL}trashbin/:${id}`);
+    const response = await axios.post<T, E>(`trashbin/:${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -115,12 +176,22 @@ export const copyNoteHttp = async <T, E>({
   sharedId,
   pinned,
   archived,
+  token,
 }: CopyNoteProps): Promise<[T | E | null, AxiosError | null]> => {
-  // console.log(noteId);
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
-      { sharedId }
+      `notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
+      {
+        sharedId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -135,11 +206,22 @@ export const checkBoxesHandlerHttp = async <T, E>({
   pinned,
   uncheckednote,
   archived,
+  token,
 }: CheckBoxesProps): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/checkboxes/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
-      { uncheckednote }
+      `notes/checkboxes/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
+      {
+        uncheckednote,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -155,13 +237,22 @@ export const checkBoxHandlerHttp = async <T, E>({
   archived,
   boxid,
   checked,
+  token,
 }: CheckBoxProps): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/checkbox/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
+      `notes/checkbox/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         boxid,
         checked,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
       }
     );
     return [response, null];
@@ -176,12 +267,98 @@ export const archiveNoteHandlerHttp = async <T, E>({
   noteId,
   pinned,
   archived,
+  token,
 }: ArchiveNoteProps): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/${
+      `notes/${
         !archived ? "archivenote" : "unarchivenote"
-      }/:${noteId}?isnotepined=${pinned}`
+      }/:${noteId}?isnotepined=${pinned}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+
+export const changeAvatarPictureHttp = async <T, E>({
+  avatar,
+  token,
+}: UserAvatarProps): Promise<
+  [Responseheaders | AxiosResponse | T | E | null, AxiosError | null]
+> => {
+  // const token = sessionStorage.getItem("auth-token");
+  console.log({ token });
+  try {
+    const response = await axios.post<AxiosResponse<T | E>>(
+      `avatar`,
+      {
+        avatar,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+export const checkPasswordValidity = async ({
+  password,
+  token,
+}: UserPasswordProps): Promise<[AxiosResponse | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<AxiosResponse>(
+      `pwd`,
+      {
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    return [response, null];
+  } catch (error) {
+    const err = error as AxiosError;
+
+    return [null, err];
+  }
+};
+export const newPasswordHttp = async (
+  password: string,
+  token: string
+): Promise<[AxiosResponse | null, AxiosError | null]> => {
+  try {
+    const response = await axios.post<AxiosResponse>(
+      `npwd`,
+      {
+        password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {

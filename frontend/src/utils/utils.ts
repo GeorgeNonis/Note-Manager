@@ -6,14 +6,15 @@ import { DragEndProps } from "./interfaces";
 
 export const onDropBin = async (
   e: React.DragEvent,
-  cb: (id: string, pinned: boolean) => void
+  cb: (id: string, pinned: boolean) => void,
+  token: string
 ) => {
   const id = e.dataTransfer.getData("id");
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
 
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
-    const response = await deleteNoteHttp(id, pinned, false);
+    const response = await deleteNoteHttp(id, pinned, false, token);
     if (response[1] === null) {
       cb(id, pinned);
     }
@@ -36,6 +37,7 @@ export const DragEndUtil = async ({
   state,
   cb,
   pinned,
+  token,
 }: DragEndProps) => {
   const notesPrevState = !pinned ? [...state.notes] : [...state.pinnedNotes];
 
@@ -51,7 +53,7 @@ export const DragEndUtil = async ({
 
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
 
-  const response = await sortNotesHttp([...b], pinned);
+  const response = await sortNotesHttp([...b], pinned, token);
   console.log(response);
 
   const [, error] = response;
@@ -80,7 +82,8 @@ export const isThereError = <
 
 export const notePostHandler = async (
   titleValue: string,
-  noteValue: string
+  noteValue: string,
+  token: string
 ) => {
   const processedNote = {
     title: "",
@@ -94,7 +97,7 @@ export const notePostHandler = async (
   processedNote.title = titleValue;
   processedNote.note = noteValue;
   processedNote.id = crypto.randomUUID();
-  const response = await addNoteHttp(processedNote);
+  const response = await addNoteHttp(processedNote, token);
   // console.log(processedNote);
   // console.log(response);
   const boolean = isThereError(response);
@@ -112,4 +115,22 @@ export const IfNetworkDown = (msg: string): string => {
   } else {
     return msg;
   }
+};
+
+export const convertImageToBase64 = (
+  imgUrl: string,
+  callback: (arg: string) => void
+) => {
+  const image = new Image();
+  image.crossOrigin = "anonymous";
+  image.onload = () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d")!;
+    canvas.height = image.naturalHeight;
+    canvas.width = image.naturalWidth;
+    ctx.drawImage(image, 0, 0);
+    const dataUrl = canvas.toDataURL();
+    callback && callback(dataUrl);
+  };
+  image.src = imgUrl;
 };

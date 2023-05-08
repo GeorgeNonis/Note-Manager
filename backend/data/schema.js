@@ -6,6 +6,7 @@ const userSchema = new Schema({
   userId: String,
   password: String,
   date: String,
+  lastTimeDitedNote: String,
   email: String,
   image: String,
   unPinnedNotes: { type: Array, default: [] },

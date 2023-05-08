@@ -5,14 +5,26 @@ import { AvatarOptionsProps } from "./interfaces";
 import { HiXMark } from "react-icons/hi2";
 import styles from "./styles.module.scss";
 
-const AvatarOptions = ({ closeModal, avatarHandler }: AvatarOptionsProps) => {
+const AvatarOptions = ({
+  closeModal,
+  avatarHandler,
+  transitionState,
+}: AvatarOptionsProps) => {
+  const cssClasses = [
+    styles.modalContent,
+    transitionState === "entering"
+      ? styles.openModal
+      : transitionState === "exiting"
+      ? styles.closeModal
+      : null,
+  ];
   return (
     <>
       <div
         className={styles.backdrop}
         onClick={() => closeModal((prev) => !prev)}
       ></div>
-      <div className={styles.modalContent}>
+      <div className={cssClasses.join(" ")}>
         <HiXMark
           className={styles.xMark}
           onClick={() => closeModal((prev) => !prev)}

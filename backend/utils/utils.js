@@ -119,14 +119,14 @@ export const createUser = (email, hashedPwd, image) => {
   const curr = new Date();
   curr.setDate(curr.getDate());
   const date = curr.toISOString().substring(0, 10);
-
-  console.log(date);
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
 
   const user = {
     userId: crypto.randomUUID(),
     email,
     password: hashedPwd,
     date,
+    lastTimeDitedNote,
     image,
     notes: [],
     deletedNotes: [],

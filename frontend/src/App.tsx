@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "./errors";
-import RootLayout from "./pages/rootLayout";
+// import RootLayout from "./pages/rootLayout";
 import { lazy, Suspense } from "react";
 import ArchiveNotesSection from "./components/sections/archive-notes-section";
+import { LoadingSpinner } from "./components";
 
+const RootLayout = lazy(() => import("./pages/rootLayout"));
 const ExistinNotesSection = lazy(
   () => import("./components/sections/existing-notes-section")
 );
@@ -27,7 +29,11 @@ const router = createBrowserRouter([
   },
   {
     path: "notes",
-    element: <RootLayout />,
+    element: (
+      <Suspense fallback={<LoadingSpinner />}>
+        <RootLayout />
+      </Suspense>
+    ),
     errorElement: <Error />,
     children: [
       {

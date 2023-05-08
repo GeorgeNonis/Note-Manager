@@ -29,7 +29,7 @@ const NotesSection = ({
               onDragEnd={onDragEnd}
               onDragEnter={onDragEnter}
               onDragStart={onDragStart}
-              key={n.id}
+              key={i}
             />
           );
         })}

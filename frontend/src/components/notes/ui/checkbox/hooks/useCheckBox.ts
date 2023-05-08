@@ -13,6 +13,7 @@ export const useCheckBox = ({
   boxid,
   archived,
 }: UseCheckBox) => {
+  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const checkHandler = async () => {
@@ -23,6 +24,7 @@ export const useCheckBox = ({
       checked,
       pinned,
       archived,
+      token,
     });
     const sucessfullRequest = isThereError(response);
     if (sucessfullRequest) {

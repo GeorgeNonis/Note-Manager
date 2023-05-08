@@ -9,33 +9,38 @@ interface AccountPasswordProps {
 }
 
 const AccountPassword = ({ initialState }: AccountPasswordProps) => {
-  const { handlers, values } = useAccountPassword();
-  console.log(values.validInputs);
+  const { handlers, values } = useAccountPassword({ initialState });
+  // console.log(values.validInputs);
   return (
     <div className={styles.mainContent}>
-      <form onSubmit={handlers.onSumbitHandler}>
+      <form onSubmit={handlers.onSumbithandler}>
         <fieldset>
           <legend>
             Current Passowrd
-            <span
-              className={
-                values.validCurrentPassword ? styles.show : styles.hide
-              }
-            >
-              <TbCircleCheck className={styles.correct} />
-            </span>
-            <span
-              className={
-                !values.validCurrentPassword && values.currentPassword
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleX className={styles.xmark} />
-            </span>
+            {values.validCurrentPassword && values.currentPassword && (
+              <span
+                className={
+                  values.validCurrentPassword ? styles.show : styles.hide
+                }
+              >
+                <TbCircleCheck className={styles.correct} />
+              </span>
+            )}
+            {!values.validCurrentPassword && values.currentPassword && (
+              <span
+                className={
+                  !values.validCurrentPassword && values.currentPassword
+                    ? styles.show
+                    : styles.hide
+                }
+              >
+                <TbCircleX className={styles.xmark} />
+              </span>
+            )}
           </legend>
           <input
             type="text"
+            value={values.currentPassword}
             onChange={(e) => handlers.setCurrentPassword(e.target.value)}
             onFocus={() => handlers.setFocusCurrentPassword(true)}
             onBlur={() => handlers.setFocusCurrentPassword(false)}
@@ -44,44 +49,52 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
             aria-describedby="currentPassword"
           />
           <p
+            style={{
+              opacity: `${
+                values.focusCurrentPassword &&
+                !values.validCurrentPassword &&
+                values.currentPassword
+                  ? 1
+                  : 0
+              }`,
+            }}
             ref={values.errRef}
             id="currentPassword"
-            className={
-              values.focusCurrentPassword &&
-              !values.validCurrentPassword &&
-              values.currentPassword
-                ? styles.show
-                : styles.hide
-            }
+            className={styles.show}
           >
             <AiOutlineInfoCircle />
-            <h3>You have to enter your Current Password!</h3>
+            <span>You have to enter your Current Password!</span>
           </p>
         </fieldset>
         <fieldset>
           <legend>
             New Passowrd
-            <span
-              className={
-                values.validNewPassword && values.newPassword
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleCheck className={styles.correct} />
-            </span>
-            <span
-              className={
-                !values.validNewPassword && values.newPassword
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleX className={styles.xmark} />
-            </span>
+            {values.validNewPassword && values.newPassword && (
+              <span
+                className={
+                  values.validNewPassword && values.newPassword
+                    ? styles.show
+                    : styles.hide
+                }
+              >
+                <TbCircleCheck className={styles.correct} />
+              </span>
+            )}
+            {!values.validNewPassword && values.newPassword && (
+              <span
+                className={
+                  !values.validNewPassword && values.newPassword
+                    ? styles.show
+                    : styles.hide
+                }
+              >
+                <TbCircleX className={styles.xmark} />
+              </span>
+            )}
           </legend>
           <input
             type="text"
+            value={values.newPassword}
             onChange={(e) => handlers.setNewPassword(e.target.value)}
             onFocus={() => handlers.setFocusNewPassword(true)}
             onBlur={() => handlers.setFocusNewPassword(false)}
@@ -90,48 +103,49 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
             aria-describedby="pwdnote"
           />
           <p
+            style={{
+              opacity: `${
+                values.focusNewPassword &&
+                !values.validNewPassword &&
+                values.newPassword
+                  ? 1
+                  : 0
+              }`,
+            }}
             ref={values.errRef}
             id="pwdnote"
-            className={
-              values.focusNewPassword &&
-              !values.validNewPassword &&
-              values.newPassword
-                ? styles.show
-                : styles.hide
-            }
+            className={styles.show}
           >
             <AiOutlineInfoCircle />
-            <h3>
+            <span>
               Minimum eight characters, at least one uppercase letter, one
               lowercase letter, one number and one special character
-            </h3>
+            </span>
           </p>
         </fieldset>
         <fieldset>
           <legend>
             Confirm Passowrd
-            <span
-              className={
-                values.validMatch && values.validNewPassword
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleCheck className={styles.correct} />
-            </span>
-            <span
-              className={
-                (!values.validMatch && !values.validNewPassword) ||
-                values.newPassword
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleX className={styles.xmark} />
-            </span>
+            {values.validMatch && values.validNewPassword && (
+              <span
+                className={
+                  values.validMatch && values.validNewPassword
+                    ? styles.show
+                    : styles.hide
+                }
+              >
+                <TbCircleCheck className={styles.correct} />
+              </span>
+            )}
+            {!values.validMatch && (
+              <span className={styles.show}>
+                <TbCircleX className={styles.xmark} />
+              </span>
+            )}
           </legend>
           <input
             type="text"
+            value={values.confirmNewPassword}
             onChange={(e) => handlers.setConfirmNewPassword(e.target.value)}
             onFocus={() => handlers.setFocusConfirmPassword(true)}
             onBlur={() => handlers.setFocusConfirmPassword(false)}
@@ -142,21 +156,27 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
             aria-describedby="confirmpwd"
           />
           <p
+            style={{
+              opacity: `${
+                !values.validMatch && values.focusConfirmPassword ? 1 : 0
+              }`,
+            }}
             ref={values.errRef}
             id="confirmpwd"
-            className={
-              values.focusConfirmPassword &&
-              !values.validNewPassword &&
-              values.newPassword
-                ? styles.show
-                : styles.hide
-            }
+            className={styles.show}
           >
             <AiOutlineInfoCircle />
-            <h3> Must match your New Password</h3>
+            <span> Must match your New Password</span>
           </p>
         </fieldset>
-        <button className={styles.updateButton} disabled={!values.validInputs}>
+        <button
+          className={styles.updateButton}
+          disabled={!values.validInputs}
+          type="button"
+          style={{
+            cursor: `${!values.validInputs ? "not-allowed" : "pointer"}`,
+          }}
+        >
           Update Password
         </button>
       </form>

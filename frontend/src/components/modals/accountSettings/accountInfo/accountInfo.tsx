@@ -7,15 +7,8 @@ interface AccountInfoProps {
 }
 
 const AccountInfo = ({ initialState }: AccountInfoProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const { email, date } = initialState;
-  /*
-   * Email
-   * Password
-   * Date of your account creation
-   * Last time you edited a Note
-   */
-
+  const { email, date, lastTimeDitedNote } = initialState;
+  // console.log({ lastTimeDitedNote });
   return (
     <div className={styles.accountDetails}>
       <div className={styles.mainContent}>
@@ -25,28 +18,13 @@ const AccountInfo = ({ initialState }: AccountInfoProps) => {
         </fieldset>
         <fieldset>
           <legend>Date of registration</legend>
-          <input type="date" value={date} defaultValue={date} readOnly />
+          <input type="date" value={date} readOnly />
         </fieldset>
         <fieldset>
           <legend>Last time you edited a Note</legend>
-          <input
-            type="date"
-            name="begin"
-            placeholder="dd-mm-yyyy"
-            min="1997-01-01"
-            max="2030-12-31"
-            //   value={"Georgenonis@gmail.com"}
-            readOnly
-          />
+          <input type="date" value={lastTimeDitedNote} readOnly />
         </fieldset>
       </div>
-      {/* <div>
-        <img
-          className={styles.profimg}
-          src="https://cdn.discordapp.com/attachments/1056419450473152533/1090660819492147310/Neilyo77_background_image_where_theres_a_person_looking_for_hes_8875f0c2-ec7f-4826-8465-9c71c09fc32e.png"
-          alt="user_picture"
-        />
-      </div> */}
     </div>
   );
 };

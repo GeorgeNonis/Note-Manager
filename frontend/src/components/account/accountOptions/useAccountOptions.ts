@@ -1,7 +1,12 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useOutsideHover } from "../../../hooks";
 import { useDispatch } from "react-redux";
-import { openAccountSettings } from "../../../store/display-state-slice";
+import {
+  formSwitch,
+  openAccountSettings,
+} from "../../../store/display-state-slice";
+import { useNavigate } from "react-router-dom";
+import { useLogoutHandler } from "../../../hooks/useLogoutHandler";
 
 interface useAccountOptionsProps {
   openAccountModal: Dispatch<SetStateAction<boolean>>;
@@ -10,16 +15,15 @@ interface useAccountOptionsProps {
 export const useAccountOptions = ({
   openAccountModal,
 }: useAccountOptionsProps) => {
+  const { logoutHandler } = useLogoutHandler();
   const [showModal, setShowModal] = useState(false);
   const [changePicutre, setChangePicture] = useState(false);
   const hoverOutsideImage = useOutsideHover(() => setChangePicture(false));
   const dispatch = useDispatch();
 
   const accountSettingsHandler = () => {
-    console.log("clicking");
     dispatch(openAccountSettings());
     openAccountModal(false);
-    console.log(showModal);
   };
 
   const state = {
@@ -27,6 +31,7 @@ export const useAccountOptions = ({
       setChangePicture,
       setShowModal,
       accountSettingsHandler,
+      logoutHandler,
     },
     values: {
       changePicutre,

@@ -11,56 +11,63 @@ const initialState = {
   isThereError: false,
   accountSettings: false,
   emailAlreadyInUse: false,
-  user: "",
+  showLoginForm: false,
 } as DisplayStateInitialState;
 
 const displayState = createSlice({
   name: "displayManagment",
   initialState,
   reducers: {
-    setUser(state, { payload }) {
-      console.log({ payload });
-      console.log("ss");
-      const email = payload;
-      state.user = email;
+    refreshState(state) {
+      console.log("refreshing state");
+      state.review = false;
+      state.loadingInitialState = true;
+      state.error = "";
+      state.httpReqResLoading = false;
+      state.displaySideBar = true;
+      state.isThereError = false;
+      state.accountSettings = false;
+      state.emailAlreadyInUse = false;
+      state.showLoginForm = false;
     },
     loadingInitialState(state, { payload }) {
       state.loadingInitialState = payload;
     },
     errorState(state, { payload: error }) {
-      // console.log(error);
       state.error = error;
     },
     httpReqResLoading(state) {
       state.httpReqResLoading = !state.httpReqResLoading;
-      // console.log("Changing");
     },
     displaySideBar(state) {
       state.displaySideBar = !state.displaySideBar;
-      // console.log("MAMA GUEVO");
     },
     openAccountSettings(state) {
-      console.log("clicking");
+      // console.log("clicking");
       state.accountSettings = !state.accountSettings;
     },
     emailAlreadyInUseHandler(state, { payload }) {
       const response = payload;
-      console.log(response);
+
       const isTheEmailAlreadyInUse =
         response.message === ErrorMessages.alreadyInUse;
       state.emailAlreadyInUse = isTheEmailAlreadyInUse;
+    },
+    formSwitch(state) {
+      state.showLoginForm = !state.showLoginForm;
     },
   },
 });
 
 export const {
-  setUser,
+  refreshState,
   loadingInitialState,
   errorState,
   httpReqResLoading,
   displaySideBar,
   openAccountSettings,
   emailAlreadyInUseHandler,
+  formSwitch,
 } = displayState.actions;
 
 export default displayState.reducer;

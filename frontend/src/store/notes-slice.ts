@@ -4,8 +4,9 @@ import { InitialState } from "./interfaces";
 
 const initialState = {
   email: "",
-  password: "",
+  // password: "",
   date: "",
+  lastTimeDitedNote: "",
   image: "",
   notes: [],
   deletedNotes: [],
@@ -18,17 +19,35 @@ const notes = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    initial(state, { payload: { _doc } }) {
-      console.log({ _doc });
-      state.email = _doc.email;
-      state.password = _doc.password;
-      state.date = _doc.date;
-      state.image = _doc.image;
-      state.notes = [..._doc.unPinnedNotes];
-      state.pinnedNotes = [..._doc.pinnedNotes];
-      state.archivedNotes = [..._doc.archivedNotes];
-      state.deletedNotes = [..._doc.deletedNotes];
-      state.labels = [..._doc.labels];
+    initial(state, { payload }) {
+      const _doc = payload;
+      const { ...rest } = _doc;
+      const img = new Image();
+      img.src = rest._doc.image;
+
+      state.email = rest._doc.email;
+      // state.password = rest._doc.password;
+      state.date = rest._doc.date;
+      state.lastTimeDitedNote = rest._doc.lastTimeDitedNote;
+      state.image = img.src;
+      state.notes = [...rest._doc.unPinnedNotes];
+      state.pinnedNotes = [...rest._doc.pinnedNotes];
+      state.archivedNotes = [...rest._doc.archivedNotes];
+      state.deletedNotes = [...rest._doc.deletedNotes];
+      state.labels = [...rest._doc.labels];
+    },
+    logout(state) {
+      console.log("logging out and reseting from notes-slices");
+      state.email = "";
+      // state.password = "";
+      state.date = "";
+      state.lastTimeDitedNote = "";
+      state.image = "";
+      state.notes = [];
+      state.pinnedNotes = [];
+      state.archivedNotes = [];
+      state.deletedNotes = [];
+      state.labels = [];
     },
     addNote(state, { payload }) {
       state.notes = [...state.notes, { ...payload }];
@@ -151,9 +170,19 @@ const notes = createSlice({
     addLabel(state, { payload }) {
       const { id, label, labelId } = payload;
       if (payload.id) {
-        state.labels.push({ label, labelId, notes: [{ id, checked: true }] });
+        state.labels.push({
+          label,
+          labelId,
+          notes: [{ id, checked: true }],
+          token: "",
+        });
       } else {
-        state.labels.push({ label, labelId, notes: [] });
+        state.labels.push({
+          label,
+          labelId,
+          notes: [],
+          token: "",
+        });
       }
     },
     tickHandler(state, { payload }) {
@@ -226,17 +255,29 @@ const notes = createSlice({
         note.checked?.push(checkbox);
       }
     },
+    lastTimeDitedNoteHandler(state) {
+      const curr = new Date();
+      curr.setDate(curr.getDate());
+      const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
+      state.lastTimeDitedNote = lastTimeDitedNote;
+    },
+    changeAvatarProfile(state, { payload }) {
+      const image = payload;
+      state.image = image;
+    },
   },
 });
 
 export const {
+  initial,
+  logout,
   addNote,
   editNote,
   archiveNote,
   unarchiveNote,
   deleteNote,
   sortNotes,
-  initial,
   restoreNote,
   removeNote,
   pinHandler,
@@ -249,6 +290,8 @@ export const {
   checkBoxes,
   checkBox,
   sortUnpinnedNotes,
+  lastTimeDitedNoteHandler,
+  changeAvatarProfile,
 } = notes.actions;
 
 export default notes.reducer;

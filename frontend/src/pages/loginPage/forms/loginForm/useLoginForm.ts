@@ -3,14 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { PWD_REGEX, USER_REGEX } from "../../../../config";
 import { getUserHttp } from "../../../../services";
 import { isThereError } from "../../../../utils";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../../../store/display-state-slice";
-import { initial } from "../../../../store/notes-slice";
+import styles from "./styles.module.scss";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
 
@@ -26,9 +22,8 @@ export const useLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [validInputs, setValidInputs] = useState(false);
-  const [validMatch, setValidMatch] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [validCredentials, setValidCredentials] = useState(false);
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -36,27 +31,42 @@ export const useLoginForm = () => {
   };
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const token = sessionStorage.getItem("auth-token")!;
+    setValidCredentials(false);
     e.preventDefault();
     const v1 = USER_REGEX.test(email);
     const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
       errRef.current?.focus();
-      setErrorMsg("Invalid Entry");
+
       return;
     }
+    const response = await getUserHttp({ email, pwd: password, token });
 
-    const response = await getUserHttp({ email, pwd: password });
-    console.log({ response });
     const successRequest = isThereError(response);
+    if (!response[0]?.data.match) return setValidCredentials(response[0]?.data);
+    console.log(response[0]?.data.match);
+    console.log(typeof response[0]?.data.match);
     if (successRequest) {
-      dispatch(setUser(email));
-      console.log("Sucess");
-      console.log(response[0]);
-      navigate("/notes");
+      const token = response[0]?.headers.authorization;
+      sessionStorage.setItem("auth-token", token!);
+      return navigate("/notes");
     } else {
-      console.log(response[1]?.message);
+      console.log(response[1]);
     }
   };
+
+  const warningCredentialsStlye = [
+    styles.invalidCredentials,
+    !validCredentials ? styles.hideInvalidCredentials : null,
+  ];
+
+  useEffect(() => {
+    if (!validCredentials) return;
+    setTimeout(() => {
+      setValidCredentials(false);
+    }, 5000);
+  }, [validCredentials]);
 
   useEffect(() => {
     emailRef.current?.focus();
@@ -80,7 +90,8 @@ export const useLoginForm = () => {
       loginForm,
       validInputs,
       errRef,
-      validMatch,
+      validCredentials,
+      warningCredentialsStlye,
       emailValues: {
         email,
         emailFocus,

@@ -13,12 +13,14 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const dispatch = useDispatch();
   const noteId = note.id;
 
+  const token = sessionStorage.getItem("auth-token")!;
   const saveChanges = async () => {
     const response = await editNoteHttp({
       noteId,
       pinned,
       titleValue: noteTitle,
       noteValue,
+      token,
     });
 
     const sucessfullRequest = isThereError(response);
@@ -34,7 +36,7 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
   const pinNoteHandler = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    const response = await pinNoteHandlerHttp(note.id, pinned);
+    const response = await pinNoteHandlerHttp(note.id, pinned, token);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest

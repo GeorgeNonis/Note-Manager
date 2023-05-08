@@ -5,6 +5,7 @@ import { DEFAULT_AVTR } from "../../../../config";
 import { AvatarOptions } from "../../../index";
 import styles from "./styles.module.scss";
 import { InitialState } from "../../../../store/interfaces";
+import { Transition } from "react-transition-group";
 
 interface AccountAvatarProps {
   initialState: InitialState;
@@ -12,17 +13,34 @@ interface AccountAvatarProps {
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
-  const {} = initialState;
+  const { image } = initialState;
   return (
     <>
-      {values.changeAvatar &&
+      <Transition
+        in={values.changeAvatar}
+        timeout={500}
+        mountOnEnter
+        unmountOnExit
+      >
+        {(transState) =>
+          ReactDOM.createPortal(
+            <AvatarOptions
+              transitionState={transState}
+              closeModal={handlers.setChangeAvatar}
+              avatarHandler={handlers.selectAvatarHandler}
+            />,
+            document.getElementById("avataroptions")!
+          )
+        }
+      </Transition>
+      {/* {values.changeAvatar &&
         ReactDOM.createPortal(
           <AvatarOptions
             closeModal={handlers.setChangeAvatar}
             avatarHandler={handlers.selectAvatarHandler}
           />,
           document.getElementById("avataroptions")!
-        )}
+        )} */}
       <div className={styles.mainContent}>
         <div className={styles.avatars}>
           <img
@@ -37,7 +55,7 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
                 ? `${styles.avatar} ${styles.test}`
                 : styles.avatar
             }
-            src={values.userAvatar}
+            src={image}
             alt="user_picture"
           />
           {values.hoverOnAvatar && (
@@ -63,7 +81,7 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
                 ? `${styles.selectedAvatar} ${styles.test1}`
                 : styles.selectedAvatar
             }
-            src={values.selectedAvatar}
+            src={values.selectedAvatar as string}
             alt={DEFAULT_AVTR}
           />
           {!values.default_avatar &&

@@ -12,6 +12,7 @@ const Account = () => {
   return (
     <div className={styles.mainContent} ref={values.OnclickOutside}>
       <img
+        loading="lazy"
         className={styles.userImage}
         onClick={() => {
           handlers.setAccountSettings(!values.accountSettings);

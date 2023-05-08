@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { PWD_REGEX } from "../../../../config";
+import {
+  checkPasswordValidity,
+  newPasswordHttp,
+} from "../../../../services/postNote";
+import { InitialState } from "../../../../store/interfaces";
+import { isThereError } from "../../../../utils";
 
-export const useAccountPassword = () => {
-  const existingPassword = "123";
+interface UseAccountPasswordProps {
+  initialState: InitialState;
+}
+
+export const useAccountPassword = ({
+  initialState,
+}: UseAccountPasswordProps) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [focusCurrentPassword, setFocusCurrentPassword] = useState(false);
   const [validCurrentPassword, setValidCurrentPassword] = useState(false);
@@ -15,39 +26,67 @@ export const useAccountPassword = () => {
   const [validInputs, setValidInputs] = useState(false);
 
   const errRef = useRef<HTMLParagraphElement>(null);
+  const token = sessionStorage.getItem("auth-token") as string;
+  // console.log({ validMatch });
+  const checkPassword = async () => {
+    const res = await checkPasswordValidity({
+      password: currentPassword,
+      token,
+    });
+    // console.log("checking if pwd is valid");
+    // console.log(res[0]?.data);
+    setValidCurrentPassword(res[0]?.data.match);
+  };
+
+  const onSumbithandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const v1 = PWD_REGEX.test(newPassword);
+    if (!v1 || !validCurrentPassword) {
+      return;
+    }
+    const response = await newPasswordHttp(newPassword, token);
+    const successRequest = isThereError(response);
+    if (successRequest) {
+      console.log("sucess");
+    }
+    setCurrentPassword("");
+    setConfirmNewPassword("");
+    setNewPassword("");
+    setValidInputs(false);
+  };
 
   useEffect(() => {
-    const correctCurrentPassword = existingPassword === currentPassword;
-    setValidCurrentPassword(correctCurrentPassword);
+    if (currentPassword.length === 0) return;
+    const timer = setTimeout(() => {
+      checkPassword();
+    }, 250);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [currentPassword]);
+
+  useEffect(() => {
     const validNewPassword = PWD_REGEX.test(newPassword);
 
     setValidNewPassword(validNewPassword);
 
     const match = newPassword === confirmNewPassword;
 
-    console.log({ match });
-    console.log({ newPassword, confirmNewPassword });
     setValidMAtch(match);
 
     const result = validNewPassword && match;
 
-    console.log({ currentPassword });
-    // console.log({ currentPassword && valid });
-
-    setValidInputs(result && correctCurrentPassword);
+    setValidInputs(result && validCurrentPassword);
   }, [newPassword, confirmNewPassword, currentPassword]);
-
-  const onSumbitHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
 
   const values = {
     validInputs,
     validMatch,
     validNewPassword,
     validCurrentPassword,
-    newPassword,
     currentPassword,
+    newPassword,
+    confirmNewPassword,
     focusNewPassword,
     errRef,
     focusConfirmPassword,
@@ -58,10 +97,10 @@ export const useAccountPassword = () => {
     setCurrentPassword,
     setNewPassword,
     setConfirmNewPassword,
-    onSumbitHandler,
     setFocusNewPassword,
     setFocusConfirmPassword,
     setFocusCurrentPassword,
+    onSumbithandler,
   };
   return { values, handlers };
 };

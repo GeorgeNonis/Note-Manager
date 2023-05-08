@@ -26,8 +26,6 @@ const BackgroundImage = ({
       : null,
   ];
 
-  console.log(transitionState);
-
   return (
     <>
       <div

@@ -13,7 +13,9 @@ export const useBackgroundimage = ({
   pinned,
   archived,
 }: useBackgroundimageProps) => {
+  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
+
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   useEffect(() => {
     const preload_images = mobileVersion.map((src) => {
@@ -25,7 +27,13 @@ export const useBackgroundimage = ({
   }, []);
 
   const displayHandler = async (value: string) => {
-    const response = await updateNoteColorHttp(value, id, pinned, archived);
+    const response = await updateNoteColorHttp(
+      value,
+      id,
+      pinned,
+      archived,
+      token
+    );
     console.log(`${value} clicking`);
     const sucessfullRequest = isThereError(response);
     sucessfullRequest

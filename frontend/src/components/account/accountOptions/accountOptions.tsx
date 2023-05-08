@@ -26,9 +26,12 @@ const AccountOptions = ({ openAccountModal, image }: AccountOptionsProps) => {
         >
           Manage your Account
         </button>
-        <Link to={"/"} className={styles.signoutbutton}>
+        <button
+          className={styles.signoutbutton}
+          onClick={handlers.logoutHandler}
+        >
           Sign Out
-        </Link>
+        </button>
       </div>
     </>
   );

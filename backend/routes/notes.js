@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createUser, getIdPinnedStatus } from "../utils/utils.js";
 import UserBluePrint from "../data/schema.js";
+import { veirfyJWT } from "./middleAuth.js";
 const router = express.Router();
 
 /**
@@ -10,16 +11,166 @@ const router = express.Router();
  */
 
 router.get(`/v1/testing`, async (req, res, next) => {
-  res.cookie(`name`, "giorgos");
+  console.log("Testing");
+  res.setHeader(
+    "Set-Cookie",
+    `email=georgenonis@gmail.com ;SameSite=None; Secure`
+  );
+
+  return res.status(200);
 });
 
+/**
+ *  Signup User or Login User
+ */
+
+// router.post(`/v1/login`, async (req, res, next) => {
+//   const { email, pwd } = req.body;
+//   console.log("Logging process");
+//   console.log({ email, pwd });
+
+//   if (!email || !pwd)
+//     return (
+//       res.status(400), json({ message: "Email and Password are required!" })
+//     );
+
+//   const user = await UserBluePrint.findOne({ email }).exec();
+
+//   if (!user.password) return res.sendStatus(401);
+
+//   try {
+//     const response = bcrypt.compare(pwd, user.password);
+//     const accessToken = jwt.sign(
+//       {
+//         user: user.email,
+//       },
+//       process.env.ACCCESS_TOKEN_SECRET,
+//       {
+//         expiresIn: "1h",
+//       }
+//     );
+
+//     const isTokenValid = jwt.verify(
+//       accessToken,
+//       process.env.ACCCESS_TOKEN_SECRET
+//     );
+//     console.log({ isTokenValid });
+
+//     // const NotValidTokenOnPurpose = jwt.verify(
+//     //   "12312323213",
+//     //   process.env.ACCCESS_TOKEN_SECRET
+//     // );
+//     // console.log({ NotValidTokenOnPurpose });
+//     // const refreshToken = jwt.sign(
+//     //   {
+//     //     user: user.email,
+//     //   },
+//     //   process.env.ACCCESS_TOKEN_SECRET,
+//     //   {
+//     //     expiresIn: "1d",
+//     //   }
+//     // );
+//     res.setHeader("Authorization", accessToken);
+//     res.status(200).json({ message: "Correct credentials" });
+//     return [response, null];
+//     accessToken;
+//   } catch (error) {
+//     res.status(500).json({ message: "Internal error", error });
+//     return [null, error];
+//   }
+// });
+
+// router.get(`/v1/userexist`, async (req, res, next) => {
+//   const email = req.query.email;
+//   // console.log({ email });
+
+//   const allUsers = await UserBluePrint.find({});
+
+//   const oneUser = await UserBluePrint.findOne({ email });
+//   console.log({ oneUser });
+//   console.log(oneUser === null);
+//   console.log(typeof oneUser);
+//   // console.log({ allUsers });
+//   const duplicate = allUsers.some((user) => {
+//     // console.log(user.email);
+//     return user.email.toLowerCase() === email.toLowerCase();
+//   });
+
+//   console.log({ duplicate, email });
+
+//   try {
+//     if (duplicate) {
+//       console.log("Account with this email exists already");
+
+//       return res
+//         .status(201)
+//         .json({ message: `Account with this email exist's already` });
+//     } else {
+//       console.log("No account associated with this email");
+//       return res
+//         .status(200)
+//         .json({ message: `No account associated with this email` });
+//     }
+//   } catch (error) {
+//     return res.status(500).json({ message: "something went wrong", error });
+//   }
+// });
+
+// router.post("/v1/signup", async (req, res, next) => {
+//   console.log("SIGNUP PROCESS");
+//   const { email, pwd, image } = req.body;
+
+//   if (!email || !pwd) {
+//     return res.status(400).json({ message: "Email and Password are required" });
+//   }
+
+//   const allUsers = await UserBluePrint.find({});
+//   const duplicate = allUsers.some((user) => {
+//     return user.email.toLowerCase() === email.toLowerCase();
+//   });
+//   /**
+//    * Check for duplicates in Database
+//    */
+//   if (duplicate) {
+//     console.log("Duplicates");
+//     return res.sendStatus(409);
+//   }
+//   console.log({ duplicate, email, pwd, image });
+//   // return;
+//   try {
+//     const hashedPwd = await bcrypt.hash(pwd, 10);
+
+//     const user = createUser(email, hashedPwd, image);
+//     const newUser = new UserBluePrint({ ...user });
+
+//     const response = await newUser
+//       .save()
+//       .then((res) => console.log(res))
+//       .catch((error) => console.log(error));
+
+//     res.status(200).json(response);
+//     return [response, null];
+//   } catch (error) {
+//     res.status(500).json({ message: "Internal error", error });
+//     return [null, error];
+//   }
+// });
+
+/**
+ * AUTH VERIFICATION
+ */
+
+/**
+ * AUTH VERIFICATION
+ */
+
 router.get("/v1/notes", async (req, res, next) => {
-  const { email } = req.query;
-  /**
-   * Improve this and use Promise.allSettled
-   */
+  const email = req.user;
+  console.log({ email });
+
   try {
-    const [user] = await UserBluePrint.find({ email });
+    const user = await UserBluePrint.findOne({ email }).exec();
+    console.log({ user });
     res.status(200).json({
       ...user,
     });
@@ -33,7 +184,9 @@ router.get("/v1/notes", async (req, res, next) => {
 // Promise.allSettled
 
 router.get("/v1/trashbin", async (req, res, next) => {
-  UserBluePrint.findById("642d61213adbae2d3c5fd3ab")
+  const email = req.user;
+
+  UserBluePrint.findOne({ email })
     .exec()
     .then((user) => {
       res.status(200).json(user.deletedNotes);
@@ -44,10 +197,10 @@ router.get("/v1/trashbin", async (req, res, next) => {
 });
 
 router.get("/v1/notes/labels", async (req, res, next) => {
+  const email = req.user;
+
   try {
-    const response = await UserBluePrint.findById(
-      "642d61213adbae2d3c5fd3ab"
-    ).exec();
+    const response = await UserBluePrint.findOne({ email }).exec();
 
     res.status(200).json(response.labels);
     return [response, null];
@@ -61,144 +214,25 @@ router.get("/v1/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post(`/v1/login`, async (req, res, next) => {
-  const { email, pwd } = req.body;
-  console.log("Logging process");
-  console.log({ email, pwd });
-
-  if (!email || !pwd)
-    return (
-      res.status(400), json({ message: "Email and Password are required!" })
-    );
-
-  const user = await UserBluePrint.findOne({ email }).exec();
-
-  if (!user.password) return res.sendStatus(401);
-
-  try {
-    const response = bcrypt.compare(pwd, user.password);
-    const accessToken = jwt.sign(
-      {
-        user: user.email,
-      },
-      process.env.ACCCESS_TOKEN_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    const refreshToken = jwt.sign(
-      {
-        user: user.email,
-      },
-      process.env.ACCCESS_TOKEN_SECRET,
-      {
-        expiresIn: "1d",
-      }
-    );
-    res.setHeader("Set-Cookie", `email=${user.email};`);
-    res
-      .status(200)
-      .json({ message: "Correct credentials", token: accessToken, user });
-    return [response, null];
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-    return [null, error];
-  }
-});
-
-router.get(`/v1/userexist`, async (req, res, next) => {
-  const email = req.query.email;
-  // console.log({ email });
-
-  const allUsers = await UserBluePrint.find({});
-
-  const oneUser = await UserBluePrint.findOne({ email });
-  console.log({ oneUser });
-  console.log(oneUser === null);
-  console.log(typeof oneUser);
-  // console.log({ allUsers });
-  const duplicate = allUsers.some((user) => {
-    // console.log(user.email);
-    return user.email.toLowerCase() === email.toLowerCase();
-  });
-
-  console.log({ duplicate, email });
-
-  try {
-    if (duplicate) {
-      console.log("Account with this email exists already");
-
-      return res
-        .status(201)
-        .json({ message: `Account with this email exist's already` });
-    } else {
-      console.log("No account associated with this email");
-      return res
-        .status(200)
-        .json({ message: `No account associated with this email` });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: "something went wrong", error });
-  }
-});
-
-router.post("/v1/signup", async (req, res, next) => {
-  console.log("SIGNUP PROCESS");
-  const { email, pwd, image } = req.body;
-
-  // const urlToBase64 = convertImageToBase64(image, (img) => img);
-
-  // console.log({ urlToBase64 });
-
-  if (!email || !pwd) {
-    return res.status(400).json({ message: "Email and Password are required" });
-  }
-
-  const allUsers = await UserBluePrint.find({});
-  const duplicate = allUsers.some((user) => {
-    // console.log(user.email);
-    return user.email.toLowerCase() === email.toLowerCase();
-  });
-  // console.log(Array.isArray(duplicate));
-  /**
-   * Check for duplicates in Database
-   */
-  if (duplicate) {
-    console.log("Duplicates");
-    return res.sendStatus(409);
-  }
-  console.log({ duplicate, email, pwd, image });
-  // return;
-  try {
-    const hashedPwd = await bcrypt.hash(pwd, 10);
-
-    const user = createUser(email, hashedPwd, image);
-    const newUser = new UserBluePrint({ ...user });
-
-    const response = await newUser
-      .save()
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
-
-    res.status(200).json(response);
-    return [response, null];
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-    return [null, error];
-  }
-});
-
 router.post("/v1/notes", async (req, res, next) => {
   const data = req.body;
-  console.log("requesting to post note");
+  const email = req.user;
+
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
   try {
-    const userdata = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { unPinnedNotes } = userdata;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { unPinnedNotes } = user;
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
-      { unPinnedNotes: [...unPinnedNotes, { ...data }] }
-    );
-    res.setHeader("Set-Cookie", `email=${user.email}`);
+      { email: email },
+      {
+        unPinnedNotes: [...unPinnedNotes, { ...data }],
+        lastTimeDitedNote: lastTimeDitedNote,
+      }
+    ).exec();
 
     res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
@@ -210,14 +244,19 @@ router.post("/v1/notes", async (req, res, next) => {
 });
 
 router.post("/v1/notes/editnote/:id", async (req, res, next) => {
-  console.log(req.query);
+  const email = req.user;
+
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
   const { noteValue, titleValue } = req.body;
   const archived = req.query.isarchived === "true";
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
-  const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-  const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
-  console.log({ data });
-  console.log({ archivedNotes });
+  const user = await UserBluePrint.findOne({ email }).exec();
+
+  const { pinnedNotes, unPinnedNotes, archivedNotes } = user;
+
   const notes = archived ? archivedNotes : pinned ? pinnedNotes : unPinnedNotes;
   const noteIndex = notes.findIndex((n) => n.id === id);
   const note = notes[noteIndex];
@@ -226,12 +265,12 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 
   try {
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       archived
-        ? { archivedNotes: [...notes] }
+        ? { archivedNotes: [...notes], lastTimeDitedNote }
         : pinned
-        ? { pinnedNotes: [...notes] }
-        : { unPinnedNotes: [...notes] }
+        ? { pinnedNotes: [...notes], lastTimeDitedNote }
+        : { unPinnedNotes: [...notes], lastTimeDitedNote }
     );
     res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
@@ -242,12 +281,14 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
 });
 
 router.post("/v1/notes/sortnotes", async (req, res, next) => {
+  const email = req.user;
+
   const data = req.body;
   const pinned = req.query.isnotepined === "true";
 
   try {
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       pinned ? { pinnedNotes: [...data] } : { unPinnedNotes: [...data] }
     );
     res.status(200).json({
@@ -261,14 +302,15 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 });
 
 router.post("/v1/trashbin/:id", async (req, res, next) => {
+  const email = req.user;
+
   const id = req.params.id.split(":")[1];
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    console.log({ data });
-    const { deletedNotes, unPinnedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+    const { deletedNotes, unPinnedNotes } = user;
     const restoredNote = deletedNotes.find((n) => n.id === id);
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         deletedNotes: [...deletedNotes.filter((n) => n.id !== id)],
         unPinnedNotes: [...unPinnedNotes, { ...restoredNote }],
@@ -286,12 +328,15 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
 });
 
 router.post("/v1/trashbin", async (req, res, next) => {
+  const email = req.user;
+
   const id = req.body.id;
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
+    const user = await UserBluePrint.findOne({ email }).exec();
+
     const { deletedNotes } = data;
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         deletedNotes: [...deletedNotes.filter((n) => n.id !== id)],
       }
@@ -306,16 +351,19 @@ router.post("/v1/trashbin", async (req, res, next) => {
 });
 
 router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
+  const email = req.user;
+
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { pinnedNotes, unPinnedNotes } = user;
     const { id, isNotePined: pinned } = getIdPinnedStatus(req);
     const notes = pinned ? pinnedNotes : unPinnedNotes;
     const noteIndex = notes.findIndex((n) => n.id === id);
     const note = notes[noteIndex];
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       pinned
         ? {
             pinnedNotes: [...pinnedNotes.filter((n) => n.id !== id)],
@@ -335,12 +383,19 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
 });
 
 router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
-  // const archived = req.query.isarchived === "true";
+  const email = req.user;
+
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
+  console.log({ email });
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = user;
     const notes = archived
       ? archivedNotes
       : pinned
@@ -352,12 +407,12 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 
     note.color = color;
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       archived
-        ? { archivedNotes: [...notes] }
+        ? { archivedNotes: [...notes], lastTimeDitedNote }
         : pinned
-        ? { pinnedNotes: [...notes] }
-        : { unPinnedNotes: [...notes] }
+        ? { pinnedNotes: [...notes], lastTimeDitedNote }
+        : { unPinnedNotes: [...notes], lastTimeDitedNote }
     );
 
     res.status(200).json({ message: "Sucessfully updated note color" });
@@ -369,10 +424,13 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
 });
 
 router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
+  const email = req.user;
+
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = user;
     const { sharedId } = req.body;
     const notes = archived
       ? archivedNotes
@@ -381,7 +439,7 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
       : unPinnedNotes;
     const note = notes.find((n) => n.id === id);
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         unPinnedNotes: [...unPinnedNotes, { ...note, id: sharedId }],
       }
@@ -397,17 +455,20 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
+  const email = req.user;
+
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { label, labelId } = req.body;
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { labels } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { labels } = user;
     const newLabel = id
       ? { label, labelId, notes: [{ id, pinned, checked: true }] }
       : { label, labelId, notes: [] };
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         labels: [...labels, { ...newLabel }],
       }
@@ -423,11 +484,14 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/label/:id`, async (req, res, next) => {
+  const email = req.user;
+
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { labels } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { labels } = user;
     const findLabelIndex = labels.findIndex((lb) => lb.label === label);
     const noteIndex = labels[findLabelIndex].notes.findIndex(
       (n) => n.id === id
@@ -444,7 +508,7 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
 
     // response.labels = [...labels];
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         labels: [...labels],
       }
@@ -458,18 +522,21 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/labels/:label`, async (req, res, next) => {
+  const email = req.user;
+
   const label = req.params.label.split(":")[1].trim();
   const newLabel = req.body.newLabel;
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { labels } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { labels } = user;
 
     const newState = [...labels];
     const indexOfLabel = newState.findIndex((l) => l.label.trim() === label);
 
     newState[indexOfLabel].label = newLabel;
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         labels: [...newState],
       }
@@ -485,10 +552,17 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
+  const email = req.user;
+
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = user;
     const { uncheckednote } = req.body;
     const notes = archived
       ? archivedNotes
@@ -510,14 +584,15 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
 
     note.checkbox = !note.checkbox;
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       archived
-        ? { archivedNotes: [...notes] }
+        ? { archivedNotes: [...notes], lastTimeDitedNote }
         : pinned
         ? {
             pinnedNotes: [...notes],
+            lastTimeDitedNote,
           }
-        : { unPinnedNotes: [...notes] }
+        : { unPinnedNotes: [...notes], lastTimeDitedNote }
     );
 
     res.status(200).json({ message: "Sucessfully handled checkboxes" });
@@ -529,10 +604,17 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
 });
 
 router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
+  const email = req.user;
+
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { pinnedNotes, unPinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { pinnedNotes, unPinnedNotes, archivedNotes } = user;
     const { boxid, checked } = req.body;
 
     const notes = archived
@@ -553,14 +635,15 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
       note.unChecked = [...note.unChecked?.filter((b) => b.id !== boxid)];
     }
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       archived
-        ? { archivedNotes: [...notes] }
+        ? { archivedNotes: [...notes], lastTimeDitedNote }
         : pinned
         ? {
             pinnedNotes: [...notes],
+            lastTimeDitedNote,
           }
-        : { unPinnedNotes: [...notes] }
+        : { unPinnedNotes: [...notes], lastTimeDitedNote }
     );
 
     res.status(200).json({ message: "Sucessfully handled checkbox" });
@@ -572,16 +655,18 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
 });
 
 router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
+  const email = req.user;
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
 
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { unPinnedNotes, pinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { unPinnedNotes, pinnedNotes, archivedNotes } = user;
     const notes = pinned ? pinnedNotes : unPinnedNotes;
     const note = notes.find((n) => n.id === id);
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       pinned
         ? {
             archivedNotes: [...archivedNotes, { ...note }],
@@ -602,16 +687,18 @@ router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
 });
 
 router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
+  const email = req.user;
   const { id } = getIdPinnedStatus(req);
 
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { unPinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { unPinnedNotes, archivedNotes } = user;
     const notes = archivedNotes;
     const note = notes.find((n) => n.id === id);
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       {
         archivedNotes: [...archivedNotes.filter((n) => n.id !== id)],
         unPinnedNotes: [...unPinnedNotes, { ...note }],
@@ -626,15 +713,76 @@ router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
   }
 });
 
+router.post(`/v1/avatar`, async (req, res) => {
+  const email = req.user;
+  const { avatar } = req.body;
+
+  try {
+    const response = await UserBluePrint.updateOne(
+      { email },
+      {
+        image: avatar,
+      }
+    ).exec();
+
+    res.status(200).json({ message: "Archived note successfully" });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+router.post(`/v1/pwd`, async (req, res) => {
+  const email = req.user;
+  console.log(req);
+  const { password } = req.body;
+  console.log({ email });
+  const response = await UserBluePrint.findOne({ email }).exec();
+  console.log({ response });
+  const match = await bcrypt.compare(password, response.password);
+  console.log({ match });
+  try {
+    res.status(200).json({ match });
+
+    return [response, null];
+  } catch (error) {
+    return [null, error];
+  }
+});
+router.post(`/v1/npwd`, async (req, res) => {
+  const email = req.user;
+  // console.log(req);
+  const { password } = req.body;
+  try {
+    const newHashedPwd = await bcrypt.hash(password, 10);
+    console.log({ email });
+    console.log({ password });
+    console.log({ newHashedPwd });
+    const response = await UserBluePrint.updateOne(
+      { email },
+      { password: newHashedPwd }
+    );
+    console.log({ response });
+    res.status(200).json({ response });
+
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
 /**
  * DELETE REQUESTS
  */
 
 router.delete("/v1/notes/:id", async (req, res, next) => {
+  const email = req.user;
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { deletedNotes, unPinnedNotes, pinnedNotes, archivedNotes } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+
+    const { deletedNotes, unPinnedNotes, pinnedNotes, archivedNotes } = user;
     const prevState = archived
       ? archivedNotes
       : pinned
@@ -643,7 +791,7 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
     const note = prevState.find((n) => n.id === id);
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       archived
         ? {
             archivedNotes: [...prevState.filter((n) => n.id != id)],
@@ -669,13 +817,14 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
 });
 
 router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
+  const email = req.user;
   const label = req.params.label.split(":")[1];
   try {
-    const data = await UserBluePrint.findById("642d61213adbae2d3c5fd3ab");
-    const { labels } = data;
+    const user = await UserBluePrint.findOne({ email }).exec();
+    const { labels } = user;
 
     const response = await UserBluePrint.updateOne(
-      { userId: 1995 },
+      { email },
       { labels: [...labels.filter((l) => l.label !== label)] }
     );
 
@@ -688,7 +837,7 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
 });
 
 router.get(`/v1/account`, async (req, res, next) => {
-  const email = req.query.email;
+  const email = req.user;
 
   console.log("deleting account");
   try {

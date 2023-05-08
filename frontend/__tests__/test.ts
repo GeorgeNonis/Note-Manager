@@ -9,7 +9,9 @@ const x = TestingGenerics([1, 2, 3, ""], "giorgos");
 x[0];
 
 const initiateUser = async () => {
-  fetch("http://localhost:4569/v1/testing")
+  fetch("http://localhost:4569/v1/testing", {
+    credentials: "include",
+  })
     .then((response) => {
       return response.json();
     })
@@ -44,3 +46,24 @@ const editUser = async () => {
       console.log(error);
     });
 };
+
+const parseJwt1 = (test: string) => {
+  try {
+    return Buffer.from(test, "base64");
+  } catch (e) {
+    return null;
+  }
+};
+const parseJwt2 = (test: string) => {
+  try {
+    return JSON.parse(atob(test.split(".")[1]));
+  } catch (e) {
+    return null;
+  }
+};
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZW9yZ2Vub25pc0BnbWFpbC5jb20iLCJpYXQiOjE2ODM0ODYwMjgsImV4cCI6MTY4MzQ4NjA4OH0.K6WQz5l2bXzqQYZhe_jlPeW-k1XbyeuBcypN7f0yNYk";
+
+// console.log({ parseJwt1 });
+
+console.log(parseJwt2(token));

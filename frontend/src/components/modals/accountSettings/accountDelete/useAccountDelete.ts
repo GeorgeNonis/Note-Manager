@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { deleteAccountHttp } from "../../../../services/delete";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../../../store/store";
+import { isThereError } from "../../../../utils";
+import { useLogoutHandler } from "../../../../hooks/useLogoutHandler";
 
 export const useAccountDelete = ({ email }: { email: string }) => {
+  const { logoutHandler } = useLogoutHandler();
+
   const [confirmEmail, setConfirmEmail] = useState(``);
   const [validMatch, setValidMatch] = useState(false);
-
-  const navigate = useNavigate();
+  const token = sessionStorage.getItem("auth-token")!;
 
   const deleteAccountHandler = async () => {
-    const response = await deleteAccountHttp(email);
-    navigate("/");
+    if (!validMatch) return;
+    const response = await deleteAccountHttp(email, token);
+    const successfullRequest = isThereError(response);
+    if (successfullRequest) {
+      logoutHandler();
+    }
   };
 
   useEffect(() => {

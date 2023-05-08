@@ -3,8 +3,9 @@ import { Labels } from "../services/interfaces";
 
 export interface InitialState {
   email: string;
-  password: string;
+  // password: string;
   date: string;
+  lastTimeDitedNote: string;
   image: string;
   notes: NoteObj[];
   pinnedNotes: NoteObj[];
@@ -22,5 +23,5 @@ export interface DisplayStateInitialState {
   isThereError: boolean;
   accountSettings: boolean;
   emailAlreadyInUse: boolean;
-  user: string;
+  showLoginForm: boolean;
 }

@@ -1,13 +1,27 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { BASE_URL } from "../config";
+import { AxiosError, AxiosResponse } from "axios";
+import axios from "./axios";
 import { NoteObj } from "../interfaces/interfaces";
 import { AddLabelHttpProp, EditNoteArgs } from "./interfaces";
 
-export const sortNotesHttp = async (data: NoteObj[], pinned: boolean) => {
+export const sortNotesHttp = async (
+  data: NoteObj[],
+  pinned: boolean,
+  token: string
+) => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post(
-      `${BASE_URL}notes/sortnotes?isnotepined=${pinned}`,
-      data
+      `notes/sortnotes?isnotepined=${pinned}`,
+      {
+        data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -21,15 +35,24 @@ export const editNoteHttp = async <T, E>({
   noteValue,
   titleValue,
   archived = false,
+  token,
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
   console.log(pinned);
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     console.log("Before response");
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/editnote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
+      `notes/editnote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         noteValue,
         titleValue,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
       }
     );
     console.log("Hello from edit.ts");
@@ -45,13 +68,22 @@ export const updateNoteColorHttp = async <T, E>(
   color: string,
   id: string,
   pinned: boolean,
-  archived: boolean = false
+  archived: boolean = false,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/colorupdate/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
+      `notes/colorupdate/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         color,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
       }
     );
     return [response, null];
@@ -68,13 +100,22 @@ export const addLabelHttp = async <T, E>({
   pinned,
   labelId,
   archived = false,
+  token,
 }: AddLabelHttpProp): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/labels/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
+      `notes/labels/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         label,
         labelId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
       }
     );
     return [response, null];
@@ -89,11 +130,20 @@ export const tickLabelHandlerHttp = async <T, E>(
   id: string,
   label: string,
   pinned: boolean,
-  archived: boolean = false
+  archived: boolean = false,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
     const response = await axios.post<T, E>(
-      `${BASE_URL}notes/label/:${id}?label=${label}&isnotepined=${pinned}&isarchived=${archived}`
+      `notes/label/:${id}?label=${label}&isnotepined=${pinned}&isarchived=${archived}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
     );
     return [response, null];
   } catch (error) {
@@ -105,13 +155,25 @@ export const tickLabelHandlerHttp = async <T, E>(
 
 export const editLabelHttp = async <T, E>(
   label: string,
-  newLabel: string
+  newLabel: string,
+  token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
+  // const token = sessionStorage.getItem("auth-token");
+
   try {
-    // console.log(`Im hitting ${BASE_URL}labels/:${label}`);
-    const response = await axios.post<T, E>(`${BASE_URL}labels/:${label}`, {
-      newLabel,
-    });
+    // console.log(`Im hitting labels/:${label}`);
+    const response = await axios.post<T, E>(
+      `labels/:${label}`,
+      {
+        newLabel,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

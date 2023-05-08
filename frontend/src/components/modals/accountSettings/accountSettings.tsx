@@ -4,14 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { openAccountSettings } from "../../../store/display-state-slice";
 import * as Components from "../../index";
 import { HiXMark } from "react-icons/hi2";
-import styles from "./styles.module.scss";
 import { IRootState } from "../../../store/store";
+import styles from "./styles.module.scss";
 
-const AccountSettings = ({}: AccountSettingsProps) => {
+const AccountSettings = ({ transitionState }: AccountSettingsProps) => {
   const { ...initialState } = useSelector((state: IRootState) => state.notes);
-  console.log({ initialState });
+  // console.log({ initialState });
   const [option, setOption] = useState<string>("Info");
   const dispatch = useDispatch();
+
+  const cssClasses = [
+    styles.modalContent,
+    transitionState === "entering"
+      ? styles.openModal
+      : transitionState === "exiting"
+      ? styles.closeModal
+      : null,
+  ];
 
   type Key = {
     [key: string]: {
@@ -34,15 +43,13 @@ const AccountSettings = ({}: AccountSettingsProps) => {
     },
   };
 
-  console.log(option);
-  console.log(options[option]);
   return (
     <>
       <div
         className={styles.backdrop}
         onClick={() => dispatch(openAccountSettings())}
       ></div>
-      <div className={styles.modalContent}>
+      <div className={cssClasses.join(" ")}>
         <HiXMark
           className={styles.xMark}
           onClick={() => dispatch(openAccountSettings())}

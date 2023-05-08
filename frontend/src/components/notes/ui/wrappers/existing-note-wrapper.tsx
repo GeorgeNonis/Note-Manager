@@ -17,8 +17,7 @@ const ExistingNoteWrapper = ({
 }: ExistingNoteWrapperProps) => {
   // console.log(clickOutsideNote.current.clientHeight);
   // console.log(clickOutsideNote.current.clientWidth);
-  console.log({ note });
-  console.log(note.color);
+  // console.log({ note });
   return (
     <div
       style={{

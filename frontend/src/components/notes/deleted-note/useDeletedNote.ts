@@ -10,13 +10,14 @@ import { errorState } from "../../../store/display-state-slice";
 export const useDeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem("auth-token")!;
 
   const clickOutsideNote = useOutsideClick(() => setReview(false));
 
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const response = await restoreNoteHttp(note.id);
+    const response = await restoreNoteHttp(note.id, token);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest
@@ -26,7 +27,7 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
 
   const removeProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    const response = await removeNoteHttp(note.id);
+    const response = await removeNoteHttp(note.id, token);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest

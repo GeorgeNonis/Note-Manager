@@ -19,4 +19,6 @@ export {
   archiveNoteHandlerHttp,
   createUserHttp,
   getUserHttp,
+  changeAvatarPictureHttp,
+  newPasswordHttp,
 } from "./postNote";

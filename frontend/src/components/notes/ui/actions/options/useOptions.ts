@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useOutsideClick } from "../../../../../hooks";
 import {
   deleteNoteHttp,
@@ -29,11 +29,13 @@ export const useOptions = ({
   styles,
   review,
 }: UseOptionsProps) => {
+  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [discardBoxes, setDiscardBoxes] = useState(false);
   const [display, setDisplay] = useState<boolean>(false);
   const [displayPalette, setDisplayPalette] = useState<boolean>(false);
   const [displayAddLabel, setDisplayAddLabel] = useState<boolean>();
+  const nodeRef = useRef(null);
   const outsideOptions = useOutsideClick(() => {
     setDisplay(false);
     setDisplayAddLabel(false);
@@ -46,6 +48,7 @@ export const useOptions = ({
       pinned,
       archived,
       sharedId,
+      token,
     });
     dispatch(httpReqResLoading());
 
@@ -64,7 +67,7 @@ export const useOptions = ({
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     e.stopPropagation();
 
-    const response = await deleteNoteHttp(note.id, pinned, archived!);
+    const response = await deleteNoteHttp(note.id, pinned, archived!, token);
     const sucessfullRequest = isThereError(response);
 
     sucessfullRequest
@@ -103,6 +106,7 @@ export const useOptions = ({
         pinned,
         archived,
         uncheckednote,
+        token,
       });
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
@@ -120,6 +124,7 @@ export const useOptions = ({
           pinned,
           archived,
           uncheckednote,
+          token,
         });
         const sucessfullRequest = isThereError(response);
         sucessfullRequest
@@ -136,6 +141,7 @@ export const useOptions = ({
       noteId: note.id,
       pinned,
       archived,
+      token,
     });
 
     const sucessfullRequest = isThereError(response);
@@ -162,6 +168,7 @@ export const useOptions = ({
     display,
     displayPalette,
     discardBoxes,
+    nodeRef,
     setDiscardBoxes,
     setDisplayAddLabel,
     setDisplayPalette,

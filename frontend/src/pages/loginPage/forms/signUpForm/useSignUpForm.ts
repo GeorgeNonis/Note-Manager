@@ -10,12 +10,11 @@ import { createUserHttp } from "../../../../services/postNote";
 import { isThereError } from "../../../../utils";
 import { getUsersHttp } from "../../../../services/getNote";
 import { useDispatch } from "react-redux";
-import {
-  emailAlreadyInUseHandler,
-  setUser,
-} from "../../../../store/display-state-slice";
+import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice";
+import { convertImageToBase64 } from "../../../../utils/utils";
 
 export const useSignUpForm = () => {
+  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -51,23 +50,6 @@ export const useSignUpForm = () => {
     setPasswordHover(!passwordHover);
     setConfirmPasswordHover(!confirmPasswordHover);
   };
-  const convertImageToBase64 = (
-    imgUrl: string,
-    callback: (arg: string) => void
-  ) => {
-    const image = new Image();
-    image.crossOrigin = "anonymous";
-    image.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d")!;
-      canvas.height = image.naturalHeight;
-      canvas.width = image.naturalWidth;
-      ctx.drawImage(image, 0, 0);
-      const dataUrl = canvas.toDataURL();
-      callback && callback(dataUrl);
-    };
-    image.src = imgUrl;
-  };
 
   const avatarHandler = (avatar: string | File) => {
     if (!URL_REGEX.test(avatar as string)) {
@@ -86,12 +68,12 @@ export const useSignUpForm = () => {
       });
     }
 
-    // console.log({ avatar });
     setChangeAvatar(false);
     setDefaultAvatar(false);
   };
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const token = sessionStorage.getItem("auth-token")!;
     e.preventDefault();
     const v1 = USER_REGEX.test(email);
     const v2 = PWD_REGEX.test(password);
@@ -101,11 +83,12 @@ export const useSignUpForm = () => {
       return;
     }
 
-    const response = await createUserHttp(email, password, avatar);
+    const response = await createUserHttp(email, password, avatar, token);
     const successRequest = isThereError(response);
     if (successRequest) {
-      dispatch(setUser(email));
-      console.log("Sucess");
+      const token = response[0]?.headers.authorization;
+      sessionStorage.setItem("auth-token", token!);
+      // dispatch(authorizedHandler(true));
       navigate("/notes");
     } else {
       console.log(response[1]?.message);
@@ -113,7 +96,7 @@ export const useSignUpForm = () => {
   };
 
   const doesUserExists = async () => {
-    const response = await getUsersHttp(email);
+    const response = await getUsersHttp(email, token);
 
     dispatch(emailAlreadyInUseHandler(response[0]));
   };
