@@ -340,3 +340,11 @@
     opacity: 100% !important;
   }
 }
+.loadingScreen {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  h3 {
+    font-size: 1rem;
+  }
+}

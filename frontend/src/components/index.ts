@@ -34,3 +34,4 @@ export { default as NoArchievedNotesMsg } from "./sections/archive-notes-section
 export { default as ArchivedNotesSection } from "./sections/archive-notes-section/notes-section/archived-notes-section";
 export { default as Account } from "./account/account";
 export { default as AccountSettings } from "./modals/accountSettings/accountSettings";
+export { default as Loading } from "./notes/ui/loadingscreen";

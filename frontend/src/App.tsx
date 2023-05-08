@@ -3,7 +3,7 @@ import Error from "./errors";
 // import RootLayout from "./pages/rootLayout";
 import { lazy, Suspense } from "react";
 import ArchiveNotesSection from "./components/sections/archive-notes-section";
-import { LoadingSpinner } from "./components";
+import { Loading, LoadingSpinner } from "./components";
 
 const RootLayout = lazy(() => import("./pages/rootLayout"));
 const ExistinNotesSection = lazy(
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Suspense fallback={"loading login page"}>
+      <Suspense fallback={<LoadingSpinner />}>
         <LoginPage />
       </Suspense>
     ),
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       {
         path: "/notes/",
         element: (
-          <Suspense fallback={"loading existing section"}>
+          <Suspense fallback={<LoadingSpinner />}>
             <ExistinNotesSection />
           </Suspense>
         ),
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       {
         path: "deletednotes",
         element: (
-          <Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
             <DeletedNotesSection />
           </Suspense>
         ),
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       {
         path: "archivenotes",
         element: (
-          <Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
             <ArchiveNotesSection />
           </Suspense>
         ),
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: "labelsnotesection/:labelId",
         element: (
-          <Suspense>
+          <Suspense fallback={<LoadingSpinner />}>
             <NotesWithLabelsSection />
           </Suspense>
         ),

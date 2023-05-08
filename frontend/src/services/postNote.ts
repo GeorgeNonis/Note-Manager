@@ -104,10 +104,12 @@ export const pinNoteHandlerHttp = async <T, E>(
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   // const token = sessionStorage.getItem("auth-token");
-
+  console.log("pinning note --- frontend request from Http");
+  console.log({ token });
   try {
     const response = await axios.post<T, E>(
       `notes/pinnote/:${id}?isnotepined=${pinned}`,
+      { undefined },
       {
         headers: {
           "Content-Type": "application/json",

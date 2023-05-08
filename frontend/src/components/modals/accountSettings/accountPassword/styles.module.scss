@@ -1,50 +1,142 @@
-.mainContent {
-  // form {
-  //   display: grid;
-  //   grid-template-rows: 3fr 3fr 3fr 1fr;
-  //   place-items: center;
-  //   gap: 1rem;
-  //   padding: 1rem;
-  //   border-radius: 8px;
-  //   fieldset {
-  //     all: unset;
-  //     position: relative;
-  //     width: 50%;
-  //     legend {
-  //       margin-bottom: 0.4rem;
-  //       width: 100%;
-  //       span {
-  //         float: right;
-  //         width: 10%;
-  //         background: none;
-  //         border: none;
-  //         margin-top: 1vh;
-  //         cursor: pointer;
-  //       }
-  //     }
-  //   }
+@import "../../../../styles/mixins.module.scss";
 
-  //   input {
-  //     font-family: "CormorantGaramond";
-  //     outline: none;
-  //     border: none;
-  //     border-radius: 8px;
-  //     width: 100%;
-  //     height: 2.3rem;
-  //     padding: 0.2rem 1rem;
-  //     box-sizing: border-box;
-  //     font-size: 1.2rem;
-  //     background: rgba(0, 0, 0, 0.4588235294);
-  //   }
-  // }
+@media (max-width: 599px) {
   form {
-    width: 40dvw;
-    padding: 1rem;
+    padding: 0 1rem;
+    input {
+      height: 1.5rem;
+    }
+    legend {
+      font-size: 0.785rem;
+      span {
+        font-size: 0.785rem;
+      }
+    }
+  }
+  .updateButton {
+    width: 8rem;
+    font-size: 0.67rem;
+    margin-top: 1rem;
+  }
+
+  .show {
+    span {
+      font-size: 0.5rem;
+    }
+  }
+}
+@media (max-width: 450px) {
+  form {
+    padding: 0 1rem;
+    input {
+      height: 1.5rem;
+    }
+    legend {
+      font-size: 0.785rem;
+      span {
+        font-size: 0.785rem;
+      }
+    }
+  }
+  .updateButton {
+    width: 8rem;
+    font-size: 0.67rem;
+    margin-top: 1rem;
+  }
+
+  .show {
+    span {
+      font-size: 0.5rem;
+    }
+  }
+}
+@media (min-width: 599px) {
+  form {
+    padding: 0 1rem;
+    input {
+      height: 1.5rem;
+    }
+    legend {
+      font-size: 0.785rem;
+      span {
+        font-size: 0.785rem;
+      }
+    }
+  }
+  .updateButton {
+    width: 8rem;
+    font-size: 0.67rem;
+    margin-top: 1rem;
+  }
+
+  .show {
+    span {
+      font-size: 0.5rem;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  form {
+    padding: 0 1rem;
+    grid-gap: 1rem;
+    input {
+      height: 2rem;
+    }
+    legend {
+      font-size: 1;
+      span {
+        font-size: 1rem;
+      }
+    }
+  }
+  .updateButton {
+    padding: 0 1rem;
+    width: 10rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .show {
+    span {
+      font-size: 0.9rem;
+    }
+  }
+}
+@media (min-width: 1441px) {
+  form {
+    padding: 0 2rem;
+    grid-gap: 2rem;
+    input {
+      height: 2.2rem;
+    }
+    legend {
+      font-size: 1.2;
+      span {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  .updateButton {
+    padding: 0 2rem;
+    width: 12rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .show {
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+.mainContent {
+  form {
+    box-sizing: border-box;
+    // padding: 1rem;
     display: grid;
-    gap: 1rem;
+    // gap: 1rem;
     margin-inline: auto;
-    // border: 1px solid black;
-    // background-color: #00000075;
     border-radius: 8px;
     fieldset {
       all: unset;
@@ -58,7 +150,6 @@
           background: none;
           border: none;
           margin-top: 1vh;
-          // cursor: pointer;
         }
       }
     }
@@ -69,7 +160,7 @@
       border: none;
       border-radius: 8px;
       width: 100%;
-      height: 2rem;
+      // height: 2rem;
       padding: 0 1rem;
       box-sizing: border-box;
       background: rgba(0, 0, 0, 0.4588235294);
@@ -80,7 +171,7 @@
     border-radius: 8px;
     background: #f26716;
     border: none;
-    width: 10rem;
+    // width: 10rem;
     height: 2.3rem;
     justify-self: center;
     transition: all 230ms ease-in-out;
@@ -106,7 +197,7 @@
   margin: 0.5rem 0 0 0;
 
   span {
-    font-size: 0.75rem;
+    // font-size: 0.75rem;
   }
   svg {
     place-self: center;

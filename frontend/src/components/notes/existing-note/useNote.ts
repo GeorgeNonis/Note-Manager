@@ -35,7 +35,9 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
     e.stopPropagation();
-
+    console.log(
+      "pinning note --- inside from pinNoteHandler from useNote Hook"
+    );
     const response = await pinNoteHandlerHttp(note.id, pinned, token);
 
     const sucessfullRequest = isThereError(response);

@@ -1,3 +1,76 @@
+@import "../../styles/mixins.module.scss";
+
+@media (max-width: 599px) {
+  .burger {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .logo {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .title {
+    font-size: 0.87rem;
+  }
+}
+@media (max-width: 450px) {
+  .burger {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .logo {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .title {
+    font-size: 0.7rem;
+  }
+}
+@media (min-width: 599px) {
+  .burger {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+  .logo {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 1200px) {
+  .burger {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .logo {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 1441px) {
+  .burger {
+    width: 2rem;
+    height: 2rem;
+  }
+  .logo {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+}
+
 .menuThreeLines {
   position: absolute;
   top: 0.5rem;
@@ -7,21 +80,10 @@
 }
 
 .burger {
-  width: 1.5rem;
-  height: 1.5rem;
   border-radius: 50%;
   padding: 12px;
   &:hover {
     cursor: pointer;
     background-color: rgba(232, 234, 237, 0.08);
   }
-}
-
-.logo {
-  width: 3.5rem;
-  height: 3.5rem;
-}
-
-.title {
-  font-size: 1rem;
 }

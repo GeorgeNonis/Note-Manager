@@ -1,5 +1,16 @@
 @import "./mixins.module.scss";
 
+@media (max-width: 599px) {
+}
+@media (max-width: 450px) {
+}
+@media (min-width: 600px) {
+}
+@media (min-width: 1200px) {
+}
+@media (min-width: 1441px) {
+}
+
 .main {
   display: grid;
   grid-template-columns: 2fr 8fr;
@@ -11,7 +22,7 @@
   .div {
     @include for-phone-only {
       h3 {
-        font-size: 0.6rem;
+        font-size: 0.45rem;
       }
       svg {
         height: 1rem;

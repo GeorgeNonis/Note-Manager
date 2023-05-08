@@ -355,7 +355,8 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
-
+    console.log("pinning note --- backend request from frontned");
+    console.log({ user, email });
     const { pinnedNotes, unPinnedNotes } = user;
     const { id, isNotePined: pinned } = getIdPinnedStatus(req);
     const notes = pinned ? pinnedNotes : unPinnedNotes;
@@ -444,7 +445,6 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
         unPinnedNotes: [...unPinnedNotes, { ...note, id: sharedId }],
       }
     );
-    // response.unPinnedNotes = [...unPinnedNotes, { ...note, id: sharedId }];
 
     res.status(200).json({ message: "Sucessfully copied note" });
     return [response, null];
@@ -734,13 +734,9 @@ router.post(`/v1/avatar`, async (req, res) => {
 });
 router.post(`/v1/pwd`, async (req, res) => {
   const email = req.user;
-  console.log(req);
   const { password } = req.body;
-  console.log({ email });
   const response = await UserBluePrint.findOne({ email }).exec();
-  console.log({ response });
   const match = await bcrypt.compare(password, response.password);
-  console.log({ match });
   try {
     res.status(200).json({ match });
 
@@ -755,14 +751,11 @@ router.post(`/v1/npwd`, async (req, res) => {
   const { password } = req.body;
   try {
     const newHashedPwd = await bcrypt.hash(password, 10);
-    console.log({ email });
-    console.log({ password });
-    console.log({ newHashedPwd });
     const response = await UserBluePrint.updateOne(
       { email },
       { password: newHashedPwd }
     );
-    console.log({ response });
+
     res.status(200).json({ response });
 
     return [response, null];
