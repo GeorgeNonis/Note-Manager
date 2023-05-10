@@ -46,7 +46,7 @@ export const createUserHttp = async <T, E>(
         },
       }
     );
-    // console.log(response);
+
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -89,7 +89,6 @@ export const addNoteHttp = async <T, E>(
         },
       }
     );
-    // console.log(response);
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -103,9 +102,6 @@ export const pinNoteHandlerHttp = async <T, E>(
   pinned: boolean,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-  console.log("pinning note --- frontend request from Http");
-  console.log({ token });
   try {
     const response = await axios.post<T, E>(
       `notes/pinnote/:${id}?isnotepined=${pinned}`,
@@ -129,11 +125,9 @@ export const removeNoteHttp = async <T, E>(
   id: string,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
-      `trashbin`,
+      `trashbin/:${id}`,
       {
         id,
       },
@@ -159,12 +153,16 @@ export const restoreNoteHttp = async <T, E>(
   // const token = sessionStorage.getItem("auth-token");
 
   try {
-    const response = await axios.post<T, E>(`trashbin/:${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await axios.post<T, E>(
+      `trashbin/:${id}`,
+      { undefined },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -278,6 +276,7 @@ export const archiveNoteHandlerHttp = async <T, E>({
       `notes/${
         !archived ? "archivenote" : "unarchivenote"
       }/:${noteId}?isnotepined=${pinned}`,
+      { undefined },
       {
         headers: {
           "Content-Type": "application/json",
@@ -299,8 +298,6 @@ export const changeAvatarPictureHttp = async <T, E>({
 }: UserAvatarProps): Promise<
   [Responseheaders | AxiosResponse | T | E | null, AxiosError | null]
 > => {
-  // const token = sessionStorage.getItem("auth-token");
-  console.log({ token });
   try {
     const response = await axios.post<AxiosResponse<T | E>>(
       `avatar`,

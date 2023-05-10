@@ -11,6 +11,7 @@ export const useNotesSection = () => {
   const state = useSelector((state: IRootState) => state.notes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem("auth-token")!;
 
   /**
    * Hook to detect outside click from the note's div
@@ -18,19 +19,17 @@ export const useNotesSection = () => {
    */
   const onDragEnd = async (e: React.DragEvent) => {
     const id = e.dataTransfer.getData("id");
-    // console.log(id);
 
     const draggable =
       e.currentTarget.attributes.getNamedItem("draggable")?.value;
-    // console.log(draggable);
     if (!draggable) return;
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
-        dispatch(errorState(arr));
+        // dispatch(errorState(arr));
       }
       dispatch(sortNotes({ arr, pinned: false }));
     };
-    await DragEndUtil({ state, index, indexOf, cb, pinned: false });
+    await DragEndUtil({ state, index, indexOf, cb, pinned: false, token });
   };
 
   return {

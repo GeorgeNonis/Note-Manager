@@ -37,11 +37,7 @@ export const editNoteHttp = async <T, E>({
   archived = false,
   token,
 }: EditNoteArgs): Promise<[T | E | null, AxiosError | null]> => {
-  console.log(pinned);
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
-    console.log("Before response");
     const response = await axios.post<T, E>(
       `notes/editnote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
@@ -55,7 +51,6 @@ export const editNoteHttp = async <T, E>({
         },
       }
     );
-    console.log("Hello from edit.ts");
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -71,8 +66,6 @@ export const updateNoteColorHttp = async <T, E>(
   archived: boolean = false,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/colorupdate/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
@@ -102,8 +95,6 @@ export const addLabelHttp = async <T, E>({
   archived = false,
   token,
 }: AddLabelHttpProp): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/labels/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
@@ -133,11 +124,11 @@ export const tickLabelHandlerHttp = async <T, E>(
   archived: boolean = false,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
+  // console.log({ id, label, pinned, archived, token });
   try {
     const response = await axios.post<T, E>(
       `notes/label/:${id}?label=${label}&isnotepined=${pinned}&isarchived=${archived}`,
+      { undefined },
       {
         headers: {
           "Content-Type": "application/json",
@@ -158,10 +149,8 @@ export const editLabelHttp = async <T, E>(
   newLabel: string,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
+  console.log({ label, newLabel, token });
   try {
-    // console.log(`Im hitting labels/:${label}`);
     const response = await axios.post<T, E>(
       `labels/:${label}`,
       {

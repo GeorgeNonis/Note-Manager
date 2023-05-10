@@ -88,7 +88,6 @@ export const useSignUpForm = () => {
     if (successRequest) {
       const token = response[0]?.headers.authorization;
       sessionStorage.setItem("auth-token", token!);
-      // dispatch(authorizedHandler(true));
       navigate("/notes");
     } else {
       console.log(response[1]?.message);
@@ -113,7 +112,6 @@ export const useSignUpForm = () => {
     setAvatar(
       avtr_pictures[Math.floor(Math.random() * avtr_pictures.length)].src
     );
-    console.log();
   }, []);
 
   useEffect(() => {

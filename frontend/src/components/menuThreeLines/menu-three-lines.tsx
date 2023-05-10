@@ -8,7 +8,8 @@ const MenuThreeLines = () => {
     <div className={styles.menuThreeLines}>
       <AiOutlineMenu className={styles.burger} onClick={toggleMenuThreeLines} />
       <img
-        src="../../../images/googlekeeplogo.png"
+        // src="../../../images/googlekeeplogo.png"
+        src="./googlekeeplogo.png"
         alt="notes_logo"
         className={styles.logo}
       />

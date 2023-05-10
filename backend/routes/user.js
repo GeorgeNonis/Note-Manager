@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.post(`/v1/login`, async (req, res, next) => {
   const { email, pwd } = req.body;
-  console.log("Logging process");
-  console.log({ email, pwd });
 
   if (!email || !pwd)
     return (
@@ -17,6 +15,12 @@ router.post(`/v1/login`, async (req, res, next) => {
     );
 
   const user = await UserBluePrint.findOne({ email }).exec();
+
+  if (user === null) {
+    const msg = "User doesnt exist";
+    res.status(200).json({ match: false, msg });
+    return [msg, null];
+  }
 
   const match = user ? await bcrypt.compare(pwd, user.password) : false;
 
@@ -63,17 +67,12 @@ router.get(`/v1/userexist`, async (req, res, next) => {
     return user.email.toLowerCase() === email.toLowerCase();
   });
 
-  console.log({ duplicate, email });
-
   try {
     if (duplicate) {
-      console.log("Account with this email exists already");
-
       return res
         .status(201)
         .json({ message: `Account with this email exist's already` });
     } else {
-      console.log("No account associated with this email");
       return res
         .status(200)
         .json({ message: `No account associated with this email` });
@@ -84,7 +83,6 @@ router.get(`/v1/userexist`, async (req, res, next) => {
 });
 
 router.post("/v1/signup", async (req, res, next) => {
-  console.log("SIGNUP PROCESS");
   const { email, pwd, image } = req.body;
 
   if (!email || !pwd) {
@@ -99,16 +97,16 @@ router.post("/v1/signup", async (req, res, next) => {
    * Check for duplicates in Database
    */
   if (duplicate) {
-    console.log("Duplicates");
     return res.sendStatus(409);
   }
-  console.log({ duplicate, email, pwd, image });
   // return;
   try {
     const hashedPwd = await bcrypt.hash(pwd, 10);
-
+    console.log({ hashedPwd });
     const user = createUser(email, hashedPwd, image);
+    console.log({ user });
     const newUser = new UserBluePrint({ ...user });
+    console.log({ newUser });
 
     const response = await newUser
       .save()
@@ -123,6 +121,7 @@ router.post("/v1/signup", async (req, res, next) => {
         expiresIn: "1h",
       }
     );
+    console.log({ accessToken });
 
     // const refreshToken = jwt.sign(
     //   {

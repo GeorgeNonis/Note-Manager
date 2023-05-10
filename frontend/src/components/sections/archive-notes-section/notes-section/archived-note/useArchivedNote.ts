@@ -24,11 +24,9 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
     });
 
     const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
-    console.log("Hello");
-    sucessfullRequest
-      ? dispatch(editNote({ id: noteId, titleValue: noteTitle, noteValue }))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest &&
+      dispatch(editNote({ id: noteId, titleValue: noteTitle, noteValue }));
+    // : dispatch(errorState(response[1]?.message));
   };
 
   // const zIndex = !review ? zindex : 20002;

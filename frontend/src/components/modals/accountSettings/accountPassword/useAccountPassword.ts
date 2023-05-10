@@ -27,14 +27,11 @@ export const useAccountPassword = ({
 
   const errRef = useRef<HTMLParagraphElement>(null);
   const token = sessionStorage.getItem("auth-token") as string;
-  // console.log({ validMatch });
   const checkPassword = async () => {
     const res = await checkPasswordValidity({
       password: currentPassword,
       token,
     });
-    // console.log("checking if pwd is valid");
-    // console.log(res[0]?.data);
     setValidCurrentPassword(res[0]?.data.match);
   };
 
@@ -47,7 +44,6 @@ export const useAccountPassword = ({
     const response = await newPasswordHttp(newPassword, token);
     const successRequest = isThereError(response);
     if (successRequest) {
-      console.log("sucess");
     }
     setCurrentPassword("");
     setConfirmNewPassword("");

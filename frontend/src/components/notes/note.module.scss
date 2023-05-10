@@ -140,9 +140,9 @@
   position: absolute;
   inset: 7px -5px auto auto;
   color: gray;
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
-
+    color: white;
     .span {
       color: white !important;
       opacity: 100%;

@@ -1,7 +1,7 @@
 @mixin actionButtonStyle {
-  font-size: 1rem;
-  height: 2.5rem;
-  width: 80%;
+  // font-size: 1rem;
+  // width: 80%;
+  // height: 2.5rem;
   margin-block: 0.7rem;
   margin-inline: auto;
   border-radius: 8px;
@@ -10,25 +10,261 @@
   cursor: pointer;
   font-family: "CormorantGaramond";
   transition: all 250ms ease-in-out;
-  &:hover {
-    height: 3rem;
-    width: 90%;
-  }
+  // &:hover {
+  //   height: 3rem;
+  //   width: 90%;
+  // }
 }
 
 @mixin avatarStyle {
-  width: 10rem;
-  height: 10rem;
+  // width: 10rem;
+  // height: 10rem;
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  inset: 50% auto auto 50%;
+  // inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
   transition: all 500ms ease-in-out;
   padding: 0.5rem;
 
   &:hover {
     background-color: gray;
+  }
+}
+
+@import "../../../../styles/mixins.module.scss";
+
+@media (max-width: 599px) {
+  .avatar {
+    width: 5.3rem;
+    height: 5.3rem;
+    inset: 50% auto auto 50%;
+  }
+
+  .svg {
+    inset: 50% auto auto 50%;
+    width: 3.3rem;
+    height: 3.3rem;
+  }
+  .selectedAvatar {
+    width: 5.3rem;
+    height: 5.3rem;
+    width: 6rem;
+  }
+  .test {
+    inset: 20% auto auto 50%;
+  }
+
+  .test1 {
+    inset: 60% auto auto 50%;
+  }
+
+  .cancelButton {
+    width: 6rem;
+    height: 2rem;
+    font-size: 0.65rem;
+    &:hover {
+      width: 6.4rem;
+      height: 2.4rem;
+    }
+  }
+
+  .actions {
+    button {
+      width: 5.5rem;
+      height: 2rem;
+      font-size: 0.65rem;
+      &:hover {
+        width: 6rem;
+        height: 2.4rem;
+      }
+    }
+  }
+}
+@media (max-width: 450px) {
+  .avatar {
+    width: 5rem;
+    height: 5rem;
+    inset: 50% auto auto 50%;
+  }
+  .svg {
+    inset: 50% auto auto 50%;
+    width: 3rem;
+    height: 3rem;
+  }
+  .selectedAvatar {
+    width: 5rem;
+    height: 5rem;
+    inset: 50% auto auto 50%;
+  }
+  .test {
+    inset: 20% auto auto 50%;
+  }
+
+  .test1 {
+    inset: 60% auto auto 50%;
+  }
+
+  .cancelButton {
+    width: 4.5rem;
+    height: 2rem;
+    font-size: 0.65rem;
+    &:hover {
+      width: 4.9rem;
+      height: 2.4rem;
+    }
+  }
+
+  .actions {
+    button {
+      width: 4.5rem;
+      height: 2rem;
+      font-size: 0.65rem;
+      &:hover {
+        width: 4.9rem;
+        height: 2.4rem;
+      }
+    }
+  }
+}
+@media (min-width: 599px) {
+  .avatar {
+    width: 6rem;
+    height: 6rem;
+    inset: 50% auto auto 50%;
+  }
+  .svg {
+    inset: 50% auto auto 50%;
+    width: 4rem;
+    height: 4rem;
+  }
+  .selectedAvatar {
+    width: 6rem;
+    height: 6rem;
+    inset: 50% auto auto 50%;
+  }
+  .test {
+    inset: 50% auto auto 25%;
+  }
+
+  .test1 {
+    inset: 50% auto auto 75%;
+  }
+
+  .cancelButton {
+    width: 8rem;
+    height: 2rem;
+    font-size: 0.8rem;
+    &:hover {
+      width: 8.4rem;
+      height: 2.4rem;
+    }
+  }
+
+  .actions {
+    button {
+      width: 8rem;
+      height: 2rem;
+      font-size: 0.8rem;
+      &:hover {
+        width: 8.4rem;
+        height: 2.4rem;
+      }
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .avatar {
+    width: 10rem;
+    height: 10rem;
+    inset: 50% auto auto 50%;
+  }
+
+  .svg {
+    inset: 50% auto auto 50%;
+    width: 8rem;
+    height: 8rem;
+  }
+  .selectedAvatar {
+    width: 10rem;
+    height: 10rem;
+    inset: 50% auto auto 50%;
+  }
+  .test {
+    inset: 50% auto auto 25%;
+  }
+
+  .test1 {
+    inset: 50% auto auto 75%;
+  }
+
+  .cancelButton {
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    &:hover {
+      width: 10.4rem;
+      height: 2.9rem;
+    }
+  }
+
+  .actions {
+    button {
+      width: 10rem;
+      height: 2.5rem;
+      font-size: 1rem;
+      &:hover {
+        width: 10.4rem;
+        height: 2.9rem;
+      }
+    }
+  }
+}
+@media (min-width: 2400px) {
+  .avatar {
+    width: 13rem;
+    height: 13rem;
+    inset: 50% auto auto 50%;
+  }
+  .svg {
+    inset: 50% auto auto 50%;
+
+    width: 11rem;
+    height: 11rem;
+  }
+  .selectedAvatar {
+    width: 13rem;
+    height: 13rem;
+    inset: 50% auto auto 50%;
+  }
+  .test {
+    inset: 50% auto auto 25%;
+  }
+
+  .test1 {
+    inset: 50% auto auto 75%;
+  }
+
+  .cancelButton {
+    width: 15rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    &:hover {
+      width: 15.4rem;
+      height: 4.4rem;
+    }
+  }
+
+  .actions {
+    button {
+      width: 15rem;
+      height: 4rem;
+      font-size: 1.5rem;
+      &:hover {
+        width: 15.4rem;
+        height: 4.4rem;
+      }
+    }
   }
 }
 
@@ -40,11 +276,9 @@
 }
 
 .svg {
-  width: 5rem;
-  height: 5rem;
   border-radius: 50%;
   position: absolute;
-  inset: 50% auto auto 50%;
+  // inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
   opacity: 0.7;
   z-index: 12;
@@ -62,7 +296,7 @@
 
 .actions {
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
   place-items: center;
   button {
     @include actionButtonStyle();
@@ -84,16 +318,16 @@
   inset: 90% auto auto 50%;
   @include actionButtonStyle();
   transform: translate(-50%, -50%);
-  width: 30%;
-  &:hover {
-    width: 35%;
-  }
+  // width: 30%;
+  // &:hover {
+  // width: 35%;
+  // }
 }
 
 .test {
-  inset: 50% auto auto 25%;
+  // inset: 50% auto auto 25%;
 }
 
-.test1 {
-  inset: 50% auto auto 75%;
-}
+// .test1 {
+//   inset: 50% auto auto 75%;
+// }

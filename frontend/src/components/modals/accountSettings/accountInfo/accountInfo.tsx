@@ -8,7 +8,6 @@ interface AccountInfoProps {
 
 const AccountInfo = ({ initialState }: AccountInfoProps) => {
   const { email, date, lastTimeDitedNote } = initialState;
-  // console.log({ lastTimeDitedNote });
   return (
     <div className={styles.accountDetails}>
       <div className={styles.mainContent}>

@@ -9,7 +9,6 @@ import styles from "./styles.module.scss";
 
 const AccountSettings = ({ transitionState }: AccountSettingsProps) => {
   const { ...initialState } = useSelector((state: IRootState) => state.notes);
-  // console.log({ initialState });
   const [option, setOption] = useState<string>("Info");
   const dispatch = useDispatch();
 

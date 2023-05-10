@@ -12,8 +12,7 @@ const NotesSection = ({
 }) => {
   const { onDragEnter, onDragStart, onDragEnd } = useNotesSection();
   let zIndex = 1000;
-  // console.log(`Inside notes-section before I map`);
-  // console.log(notes);
+
   return (
     <main className={styles.content}>
       <div className={styles.notes} role="divwithnotes">

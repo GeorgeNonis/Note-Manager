@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { NoteObj } from "../../../../../interfaces/interfaces";
 
 interface CreateCheckBoxes {
@@ -10,7 +11,7 @@ export const CreateCheckBoxes = ({ note }: CreateCheckBoxes) => {
     : [""];
   const uncheckednote = [
     ...setences.map((s) => {
-      return { note: s, id: crypto.randomUUID() };
+      return { note: s, id: uuidv4() };
     }),
   ];
   return { uncheckednote };

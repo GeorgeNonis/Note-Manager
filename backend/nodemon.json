@@ -1,5 +1,8 @@
 {
-  "user": {
-    "PORT": 3030
+  "env": {
+    "PORT": 4569,
+    "DB_API": "mongodb+srv://georgenonis:CnAmtWSronh96a4L@cluster0.o7z8bjc.mongodb.net/notes?retryWrites=true&w=majority",
+    "ACCCESS_TOKEN_SECRET": "5af59daab6ee131d765b55ff6658b47e55373f70575ede72bca5270e02eedf32f30e2672da873231f341fa8e421e0e0d8a41a9665881e48427bb14f82758bbee",
+    "REFRESH_TOKEN_SECRET": "413fea33e9b0e6c20e66162b3a045e18befd5b75e528d781f7dd7616fe9a8bb7de501367aee61e455e97fd1be0bc191b898888900a8b044bc2a5908a59072acc"
   }
 }

@@ -278,7 +278,7 @@ const SignUpForm = () => {
         </button>
         <div className={styles.crossLine}>
           <div></div>
-          <span>OR</span>
+          <span className={styles.or}>OR</span>
           <div></div>
         </div>
         <button

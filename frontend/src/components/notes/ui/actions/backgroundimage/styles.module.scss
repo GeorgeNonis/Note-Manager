@@ -1,10 +1,9 @@
 @mixin imgsStyle {
-  width: 15rem;
-  height: 15rem;
+  // width: 15rem;
+  // height: 15rem;
   border-radius: 8px;
   cursor: pointer;
 }
-
 .backdrop {
   position: fixed;
   inset: 0 auto auto 0;
@@ -19,6 +18,166 @@
 }
 .backdropClosed {
   display: none;
+}
+
+@import "../../../../../styles/mixins.module.scss";
+
+@media (max-width: 599px) {
+  .xMark {
+    width: 2rem;
+    height: 2rem;
+  }
+  .modalContent {
+    width: 90dvw;
+
+    padding: 1rem 0 1rem 0;
+  }
+  .backgroundImages {
+    // grid-template-columns: repeat(3, 23dvw);
+    grid-template-columns: 1fr 1fr 1fr;
+
+    img {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+
+  .default {
+    width: 5rem;
+    height: 5rem;
+  }
+  .svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+@media (max-width: 450px) {
+  .xMark {
+    width: 2rem;
+    height: 2rem;
+  }
+  .modalContent {
+    width: 90dvw;
+
+    padding: 1rem 0 1rem 0;
+
+    .title {
+      font-size: 1rem;
+    }
+  }
+
+  .backgroundImages {
+    // grid-template-columns: repeat(3, 23dvw);
+    grid-template-columns: 1fr 1fr 1fr;
+    img {
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+  }
+  .default {
+    width: 4.5rem;
+    height: 4.5rem;
+    h3 {
+      font-size: 0.75rem;
+    }
+  }
+  .svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+@media (min-width: 599px) {
+  .xMark {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .modalContent {
+    width: 50dvw;
+
+    padding: 1rem 0 1rem 0;
+    .title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .backgroundImages {
+    // grid-template-columns: repeat(3, 23dvw);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    img {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+  .default {
+    width: 6rem;
+    height: 6rem;
+  }
+  .svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .xMark {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .modalContent {
+    width: 50dvw;
+    padding: 1rem 0 1rem 0;
+  }
+
+  .backgroundImages {
+    // grid-template-columns: repeat(3, 18dvw);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    img {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+  .default {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .svg {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+@media (min-width: 2400px) {
+  .xMark {
+    width: 4rem;
+    height: 4rem;
+  }
+  .modalContent {
+    width: 50dvw;
+    padding: 1rem 0 1rem 0;
+    .title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .backgroundImages {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    img {
+      width: 14rem;
+      height: 14rem;
+    }
+  }
+  .default {
+    width: 14rem;
+    height: 14rem;
+    h3 {
+      font-size: 2rem;
+    }
+  }
+  .svg {
+    width: 6rem;
+    height: 6rem;
+  }
 }
 .modalContent {
   position: fixed !important;
@@ -47,7 +206,9 @@
   position: relative;
   display: grid;
   place-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
+  place-content: center;
+
+  // grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
 
   img {
@@ -59,6 +220,8 @@
 .default {
   display: grid;
   place-content: center;
+  // width: 100%;
+  // height: 100%;
   @include imgsStyle;
   background: #202124;
   h3 {
@@ -69,7 +232,7 @@
 .title {
   letter-spacing: 0.01428571em;
   font-family: "CormorantGaramond";
-  font-size: 1.3rem;
+  // font-size: 1.3rem;
   font-weight: 400;
   line-height: 1.25rem;
   color: #e8eaed;

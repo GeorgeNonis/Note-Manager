@@ -63,7 +63,3 @@ const parseJwt2 = (test: string) => {
 };
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZW9yZ2Vub25pc0BnbWFpbC5jb20iLCJpYXQiOjE2ODM0ODYwMjgsImV4cCI6MTY4MzQ4NjA4OH0.K6WQz5l2bXzqQYZhe_jlPeW-k1XbyeuBcypN7f0yNYk";
-
-// console.log({ parseJwt1 });
-
-console.log(parseJwt2(token));

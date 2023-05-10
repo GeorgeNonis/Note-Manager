@@ -26,7 +26,6 @@ const notes = createSlice({
       img.src = rest._doc.image;
 
       state.email = rest._doc.email;
-      // state.password = rest._doc.password;
       state.date = rest._doc.date;
       state.lastTimeDitedNote = rest._doc.lastTimeDitedNote;
       state.image = img.src;
@@ -37,9 +36,7 @@ const notes = createSlice({
       state.labels = [...rest._doc.labels];
     },
     logout(state) {
-      console.log("logging out and reseting from notes-slices");
       state.email = "";
-      // state.password = "";
       state.date = "";
       state.lastTimeDitedNote = "";
       state.image = "";
@@ -70,9 +67,6 @@ const notes = createSlice({
       const { id, pinned } = payload;
       const notes = pinned ? state.pinnedNotes : state.notes;
       const note = notes.find((n) => n.id === id) as NoteObj;
-      console.log({ id });
-      console.log({ notes });
-      console.log({ note });
       pinned
         ? (state.pinnedNotes = [...notes.filter((n) => n.id !== id)])
         : (state.notes = [...notes.filter((n) => n.id !== id)]);
@@ -109,17 +103,12 @@ const notes = createSlice({
     sortUnpinnedNotes(state, { payload }) {
       const { arr } = payload;
 
-      console.log(arr);
-      //Testing purposes
       state.notes = [...arr];
     },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
-      // console.log(pinned);
-      console.log(arr);
 
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
-      // console.log("here");
     },
     restoreNote(state, { payload: id }) {
       const note = state.deletedNotes.find((n) => n.id === id);
@@ -206,7 +195,6 @@ const notes = createSlice({
 
     editLabel(state, { payload }) {
       const { label, newLabel } = payload;
-      console.log({ payload });
       const indexOfLabel = state.labels.findIndex((l) => l.label === label);
 
       state.labels[indexOfLabel].label = newLabel;
@@ -236,7 +224,6 @@ const notes = createSlice({
     },
     checkBox(state, { payload }) {
       const { id, boxid, checked, pinned, archived } = payload;
-      // console.log({ id, boxid, checked, pinned });
       const notes = archived
         ? state.archivedNotes
         : pinned

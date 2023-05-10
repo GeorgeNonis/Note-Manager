@@ -17,6 +17,12 @@
     width: 90%;
   }
 }
+
+@media (max-width: 599px) {
+  .form {
+    width: 60dvw;
+  }
+}
 @media (max-width: 450px) {
   .form {
     width: 70dvw;
@@ -29,14 +35,9 @@
     }
   }
 }
-@media (max-width: 599px) {
-  .form {
-    width: 60dvw;
-  }
-}
 @media (min-width: 600px) {
   .form {
-    width: 50dvw;
+    width: 40dvw;
     button {
       height: 2.3rem;
       font-size: 0.8rem;
@@ -48,7 +49,7 @@
 }
 @media (min-width: 1200px) {
   .form {
-    width: 30dvw;
+    width: 35dvw;
     button {
       height: 2.3rem;
       font-size: 0.8rem;

@@ -14,6 +14,7 @@ interface AccountAvatarProps {
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
   const { image } = initialState;
+  // console.log(values.hoverOnAvatar);
   return (
     <>
       <Transition

@@ -30,7 +30,7 @@ export const useExistingNotesSection = () => {
 
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
-        dispatch(errorState(arr));
+        // dispatch(errorState(arr));
       }
       dispatch(sortUnpinnedNotes({ arr }));
     };
@@ -52,9 +52,8 @@ export const useExistingNotesSection = () => {
       note,
       token
     );
-    boolean
-      ? dispatch(addNote(processedNote))
-      : dispatch(errorState(response[1]?.message));
+    boolean && dispatch(addNote(processedNote));
+    // : dispatch(errorState(response[1]?.message));
 
     setTitle("");
     setNote("");

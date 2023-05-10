@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import fs from "node:fs/promises";
 import path from "path";
 import process from "process";
@@ -118,11 +119,14 @@ export const findNoteIndex = (arr, id) => {
 export const createUser = (email, hashedPwd, image) => {
   const curr = new Date();
   curr.setDate(curr.getDate());
+  console.log({ curr });
   const date = curr.toISOString().substring(0, 10);
+  console.log({ date });
   const lastTimeDitedNote = curr.toISOString().substring(0, 10);
-
+  console.log({ lastTimeDitedNote });
+  console.log("okay until here");
   const user = {
-    userId: crypto.randomUUID(),
+    userId: uuidv4(),
     email,
     password: hashedPwd,
     date,

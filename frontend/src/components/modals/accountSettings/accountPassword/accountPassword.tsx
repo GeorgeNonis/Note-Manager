@@ -10,7 +10,6 @@ interface AccountPasswordProps {
 
 const AccountPassword = ({ initialState }: AccountPasswordProps) => {
   const { handlers, values } = useAccountPassword({ initialState });
-  // console.log(values.validInputs);
   return (
     <div className={styles.mainContent}>
       <form onSubmit={handlers.onSumbithandler}>
@@ -40,13 +39,14 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
           </legend>
           <input
             type="text"
+            id="currentPassword"
             value={values.currentPassword}
             onChange={(e) => handlers.setCurrentPassword(e.target.value)}
             onFocus={() => handlers.setFocusCurrentPassword(true)}
             onBlur={() => handlers.setFocusCurrentPassword(false)}
             required
             aria-invalid={values.validCurrentPassword ? true : false}
-            aria-describedby="currentPassword"
+            aria-describedby="crp"
           />
           <p
             style={{
@@ -59,7 +59,7 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
               }`,
             }}
             ref={values.errRef}
-            id="currentPassword"
+            id="crp"
             className={styles.show}
           >
             <AiOutlineInfoCircle />
@@ -94,6 +94,7 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
           </legend>
           <input
             type="text"
+            id="newpwd"
             value={values.newPassword}
             onChange={(e) => handlers.setNewPassword(e.target.value)}
             onFocus={() => handlers.setFocusNewPassword(true)}
@@ -145,6 +146,7 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
           </legend>
           <input
             type="text"
+            id="confirmpwd"
             value={values.confirmNewPassword}
             onChange={(e) => handlers.setConfirmNewPassword(e.target.value)}
             onFocus={() => handlers.setFocusConfirmPassword(true)}
@@ -172,7 +174,7 @@ const AccountPassword = ({ initialState }: AccountPasswordProps) => {
         <button
           className={styles.updateButton}
           disabled={!values.validInputs}
-          type="button"
+          type="submit"
           style={{
             cursor: `${!values.validInputs ? "not-allowed" : "pointer"}`,
           }}

@@ -12,12 +12,9 @@ import NoNotesMsg from "../ui/noNotesMsg";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
-  // console.log(`useStore.values.state`);
-  // console.log(useStore.values.state);
-
   if (useStore.values.loading) return <LoadingSpinner />;
 
-  if (useStore.values.error === "Network Error") return <></>;
+  // if (useStore.values.error === "Network Error") return <></>;
 
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
@@ -27,7 +24,6 @@ const ExistinNotesSection = () => {
       <NotesSection notes={[...useStore.values.state.notes]} />
     );
 
-  // console.log(useStore.values.state.notes);
   return (
     <Wrapper styles={styles}>
       <main

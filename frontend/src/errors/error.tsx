@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
+import { useLogoutHandler } from "../hooks/useLogoutHandler";
 
 const Error = () => {
+  const { logoutHandler } = useLogoutHandler();
   return (
     <div className={styles.content}>
       <h2>Something went wrong</h2>
@@ -10,7 +12,9 @@ const Error = () => {
         your understanding
       </h3>
 
-      <Link to={"/"}>Head back to the main page</Link>
+      <Link to={"/"} onClick={logoutHandler}>
+        Head back to the main page
+      </Link>
     </div>
   );
 };

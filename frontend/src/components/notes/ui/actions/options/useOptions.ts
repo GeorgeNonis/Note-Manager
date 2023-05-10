@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { useRef, useState } from "react";
 import { useOutsideClick } from "../../../../../hooks";
 import {
@@ -42,7 +43,7 @@ export const useOptions = ({
   });
 
   const copyNoteHandler = async (id: string, pinned: boolean) => {
-    const sharedId = crypto.randomUUID();
+    const sharedId = uuidv4();
     const response = await copyNoteHttp({
       noteId: id,
       pinned,
@@ -53,11 +54,10 @@ export const useOptions = ({
     dispatch(httpReqResLoading());
 
     const sucessfullRequest = isThereError(response);
-    // console.log(sucessfullRequest);
     if (sucessfullRequest) {
       dispatch(copyNote({ id, pinned, archived, sharedId }));
     } else {
-      dispatch(errorState(response[1]?.message));
+      // dispatch(errorState(response[1]?.message));
     }
 
     dispatch(httpReqResLoading());
@@ -70,10 +70,9 @@ export const useOptions = ({
     const response = await deleteNoteHttp(note.id, pinned, archived!, token);
     const sucessfullRequest = isThereError(response);
 
-    sucessfullRequest
-      ? dispatch(deleteNote({ id: note.id, pinned, archived }))
-      : dispatch(errorState(response[1]?.message));
-    // dispatch(deleteNote({ id: note.id, pinned, archive }));
+    sucessfullRequest &&
+      dispatch(deleteNote({ id: note.id, pinned, archived }));
+    // : dispatch(errorState(response[1]?.message));
     setDisplay(false);
   };
 
@@ -90,7 +89,6 @@ export const useOptions = ({
   const discardBoxesHandler = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    // console.log(e.currentTarget.id);
     setDiscardBoxes(false);
   };
 
@@ -112,13 +110,14 @@ export const useOptions = ({
       if (sucessfullRequest) {
         dispatch(checkBoxes({ id: note.id, pinned, archived }));
       } else {
-        dispatch(errorState(response[1]?.message));
+        // dispatch(errorState(response[1]?.message));
       }
       setDiscardBoxes(!discardBoxes);
     } else {
       if (note.createCheckboxes === true) {
         setDiscardBoxes(!discardBoxes);
       } else {
+        if (note.note.length === 0) return;
         const response = await checkBoxesHandlerHttp({
           noteId: note.id,
           pinned,
@@ -127,11 +126,11 @@ export const useOptions = ({
           token,
         });
         const sucessfullRequest = isThereError(response);
-        sucessfullRequest
-          ? dispatch(
-              checkBoxes({ id: note.id, pinned, archived, uncheckednote })
-            )
-          : dispatch(errorState(response[1]?.message));
+        sucessfullRequest &&
+          dispatch(
+            checkBoxes({ id: note.id, pinned, archived, uncheckednote })
+          );
+        // : dispatch(errorState(response[1]?.message));
       }
     }
   };
@@ -146,11 +145,10 @@ export const useOptions = ({
 
     const sucessfullRequest = isThereError(response);
 
-    sucessfullRequest
-      ? !archived
-        ? dispatch(archiveNote({ id: note.id, pinned }))
-        : dispatch(unarchiveNote({ id: note.id }))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest && !archived
+      ? dispatch(archiveNote({ id: note.id, pinned }))
+      : dispatch(unarchiveNote({ id: note.id }));
+    // : dispatch(errorState(response[1]?.message));
   };
 
   const contentStyle =

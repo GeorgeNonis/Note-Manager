@@ -3,6 +3,7 @@ import { useEffect, RefObject, MutableRefObject, useRef } from "react";
 import { addNoteHttp, deleteNoteHttp, sortNotesHttp } from "../services";
 import { ErrorMessages } from "../errors/error-messages";
 import { DragEndProps } from "./interfaces";
+import { v4 as uuidv4 } from "uuid";
 
 export const onDropBin = async (
   e: React.DragEvent,
@@ -54,7 +55,6 @@ export const DragEndUtil = async ({
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
 
   const response = await sortNotesHttp([...b], pinned, token);
-  console.log(response);
 
   const [, error] = response;
   if (!error === undefined) {
@@ -70,12 +70,9 @@ export const isThereError = <
 >(
   response: T
 ) => {
-  // console.log(response);
   if (response[1] === null) {
-    // console.log("true");
     return true;
   } else {
-    // console.log("false");
     return false;
   }
 };
@@ -96,10 +93,8 @@ export const notePostHandler = async (
   };
   processedNote.title = titleValue;
   processedNote.note = noteValue;
-  processedNote.id = crypto.randomUUID();
+  processedNote.id = uuidv4();
   const response = await addNoteHttp(processedNote, token);
-  // console.log(processedNote);
-  // console.log(response);
   const boolean = isThereError(response);
 
   return { processedNote, boolean, response };
@@ -113,6 +108,7 @@ export const IfNetworkDown = (msg: string): string => {
   if (msg === "Network down") {
     return ErrorMessages.networkdown;
   } else {
+    // console.log({ msg });
     return msg;
   }
 };

@@ -9,7 +9,6 @@ const AccountDelete = ({ initialState }: AccountDeleteProps) => {
   const { email } = initialState;
   const { validMatch, setConfirmEmail, deleteAccountHandler } =
     useAccountDelete({ email });
-  console.log(validMatch);
   return (
     <div className={styles.mainContent}>
       <p>

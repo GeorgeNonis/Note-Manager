@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
@@ -17,7 +18,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
   const addLabelHandler = async () => {
     if (value.length === 0) return;
     if (labels.find((l) => l.label === value)) return;
-    const sharedId = crypto.randomUUID();
+    const sharedId = uuidv4();
     const response = await addLabelHttp({
       id,
       pinned,
@@ -27,11 +28,11 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
       token,
     });
     const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(
-          addLabel({ id, pinned, archived, label: value, labelId: sharedId })
-        )
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest &&
+      dispatch(
+        addLabel({ id, pinned, archived, label: value, labelId: sharedId })
+      );
+    // : dispatch(errorState(response[1]?.message));
     setValue("");
   };
 

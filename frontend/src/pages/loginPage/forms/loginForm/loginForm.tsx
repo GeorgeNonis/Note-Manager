@@ -11,11 +11,10 @@ const LoginForm = () => {
   const { showPasswordHandler, emailHandlers, passwordHandlers, handleSumbit } =
     handlers;
 
-  // console.log(values.validInputs);
   return (
     <>
       <div className={values.warningCredentialsStlye.join(" ")}>
-        Invalid Credentials
+        {values.userMsg}
       </div>
       {/* {values.validCredentials && (
       )} */}

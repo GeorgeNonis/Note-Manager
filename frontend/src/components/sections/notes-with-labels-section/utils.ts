@@ -3,9 +3,6 @@ import { Labels } from "../../../services/interfaces";
 
 export const findPinnedNotes = (arr: NoteObj[], currentLabel: Labels) => {
   const pinnedNotes: NoteObj[] = [];
-  // console.log("Before error");
-  // console.log(currentLabel);
-  // console.log(currentLabel.notes);
   currentLabel.notes &&
     currentLabel.notes.forEach((vl) => {
       arr.forEach((note) => {

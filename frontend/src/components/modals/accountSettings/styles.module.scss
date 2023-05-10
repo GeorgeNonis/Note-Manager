@@ -107,14 +107,14 @@
   }
 }
 
-@media (min-width: 1441px) {
+@media (min-width: 2400px) {
   .modalContent {
     width: 50vw;
     padding: 1rem 1.5rem 1rem 1.5rem;
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 
   .content {
@@ -122,9 +122,10 @@
   }
 
   .col1 {
+    grid-gap: 2rem;
     h3 {
-      padding: 0.5rem;
-      font-size: 1rem;
+      padding: 1rem;
+      font-size: 1.5rem;
     }
   }
 }

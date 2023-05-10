@@ -19,7 +19,6 @@ const displayState = createSlice({
   initialState,
   reducers: {
     refreshState(state) {
-      console.log("refreshing state");
       state.review = false;
       state.loadingInitialState = true;
       state.error = "";
@@ -34,6 +33,7 @@ const displayState = createSlice({
       state.loadingInitialState = payload;
     },
     errorState(state, { payload: error }) {
+      // console.log({ error });
       state.error = error;
     },
     httpReqResLoading(state) {
@@ -43,7 +43,6 @@ const displayState = createSlice({
       state.displaySideBar = !state.displaySideBar;
     },
     openAccountSettings(state) {
-      // console.log("clicking");
       state.accountSettings = !state.accountSettings;
     },
     emailAlreadyInUseHandler(state, { payload }) {

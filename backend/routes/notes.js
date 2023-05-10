@@ -10,167 +10,11 @@ const router = express.Router();
  * GET REQUESTS
  */
 
-router.get(`/v1/testing`, async (req, res, next) => {
-  console.log("Testing");
-  res.setHeader(
-    "Set-Cookie",
-    `email=georgenonis@gmail.com ;SameSite=None; Secure`
-  );
-
-  return res.status(200);
-});
-
-/**
- *  Signup User or Login User
- */
-
-// router.post(`/v1/login`, async (req, res, next) => {
-//   const { email, pwd } = req.body;
-//   console.log("Logging process");
-//   console.log({ email, pwd });
-
-//   if (!email || !pwd)
-//     return (
-//       res.status(400), json({ message: "Email and Password are required!" })
-//     );
-
-//   const user = await UserBluePrint.findOne({ email }).exec();
-
-//   if (!user.password) return res.sendStatus(401);
-
-//   try {
-//     const response = bcrypt.compare(pwd, user.password);
-//     const accessToken = jwt.sign(
-//       {
-//         user: user.email,
-//       },
-//       process.env.ACCCESS_TOKEN_SECRET,
-//       {
-//         expiresIn: "1h",
-//       }
-//     );
-
-//     const isTokenValid = jwt.verify(
-//       accessToken,
-//       process.env.ACCCESS_TOKEN_SECRET
-//     );
-//     console.log({ isTokenValid });
-
-//     // const NotValidTokenOnPurpose = jwt.verify(
-//     //   "12312323213",
-//     //   process.env.ACCCESS_TOKEN_SECRET
-//     // );
-//     // console.log({ NotValidTokenOnPurpose });
-//     // const refreshToken = jwt.sign(
-//     //   {
-//     //     user: user.email,
-//     //   },
-//     //   process.env.ACCCESS_TOKEN_SECRET,
-//     //   {
-//     //     expiresIn: "1d",
-//     //   }
-//     // );
-//     res.setHeader("Authorization", accessToken);
-//     res.status(200).json({ message: "Correct credentials" });
-//     return [response, null];
-//     accessToken;
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal error", error });
-//     return [null, error];
-//   }
-// });
-
-// router.get(`/v1/userexist`, async (req, res, next) => {
-//   const email = req.query.email;
-//   // console.log({ email });
-
-//   const allUsers = await UserBluePrint.find({});
-
-//   const oneUser = await UserBluePrint.findOne({ email });
-//   console.log({ oneUser });
-//   console.log(oneUser === null);
-//   console.log(typeof oneUser);
-//   // console.log({ allUsers });
-//   const duplicate = allUsers.some((user) => {
-//     // console.log(user.email);
-//     return user.email.toLowerCase() === email.toLowerCase();
-//   });
-
-//   console.log({ duplicate, email });
-
-//   try {
-//     if (duplicate) {
-//       console.log("Account with this email exists already");
-
-//       return res
-//         .status(201)
-//         .json({ message: `Account with this email exist's already` });
-//     } else {
-//       console.log("No account associated with this email");
-//       return res
-//         .status(200)
-//         .json({ message: `No account associated with this email` });
-//     }
-//   } catch (error) {
-//     return res.status(500).json({ message: "something went wrong", error });
-//   }
-// });
-
-// router.post("/v1/signup", async (req, res, next) => {
-//   console.log("SIGNUP PROCESS");
-//   const { email, pwd, image } = req.body;
-
-//   if (!email || !pwd) {
-//     return res.status(400).json({ message: "Email and Password are required" });
-//   }
-
-//   const allUsers = await UserBluePrint.find({});
-//   const duplicate = allUsers.some((user) => {
-//     return user.email.toLowerCase() === email.toLowerCase();
-//   });
-//   /**
-//    * Check for duplicates in Database
-//    */
-//   if (duplicate) {
-//     console.log("Duplicates");
-//     return res.sendStatus(409);
-//   }
-//   console.log({ duplicate, email, pwd, image });
-//   // return;
-//   try {
-//     const hashedPwd = await bcrypt.hash(pwd, 10);
-
-//     const user = createUser(email, hashedPwd, image);
-//     const newUser = new UserBluePrint({ ...user });
-
-//     const response = await newUser
-//       .save()
-//       .then((res) => console.log(res))
-//       .catch((error) => console.log(error));
-
-//     res.status(200).json(response);
-//     return [response, null];
-//   } catch (error) {
-//     res.status(500).json({ message: "Internal error", error });
-//     return [null, error];
-//   }
-// });
-
-/**
- * AUTH VERIFICATION
- */
-
-/**
- * AUTH VERIFICATION
- */
-
 router.get("/v1/notes", async (req, res, next) => {
   const email = req.user;
-  console.log({ email });
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
-    console.log({ user });
     res.status(200).json({
       ...user,
     });
@@ -237,7 +81,6 @@ router.post("/v1/notes", async (req, res, next) => {
     res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
   } catch (error) {
-    console.log("theres error");
     res.status(500).json({ message: "Internal error", error });
     return [null, error];
   }
@@ -303,12 +146,15 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 
 router.post("/v1/trashbin/:id", async (req, res, next) => {
   const email = req.user;
-
   const id = req.params.id.split(":")[1];
+  console.log("testing purposes");
+  return res.status(500).json({ message: "Internal error" });
+
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
     const { deletedNotes, unPinnedNotes } = user;
     const restoredNote = deletedNotes.find((n) => n.id === id);
+
     const response = await UserBluePrint.updateOne(
       { email },
       {
@@ -316,7 +162,6 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
         unPinnedNotes: [...unPinnedNotes, { ...restoredNote }],
       }
     );
-
     res.status(200).json({
       message: "Restored note Successfully",
     });
@@ -355,8 +200,7 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
-    console.log("pinning note --- backend request from frontned");
-    console.log({ user, email });
+
     const { pinnedNotes, unPinnedNotes } = user;
     const { id, isNotePined: pinned } = getIdPinnedStatus(req);
     const notes = pinned ? pinnedNotes : unPinnedNotes;
@@ -389,8 +233,6 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
   const curr = new Date();
   curr.setDate(curr.getDate());
   const lastTimeDitedNote = curr.toISOString().substring(0, 10);
-
-  console.log({ email });
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
@@ -459,6 +301,7 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { label, labelId } = req.body;
+
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -488,6 +331,7 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
+  // console.log({ email, label, req });
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -498,11 +342,9 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
     );
 
     if (noteIndex >= 0) {
-      console.log("index exist");
       labels[findLabelIndex].notes[noteIndex].checked =
         !labels[findLabelIndex].notes[noteIndex].checked;
     } else {
-      console.log("index doesnt exist");
       labels[findLabelIndex].notes.push({ id, checked: true, pinned });
     }
 
@@ -747,7 +589,6 @@ router.post(`/v1/pwd`, async (req, res) => {
 });
 router.post(`/v1/npwd`, async (req, res) => {
   const email = req.user;
-  // console.log(req);
   const { password } = req.body;
   try {
     const newHashedPwd = await bcrypt.hash(password, 10);
@@ -831,12 +672,8 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
 
 router.get(`/v1/account`, async (req, res, next) => {
   const email = req.user;
-
-  console.log("deleting account");
   try {
     const response = await UserBluePrint.findOneAndDelete({ email });
-    console.log(Array.isArray);
-    console.log({ response });
     res.status(200).json({ message: "Sucessfully deleted account" });
     return [response, null];
   } catch (error) {

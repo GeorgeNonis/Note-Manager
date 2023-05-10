@@ -12,14 +12,14 @@ export const useColorPallete = ({
   pinned,
 }: ColorPalleteProps) => {
   const dispatch = useDispatch();
+  const token = sessionStorage.getItem("auth-token")!;
 
   const displayHandler = async (value: string) => {
-    const response = await updateNoteColorHttp(value, id, pinned);
+    // const response = await updateNoteColorHttp(value, id, pinned, token);
 
-    const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(setColor({ value, id, pinned }))
-      : dispatch(errorState(response[1]?.message));
+    // const sucessfullRequest = isThereError(response);
+    // sucessfullRequest && dispatch(setColor({ value, id, pinned }));
+    // : dispatch(errorState(response[1]?.message));
 
     setDisplayPalette(false);
   };

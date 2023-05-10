@@ -38,7 +38,6 @@ const BackgroundImage = ({
           <div
             className={styles.default}
             onClick={() => {
-              console.log("clicking");
               displayHandler(`#202124`);
             }}
           >
@@ -53,7 +52,6 @@ const BackgroundImage = ({
                 alt={bg.src}
                 key={bg.src}
                 onClick={() => {
-                  console.log("clicking");
                   displayHandler(bg.src);
                 }}
               />

@@ -24,26 +24,20 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
     });
 
     const sucessfullRequest = isThereError(response);
-    console.log(sucessfullRequest);
-    console.log("Hello");
-    sucessfullRequest
-      ? dispatch(
-          editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
-        )
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest &&
+      dispatch(
+        editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
+      );
+    // : dispatch(errorState(response[1]?.message));
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(
-      "pinning note --- inside from pinNoteHandler from useNote Hook"
-    );
     const response = await pinNoteHandlerHttp(note.id, pinned, token);
 
     const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(pinHandler(note.id))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest && dispatch(pinHandler(note.id));
+    // : dispatch(errorState(response[1]?.message));
   };
   // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;

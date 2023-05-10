@@ -24,6 +24,7 @@ export const useLoginForm = () => {
   const [validInputs, setValidInputs] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
   const [validCredentials, setValidCredentials] = useState(false);
+  const [userMsg, setUserMsg] = useState("Invalid Credentials");
 
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
@@ -31,6 +32,7 @@ export const useLoginForm = () => {
   };
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setUserMsg("Invalid Credentials");
     const token = sessionStorage.getItem("auth-token")!;
     setValidCredentials(false);
     e.preventDefault();
@@ -44,15 +46,17 @@ export const useLoginForm = () => {
     const response = await getUserHttp({ email, pwd: password, token });
 
     const successRequest = isThereError(response);
+    if (response[0]?.data.msg) {
+      console.log(response[0]?.data.msg);
+      setUserMsg(response[0]?.data.msg);
+    }
     if (!response[0]?.data.match) return setValidCredentials(response[0]?.data);
-    console.log(response[0]?.data.match);
-    console.log(typeof response[0]?.data.match);
     if (successRequest) {
       const token = response[0]?.headers.authorization;
       sessionStorage.setItem("auth-token", token!);
       return navigate("/notes");
     } else {
-      console.log(response[1]);
+      // console.log(response[1]);
     }
   };
 
@@ -92,6 +96,7 @@ export const useLoginForm = () => {
       errRef,
       validCredentials,
       warningCredentialsStlye,
+      userMsg,
       emailValues: {
         email,
         emailFocus,

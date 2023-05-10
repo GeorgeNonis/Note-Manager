@@ -7,22 +7,174 @@
   background-color: rgba(10, 10, 10, 0.6);
 }
 
+@import "../../../styles/mixins.module.scss";
+
+@media (max-width: 599px) {
+  .xMark {
+    width: 2rem;
+    height: 2rem;
+  }
+  .modalContent {
+    width: 90dvw;
+
+    padding: 1rem 0 1rem 0;
+  }
+
+  .fromcomputer {
+    place-self: center;
+    width: 100%;
+  }
+  .modalImages {
+    grid-template-columns: repeat(3, 23dvw);
+
+    img {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+  .svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+@media (max-width: 450px) {
+  .xMark {
+    width: 2rem;
+    height: 2rem;
+  }
+  .modalContent {
+    width: 90dvw;
+
+    padding: 1rem 0 1rem 0;
+
+    h1 {
+      font-size: 1rem;
+    }
+  }
+  .fromcomputer {
+    place-self: center;
+    width: 100%;
+    h3 {
+      font-size: 1rem;
+    }
+  }
+  .modalImages {
+    grid-template-columns: repeat(3, 23dvw);
+
+    img {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+  .svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+@media (min-width: 599px) {
+  .xMark {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .modalContent {
+    width: 90dvw;
+
+    padding: 1rem 0 1rem 0;
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  .fromcomputer {
+    place-self: center;
+  }
+  .modalImages {
+    grid-template-columns: repeat(3, 23dvw);
+
+    img {
+      width: 6rem;
+      height: 6rem;
+    }
+  }
+  .svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .xMark {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .modalContent {
+    width: 60dvw;
+    padding: 1rem 0 1rem 0;
+  }
+  .fromcomputer {
+    place-self: center;
+  }
+  .modalImages {
+    grid-template-columns: repeat(3, 18dvw);
+    img {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+
+  .svg {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+@media (min-width: 2400px) {
+  .xMark {
+    width: 4rem;
+    height: 4rem;
+  }
+  .modalContent {
+    width: 60dvw;
+    padding: 1rem 0 1rem 0;
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+  .fromcomputer {
+    place-self: center;
+    h3 {
+      font-size: 2.3rem;
+    }
+  }
+  .modalImages {
+    grid-template-columns: repeat(3, 15dvw);
+    img {
+      width: 14rem;
+      height: 14rem;
+    }
+  }
+
+  .svg {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
 .modalContent {
-  padding: 1rem 2.5rem 1rem 2.5rem;
+  // padding: 1rem 2.5rem 1rem 2.5rem;
+  box-sizing: border-box;
   border-radius: 8px;
   position: absolute;
   inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  width: 70dvw;
+  // width: 70dvw;
   height: 80dvh;
   background-color: #313235;
   z-index: 100000000;
   border: none;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 60%), 0 4px 8px 3px rgb(0 0 0 / 30%);
-  overflow-x: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   h1 {
     margin: 0;
-    font-size: 1.7rem;
+    // font-size: 1.7rem;
     font-weight: 300;
     font-family: "CormorantGaramond";
     text-align: center;
@@ -36,8 +188,7 @@
       place-items: center;
       justify-self: flex-end;
       margin: 0 0rem 1.5rem 0;
-      width: 25rem;
-      float: right;
+      width: 100%;
       border-radius: 8px;
       &:hover {
         background-color: #5d5d5d87;
@@ -46,16 +197,16 @@
         pointer-events: none;
         all: unset;
       }
-      svg {
+      .svg {
         pointer-events: none;
-        width: 3rem;
-        height: 3rem;
+        // width: 3rem;
+        // height: 3rem;
         path {
           stroke: #969ba1;
         }
       }
       h3 {
-        font-size: 1rem;
+        // font-size: 1rem;
         font-family: "CormorantGaramond";
         color: #c8cdd3;
         margin: 0 auto 0;
@@ -78,11 +229,9 @@
   display: grid;
   place-content: center;
   place-items: center;
-  grid-template-columns: repeat(4, 1fr);
+  place-self: center;
   grid-gap: 1.5rem;
   img {
-    width: 10rem;
-    height: 10rem;
     cursor: pointer;
     border-radius: 50%;
   }
@@ -92,8 +241,8 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  width: 2rem;
-  height: 2rem;
+  // width: 2rem;
+  // height: 2rem;
   cursor: pointer;
   transition: all 230ms ease-in-out;
   &:hover {

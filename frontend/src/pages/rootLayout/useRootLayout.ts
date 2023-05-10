@@ -16,25 +16,35 @@ import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
 
 export const useRootLayout = () => {
+  const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
   const dispatch = useDispatch();
+  const error = "";
   axios.interceptors.response.use(
     (response) => {
+      displayState.error.length > 0 && dispatch(errorState(error));
+
       return response;
     },
     (err) => {
       const {
         response: { status },
+        message,
       } = err;
+      // console.log({ err });
+      // console.log({ message });
       if (status == 401) {
         logoutHandler();
+      } else if (status === 500) {
+        dispatch(errorState(IfNetworkDown(message)));
+      } else {
+        dispatch(errorState(status.toString()));
       }
       return Promise.reject(err);
     }
   );
 
   const location = useLocation();
-  const displayState = useSelector((state: IRootState) => state.displayState);
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
@@ -64,7 +74,6 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const token = sessionStorage.getItem("auth-token");
-    console.log("useeffect of location");
     if (!token) return;
     const parseJwt = (test: string) => {
       try {
@@ -78,7 +87,6 @@ export const useRootLayout = () => {
     }
 
     if (parseJwt(token!).exp * 1000 < Date.now()) {
-      console.log("logging out");
       logoutHandler();
     }
   }, [location]);
@@ -86,7 +94,6 @@ export const useRootLayout = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await getNotesHttp(token!);
-      console.log("First Http to get data");
 
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
@@ -105,13 +112,11 @@ export const useRootLayout = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("triggering");
     if (!displayState.error) return;
-    // if (displayState.error === networkdown || requestFailed) return;
 
     const timer = setTimeout(() => {
       dispatch(errorState(""));
-    }, 1500);
+    }, 5000);
 
     return () => {
       clearInterval(timer);

@@ -1,11 +1,10 @@
-import { useCallback } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
 import { addLabel } from "../../../../store/notes-slice";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { addLabelHttp } from "../../../../services";
 import { isThereError } from "../../../../utils/utils";
-import { errorState } from "../../../../store/display-state-slice";
 
 export const useEditLabelsModal = (
   cb: Dispatch<React.SetStateAction<boolean>>
@@ -28,19 +27,17 @@ export const useEditLabelsModal = (
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
-    // console.log("clicking");
     if (e.currentTarget.id === "x&plus") {
       setCreateLabel(!createLabel);
       return createLabel && newLabelRef.current?.focus();
     }
     setCreateLabel(!createLabel);
     if (label.length === 0 || labels.some((l) => l.label === label)) return;
-    const sharedId = crypto.randomUUID();
+    const sharedId = uuidv4();
     const response = await addLabelHttp({ label, labelId: sharedId, token });
     const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(addLabel({ label, labelId: sharedId }))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest && dispatch(addLabel({ label, labelId: sharedId }));
+    // : dispatch(errorState(response[1]?.message));
 
     setLabel("");
   };

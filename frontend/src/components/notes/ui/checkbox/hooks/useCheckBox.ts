@@ -30,7 +30,7 @@ export const useCheckBox = ({
     if (sucessfullRequest) {
       dispatch(checkBox({ id: noteId, boxid, checked, pinned, archived }));
     } else {
-      dispatch(errorState(response[1]?.message));
+      // dispatch(errorState(response[1]?.message));
     }
     setLoading(false);
   };

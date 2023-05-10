@@ -52,16 +52,17 @@
     }
   }
 }
-@media (min-width: 1441px) {
+@media (min-width: 2400px) {
   .mainContent {
     width: 90%;
+    grid-gap: 2rem;
     legend {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
     input {
       width: 100%;
-      padding: 0.5rem;
-      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      font-size: 1.5rem;
     }
   }
 }

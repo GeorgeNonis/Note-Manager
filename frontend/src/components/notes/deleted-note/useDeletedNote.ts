@@ -20,9 +20,8 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     const response = await restoreNoteHttp(note.id, token);
 
     const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(restoreNote(note.id))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest && dispatch(restoreNote(note.id));
+    // : dispatch(errorState(response[1]?.message));
   };
 
   const removeProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,9 +29,8 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     const response = await removeNoteHttp(note.id, token);
 
     const sucessfullRequest = isThereError(response);
-    sucessfullRequest
-      ? dispatch(removeNote(note.id))
-      : dispatch(errorState(response[1]?.message));
+    sucessfullRequest && dispatch(removeNote(note.id));
+    // : dispatch(errorState(response[1]?.message));
 
     setReview(false);
   };

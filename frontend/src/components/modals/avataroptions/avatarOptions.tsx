@@ -18,6 +18,7 @@ const AvatarOptions = ({
       ? styles.closeModal
       : null,
   ];
+  navigator.userAgent;
   return (
     <>
       <div
@@ -33,9 +34,18 @@ const AvatarOptions = ({
         <div className={styles.actions}>
           <div className={styles.fromcomputer}>
             <button>
-              <GrPersonalComputer fill="black" stroke="gray" color="gray" />
+              <GrPersonalComputer
+                fill="black"
+                stroke="gray"
+                color="gray"
+                className={styles.svg}
+              />
             </button>
-            <h3>From Computer</h3>
+            <h3>
+              {/Android|iPhone/i.test(navigator.userAgent)
+                ? "From Gallery"
+                : "From Computer"}
+            </h3>
             <input
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.files) {
@@ -61,7 +71,6 @@ const AvatarOptions = ({
                     src={avtr.src}
                     key={avtr.src}
                     onClick={() => {
-                      console.log(URL_REGEX.test(avtr.src));
                       avatarHandler(avtr.src);
                     }}
                   />

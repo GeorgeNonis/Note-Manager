@@ -1,2 +1,2 @@
-export { default } from "./avatarOptions.tsx";
-export * from "./interfaces.ts";
+export { default } from "./avatarOptions";
+export * from "./interfaces";

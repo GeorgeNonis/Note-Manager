@@ -15,9 +15,6 @@ const ExistingNoteWrapper = ({
   onDragEnd,
   dragable,
 }: ExistingNoteWrapperProps) => {
-  // console.log(clickOutsideNote.current.clientHeight);
-  // console.log(clickOutsideNote.current.clientWidth);
-  // console.log({ note });
   return (
     <div
       style={{
@@ -35,7 +32,6 @@ const ExistingNoteWrapper = ({
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
-      // onDragEnd={(e) => onDragEnd(e)}
       onDrop={(e) => onDragEnd(e)}
       onDragOver={(e) => e.preventDefault()}
     >

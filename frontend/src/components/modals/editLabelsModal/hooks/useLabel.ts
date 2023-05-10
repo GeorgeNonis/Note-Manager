@@ -27,7 +27,7 @@ export const useLabel = (label: string) => {
       params.labelId?.split(":")[1] && navigate("/notes");
       dispatch(deleteLabel(label));
     } else {
-      dispatch(errorState(response[1]?.message));
+      // dispatch(errorState(response[1]?.message));
     }
   };
 
@@ -35,18 +35,16 @@ export const useLabel = (label: string) => {
     if (!edit) {
       return setEdit(!edit);
     }
-    console.log(`${label} ${newLabel}`);
     if (label === newLabel || newLabel.length === 0) return;
 
     const response = await editLabelHttp(label, newLabel, token);
 
     const sucessfullRequest = isThereError(response);
-    console.log({ response });
 
     if (sucessfullRequest) {
       dispatch(editLabel({ label, newLabel }));
     } else {
-      dispatch(errorState(response[1]?.message));
+      // dispatch(errorState(response[1]?.message));
     }
   };
 

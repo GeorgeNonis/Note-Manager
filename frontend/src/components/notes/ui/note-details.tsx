@@ -25,7 +25,6 @@ const NoteDetails = ({
           value={editable ? note.note : noteValue}
           onChange={(e) => {
             if (setNotedetails) {
-              console.log("s");
               setNotedetails(e.target.value);
             }
           }}
