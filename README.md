@@ -40,6 +40,7 @@
 ### Features of Note Manager :wrench:
 
 <ul>
+      <li>Account Settings - Pwd reset + Change Avatar - Delete ACcount</li>:open_file_folder:
    <li>Create Note</li>:open_file_folder:
    <li>Edit Note</li>:pencil2:
    <li>Drag and drop to the bin to delete note OR you can delete it throught it options (...)<li>:raised_hand:
