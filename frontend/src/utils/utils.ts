@@ -49,18 +49,19 @@ export const DragEndUtil = async ({
     arr[i1] = arr[i2];
     // Step 3
     arr[i2] = temp;
+    // console.log({ temp });
     return arr;
   };
-
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
-
+  // console.log({ index, indexOf });
+  // console.log({ notesPrevState });
+  // console.log({ b });
   const response = await sortNotesHttp([...b], pinned, token);
 
   const [, error] = response;
   if (!error === undefined) {
     cb(error);
   } else {
-    // cb([...notesPrevState, ...rest]);
     cb([...b]);
   }
 };

@@ -101,13 +101,14 @@ const notes = createSlice({
         : (state.notes = [...state.notes.filter((n) => n.id !== id)]);
     },
     sortUnpinnedNotes(state, { payload }) {
-      const { arr } = payload;
-
-      state.notes = [...arr];
+      const arr = payload;
+      // console.log(payload);
+      // state.notes = [...arr];
+      state.notes = [...payload];
     },
     sortNotes(state, { payload }) {
       const { pinned, arr } = payload;
-
+      // console.log("Trigered by Pinned Notes Sections");
       pinned ? (state.pinnedNotes = [...arr]) : (state.notes = [...arr]);
     },
     restoreNote(state, { payload: id }) {

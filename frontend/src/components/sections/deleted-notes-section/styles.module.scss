@@ -1,19 +1,57 @@
 @import "../../../styles/mixins.module.scss";
 
+@media (max-width: 599px) {
+  .warning {
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 450px) {
+  .warning {
+    font-size: 0.75rem;
+  }
+}
+@media (min-width: 599px) {
+  .warning {
+    font-size: 0.7rem;
+  }
+}
+@media (min-width: 1200px) {
+  .warning {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 2400px) {
+  .warning {
+    font-size: 1.5rem;
+  }
+}
+
 .warning {
   position: absolute;
   inset: 4rem auto auto 50%;
   transform: translateX(-49%);
   font-style: italic;
-  font-size: 1rem;
+  text-align: center;
+  // font-size: 1rem;
 }
 
 .notes {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  // grid-template-columns: repeat(4, minmax(100px, 1fr));
   margin: 1rem;
   padding-top: 4rem;
+
+  @include for-tablet-landscape-up {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+  @include for-desktop-up {
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+  }
+
+  @include for-phone-only {
+    grid-auto-flow: rows;
+  }
 }
 
 .error {

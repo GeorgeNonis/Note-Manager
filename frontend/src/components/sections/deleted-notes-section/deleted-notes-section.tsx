@@ -6,9 +6,6 @@ const DeletedNotesSection = () => {
   const { state } = useDeletedNotesSection();
 
   let zindex = 1000;
-
-  // if (state.displayState.error)
-  //   return <p className={styles.error}>{state.displayState.error}</p>;
   return (
     <>
       <main>

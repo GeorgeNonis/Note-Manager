@@ -8,8 +8,8 @@ export const sortNotesHttp = async (
   pinned: boolean,
   token: string
 ) => {
-  // const token = sessionStorage.getItem("auth-token");
-
+  // console.log("Okay until here");
+  // console.log(data, pinned, token);
   try {
     const response = await axios.post(
       `notes/sortnotes?isnotepined=${pinned}`,

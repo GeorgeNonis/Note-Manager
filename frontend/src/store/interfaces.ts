@@ -24,4 +24,5 @@ export interface DisplayStateInitialState {
   accountSettings: boolean;
   emailAlreadyInUse: boolean;
   showLoginForm: boolean;
+  fetchingData: boolean;
 }

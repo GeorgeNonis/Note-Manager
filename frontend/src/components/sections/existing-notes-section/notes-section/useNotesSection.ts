@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../../../../hooks";
 import { NoteObj } from "../../../../interfaces/interfaces";
 import { errorState } from "../../../../store/display-state-slice";
-import { sortNotes } from "../../../../store/notes-slice";
+import { sortNotes, sortUnpinnedNotes } from "../../../../store/notes-slice";
 import { IRootState } from "../../../../store/store";
 import { DragEndUtil } from "../../../../utils";
 
@@ -24,11 +24,11 @@ export const useNotesSection = () => {
       e.currentTarget.attributes.getNamedItem("draggable")?.value;
     if (!draggable) return;
     const cb = (arr: Iterable<NoteObj>[]) => {
+      dispatch(sortUnpinnedNotes(arr));
       if (!Array.isArray(arr)) {
-        // dispatch(errorState(arr));
       }
-      dispatch(sortNotes({ arr, pinned: false }));
     };
+
     await DragEndUtil({ state, index, indexOf, cb, pinned: false, token });
   };
 

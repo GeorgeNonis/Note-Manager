@@ -7,11 +7,6 @@
   border: 1px solid gray;
   border-radius: 5px;
   padding: 0.5rem;
-  // // & :not(._actions_196ge_81) {
-  // //   ._mainSection_1gaw9_4 {
-  // //     grid-gap: 2rem;
-  // //   }
-  // }
 
   @include for-phone-only {
     width: 80%;

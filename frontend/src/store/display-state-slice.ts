@@ -12,6 +12,7 @@ const initialState = {
   accountSettings: false,
   emailAlreadyInUse: false,
   showLoginForm: false,
+  fetchingData: false,
 } as DisplayStateInitialState;
 
 const displayState = createSlice({
@@ -55,6 +56,10 @@ const displayState = createSlice({
     formSwitch(state) {
       state.showLoginForm = !state.showLoginForm;
     },
+    fetchingDataHandler(state) {
+      console.log("initiating again");
+      state.fetchingData = !state.fetchingData;
+    },
   },
 });
 
@@ -67,6 +72,7 @@ export const {
   openAccountSettings,
   emailAlreadyInUseHandler,
   formSwitch,
+  fetchingDataHandler,
 } = displayState.actions;
 
 export default displayState.reducer;
