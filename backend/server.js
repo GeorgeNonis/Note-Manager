@@ -12,6 +12,7 @@ const app = express();
 const corsOptions = {
   exposedHeaders: "Authorization",
 };
+console.log();
 
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
