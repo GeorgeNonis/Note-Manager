@@ -2,7 +2,10 @@ import { v4 as uuidv4 } from "uuid";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLabelHttp, tickLabelHandlerHttp } from "../../../../../services";
-import { errorState } from "../../../../../store/display-state-slice";
+import {
+  errorState,
+  fetchingDataHandler,
+} from "../../../../../store/display-state-slice";
 import { addLabel, tickHandler } from "../../../../../store/notes-slice";
 import { IRootState } from "../../../../../store/store";
 import { isThereError } from "../../../../../utils/utils";
@@ -16,6 +19,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
   const addLabelHandler = async () => {
+    dispatch(fetchingDataHandler());
     if (value.length === 0) return;
     if (labels.find((l) => l.label === value)) return;
     const sharedId = uuidv4();
@@ -34,6 +38,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
       );
     // : dispatch(errorState(response[1]?.message));
     setValue("");
+    dispatch(fetchingDataHandler());
   };
 
   const doesLabelExist = labels.find((lb) => lb.label === value);
@@ -54,6 +59,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
     label: string,
     id: string
   ) => {
+    dispatch(fetchingDataHandler());
     const response = await tickLabelHandlerHttp(
       id,
       label,
@@ -67,6 +73,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
       dispatch(tickHandler({ id, label }));
     } else {
     }
+    dispatch(fetchingDataHandler());
   };
 
   useEffect(() => {

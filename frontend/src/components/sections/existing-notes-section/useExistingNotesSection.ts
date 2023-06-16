@@ -25,11 +25,11 @@ export const useExistingNotesSection = () => {
   });
 
   const onDragEnd = async (e: React.DragEvent) => {
-    console.log("before id");
+    // console.log("before id");
     const id = e.dataTransfer.getData("id");
-    console.log("after id");
+    // console.log("after id");
     if (id.length === 0) return;
-    console.log("before callback");
+    // console.log("before callback");
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
       }

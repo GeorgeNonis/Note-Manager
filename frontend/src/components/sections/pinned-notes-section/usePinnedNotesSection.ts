@@ -23,7 +23,7 @@ export const usePinnedNotesSection = () => {
       }
       dispatch(sortNotes({ arr, pinned: true }));
     };
-    console.log("pinned note");
+    // console.log("pinned note");
     await DragEndUtil({ state, index, indexOf, cb, pinned: true, token });
   };
 

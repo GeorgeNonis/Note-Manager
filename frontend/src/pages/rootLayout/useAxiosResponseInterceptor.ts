@@ -11,13 +11,10 @@ import { IfNetworkDown } from "../../utils";
 
 const useAxiosREsponseInterceptor = () => {
   const dispatch = useDispatch();
-  const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
-  const error = "";
 
   axios.interceptors.request.use(
     (request) => {
-      dispatch(fetchingDataHandler());
       return request;
     },
     (err) => {
@@ -30,8 +27,6 @@ const useAxiosREsponseInterceptor = () => {
    */
   axios.interceptors.response.use(
     (response) => {
-      displayState.error.length > 0 && dispatch(errorState(error));
-      dispatch(fetchingDataHandler());
       return response;
     },
     (err) => {
@@ -46,7 +41,7 @@ const useAxiosREsponseInterceptor = () => {
       } else {
         dispatch(errorState(status.toString()));
       }
-      dispatch(fetchingDataHandler());
+      // dispatch(fetchingDataHandler());
       return Promise.reject(err);
     }
   );

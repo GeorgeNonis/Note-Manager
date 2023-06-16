@@ -5,6 +5,7 @@ import { addLabel } from "../../../../store/notes-slice";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { addLabelHttp } from "../../../../services";
 import { isThereError } from "../../../../utils/utils";
+import { fetchingDataHandler } from "../../../../store/display-state-slice";
 
 export const useEditLabelsModal = (
   cb: Dispatch<React.SetStateAction<boolean>>
@@ -27,6 +28,7 @@ export const useEditLabelsModal = (
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
+    dispatch(fetchingDataHandler());
     if (e.currentTarget.id === "x&plus") {
       setCreateLabel(!createLabel);
       return createLabel && newLabelRef.current?.focus();
@@ -40,6 +42,7 @@ export const useEditLabelsModal = (
     // : dispatch(errorState(response[1]?.message));
 
     setLabel("");
+    dispatch(fetchingDataHandler());
   };
 
   const state = {

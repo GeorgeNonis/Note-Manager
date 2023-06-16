@@ -15,6 +15,7 @@ import {
 } from "../../../../../store/notes-slice";
 import {
   errorState,
+  fetchingDataHandler,
   httpReqResLoading,
 } from "../../../../../store/display-state-slice";
 import { useDispatch } from "react-redux/es/exports";
@@ -43,6 +44,7 @@ export const useOptions = ({
   });
 
   const copyNoteHandler = async (id: string, pinned: boolean) => {
+    dispatch(fetchingDataHandler());
     const sharedId = uuidv4();
     const response = await copyNoteHttp({
       noteId: id,
@@ -62,9 +64,11 @@ export const useOptions = ({
 
     dispatch(httpReqResLoading());
     setDisplay(false);
+    dispatch(fetchingDataHandler());
   };
 
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
+    dispatch(fetchingDataHandler());
     e.stopPropagation();
 
     const response = await deleteNoteHttp(note.id, pinned, archived!, token);
@@ -74,6 +78,7 @@ export const useOptions = ({
       dispatch(deleteNote({ id: note.id, pinned, archived }));
     // : dispatch(errorState(response[1]?.message));
     setDisplay(false);
+    dispatch(fetchingDataHandler());
   };
 
   const openDotOptions = () => {
@@ -97,6 +102,7 @@ export const useOptions = ({
   };
 
   const checkBoxesHandler = async (e: React.MouseEvent<HTMLElement>) => {
+    dispatch(fetchingDataHandler());
     const { uncheckednote } = CreateCheckBoxes({ note });
     if (e.currentTarget.id === "discard") {
       const response = await checkBoxesHandlerHttp({
@@ -133,9 +139,11 @@ export const useOptions = ({
         // : dispatch(errorState(response[1]?.message));
       }
     }
+    dispatch(fetchingDataHandler());
   };
 
   const archiveNoteHandler = async () => {
+    dispatch(fetchingDataHandler());
     const response = await archiveNoteHandlerHttp({
       noteId: note.id,
       pinned,
@@ -149,6 +157,7 @@ export const useOptions = ({
       ? dispatch(archiveNote({ id: note.id, pinned }))
       : dispatch(unarchiveNote({ id: note.id }));
     // : dispatch(errorState(response[1]?.message));
+    dispatch(fetchingDataHandler());
   };
 
   const contentStyle =

@@ -6,6 +6,8 @@ import {
 } from "../../../../services/postNote";
 import { InitialState } from "../../../../store/interfaces";
 import { isThereError } from "../../../../utils";
+import { fetchingDataHandler } from "../../../../store/display-state-slice";
+import { useDispatch } from "react-redux";
 
 interface UseAccountPasswordProps {
   initialState: InitialState;
@@ -14,6 +16,7 @@ interface UseAccountPasswordProps {
 export const useAccountPassword = ({
   initialState,
 }: UseAccountPasswordProps) => {
+  const dispatch = useDispatch();
   const [currentPassword, setCurrentPassword] = useState("");
   const [focusCurrentPassword, setFocusCurrentPassword] = useState(false);
   const [validCurrentPassword, setValidCurrentPassword] = useState(false);
@@ -36,6 +39,7 @@ export const useAccountPassword = ({
   };
 
   const onSumbithandler = async (e: React.FormEvent) => {
+    dispatch(fetchingDataHandler());
     e.preventDefault();
     const v1 = PWD_REGEX.test(newPassword);
     if (!v1 || !validCurrentPassword) {
@@ -49,6 +53,7 @@ export const useAccountPassword = ({
     setConfirmNewPassword("");
     setNewPassword("");
     setValidInputs(false);
+    dispatch(fetchingDataHandler());
   };
 
   useEffect(() => {

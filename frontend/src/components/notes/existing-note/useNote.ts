@@ -1,7 +1,10 @@
 import React, { useState, useRef, MutableRefObject } from "react";
 import { useDispatch } from "react-redux";
 import { editNoteHttp, pinNoteHandlerHttp } from "../../../services";
-import { errorState } from "../../../store/display-state-slice";
+import {
+  errorState,
+  fetchingDataHandler,
+} from "../../../store/display-state-slice";
 import { editNote, pinHandler } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
 import { CustomHook } from "./interfaces";
@@ -15,6 +18,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
 
   const token = sessionStorage.getItem("auth-token")!;
   const saveChanges = async () => {
+    dispatch(fetchingDataHandler());
+
     const response = await editNoteHttp({
       noteId,
       pinned,
@@ -28,16 +33,20 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
       dispatch(
         editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
       );
+    dispatch(fetchingDataHandler());
     // : dispatch(errorState(response[1]?.message));
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
+    dispatch(fetchingDataHandler());
+
     e.stopPropagation();
     const response = await pinNoteHandlerHttp(note.id, pinned, token);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(pinHandler(note.id));
     // : dispatch(errorState(response[1]?.message));
+    dispatch(fetchingDataHandler());
   };
   // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;

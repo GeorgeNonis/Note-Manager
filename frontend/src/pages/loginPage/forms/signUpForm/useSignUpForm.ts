@@ -90,7 +90,7 @@ export const useSignUpForm = () => {
       sessionStorage.setItem("auth-token", token!);
       navigate("/notes");
     } else {
-      console.log(response[1]?.message);
+      // console.log(response[1]?.message);
     }
   };
 

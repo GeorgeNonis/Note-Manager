@@ -4,7 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useOutsideHover } from "../../../../hooks";
 import { deleteLabelHttp } from "../../../../services";
 import { editLabelHttp } from "../../../../services/";
-import { errorState } from "../../../../store/display-state-slice";
+import {
+  errorState,
+  fetchingDataHandler,
+} from "../../../../store/display-state-slice";
 import { deleteLabel, editLabel } from "../../../../store/notes-slice";
 import { isThereError } from "../../../../utils";
 
@@ -21,6 +24,7 @@ export const useLabel = (label: string) => {
   const hoverOutsideLabel = useOutsideHover(() => setMouseOverLabel(false));
 
   const deleteLabelHandler = async () => {
+    dispatch(fetchingDataHandler());
     const response = await deleteLabelHttp(label, token);
     const sucessfullRequest = isThereError(response);
     if (sucessfullRequest) {
@@ -29,6 +33,7 @@ export const useLabel = (label: string) => {
     } else {
       // dispatch(errorState(response[1]?.message));
     }
+    dispatch(fetchingDataHandler());
   };
 
   const OnEditHandler = async () => {
@@ -37,6 +42,7 @@ export const useLabel = (label: string) => {
     }
     if (label === newLabel || newLabel.length === 0) return;
 
+    dispatch(fetchingDataHandler());
     const response = await editLabelHttp(label, newLabel, token);
 
     const sucessfullRequest = isThereError(response);
@@ -46,6 +52,7 @@ export const useLabel = (label: string) => {
     } else {
       // dispatch(errorState(response[1]?.message));
     }
+    dispatch(fetchingDataHandler());
   };
 
   const state = {

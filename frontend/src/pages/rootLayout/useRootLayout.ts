@@ -7,6 +7,7 @@ import { IRootState } from "../../store/store";
 import { getNotesHttp } from "../../services";
 import {
   errorState,
+  fetchingDataHandler,
   loadingInitialState,
   refreshState,
 } from "../../store/display-state-slice";
@@ -20,9 +21,23 @@ export const useRootLayout = () => {
   const { logoutHandler } = useLogoutHandler();
   const dispatch = useDispatch();
   const error = "";
+  axios.interceptors.request.use(
+    (request) => {
+      // console.log("1");
+      // dispatch(fetchingDataHandler());
+
+      return request;
+    },
+    (err) => {
+      return Promise.reject;
+    }
+  );
+
   axios.interceptors.response.use(
     (response) => {
       displayState.error.length > 0 && dispatch(errorState(error));
+      // console.log("2");
+      // dispatch(fetchingDataHandler());
 
       return response;
     },

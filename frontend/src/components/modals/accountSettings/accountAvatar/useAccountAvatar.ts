@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { changeAvatarProfile } from "../../../../store/notes-slice";
 import { convertImageToBase64, isThereError } from "../../../../utils/utils";
 import { changeAvatarPictureHttp } from "../../../../services";
+import { fetchingDataHandler } from "../../../../store/display-state-slice";
 
 export const useAccountAvatar = (initialState: InitialState) => {
   const token = sessionStorage.getItem("auth-token")!;
@@ -45,6 +46,7 @@ export const useAccountAvatar = (initialState: InitialState) => {
   };
 
   const saveAvatarHandler = async () => {
+    dispatch(fetchingDataHandler());
     const response = await changeAvatarPictureHttp({
       avatar: selectedAvatar as string,
       token,
@@ -63,6 +65,7 @@ export const useAccountAvatar = (initialState: InitialState) => {
     } else {
       // console.log(response[1]?.message);
     }
+    dispatch(fetchingDataHandler());
   };
 
   const values = {

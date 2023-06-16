@@ -10,6 +10,7 @@ import {
 import { useNote } from "./useNote";
 import { Transition } from "react-transition-group";
 import styles from "../note.module.scss";
+import LoadingSpinnerAction from "../../ui/loading-spinner-action";
 
 const Note = ({
   note,

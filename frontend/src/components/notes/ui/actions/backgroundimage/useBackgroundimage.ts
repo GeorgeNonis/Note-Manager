@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../../../../services";
-import { errorState } from "../../../../../store/display-state-slice";
+import {
+  errorState,
+  fetchingDataHandler,
+} from "../../../../../store/display-state-slice";
 import { setColor } from "../../../../../store/notes-slice";
 import { isThereError } from "../../../../../utils/utils";
 import { useBackgroundimageProps } from "./interfaces";
@@ -27,6 +30,7 @@ export const useBackgroundimage = ({
   }, []);
 
   const displayHandler = async (value: string) => {
+    dispatch(fetchingDataHandler());
     const response = await updateNoteColorHttp(
       value,
       id,
@@ -39,6 +43,7 @@ export const useBackgroundimage = ({
     // : dispatch(errorState(response[1]?.message));
 
     setDisplayPalette(false);
+    dispatch(fetchingDataHandler());
   };
 
   return { displayHandler, images };

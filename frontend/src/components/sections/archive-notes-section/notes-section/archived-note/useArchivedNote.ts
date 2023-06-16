@@ -4,7 +4,7 @@ import { CustomHook } from "./interfaces";
 import { editNoteHttp } from "../../../../../services";
 import { isThereError } from "../../../../../utils";
 import { editNote } from "../../../../../store/notes-slice";
-import { errorState } from "../../../../../store/display-state-slice";
+import { fetchingDataHandler } from "../../../../../store/display-state-slice";
 
 export const useArchivedNote = ({ note, zindex }: CustomHook) => {
   const [review, setReview] = useState<boolean>(false);
@@ -14,6 +14,7 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
   const noteId = note.id;
   const token = sessionStorage.getItem("auth-token")!;
   const saveChanges = async () => {
+    dispatch(fetchingDataHandler());
     const response = await editNoteHttp({
       pinned: false,
       archived: true,
@@ -26,7 +27,7 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
     const sucessfullRequest = isThereError(response);
     sucessfullRequest &&
       dispatch(editNote({ id: noteId, titleValue: noteTitle, noteValue }));
-    // : dispatch(errorState(response[1]?.message));
+    dispatch(fetchingDataHandler());
   };
 
   // const zIndex = !review ? zindex : 20002;

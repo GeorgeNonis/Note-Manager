@@ -17,6 +17,7 @@ const RootLayout = () => {
     displaySideBar,
     httpReqResLoading,
     accountSettings,
+    fetchingData,
   } = state.values.displayState;
   return (
     <>
@@ -28,7 +29,10 @@ const RootLayout = () => {
               ? styles.main
               : `${styles.main} ${styles.isSideBarClosed}`
           }
-          style={{ cursor: httpReqResLoading ? "progress" : "auto" }}
+          style={{
+            cursor: httpReqResLoading ? "progress" : "auto",
+            pointerEvents: fetchingData ? "none" : "auto",
+          }}
         >
           <Comp.MenuThreeLines />
           {error.length > 0 && <Comp.ErrorWithFeature message={error} />}

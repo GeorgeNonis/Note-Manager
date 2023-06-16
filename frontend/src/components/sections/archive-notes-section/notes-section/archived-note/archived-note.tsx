@@ -5,10 +5,12 @@ import {
   Title,
   NoteDetails,
   NoteWrapper,
+  LoadingSpinner,
 } from "../../../../index";
 import { useArchivedNote } from "./useArchivedNote";
 import { Transition } from "react-transition-group";
 import styles from "../../../../notes/note.module.scss";
+import LoadingSpinnerAction from "../../../../ui/loading-spinner-action";
 
 const Note = ({ note, position, zindex }: NoteProps) => {
   const { state } = useArchivedNote({ note, zindex });

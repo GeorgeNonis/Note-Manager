@@ -57,7 +57,7 @@ const displayState = createSlice({
       state.showLoginForm = !state.showLoginForm;
     },
     fetchingDataHandler(state) {
-      console.log("initiating again");
+      // console.log("initiating again");
       state.fetchingData = !state.fetchingData;
     },
   },
