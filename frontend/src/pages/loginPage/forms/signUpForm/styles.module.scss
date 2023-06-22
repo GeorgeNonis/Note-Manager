@@ -301,12 +301,13 @@
   }
 
   input {
+    color: white !important;
+
     font-family: "CormorantGaramond";
     outline: none;
     border: none;
     border-radius: 8px;
     width: 100%;
-    // height: 2rem;
     background: none;
     padding: 0 1rem;
     box-sizing: border-box;

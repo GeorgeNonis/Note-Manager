@@ -151,6 +151,9 @@
     fieldset {
       all: unset;
       position: relative;
+      input {
+        color: white;
+      }
       legend {
         display: grid;
         grid-template-columns: 10fr 3fr;
