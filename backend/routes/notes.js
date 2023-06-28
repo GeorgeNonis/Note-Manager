@@ -128,14 +128,14 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 
   const { data } = req.body;
   const pinned = req.query.isnotepined === "true";
-  console.log({ email, data, pinned });
+  // console.log({ email, data, pinned });
 
   try {
     const response = await UserBluePrint.updateOne(
       { email },
       pinned ? { pinnedNotes: [...data] } : { unPinnedNotes: [...data] }
     );
-    console.log({ response });
+    // console.log({ response });
     res.status(200).json({
       message: "Sorted your items Successfully",
     });

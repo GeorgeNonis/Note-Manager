@@ -19,5 +19,5 @@ export const veirfyJWT = (req, res, next) => {
     return next();
   });
 
-  console.log("In the middleware End");
+  // console.log("In the middleware End");
 };

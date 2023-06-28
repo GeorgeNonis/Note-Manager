@@ -119,12 +119,12 @@ export const findNoteIndex = (arr, id) => {
 export const createUser = (email, hashedPwd, image) => {
   const curr = new Date();
   curr.setDate(curr.getDate());
-  console.log({ curr });
+  // console.log({ curr });
   const date = curr.toISOString().substring(0, 10);
-  console.log({ date });
+  // console.log({ date });
   const lastTimeDitedNote = curr.toISOString().substring(0, 10);
-  console.log({ lastTimeDitedNote });
-  console.log("okay until here");
+  // console.log({ lastTimeDitedNote });
+  // console.log("okay until here");
   const user = {
     userId: uuidv4(),
     email,

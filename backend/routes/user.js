@@ -102,11 +102,11 @@ router.post("/v1/signup", async (req, res, next) => {
   // return;
   try {
     const hashedPwd = await bcrypt.hash(pwd, 10);
-    console.log({ hashedPwd });
+    // console.log({ hashedPwd });
     const user = createUser(email, hashedPwd, image);
-    console.log({ user });
+    // console.log({ user });
     const newUser = new UserBluePrint({ ...user });
-    console.log({ newUser });
+    // console.log({ newUser });
 
     const response = await newUser
       .save()
@@ -121,7 +121,7 @@ router.post("/v1/signup", async (req, res, next) => {
         expiresIn: "1h",
       }
     );
-    console.log({ accessToken });
+    // console.log({ accessToken });
 
     // const refreshToken = jwt.sign(
     //   {

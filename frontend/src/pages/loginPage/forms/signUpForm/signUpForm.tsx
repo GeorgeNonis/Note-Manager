@@ -250,12 +250,20 @@ const SignUpForm = () => {
           />
           <div className={styles.fieldsetdiv}>
             <button
+              disabled={values.requestState}
+              style={{
+                cursor: values.requestState ? "not-allowed" : "pointer",
+              }}
               onClick={() => handlers.setChangeAvatar(true)}
               type="button"
             >
               Change
             </button>
             <button
+              disabled={values.requestState}
+              style={{
+                cursor: values.requestState ? "not-allowed" : "pointer",
+              }}
               onClick={() => handlers.setDefaultAvatar(true)}
               type="button"
             >
@@ -270,9 +278,15 @@ const SignUpForm = () => {
             !values.emailValues.emailValid ||
             !values.passwordValues.passwordValid ||
             !values.validMatch ||
-            emailAlreadyInUse
+            emailAlreadyInUse ||
+            values.requestState
           }
-          style={{ cursor: !values.validInputs ? "not-allowed" : "pointer" }}
+          style={{
+            cursor:
+              !values.validInputs || values.requestState
+                ? "not-allowed"
+                : "pointer",
+          }}
         >
           Sign Up
         </button>
@@ -282,6 +296,10 @@ const SignUpForm = () => {
           <div></div>
         </div>
         <button
+          disabled={values.requestState}
+          style={{
+            cursor: values.requestState ? "not-allowed" : "pointer",
+          }}
           type="button"
           className={styles.formLoginButton}
           onClick={() => dispatch(formSwitch())}

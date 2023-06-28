@@ -14,6 +14,7 @@ import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice"
 import { convertImageToBase64 } from "../../../../utils/utils";
 
 export const useSignUpForm = () => {
+  const [requestState, setRequestState] = useState(false);
   const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export const useSignUpForm = () => {
       setErrorMsg("Invalid Entry");
       return;
     }
-
+    setRequestState(true);
     const response = await createUserHttp(email, password, avatar, token);
     const successRequest = isThereError(response);
     if (successRequest) {
@@ -92,6 +93,7 @@ export const useSignUpForm = () => {
     } else {
       // console.log(response[1]?.message);
     }
+    setRequestState(false);
   };
 
   const doesUserExists = async () => {
@@ -147,6 +149,7 @@ export const useSignUpForm = () => {
       changeAvatar,
       default_avatar,
       avatar,
+      requestState,
       emailValues: {
         email,
         emailFocus,

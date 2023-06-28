@@ -158,13 +158,11 @@
 }
 
 .modalContent {
-  // padding: 1rem 2.5rem 1rem 2.5rem;
   box-sizing: border-box;
   border-radius: 8px;
   position: absolute;
   inset: 50% auto auto 50%;
   transform: translate(-50%, -50%);
-  // width: 70dvw;
   height: 80dvh;
   background-color: #313235;
   z-index: 100000000;
