@@ -741,6 +741,11 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
+"@stitches/react@^1.2.8":
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
+  integrity sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA==
+
 "@testing-library/dom@^9.0.0":
   version "9.2.0"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-9.2.0.tgz"
@@ -2975,6 +2980,13 @@ node-releases@^2.0.8:
   version "2.0.10"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.10.tgz"
   integrity sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==
+
+noniscomponents@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/noniscomponents/-/noniscomponents-1.0.0.tgz#5c1505794964000132d1d52e25ec54ddc8df0e41"
+  integrity sha512-AtTxODuR/CeNw2KVAF6jjzE30ZBMj1XCs33+LSSl0mFJen5MfIArchChOPEdydWo483RJXFQ9h78LgBL3jvkzw==
+  dependencies:
+    "@stitches/react" "^1.2.8"
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"

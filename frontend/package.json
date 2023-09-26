@@ -23,6 +23,7 @@
     "font-awesome": "^4.7.0",
     "mongoose": "^7.0.3",
     "nearest-color": "^0.4.4",
+    "noniscomponents": "^1.0.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
