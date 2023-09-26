@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { PWD_REGEX, USER_REGEX } from "../../../../config";
 import { getUserHttp } from "../../../../services";
 import { isThereError } from "../../../../utils";
-import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
 
 export const useLoginForm = () => {
@@ -16,9 +15,7 @@ export const useLoginForm = () => {
   const [emailValid, setEmailValid] = useState(false);
 
   const [password, setPassword] = useState("");
-  const [passwordFocus, setPasswordFocus] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-
   const [passwordHover, setPasswordHover] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -61,10 +58,9 @@ export const useLoginForm = () => {
     }
   };
 
-  const warningCredentialsStlye = [
-    styles.invalidCredentials,
-    !validCredentials ? styles.hideInvalidCredentials : null,
-  ];
+  useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!validCredentials) return;
@@ -72,10 +68,6 @@ export const useLoginForm = () => {
       setValidCredentials(false);
     }, 5000);
   }, [validCredentials]);
-
-  useEffect(() => {
-    emailRef.current?.focus();
-  }, []);
 
   useEffect(() => {
     if (!emailFocus) return;
@@ -98,7 +90,6 @@ export const useLoginForm = () => {
       emailRef,
     },
     passwordField: {
-      setPasswordFocus,
       setPassword,
       showPasswordHandler,
       passwordHover,
@@ -108,20 +99,6 @@ export const useLoginForm = () => {
       emailValid,
       passwordValid,
       validInputs,
-    },
-    values: {
-      errRef,
-      validCredentials,
-      warningCredentialsStlye,
-      userMsg,
-      emailValues: {
-        email,
-        emailFocus,
-      },
-      passwordValues: {
-        password,
-        passwordFocus,
-      },
     },
     handlers: {
       handleSumbit,

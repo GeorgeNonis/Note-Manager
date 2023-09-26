@@ -6,7 +6,6 @@ const PasswordField = ({
   showPassword,
   passwordHover,
   setPassword,
-  setPasswordFocus,
   showPasswordHandler,
 }: PasswordFieldProps) => {
   return (
@@ -15,8 +14,6 @@ const PasswordField = ({
       <StyledWrapper>
         <StyledPasswordField
           onChange={(e) => setPassword(e.target.value)}
-          onFocus={() => setPasswordFocus(true)}
-          onBlur={() => setPasswordFocus(false)}
           type={!showPassword ? "password" : "text"}
           id="password"
           name="password"
