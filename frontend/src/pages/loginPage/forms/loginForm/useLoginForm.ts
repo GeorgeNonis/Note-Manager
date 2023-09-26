@@ -4,6 +4,7 @@ import { PWD_REGEX, USER_REGEX } from "../../../../config";
 import { getUserHttp } from "../../../../services";
 import { isThereError } from "../../../../utils";
 import styles from "./styles.module.scss";
+import { toast } from "react-toastify";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const useLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [validInputs, setValidInputs] = useState(false);
-  const [loginForm, setLoginForm] = useState(false);
+
   const [validCredentials, setValidCredentials] = useState(false);
   const [userMsg, setUserMsg] = useState("Invalid Credentials");
 
@@ -50,7 +51,7 @@ export const useLoginForm = () => {
       // console.log(response[0]?.data.msg);
       setUserMsg(response[0]?.data.msg);
     }
-    if (!response[0]?.data.match) return setValidCredentials(response[0]?.data);
+    if (!response[0]?.data.match) return toast.error(userMsg);
     if (successRequest) {
       const token = response[0]?.headers.authorization;
       sessionStorage.setItem("auth-token", token!);
@@ -90,9 +91,25 @@ export const useLoginForm = () => {
   }, [password, email]);
 
   const state = {
-    values: {
-      loginForm,
+    emailField: {
+      setEmail,
+      setEmailFocus,
+      setEmailValid,
+      emailRef,
+    },
+    passwordField: {
+      setPasswordFocus,
+      setPassword,
+      showPasswordHandler,
+      passwordHover,
+      showPassword,
+    },
+    loginButtonValues: {
+      emailValid,
+      passwordValid,
       validInputs,
+    },
+    values: {
       errRef,
       validCredentials,
       warningCredentialsStlye,
@@ -100,34 +117,14 @@ export const useLoginForm = () => {
       emailValues: {
         email,
         emailFocus,
-        emailValid,
-        emailRef,
       },
       passwordValues: {
         password,
         passwordFocus,
-        passwordValid,
-        passwordHover,
-        showPassword,
       },
     },
     handlers: {
-      setPasswordHover,
-      setShowPassword,
-      showPasswordHandler,
-      setValidInputs,
-      setLoginForm,
       handleSumbit,
-      emailHandlers: {
-        setEmail,
-        setEmailFocus,
-        setEmailValid,
-      },
-      passwordHandlers: {
-        setPasswordFocus,
-        setPassword,
-        setPasswordValid,
-      },
     },
   };
 

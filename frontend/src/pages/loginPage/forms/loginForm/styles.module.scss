@@ -12,10 +12,6 @@
   cursor: pointer;
   font-family: "CormorantGaramond";
   transition: all 250ms ease-in-out;
-  &:hover {
-    height: 3rem;
-    width: 90%;
-  }
 }
 
 @media (max-width: 599px) {
@@ -29,9 +25,6 @@
     button {
       height: 2.2rem;
       font-size: 0.75rem;
-      &:hover {
-        height: 2.4rem;
-      }
     }
   }
 }
@@ -41,9 +34,6 @@
     button {
       height: 2.3rem;
       font-size: 0.8rem;
-      &:hover {
-        height: 2.5rem;
-      }
     }
   }
 }
@@ -53,9 +43,6 @@
     button {
       height: 2.3rem;
       font-size: 0.8rem;
-      &:hover {
-        height: 2.6rem;
-      }
     }
   }
 }
@@ -80,21 +67,6 @@
       margin-bottom: 0.4rem;
       width: 100%;
     }
-    .inputwrapper {
-      display: grid;
-      grid-template-columns: 11fr 1fr;
-      background: rgba(0, 0, 0, 0.4588235294);
-      border-radius: 8px;
-      span {
-        display: grid;
-        place-self: center;
-        place-content: center;
-        float: right;
-        background: none;
-        border: none;
-        cursor: pointer;
-      }
-    }
   }
 
   input {
@@ -110,16 +82,9 @@
     padding: 0 1rem;
     box-sizing: border-box;
   }
-
-  .formEmailInput {
-    background: rgba(0, 0, 0, 0.4588235294);
-  }
 }
 
 .formSignUpButton {
-  @include FormBtnStyle;
-}
-.formLoginButton {
   @include FormBtnStyle;
 }
 

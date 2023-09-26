@@ -1,11 +1,7 @@
 import {} from "react";
 import axios from "../../services/axios";
-import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../../store/store";
-import {
-  errorState,
-  fetchingDataHandler,
-} from "../../store/display-state-slice";
+import { useDispatch } from "react-redux";
+import { errorState } from "../../store/display-state-slice";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
 import { IfNetworkDown } from "../../utils";
 
