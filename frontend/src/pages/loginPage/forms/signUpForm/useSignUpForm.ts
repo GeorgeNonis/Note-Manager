@@ -4,7 +4,7 @@ import {
   USER_REGEX,
   avatar_pictures,
 } from "../../../../config";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserHttp } from "../../../../services/postNote";
 import { isThereError } from "../../../../utils";
@@ -31,7 +31,6 @@ export const useSignUpForm = () => {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
-  const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
 
   const [passwordHover, setPasswordHover] = useState(false);
   const [confirmPasswordHover, setConfirmPasswordHover] = useState(false);
@@ -39,7 +38,7 @@ export const useSignUpForm = () => {
 
   const [validInputs, setValidInputs] = useState(false);
   const [validMatch, setValidMatch] = useState(false);
-  const [loginForm, setLoginForm] = useState(false);
+
   const [errorMsg, setErrorMsg] = useState("");
 
   const [changeAvatar, setChangeAvatar] = useState(false);
@@ -142,61 +141,52 @@ export const useSignUpForm = () => {
 
   const state = {
     values: {
-      loginForm,
-      validInputs,
-      errRef,
-      validMatch,
-      changeAvatar,
-      default_avatar,
-      avatar,
-      requestState,
-      emailValues: {
-        email,
-        emailFocus,
-        emailValid,
-        emailRef,
-      },
-      passwordValues: {
-        password,
-        passwordFocus,
-        passwordValid,
-        passwordHover,
-        confirmPasswordHover,
-        showPassword,
-      },
-      confirmPasswordValues: {
-        confirmPassword,
-        confirmPasswordFocus,
-        confirmPasswordValid,
-      },
-    },
-    handlers: {
-      setPasswordHover,
-      setConfirmPasswordHover,
-      setShowPassword,
-      showPasswordHandler,
-      setValidInputs,
-      setLoginForm,
-      handleSumbit,
-      setChangeAvatar,
-      setAvatar,
-      setDefaultAvatar,
-      avatarHandler,
-      emailHandlers: {
+      emailField: {
         setEmail,
         setEmailFocus,
-        setEmailValid,
+        emailRef,
+        email,
+        emailValid,
+        emailFocus,
       },
-      passwordHandlers: {
-        setPasswordFocus,
+      passwordField: {
+        errRef,
+        showPassword,
+        password,
+        passwordValid,
+        passwordFocus,
+        passwordHover,
         setPassword,
-        setPasswordValid,
+        setPasswordFocus,
+        showPasswordHandler,
       },
-      confirmPasswordHandlers: {
+      confirmPasswordField: {
+        showPassword,
+        errRef,
+        passwordValid,
+        validMatch,
+        setConfirmPasswordHover,
+        confirmPasswordHover,
         setConfirmPassword,
         setConfirmPasswordFocus,
-        setConfirmPasswordValid,
+        showPasswordHandler,
       },
+      changeField: {
+        avatar,
+        default_avatar,
+        requestState,
+        setChangeAvatar,
+        setDefaultAvatar,
+      },
+      validInputs,
+      validMatch,
+      changeAvatar,
+      requestState,
+    },
+    handlers: {
+      handleSumbit,
+      setChangeAvatar,
+      avatarHandler,
     },
   };
 

@@ -102,29 +102,3 @@
 .xmark {
   color: red;
 }
-
-.crossLine {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 9fr 3fr 9fr;
-  place-items: center;
-  div {
-    border: 1px solid rgba(0, 0, 0, 0.4588235294);
-    width: 100%;
-  }
-}
-
-.invalidCredentials {
-  position: absolute;
-  inset: 3rem auto auto 50%;
-  transform: translateX(-50%);
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4588235294);
-  color: #fb6a6a;
-  transition: all 500ms ease-in-out;
-}
-
-.hideInvalidCredentials {
-  transform: translate(-50%, -10rem);
-}
