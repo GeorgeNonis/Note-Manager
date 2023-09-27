@@ -12,6 +12,7 @@ const EmailField = ({
   emailValid,
   emailFocus,
 }: EmailFieldProps) => {
+  console.log({ emailAlreadyInUse, emailFocus });
   return (
     <fieldset>
       <legend>

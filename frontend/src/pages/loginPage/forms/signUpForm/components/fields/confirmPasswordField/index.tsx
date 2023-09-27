@@ -1,17 +1,18 @@
+import React from "react";
 import { TbCircleCheck, TbCircleX } from "react-icons/tb";
-import styles from "../../../styles.module.scss";
 import {
   AiFillEye,
   AiFillEyeInvisible,
   AiOutlineInfoCircle,
 } from "react-icons/ai";
+import styles from "../../../styles.module.scss";
 import { ConfirmPasswordFieldProps } from "./confirmPasswordField.props";
 
 const ConfirmPasswordField = ({
   showPassword,
-  confirmPasswordconfirmPasswordValid,
+  confirmPasswordValid,
   errRef,
-  confirmPasswordconfirmPasswordFocus,
+  confirmPasswordFocus,
   passwordValid,
   validMatch,
   setConfirmPasswordHover,
@@ -24,30 +25,30 @@ const ConfirmPasswordField = ({
     <fieldset>
       <legend>
         Confirm Password:
-        {validMatch && passwordValid && (
-          <span
-            className={validMatch && passwordValid ? styles.show : styles.hide}
-          >
+        {validMatch && passwordValid ? (
+          <span className={styles.show}>
             <TbCircleCheck className={styles.correct} />
           </span>
-        )}
-        {!validMatch && (
-          <span className={styles.show}>
-            <TbCircleX className={styles.xmark} />
-          </span>
+        ) : (
+          !validMatch && (
+            <span className={styles.show}>
+              <TbCircleX className={styles.xmark} />
+            </span>
+          )
         )}
       </legend>
+
       <div className={styles.inputwrapper}>
         <input
           onChange={(e) => setConfirmPassword(e.target.value)}
           onFocus={() => setConfirmPasswordFocus(true)}
           onBlur={() => setConfirmPasswordFocus(false)}
-          type={!showPassword ? "password" : "text"}
+          type={showPassword ? "text" : "password"}
           id="confirmpwd"
           name="confirmpwd"
           required
-          aria-invalid={confirmPasswordconfirmPasswordValid ? true : false}
-          aria-describedby="confirmpwd"
+          aria-invalid={confirmPasswordValid ? "true" : "false"}
+          aria-describedby="confirmpwd-error"
         />
         <span
           onClick={showPasswordHandler}
@@ -61,13 +62,12 @@ const ConfirmPasswordField = ({
           )}
         </span>
       </div>
+
       <p
         ref={errRef}
-        id="confirmpwd"
+        id="confirmpwd-error"
         style={{
-          opacity: `${
-            !validMatch && confirmPasswordconfirmPasswordFocus ? 1 : 0
-          }`,
+          opacity: !validMatch && confirmPasswordFocus ? 1 : 0,
         }}
         className={styles.show}
       >
@@ -77,4 +77,5 @@ const ConfirmPasswordField = ({
     </fieldset>
   );
 };
+
 export default ConfirmPasswordField;

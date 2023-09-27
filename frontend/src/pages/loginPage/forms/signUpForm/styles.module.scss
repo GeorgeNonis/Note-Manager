@@ -1,7 +1,4 @@
 @mixin FormBtnStyle {
-  // font-size: 1rem;
-  // height: 2.5rem;
-  // width: 80%;
   margin-block: 0.7rem;
   margin-inline: auto;
   border-radius: 8px;
@@ -35,10 +32,6 @@
       font-size: 0.75rem;
       height: 2rem;
       width: 50%;
-      &:hover {
-        height: 2.4rem;
-        width: 60%;
-      }
     }
   }
 
@@ -46,19 +39,11 @@
     font-size: 0.75rem;
     height: 2rem;
     width: 50%;
-    &:hover {
-      height: 2.4rem;
-      width: 60%;
-    }
   }
   .formLoginButton {
     font-size: 0.75rem;
     height: 2rem;
     width: 50%;
-    &:hover {
-      height: 2.4rem;
-      width: 60%;
-    }
   }
 }
 @media (max-width: 450px) {
@@ -82,10 +67,6 @@
       font-size: 0.75rem;
       height: 2rem;
       width: 80%;
-      &:hover {
-        height: 2.4rem;
-        width: 90%;
-      }
     }
   }
 
@@ -93,20 +74,12 @@
     font-size: 0.75rem;
     height: 2rem;
     width: 80%;
-    &:hover {
-      height: 2.4rem;
-      width: 90%;
-    }
   }
 
   .formLoginButton {
     font-size: 0.75rem;
     height: 2rem;
     width: 80%;
-    &:hover {
-      height: 2.4rem;
-      width: 90%;
-    }
   }
 }
 @media (min-width: 599px) {
@@ -134,10 +107,6 @@
       font-size: 0.85rem;
       height: 2rem;
       width: 70%;
-      &:hover {
-        height: 2.4rem;
-        width: 80%;
-      }
     }
   }
 
@@ -145,19 +114,11 @@
     font-size: 0.85rem;
     height: 2rem;
     width: 70%;
-    &:hover {
-      height: 2.4rem;
-      width: 80%;
-    }
   }
   .formLoginButton {
     font-size: 0.85rem;
     height: 2rem;
     width: 70%;
-    &:hover {
-      height: 2.4rem;
-      width: 80%;
-    }
   }
 }
 @media (min-width: 1200px) {
@@ -189,10 +150,6 @@
       font-size: 0.85rem;
       height: 2rem;
       width: 50%;
-      &:hover {
-        height: 2.4rem;
-        width: 60%;
-      }
     }
   }
 
@@ -200,19 +157,11 @@
     font-size: 0.85rem;
     height: 2rem;
     width: 50%;
-    &:hover {
-      height: 2.4rem;
-      width: 60%;
-    }
   }
   .formLoginButton {
     font-size: 0.85rem;
     height: 2rem;
     width: 50%;
-    &:hover {
-      height: 2.4rem;
-      width: 60%;
-    }
   }
 }
 @media (min-width: 2400px) {
@@ -243,10 +192,6 @@
       font-size: 1.5rem;
       height: 4rem;
       width: 50%;
-      &:hover {
-        height: 4.4rem;
-        width: 60%;
-      }
     }
   }
 
@@ -254,19 +199,11 @@
     font-size: 1.5rem;
     height: 4rem;
     width: 50%;
-    &:hover {
-      height: 4.4rem;
-      width: 60%;
-    }
   }
   .formLoginButton {
     font-size: 1.5rem;
     height: 4rem;
     width: 50%;
-    &:hover {
-      height: 4.4rem;
-      width: 60%;
-    }
   }
 
   .or {
@@ -315,6 +252,10 @@
 
   .formEmailInput {
     background: rgba(0, 0, 0, 0.4588235294);
+  }
+
+  button {
+    color: white;
   }
 }
 
@@ -369,17 +310,6 @@
   color: red;
 }
 
-.crossLine {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 9fr 3fr 9fr;
-  place-items: center;
-  div {
-    border: 1px solid rgba(0, 0, 0, 0.4588235294);
-    width: 100%;
-  }
-}
-
 .fieldsetimage {
   img {
     display: grid;
@@ -402,9 +332,5 @@
   margin-top: 0.5rem;
   button {
     @include FormBtnStyle();
-    // &:hover {
-    //   height: 2.7rem;
-    //   width: 85%;
-    // }
   }
 }

@@ -1,11 +1,12 @@
-import styles from "../../styles.module.scss";
+import { StyledCrossLine } from "./crossline.styles";
+
 const CrossLine = () => {
   return (
-    <div className={styles.crossLine}>
+    <StyledCrossLine>
       <div></div>
       <span>OR</span>
       <div></div>
-    </div>
+    </StyledCrossLine>
   );
 };
 export default CrossLine;

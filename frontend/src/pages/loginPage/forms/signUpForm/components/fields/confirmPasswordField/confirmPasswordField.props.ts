@@ -1,8 +1,8 @@
 export interface ConfirmPasswordFieldProps {
   validMatch: boolean;
   passwordValid: boolean;
-  confirmPasswordconfirmPasswordValid: boolean;
-  confirmPasswordconfirmPasswordFocus: boolean;
+  confirmPasswordValid: boolean;
+  confirmPasswordFocus: boolean;
   showPassword: boolean;
   confirmPasswordHover: boolean;
   errRef: React.RefObject<HTMLParagraphElement>;

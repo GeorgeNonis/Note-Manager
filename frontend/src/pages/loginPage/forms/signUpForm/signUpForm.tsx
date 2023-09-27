@@ -11,8 +11,11 @@ import {
   ChangeField,
   ConfirmPasswordField,
   EmailField,
+  LoginButton,
   PasswordField,
+  SignUpButton,
 } from "./components";
+import { CrossLine } from "../loginForm/components";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -43,49 +46,27 @@ const SignUpForm = () => {
         }
       </Transition>
       <form className={styles.form} onSubmit={handlers.handleSumbit}>
-        <EmailField {...emailField} emailAlreadyInUse />
+        <EmailField {...emailField} emailAlreadyInUse={emailAlreadyInUse} />
         <PasswordField {...passwordField} />
         <ConfirmPasswordField
           {...confirmPasswordField}
-          confirmPasswordconfirmPasswordFocus
-          confirmPasswordconfirmPasswordValid
+          confirmPasswordFocus
+          confirmPasswordValid
         />
         <ChangeField default_avatar_pic={default_avatar_pic} {...changeField} />
-        <button
-          type="submit"
-          className={styles.formSignUpButton}
-          disabled={
-            !emailField.emailValid ||
-            !passwordField.passwordValid ||
-            !values.validMatch ||
-            emailAlreadyInUse ||
-            values.requestState
-          }
-          style={{
-            cursor:
-              !values.validInputs || values.requestState
-                ? "not-allowed"
-                : "pointer",
-          }}
-        >
-          Sign Up
-        </button>
-        <div className={styles.crossLine}>
-          <div></div>
-          <span className={styles.or}>OR</span>
-          <div></div>
-        </div>
-        <button
-          disabled={values.requestState}
-          style={{
-            cursor: values.requestState ? "not-allowed" : "pointer",
-          }}
-          type="button"
-          className={styles.formLoginButton}
+        <SignUpButton
+          emailAlreadyInUse={emailAlreadyInUse}
+          requestState={values.requestState}
+          validMatch={values.validInputs}
+          validInputs={values.validInputs}
+          passwordValid={values.passwordField.passwordValid}
+          emailValid={values.emailField.emailValid}
+        />
+        <CrossLine />
+        <LoginButton
           onClick={() => dispatch(formSwitch())}
-        >
-          Login
-        </button>
+          requestState={values.requestState}
+        />
       </form>
     </>
   );
