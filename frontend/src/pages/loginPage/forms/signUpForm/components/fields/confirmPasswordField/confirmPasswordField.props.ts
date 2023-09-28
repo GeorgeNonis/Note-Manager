@@ -1,7 +1,6 @@
 export interface ConfirmPasswordFieldProps {
   validMatch: boolean;
   passwordValid: boolean;
-  confirmPasswordValid: boolean;
   confirmPasswordFocus: boolean;
   showPassword: boolean;
   confirmPasswordHover: boolean;

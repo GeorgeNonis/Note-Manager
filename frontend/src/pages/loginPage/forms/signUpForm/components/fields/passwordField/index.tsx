@@ -6,6 +6,12 @@ import {
   AiOutlineInfoCircle,
 } from "react-icons/ai";
 import { PasswordFieldProps } from "./passwordField.props";
+import {
+  StyledCheckMark,
+  StyledCorrect,
+  StyledPasswordNote,
+  StyledXmark,
+} from "./passwordField.styles";
 
 const PasswordField = ({
   errRef,
@@ -23,16 +29,14 @@ const PasswordField = ({
       <legend>
         Password:
         {passwordValid && (
-          <span className={passwordValid ? styles.show : styles.hide}>
-            <TbCircleCheck className={styles.correct} />
-          </span>
+          <StyledCheckMark show={passwordValid}>
+            <StyledCorrect />
+          </StyledCheckMark>
         )}
         {password && !passwordValid && (
-          <span
-            className={password && !passwordValid ? styles.show : styles.hide}
-          >
-            <TbCircleX className={styles.xmark} />
-          </span>
+          <StyledCheckMark show={!!(password && !passwordValid)}>
+            <StyledXmark />
+          </StyledCheckMark>
         )}
       </legend>
       <div className={styles.inputwrapper}>
@@ -51,19 +55,16 @@ const PasswordField = ({
           {passwordHover ? <AiFillEye /> : <AiFillEyeInvisible />}
         </span>
       </div>
-      <p
+      <StyledPasswordNote
         ref={errRef}
         id="pwdnote"
-        style={{
-          opacity: `${passwordFocus && !passwordValid && password ? 1 : 0}`,
-        }}
-        className={styles.show}
+        invalidPassword={!!(passwordFocus && !passwordValid && password)}
       >
         <AiOutlineInfoCircle />
         <span>
           Minimum four characters, first one uppercase letter, least one number
         </span>
-      </p>
+      </StyledPasswordNote>
     </fieldset>
   );
 };

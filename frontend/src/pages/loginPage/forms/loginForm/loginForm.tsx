@@ -1,30 +1,30 @@
 import { useLoginForm } from "./useLoginForm";
 import { useDispatch } from "react-redux";
 import { formSwitch } from "../../../../store/display-state-slice";
-import styles from "./styles.module.scss";
-import {
-  CrossLine,
-  EmailField,
-  LoginButton,
-  PasswordField,
-  SignUpButton,
-} from "./components";
+import { CrossLine, EmailField, PasswordField } from "./components";
+import Button from "../../../../components/Atoms/Button";
+import { StyledForm } from "./loginForm.styles";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { handlers, emailField, passwordField, loginButtonValues } =
+  const { handlers, emailField, passwordField, loginButtonValues, loading } =
     useLoginForm();
   const { handleSumbit } = handlers;
 
   return (
     <>
-      <form className={styles.form} onSubmit={handleSumbit}>
+      <StyledForm onSubmit={handleSumbit}>
         <EmailField {...emailField} />
         <PasswordField {...passwordField} />
-        <LoginButton {...loginButtonValues} />
+        <Button
+          disableButton={!loginButtonValues.validInputs || loading}
+          loading={loading}
+        >
+          Login
+        </Button>
         <CrossLine />
-        <SignUpButton onClick={() => dispatch(formSwitch())} />
-      </form>
+        <Button onClick={() => dispatch(formSwitch())}>Sign Up</Button>
+      </StyledForm>
     </>
   );
 };

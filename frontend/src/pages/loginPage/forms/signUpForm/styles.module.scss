@@ -274,49 +274,11 @@
   }
 }
 
-.formSignUpButton {
-  @include FormBtnStyle;
-}
-.formLoginButton {
-  @include FormBtnStyle;
-}
-
-.hide {
-  display: grid;
-  grid-template-columns: 1fr 15fr;
-  align-items: center;
-  margin: 0;
-  opacity: 0;
-}
-
-.show {
-  display: grid;
-  grid-template-columns: 1fr 15fr;
-  align-items: center;
-  // margin: 0.5rem 0 0 0;
-
-  span {
-    font-size: 1rem;
-  }
-  svg {
-    place-self: center;
-  }
-}
-
-.correct {
-  color: lime;
-}
-.xmark {
-  color: red;
-}
-
 .fieldsetimage {
   img {
     display: grid;
     margin-inline: auto;
     margin-block: 1rem 2rem;
-    // width: 10rem;
-    // height: 10rem;
     border-radius: 50%;
   }
 }

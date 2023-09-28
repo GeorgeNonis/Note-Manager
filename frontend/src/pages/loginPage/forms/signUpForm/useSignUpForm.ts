@@ -9,11 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { createUserHttp } from "../../../../services/postNote";
 import { isThereError } from "../../../../utils";
 import { getUsersHttp } from "../../../../services/getNote";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice";
 import { convertImageToBase64 } from "../../../../utils/utils";
+import { IRootState } from "../../../../store/store";
 
 export const useSignUpForm = () => {
+  const { emailAlreadyInUse } = useSelector(
+    (state: IRootState) => state.displayState
+  );
   const [requestState, setRequestState] = useState(false);
   const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
@@ -36,10 +40,7 @@ export const useSignUpForm = () => {
   const [confirmPasswordHover, setConfirmPasswordHover] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [validInputs, setValidInputs] = useState(false);
   const [validMatch, setValidMatch] = useState(false);
-
-  const [errorMsg, setErrorMsg] = useState("");
 
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [avatar, setAvatar] = useState("");
@@ -79,7 +80,7 @@ export const useSignUpForm = () => {
     const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
       errRef.current?.focus();
-      setErrorMsg("Invalid Entry");
+
       return;
     }
     setRequestState(true);
@@ -116,12 +117,14 @@ export const useSignUpForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!emailFocus) return;
     const result = USER_REGEX.test(email);
     setEmailValid(result);
 
     const timeout = setTimeout(() => {
-      doesUserExists();
+      if (result) {
+        // Only call doesUserExists if the email format is valid
+        doesUserExists();
+      }
     }, 500);
 
     return () => {
@@ -134,13 +137,18 @@ export const useSignUpForm = () => {
     setPasswordValid(result);
     const match = password === confirmPassword;
     setValidMatch(match);
-
-    const validForm = emailValid && match;
-    setValidInputs(validForm);
   }, [password, confirmPassword, email]);
+
+  const signUpProceed =
+    !emailValid ||
+    !passwordValid ||
+    !validMatch ||
+    emailAlreadyInUse ||
+    requestState;
 
   const state = {
     values: {
+      signUpProceed,
       emailField: {
         setEmail,
         setEmailFocus,
@@ -165,8 +173,9 @@ export const useSignUpForm = () => {
         errRef,
         passwordValid,
         validMatch,
-        setConfirmPasswordHover,
+        confirmPasswordFocus,
         confirmPasswordHover,
+        setConfirmPasswordHover,
         setConfirmPassword,
         setConfirmPasswordFocus,
         showPasswordHandler,
@@ -178,8 +187,6 @@ export const useSignUpForm = () => {
         setChangeAvatar,
         setDefaultAvatar,
       },
-      validInputs,
-      validMatch,
       changeAvatar,
       requestState,
     },

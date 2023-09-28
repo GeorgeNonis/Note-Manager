@@ -9,6 +9,7 @@ export const useLoginForm = () => {
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [emailFocus, setEmailFocus] = useState(false);
@@ -41,6 +42,7 @@ export const useLoginForm = () => {
 
       return;
     }
+    setLoading(true);
     const response = await getUserHttp({ email, pwd: password, token });
 
     const successRequest = isThereError(response);
@@ -56,6 +58,7 @@ export const useLoginForm = () => {
     } else {
       // console.log(response[1]);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -83,6 +86,7 @@ export const useLoginForm = () => {
   }, [password, email]);
 
   const state = {
+    loading,
     emailField: {
       setEmail,
       setEmailFocus,

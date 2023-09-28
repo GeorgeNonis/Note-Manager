@@ -1,4 +1,3 @@
-import React from "react";
 import { TbCircleCheck, TbCircleX } from "react-icons/tb";
 import {
   AiFillEye,
@@ -7,10 +6,15 @@ import {
 } from "react-icons/ai";
 import styles from "../../../styles.module.scss";
 import { ConfirmPasswordFieldProps } from "./confirmPasswordField.props";
+import {
+  StyledCheckMark,
+  StyledCorrect,
+  StyledPasswordNote,
+  StyledXmark,
+} from "../passwordField/passwordField.styles";
 
 const ConfirmPasswordField = ({
   showPassword,
-  confirmPasswordValid,
   errRef,
   confirmPasswordFocus,
   passwordValid,
@@ -26,14 +30,14 @@ const ConfirmPasswordField = ({
       <legend>
         Confirm Password:
         {validMatch && passwordValid ? (
-          <span className={styles.show}>
-            <TbCircleCheck className={styles.correct} />
-          </span>
+          <StyledCheckMark show={validMatch && passwordValid}>
+            <StyledCorrect />
+          </StyledCheckMark>
         ) : (
           !validMatch && (
-            <span className={styles.show}>
-              <TbCircleX className={styles.xmark} />
-            </span>
+            <StyledCheckMark show={!validMatch}>
+              <StyledXmark />
+            </StyledCheckMark>
           )
         )}
       </legend>
@@ -47,7 +51,7 @@ const ConfirmPasswordField = ({
           id="confirmpwd"
           name="confirmpwd"
           required
-          aria-invalid={confirmPasswordValid ? "true" : "false"}
+          aria-invalid={passwordValid ? "true" : "false"}
           aria-describedby="confirmpwd-error"
         />
         <span
@@ -63,17 +67,14 @@ const ConfirmPasswordField = ({
         </span>
       </div>
 
-      <p
+      <StyledPasswordNote
         ref={errRef}
         id="confirmpwd-error"
-        style={{
-          opacity: !validMatch && confirmPasswordFocus ? 1 : 0,
-        }}
-        className={styles.show}
+        invalidPassword={!validMatch && confirmPasswordFocus}
       >
         <AiOutlineInfoCircle />
         <span> Must match your New Password</span>
-      </p>
+      </StyledPasswordNote>
     </fieldset>
   );
 };

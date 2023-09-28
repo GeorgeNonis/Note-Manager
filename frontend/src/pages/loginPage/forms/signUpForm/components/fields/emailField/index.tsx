@@ -2,42 +2,44 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { TbCircleCheck, TbCircleX } from "react-icons/tb";
 import styles from "../../../styles.module.scss";
 import { EmailFieldProps } from "./emailField.props";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../../../../../../store/store";
+import {
+  StyledCheckMark,
+  StyledCorrect,
+  StyledPasswordNote,
+  StyledXmark,
+} from "../passwordField/passwordField.styles";
 
 const EmailField = ({
   setEmail,
   setEmailFocus,
   emailRef,
   email,
-  emailAlreadyInUse,
   emailValid,
-  emailFocus,
 }: EmailFieldProps) => {
-  console.log({ emailAlreadyInUse, emailFocus });
+  const { emailAlreadyInUse } = useSelector(
+    (state: IRootState) => state.displayState
+  );
+  const shouldDisplayError = email && (!emailValid || emailAlreadyInUse);
+  const errorMessage = emailAlreadyInUse
+    ? `Account already exists with this email`
+    : `Must be a valid email`;
+
   return (
     <fieldset>
       <legend>
         E-Mail:
         {emailValid && !emailAlreadyInUse && (
-          <span
-            className={
-              emailValid && !emailAlreadyInUse ? styles.show : styles.hide
-            }
-          >
-            <TbCircleCheck className={styles.correct} />
-          </span>
+          <StyledCheckMark show={emailValid && !emailAlreadyInUse}>
+            <StyledCorrect />
+          </StyledCheckMark>
         )}
-        {(email && !emailValid) ||
-          (emailAlreadyInUse && (
-            <span
-              className={
-                (email && !emailValid) || emailAlreadyInUse
-                  ? styles.show
-                  : styles.hide
-              }
-            >
-              <TbCircleX className={styles.xmark} />
-            </span>
-          ))}
+        {shouldDisplayError && (
+          <StyledCheckMark show={shouldDisplayError}>
+            <StyledXmark />
+          </StyledCheckMark>
+        )}
       </legend>
       <input
         className={styles.formEmailInput}
@@ -49,22 +51,12 @@ const EmailField = ({
         name="email"
         ref={emailRef}
       />
-      <p
-        style={{
-          opacity: `${
-            (!emailValid && emailFocus && email) || emailAlreadyInUse ? 1 : 0
-          }`,
-        }}
-        className={styles.show}
-      >
+      <StyledPasswordNote invalidPassword={!!shouldDisplayError}>
         <AiOutlineInfoCircle />
-        <span>
-          {!emailAlreadyInUse
-            ? `Must be a valid email`
-            : `Account already exists with this email`}
-        </span>
-      </p>
+        <span>{errorMessage}</span>
+      </StyledPasswordNote>
     </fieldset>
   );
 };
+
 export default EmailField;
