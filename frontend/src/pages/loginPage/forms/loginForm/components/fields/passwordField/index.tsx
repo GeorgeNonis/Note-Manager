@@ -1,6 +1,8 @@
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { PasswordFieldProps } from "./passwordField.props";
-import { StyledPasswordField, StyledWrapper } from "./passwordField.styles";
+import { StyledWrapper } from "./passwordField.styles";
+import { Input } from "../../../../../../../components/Atoms";
+import { StyledFieldSet } from "../../../../signUpForm/components/fields/styles";
 
 const PasswordField = ({
   showPassword,
@@ -9,10 +11,11 @@ const PasswordField = ({
   showPasswordHandler,
 }: PasswordFieldProps) => {
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>Password:</legend>
       <StyledWrapper>
-        <StyledPasswordField
+        <Input
+          backgroundUnset
           onChange={(e) => setPassword(e.target.value)}
           type={!showPassword ? "password" : "text"}
           id="password"
@@ -22,7 +25,7 @@ const PasswordField = ({
           {passwordHover ? <AiFillEyeInvisible /> : <AiFillEye />}
         </span>
       </StyledWrapper>
-    </fieldset>
+    </StyledFieldSet>
   );
 };
 export default PasswordField;

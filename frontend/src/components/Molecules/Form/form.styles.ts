@@ -1,4 +1,4 @@
-import { styled } from "../../../../../globalStyles";
+import { styled } from "../../../../globalStyles";
 
 export const StyledForm = styled("form", {
   width: "$formSize",
@@ -10,16 +10,9 @@ export const StyledForm = styled("form", {
   backgroundColor: "#00000075",
 
   "@mobile": {
+    overflow: "auto",
     width: "$formMobileSize",
-  },
-
-  fieldset: {
-    all: "unset",
-    position: "relative",
-
-    legend: {
-      marginBottom: "0.4rem",
-      width: "100%",
-    },
+    height: "500px",
+    marginBlock: "300px",
   },
 });

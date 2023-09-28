@@ -1,6 +1,6 @@
-import { styled } from "@stitches/react";
+import { styled } from "../../../../globalStyles";
 
-export const StyledEmailInput = styled("input", {
+export const StyledInput = styled("input", {
   fontFamily: "CormorantGaramond",
   outline: "none",
   border: "none",
@@ -10,9 +10,19 @@ export const StyledEmailInput = styled("input", {
   padding: "0 1rem",
   boxSizing: "border-box",
 
-  backgroundColor: "rgba(0, 0, 0, 0.4588235294)",
+  backgroundColor: "$inputShadow",
   color: "white",
+
   ":-webkit-autofill, &:-webkit-autofill:focus": {
+    "-webkit-text-fill-color": "white",
     transition: "background-color 600000s 0s, color 600000s 0s",
+  },
+
+  variants: {
+    backgroundUnset: {
+      true: {
+        bgc: "unset",
+      },
+    },
   },
 });

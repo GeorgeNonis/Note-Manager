@@ -7,10 +7,12 @@ import { PasswordFieldProps } from "./passwordField.props";
 import {
   StyledCheckMark,
   StyledCorrect,
+  StyledFieldSet,
   StyledPasswordNote,
   StyledXmark,
-} from "./passwordField.styles";
-import { StyledInput, StyledInputWrapper, StyledSpan } from "../styles";
+} from "../styles";
+import { StyledInputWrapper, StyledSpan } from "../styles";
+import { Input } from "../../../../../../../components/Atoms";
 
 const PasswordField = ({
   errRef,
@@ -24,7 +26,7 @@ const PasswordField = ({
   showPasswordHandler,
 }: PasswordFieldProps) => {
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>
         Password:
         {passwordValid && (
@@ -39,7 +41,8 @@ const PasswordField = ({
         )}
       </legend>
       <StyledInputWrapper>
-        <StyledInput
+        <Input
+          backgroundUnset
           onChange={(e) => setPassword(e.target.value)}
           onFocus={() => setPasswordFocus(true)}
           onBlur={() => setPasswordFocus(false)}
@@ -64,7 +67,7 @@ const PasswordField = ({
           Minimum four characters, first one uppercase letter, least one number
         </span>
       </StyledPasswordNote>
-    </fieldset>
+    </StyledFieldSet>
   );
 };
 export default PasswordField;

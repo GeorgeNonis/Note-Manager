@@ -35,3 +35,5 @@ export { default as ArchivedNotesSection } from "./sections/archive-notes-sectio
 export { default as Account } from "./account/account";
 export { default as AccountSettings } from "./modals/accountSettings/accountSettings";
 export { default as Loading } from "./notes/ui/loadingscreen";
+export * from "./Atoms";
+export * from "./Molecules";

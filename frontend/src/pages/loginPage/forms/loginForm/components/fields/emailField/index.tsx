@@ -1,11 +1,12 @@
+import { Input } from "../../../../../../../components/Atoms";
+import { StyledFieldSet } from "../../../../signUpForm/components/fields/styles";
 import { EmailFieldProps } from "./email.props";
-import { StyledEmailInput } from "./emailField.styles";
 
 const EmailField = ({ emailRef, setEmail, setEmailFocus }: EmailFieldProps) => {
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>E-Mail:</legend>
-      <StyledEmailInput
+      <Input
         onChange={(e) => setEmail(e.target.value)}
         onFocus={() => setEmailFocus(true)}
         onBlur={() => setEmailFocus(false)}
@@ -14,7 +15,7 @@ const EmailField = ({ emailRef, setEmail, setEmailFocus }: EmailFieldProps) => {
         name="email"
         ref={emailRef}
       />
-    </fieldset>
+    </StyledFieldSet>
   );
 };
 export default EmailField;

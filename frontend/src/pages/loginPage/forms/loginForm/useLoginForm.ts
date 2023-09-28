@@ -50,8 +50,9 @@ export const useLoginForm = () => {
       // console.log(response[0]?.data.msg);
       setUserMsg(response[0]?.data.msg);
     }
-    if (!response[0]?.data.match) return toast.error(userMsg);
-    if (successRequest) {
+    if (!response[0]?.data.match) {
+      toast.error(userMsg);
+    } else if (successRequest) {
       const token = response[0]?.headers.authorization;
       sessionStorage.setItem("auth-token", token!);
       return navigate("/notes");

@@ -1,3 +1,4 @@
+import { TbCircleCheck, TbCircleX } from "react-icons/tb";
 import { styled } from "../../../../../../../globalStyles";
 
 export const StyledInputWrapper = styled("div", {
@@ -15,21 +16,73 @@ export const StyledSpan = styled("span", {
   padding: "0 0.5rem",
 });
 
-export const StyledInput = styled("input", {
-  fontFamily: "CormorantGaramond",
-  outline: "none",
+export const StyledCheckMark = styled("span", {
+  float: "right",
+  background: "none",
   border: "none",
-  borderRadius: "8px",
-  width: "100%",
-  height: "2rem",
-  padding: "0 1rem",
-  boxSizing: "border-box",
+  marginTop: "1vh",
 
-  backgroundColor: "rgba(0, 0, 0, 0.4588235294)",
-  color: "white",
-
-  ":-webkit-autofill, &:-webkit-autofill:focus": {
-    "-webkit-text-fill-color": "white",
-    transition: "background-color 600000s 0s, color 600000s 0s",
+  variants: {
+    show: {
+      true: {
+        display: "grid",
+        gridTemplateColumns: "1fr 15fr",
+        alignItems: "center",
+        "& svg": {
+          placeSelf: "center",
+        },
+      },
+      false: {
+        display: "grid",
+        gridTemplateColumns: "1fr 15fr",
+        alignItems: "center",
+        margin: 0,
+        opacity: 0,
+      },
+    },
   },
+});
+
+export const StyledFieldSet = styled("fieldset", {
+  all: "unset",
+  position: "relative",
+
+  legend: {
+    display: "grid",
+    gridTemplateColumns: "10fr 3fr",
+    marginBottom: "0.4rem",
+    width: "100%",
+  },
+});
+
+export const StyledPasswordNote = styled("p", {
+  display: "grid",
+  gridTemplateColumns: "1fr 15fr",
+  alignItems: "center",
+
+  "& span": {
+    fontSize: "1rem",
+  },
+
+  "& svg": {
+    placeSelf: "center",
+  },
+
+  variants: {
+    invalidPassword: {
+      true: {
+        opacity: 1,
+      },
+      false: {
+        opacity: 0,
+      },
+    },
+  },
+});
+
+export const StyledCorrect = styled(TbCircleCheck, {
+  color: "Lime",
+});
+export const StyledXmark = styled(TbCircleX, {
+  color: "red",
 });

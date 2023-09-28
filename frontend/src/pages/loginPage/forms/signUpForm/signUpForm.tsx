@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import { useSignUpForm } from "./useSignUpForm";
 import AvatarOptions from "../../../../components/modals/avataroptions/avatarOptions";
 import default_avatar_pic from "../../../../../images/default_avatar.png";
-// import styles from "./styles.module.scss";
 import { useDispatch } from "react-redux";
 import { formSwitch } from "../../../../store/display-state-slice";
 import { Transition } from "react-transition-group";
@@ -14,7 +13,7 @@ import {
 } from "./components";
 import { CrossLine } from "../loginForm/components";
 import Button from "../../../../components/Atoms/Button";
-import { StyledForm } from "./signUpForm.styles";
+import { Form } from "../../../../components/Molecules";
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ const SignUpForm = () => {
           )
         }
       </Transition>
-      <StyledForm onSubmit={handlers.handleSumbit}>
+      <Form onSubmit={handlers.handleSumbit}>
         <EmailField {...emailField} />
         <PasswordField {...passwordField} />
         <ConfirmPasswordField {...confirmPasswordField} />
@@ -55,7 +54,7 @@ const SignUpForm = () => {
         </Button>
         <CrossLine />
         <Button onClick={() => dispatch(formSwitch())}>Login</Button>
-      </StyledForm>
+      </Form>
     </>
   );
 };

@@ -5,10 +5,11 @@ import { IRootState } from "../../../../../../../store/store";
 import {
   StyledCheckMark,
   StyledCorrect,
+  StyledFieldSet,
   StyledPasswordNote,
   StyledXmark,
-} from "../passwordField/passwordField.styles";
-import { StyledInput } from "../styles";
+} from "../styles";
+import { Input } from "../../../../../../../components/Atoms";
 
 const EmailField = ({
   setEmail,
@@ -26,7 +27,7 @@ const EmailField = ({
     : `Must be a valid email`;
 
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>
         E-Mail:
         {emailValid && !emailAlreadyInUse && (
@@ -40,7 +41,7 @@ const EmailField = ({
           </StyledCheckMark>
         )}
       </legend>
-      <StyledInput
+      <Input
         css={{ bgc: "$inputShadow !important" }}
         onChange={(e) => setEmail(e.target.value)}
         onFocus={() => setEmailFocus(true)}
@@ -54,7 +55,7 @@ const EmailField = ({
         <AiOutlineInfoCircle />
         <span>{errorMessage}</span>
       </StyledPasswordNote>
-    </fieldset>
+    </StyledFieldSet>
   );
 };
 

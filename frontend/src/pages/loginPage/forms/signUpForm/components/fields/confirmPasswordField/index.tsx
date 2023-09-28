@@ -3,15 +3,16 @@ import {
   AiFillEyeInvisible,
   AiOutlineInfoCircle,
 } from "react-icons/ai";
-import styles from "../../../styles.module.scss";
 import { ConfirmPasswordFieldProps } from "./confirmPasswordField.props";
 import {
   StyledCheckMark,
   StyledCorrect,
+  StyledFieldSet,
   StyledPasswordNote,
   StyledXmark,
-} from "../passwordField/passwordField.styles";
-import { StyledInput, StyledInputWrapper, StyledSpan } from "../styles";
+} from "../styles";
+import { StyledInputWrapper, StyledSpan } from "../styles";
+import { Input } from "../../../../../../../components/Atoms";
 
 const ConfirmPasswordField = ({
   showPassword,
@@ -26,7 +27,7 @@ const ConfirmPasswordField = ({
   showPasswordHandler,
 }: ConfirmPasswordFieldProps) => {
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>
         Confirm Password:
         {validMatch && passwordValid ? (
@@ -43,7 +44,8 @@ const ConfirmPasswordField = ({
       </legend>
 
       <StyledInputWrapper>
-        <StyledInput
+        <Input
+          backgroundUnset
           onChange={(e) => setConfirmPassword(e.target.value)}
           onFocus={() => setConfirmPasswordFocus(true)}
           onBlur={() => setConfirmPasswordFocus(false)}
@@ -75,7 +77,7 @@ const ConfirmPasswordField = ({
         <AiOutlineInfoCircle />
         <span> Must match your New Password</span>
       </StyledPasswordNote>
-    </fieldset>
+    </StyledFieldSet>
   );
 };
 

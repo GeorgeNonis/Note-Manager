@@ -1,6 +1,8 @@
 import { styled } from "../../../../../../../../globalStyles";
 
 export const StyledFieldSetImage = styled("fieldset", {
+  all: "unset",
+  position: "relative",
   img: {
     display: "grid",
     marginInline: "auto",

@@ -1,5 +1,4 @@
-import Button from "../../../../../../../components/Atoms/Button";
-import styles from "../../../styles.module.scss";
+import { Button } from "../../../../../../../components/Atoms";
 import { ChangeFieldProps } from "./changeField.props";
 import { StyledFieldSetDiv, StyledFieldSetImage } from "./changeField.styles";
 
