@@ -40,7 +40,7 @@ const Button = ({
   return (
     <StyledButton
       type={type}
-      disableButton={isDisabled}
+      disabled={isDisabled}
       {...props}
       onClick={throttleOnClick}
     >

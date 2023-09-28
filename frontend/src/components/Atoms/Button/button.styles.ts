@@ -4,7 +4,7 @@ export const StyledButton = styled("button", {
   position: "relative",
   color: "white",
   height: "2.5rem",
-  width: "200px",
+  width: "$defaultSize",
   marginBlock: "0.7rem",
   marginInline: "auto",
   borderRadius: "8px",
@@ -13,17 +13,14 @@ export const StyledButton = styled("button", {
   fontFamily: "CormorantGaramond",
   transition: "all 250ms ease-in-out",
 
+  "&:disabled": {
+    cursor: "default",
+    pointerEvents: "none",
+    backgroundColor: "$primaryDisableBackground",
+    color: "$primaryDisableText !important",
+  },
+
   variants: {
-    disableButton: {
-      true: {
-        pointerEvents: "none",
-        backgroundColor: "$primaryDisableBackground",
-        color: "$primaryDisableText !important",
-      },
-      false: {
-        cursor: "pointer",
-      },
-    },
     size: {
       small: {
         fontSize: "0.875rem",

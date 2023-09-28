@@ -17,7 +17,7 @@ const LoginForm = () => {
         <EmailField {...emailField} />
         <PasswordField {...passwordField} />
         <Button
-          disableButton={!loginButtonValues.validInputs || loading}
+          disabled={!loginButtonValues.validInputs || loading}
           loading={loading}
         >
           Login

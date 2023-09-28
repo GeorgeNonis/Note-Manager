@@ -46,7 +46,7 @@ const SignUpForm = () => {
         <ConfirmPasswordField {...confirmPasswordField} />
         <ChangeField default_avatar_pic={default_avatar_pic} {...changeField} />
         <Button
-          disableButton={values.signUpProceed}
+          disabled={values.signUpProceed}
           loading={values.requestState}
           type="submit"
         >

@@ -1,3 +1,4 @@
+import Button from "../../../../../../../components/Atoms/Button";
 import styles from "../../../styles.module.scss";
 import { ChangeFieldProps } from "./changeField.props";
 
@@ -16,26 +17,20 @@ const ChangeField = ({
         alt="avatar_image"
       />
       <div className={styles.fieldsetdiv}>
-        <button
+        <Button
           disabled={requestState}
-          style={{
-            cursor: requestState ? "not-allowed" : "pointer",
-          }}
           onClick={() => setChangeAvatar(true)}
           type="button"
         >
           Change
-        </button>
-        <button
+        </Button>
+        <Button
           disabled={requestState}
-          style={{
-            cursor: requestState ? "not-allowed" : "pointer",
-          }}
           onClick={() => setDefaultAvatar(true)}
           type="button"
         >
           Remove
-        </button>
+        </Button>
       </div>
     </fieldset>
   );

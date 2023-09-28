@@ -6,6 +6,27 @@ export const { styled } = createStitches({
       primaryDisableBackground: "rgb(255, 144, 79)",
       primaryDisableText: "#ffffff8c",
     },
+    radii: {
+      1: "5px",
+      2: "10px",
+      3: "15px",
+      4: "20px",
+    },
+    space: {
+      0: "0px",
+      1: "4px",
+      2: "8px",
+      3: "16px",
+      4: "32px",
+    },
+    sizes: {
+      0: "20px",
+      1: "40px",
+      2: "60px",
+      3: "80px",
+      4: "100px",
+      defaultSize: "200px",
+    },
   },
   media: {
     mobile: "(max-width: 640px)",
@@ -116,7 +137,10 @@ const rotate = keyframes({
 });
 
 export const StyledLoadingSemiCircle = styled("div", {
-  display: "inline-block",
+  display: "grid",
+  width: "100%",
+  height: "100%",
+  placeContent: "center",
 
   "&:after": {
     content: '""',
