@@ -5,6 +5,7 @@ export const { styled } = createStitches({
     colors: {
       primaryDisableBackground: "rgb(255, 144, 79)",
       primaryDisableText: "#ffffff8c",
+      inputShadow: "rgba(0, 0, 0, 0.4588235294)",
     },
     radii: {
       1: "5px",
@@ -25,7 +26,10 @@ export const { styled } = createStitches({
       2: "60px",
       3: "80px",
       4: "100px",
+      5: "120px",
       defaultSize: "200px",
+      formSize: "500px",
+      formMobileSize: "300px",
     },
   },
   media: {

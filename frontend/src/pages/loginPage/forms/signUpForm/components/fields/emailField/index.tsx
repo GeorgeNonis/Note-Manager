@@ -1,6 +1,4 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { TbCircleCheck, TbCircleX } from "react-icons/tb";
-import styles from "../../../styles.module.scss";
 import { EmailFieldProps } from "./emailField.props";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../../../../../store/store";
@@ -10,6 +8,7 @@ import {
   StyledPasswordNote,
   StyledXmark,
 } from "../passwordField/passwordField.styles";
+import { StyledInput } from "../styles";
 
 const EmailField = ({
   setEmail,
@@ -41,8 +40,8 @@ const EmailField = ({
           </StyledCheckMark>
         )}
       </legend>
-      <input
-        className={styles.formEmailInput}
+      <StyledInput
+        css={{ bgc: "$inputShadow !important" }}
         onChange={(e) => setEmail(e.target.value)}
         onFocus={() => setEmailFocus(true)}
         onBlur={() => setEmailFocus(false)}

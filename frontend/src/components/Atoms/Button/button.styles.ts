@@ -3,8 +3,8 @@ import { styled } from "../../../../globalStyles";
 export const StyledButton = styled("button", {
   position: "relative",
   color: "white",
-  height: "2.5rem",
-  width: "$defaultSize",
+  minW: "fit-content",
+  paddingInline: "$4",
   marginBlock: "0.7rem",
   marginInline: "auto",
   borderRadius: "8px",
@@ -27,6 +27,7 @@ export const StyledButton = styled("button", {
         h: 24,
       },
       medium: {
+        fontSize: "1rem",
         h: 32,
       },
       large: {

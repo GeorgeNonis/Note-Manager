@@ -1,6 +1,7 @@
 import Button from "../../../../../../../components/Atoms/Button";
 import styles from "../../../styles.module.scss";
 import { ChangeFieldProps } from "./changeField.props";
+import { StyledFieldSetDiv, StyledFieldSetImage } from "./changeField.styles";
 
 const ChangeField = ({
   default_avatar_pic,
@@ -11,12 +12,12 @@ const ChangeField = ({
   setDefaultAvatar,
 }: ChangeFieldProps) => {
   return (
-    <fieldset className={styles.fieldsetimage}>
+    <StyledFieldSetImage>
       <img
         src={!default_avatar ? avatar : default_avatar_pic}
         alt="avatar_image"
       />
-      <div className={styles.fieldsetdiv}>
+      <StyledFieldSetDiv>
         <Button
           disabled={requestState}
           onClick={() => setChangeAvatar(true)}
@@ -31,8 +32,8 @@ const ChangeField = ({
         >
           Remove
         </Button>
-      </div>
-    </fieldset>
+      </StyledFieldSetDiv>
+    </StyledFieldSetImage>
   );
 };
 export default ChangeField;

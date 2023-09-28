@@ -91,14 +91,14 @@ export const useSignUpForm = () => {
       sessionStorage.setItem("auth-token", token!);
       navigate("/notes");
     } else {
-      // console.log(response[1]?.message);
     }
     setRequestState(false);
   };
 
   const doesUserExists = async () => {
+    setRequestState(true);
     const response = await getUsersHttp(email, token);
-
+    setRequestState(false);
     dispatch(emailAlreadyInUseHandler(response[0]));
   };
 

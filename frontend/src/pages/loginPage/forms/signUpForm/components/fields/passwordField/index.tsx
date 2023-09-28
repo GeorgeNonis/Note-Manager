@@ -1,5 +1,3 @@
-import { TbCircleCheck, TbCircleX } from "react-icons/tb";
-import styles from "../../../styles.module.scss";
 import {
   AiFillEye,
   AiFillEyeInvisible,
@@ -12,6 +10,7 @@ import {
   StyledPasswordNote,
   StyledXmark,
 } from "./passwordField.styles";
+import { StyledInput, StyledInputWrapper, StyledSpan } from "../styles";
 
 const PasswordField = ({
   errRef,
@@ -39,8 +38,8 @@ const PasswordField = ({
           </StyledCheckMark>
         )}
       </legend>
-      <div className={styles.inputwrapper}>
-        <input
+      <StyledInputWrapper>
+        <StyledInput
           onChange={(e) => setPassword(e.target.value)}
           onFocus={() => setPasswordFocus(true)}
           onBlur={() => setPasswordFocus(false)}
@@ -51,10 +50,10 @@ const PasswordField = ({
           aria-invalid={passwordValid ? true : false}
           aria-describedby="pwdnote"
         />
-        <span onClick={showPasswordHandler}>
+        <StyledSpan onClick={showPasswordHandler}>
           {passwordHover ? <AiFillEye /> : <AiFillEyeInvisible />}
-        </span>
-      </div>
+        </StyledSpan>
+      </StyledInputWrapper>
       <StyledPasswordNote
         ref={errRef}
         id="pwdnote"
