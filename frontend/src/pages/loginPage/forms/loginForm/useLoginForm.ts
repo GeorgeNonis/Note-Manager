@@ -3,26 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { PWD_REGEX, USER_REGEX } from "../../../../config";
 import { getUserHttp } from "../../../../services";
 import { isThereError } from "../../../../utils";
-import styles from "./styles.module.scss";
+import { toast } from "react-toastify";
 
 export const useLoginForm = () => {
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [emailFocus, setEmailFocus] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
 
   const [password, setPassword] = useState("");
-  const [passwordFocus, setPasswordFocus] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
-
   const [passwordHover, setPasswordHover] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const [validInputs, setValidInputs] = useState(false);
-  const [loginForm, setLoginForm] = useState(false);
+
   const [validCredentials, setValidCredentials] = useState(false);
   const [userMsg, setUserMsg] = useState("Invalid Credentials");
 
@@ -43,6 +42,7 @@ export const useLoginForm = () => {
 
       return;
     }
+    setLoading(true);
     const response = await getUserHttp({ email, pwd: password, token });
 
     const successRequest = isThereError(response);
@@ -50,20 +50,21 @@ export const useLoginForm = () => {
       // console.log(response[0]?.data.msg);
       setUserMsg(response[0]?.data.msg);
     }
-    if (!response[0]?.data.match) return setValidCredentials(response[0]?.data);
-    if (successRequest) {
+    if (!response[0]?.data.match) {
+      toast.error(userMsg);
+    } else if (successRequest) {
       const token = response[0]?.headers.authorization;
       sessionStorage.setItem("auth-token", token!);
       return navigate("/notes");
     } else {
       // console.log(response[1]);
     }
+    setLoading(false);
   };
 
-  const warningCredentialsStlye = [
-    styles.invalidCredentials,
-    !validCredentials ? styles.hideInvalidCredentials : null,
-  ];
+  useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!validCredentials) return;
@@ -71,10 +72,6 @@ export const useLoginForm = () => {
       setValidCredentials(false);
     }, 5000);
   }, [validCredentials]);
-
-  useEffect(() => {
-    emailRef.current?.focus();
-  }, []);
 
   useEffect(() => {
     if (!emailFocus) return;
@@ -90,44 +87,26 @@ export const useLoginForm = () => {
   }, [password, email]);
 
   const state = {
-    values: {
-      loginForm,
+    loading,
+    emailField: {
+      setEmail,
+      setEmailFocus,
+      setEmailValid,
+      emailRef,
+    },
+    passwordField: {
+      setPassword,
+      showPasswordHandler,
+      passwordHover,
+      showPassword,
+    },
+    loginButtonValues: {
+      emailValid,
+      passwordValid,
       validInputs,
-      errRef,
-      validCredentials,
-      warningCredentialsStlye,
-      userMsg,
-      emailValues: {
-        email,
-        emailFocus,
-        emailValid,
-        emailRef,
-      },
-      passwordValues: {
-        password,
-        passwordFocus,
-        passwordValid,
-        passwordHover,
-        showPassword,
-      },
     },
     handlers: {
-      setPasswordHover,
-      setShowPassword,
-      showPasswordHandler,
-      setValidInputs,
-      setLoginForm,
       handleSumbit,
-      emailHandlers: {
-        setEmail,
-        setEmailFocus,
-        setEmailValid,
-      },
-      passwordHandlers: {
-        setPasswordFocus,
-        setPassword,
-        setPasswordValid,
-      },
     },
   };
 

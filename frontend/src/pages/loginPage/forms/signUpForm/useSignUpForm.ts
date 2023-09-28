@@ -4,16 +4,20 @@ import {
   USER_REGEX,
   avatar_pictures,
 } from "../../../../config";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserHttp } from "../../../../services/postNote";
 import { isThereError } from "../../../../utils";
 import { getUsersHttp } from "../../../../services/getNote";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emailAlreadyInUseHandler } from "../../../../store/display-state-slice";
 import { convertImageToBase64 } from "../../../../utils/utils";
+import { IRootState } from "../../../../store/store";
 
 export const useSignUpForm = () => {
+  const { emailAlreadyInUse } = useSelector(
+    (state: IRootState) => state.displayState
+  );
   const [requestState, setRequestState] = useState(false);
   const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
@@ -31,16 +35,12 @@ export const useSignUpForm = () => {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
-  const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
 
   const [passwordHover, setPasswordHover] = useState(false);
   const [confirmPasswordHover, setConfirmPasswordHover] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [validInputs, setValidInputs] = useState(false);
   const [validMatch, setValidMatch] = useState(false);
-  const [loginForm, setLoginForm] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
 
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [avatar, setAvatar] = useState("");
@@ -80,7 +80,7 @@ export const useSignUpForm = () => {
     const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
       errRef.current?.focus();
-      setErrorMsg("Invalid Entry");
+
       return;
     }
     setRequestState(true);
@@ -91,14 +91,14 @@ export const useSignUpForm = () => {
       sessionStorage.setItem("auth-token", token!);
       navigate("/notes");
     } else {
-      // console.log(response[1]?.message);
     }
     setRequestState(false);
   };
 
   const doesUserExists = async () => {
+    setRequestState(true);
     const response = await getUsersHttp(email, token);
-
+    setRequestState(false);
     dispatch(emailAlreadyInUseHandler(response[0]));
   };
 
@@ -117,12 +117,14 @@ export const useSignUpForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!emailFocus) return;
     const result = USER_REGEX.test(email);
     setEmailValid(result);
 
     const timeout = setTimeout(() => {
-      doesUserExists();
+      if (result) {
+        // Only call doesUserExists if the email format is valid
+        doesUserExists();
+      }
     }, 500);
 
     return () => {
@@ -135,68 +137,63 @@ export const useSignUpForm = () => {
     setPasswordValid(result);
     const match = password === confirmPassword;
     setValidMatch(match);
-
-    const validForm = emailValid && match;
-    setValidInputs(validForm);
   }, [password, confirmPassword, email]);
+
+  const signUpProceed =
+    !emailValid ||
+    !passwordValid ||
+    !validMatch ||
+    emailAlreadyInUse ||
+    requestState;
 
   const state = {
     values: {
-      loginForm,
-      validInputs,
-      errRef,
-      validMatch,
-      changeAvatar,
-      default_avatar,
-      avatar,
-      requestState,
-      emailValues: {
-        email,
-        emailFocus,
-        emailValid,
-        emailRef,
-      },
-      passwordValues: {
-        password,
-        passwordFocus,
-        passwordValid,
-        passwordHover,
-        confirmPasswordHover,
-        showPassword,
-      },
-      confirmPasswordValues: {
-        confirmPassword,
-        confirmPasswordFocus,
-        confirmPasswordValid,
-      },
-    },
-    handlers: {
-      setPasswordHover,
-      setConfirmPasswordHover,
-      setShowPassword,
-      showPasswordHandler,
-      setValidInputs,
-      setLoginForm,
-      handleSumbit,
-      setChangeAvatar,
-      setAvatar,
-      setDefaultAvatar,
-      avatarHandler,
-      emailHandlers: {
+      signUpProceed,
+      emailField: {
         setEmail,
         setEmailFocus,
-        setEmailValid,
+        emailRef,
+        email,
+        emailValid,
+        emailFocus,
       },
-      passwordHandlers: {
-        setPasswordFocus,
+      passwordField: {
+        errRef,
+        showPassword,
+        password,
+        passwordValid,
+        passwordFocus,
+        passwordHover,
         setPassword,
-        setPasswordValid,
+        setPasswordFocus,
+        showPasswordHandler,
       },
-      confirmPasswordHandlers: {
+      confirmPasswordField: {
+        showPassword,
+        errRef,
+        passwordValid,
+        validMatch,
+        confirmPasswordFocus,
+        confirmPasswordHover,
+        setConfirmPasswordHover,
         setConfirmPassword,
         setConfirmPasswordFocus,
-        setConfirmPasswordValid,
+        showPasswordHandler,
       },
+      changeField: {
+        avatar,
+        default_avatar,
+        requestState,
+        setChangeAvatar,
+        setDefaultAvatar,
+      },
+      changeAvatar,
+      requestState,
+    },
+    handlers: {
+      handleSumbit,
+      setChangeAvatar,
+      avatarHandler,
     },
   };
 
