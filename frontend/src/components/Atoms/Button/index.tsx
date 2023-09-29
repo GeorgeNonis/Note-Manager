@@ -21,11 +21,9 @@ const Button = ({
       onClick?.(e);
       if (enableThrottle || type === "submit") {
         setIsDisabled(true);
-        setIsLoading(true);
 
         setTimeout(() => {
           setIsDisabled(false);
-          setIsLoading(false);
         }, delayThrottle);
       }
     },
@@ -40,7 +38,7 @@ const Button = ({
   return (
     <StyledButton
       type={type}
-      disabled={isDisabled}
+      disabled={isDisabled || isLoading}
       {...props}
       onClick={throttleOnClick}
     >

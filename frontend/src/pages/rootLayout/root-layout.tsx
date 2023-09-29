@@ -8,6 +8,7 @@ import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
+import { ToastContainer } from "react-toastify";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
@@ -21,6 +22,7 @@ const RootLayout = () => {
   } = state.values.displayState;
   return (
     <>
+      <ToastContainer />
       {loadingInitialState && <Comp.LoadingSpinner />}
       {!loadingInitialState && (
         <main

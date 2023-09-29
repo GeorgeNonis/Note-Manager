@@ -144,6 +144,13 @@ export const useSignUpForm = () => {
     !validMatch ||
     emailAlreadyInUse ||
     requestState;
+  const commonPropsForFields = {
+    errRef,
+    isHovered: passwordHover,
+    setHovered: setPasswordHover,
+    showContent: showPassword,
+    toggleShowContent: showPasswordHandler,
+  };
 
   const state = {
     values: {
@@ -157,27 +164,27 @@ export const useSignUpForm = () => {
         emailFocus,
       },
       passwordField: {
-        errRef,
-        showPassword,
-        password,
-        passwordValid,
-        passwordFocus,
-        passwordHover,
-        setPassword,
-        setPasswordFocus,
-        showPasswordHandler,
+        legendText: "Password",
+        errorMessage:
+          "Minimum four characters, first one uppercase letter, least one number",
+        isValid: passwordValid,
+        isFocused: passwordFocus,
+        value: password,
+        setValue: setPassword,
+        setFocused: setPasswordFocus,
+        backgroundUnset: true,
+        ...commonPropsForFields,
       },
       confirmPasswordField: {
-        showPassword,
-        errRef,
-        passwordValid,
-        validMatch,
-        confirmPasswordFocus,
-        confirmPasswordHover,
-        setConfirmPasswordHover,
-        setConfirmPassword,
-        setConfirmPasswordFocus,
-        showPasswordHandler,
+        legendText: "Confirm Password",
+        errorMessage: "Passwords must match",
+        isValid: validMatch && passwordValid,
+        isFocused: confirmPasswordFocus,
+        value: confirmPassword,
+        setValue: setConfirmPassword,
+        setFocused: setConfirmPasswordFocus,
+        backgroundUnset: true,
+        ...commonPropsForFields,
       },
       changeField: {
         avatar,

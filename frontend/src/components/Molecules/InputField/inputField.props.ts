@@ -1,6 +1,9 @@
-export interface InputFieldProps {
+import { InputProps } from "../../Atoms/Input/input.props";
+
+export interface InputFieldProps extends InputProps {
   legendText: string;
   errorMessage: string;
+  value: string;
   isValid: boolean;
   isFocused: boolean;
   showContent?: boolean;

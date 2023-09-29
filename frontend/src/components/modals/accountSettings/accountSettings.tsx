@@ -38,7 +38,7 @@ const AccountSettings = ({ transitionState }: AccountSettingsProps) => {
       el: <Components.AccountAvatar initialState={initialState} />,
     },
     Password: {
-      el: <Components.AccountPassword initialState={initialState} />,
+      el: <Components.AccountPassword />,
     },
   };
 

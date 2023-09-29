@@ -19,6 +19,7 @@ const InputField = ({
   legendText,
   errorMessage,
   isValid,
+  value,
   isFocused,
   showContent,
   isHovered,
@@ -27,6 +28,7 @@ const InputField = ({
   setFocused,
   setValue,
   toggleShowContent,
+  ...inputProps
 }: InputFieldProps) => {
   return (
     <StyledFieldSet>
@@ -37,7 +39,8 @@ const InputField = ({
             <StyledCorrect />
           </StyledCheckMark>
         ) : (
-          !isValid && (
+          !isValid &&
+          value && (
             <StyledCheckMark show={!isValid}>
               <StyledXmark />
             </StyledCheckMark>
@@ -47,7 +50,8 @@ const InputField = ({
 
       <StyledInputWrapper>
         <Input
-          backgroundUnset
+          {...inputProps}
+          value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
@@ -55,17 +59,17 @@ const InputField = ({
         />
         <StyledSpan
           onClick={toggleShowContent}
-          onMouseEnter={() => setHovered(!isHovered)}
-          onMouseLeave={() => setHovered(!isHovered)}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         >
-          {isHovered || showContent ? <AiFillEye /> : <AiFillEyeInvisible />}
+          {showContent ? <AiFillEye /> : <AiFillEyeInvisible />}
         </StyledSpan>
       </StyledInputWrapper>
 
       <StyledPasswordNote
         ref={errRef}
         id="inputfield-error"
-        invalidPassword={!isValid && isFocused}
+        invalidPassword={!!(!isValid && value)}
       >
         <AiOutlineInfoCircle />
         <span>{errorMessage}</span>
@@ -75,3 +79,4 @@ const InputField = ({
 };
 
 export default InputField;
+export type { InputFieldProps };
