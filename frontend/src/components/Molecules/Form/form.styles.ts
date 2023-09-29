@@ -16,4 +16,13 @@ export const StyledForm = styled("form", {
     height: "500px",
     marginBlock: "300px",
   },
+
+  variants: {
+    backgroundUnset: {
+      true: {
+        bgc: "unset",
+        border: "unset",
+      },
+    },
+  },
 });

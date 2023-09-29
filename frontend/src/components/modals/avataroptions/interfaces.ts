@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-export interface AvatarOptionsProps {
+export interface AvatarModalProps {
   closeModal: Dispatch<SetStateAction<boolean>>;
   avatarHandler: (avtr: string | File) => void;
-  transitionState: string;
+  open: boolean;
 }

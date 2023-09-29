@@ -1,6 +1,6 @@
 import { useAccountPassword } from "./useAccountPassword";
 import styles from "./styles.module.scss";
-import { InputField } from "../../../Molecules";
+import { Form, InputField } from "../../../Molecules";
 import { Button } from "../../../Atoms";
 
 const AccountPassword = () => {
@@ -14,7 +14,7 @@ const AccountPassword = () => {
   } = useAccountPassword();
   return (
     <div className={styles.mainContent}>
-      <form>
+      <Form backgroundUnset={true}>
         <InputField {...currentPasswordProps} />
         <InputField {...newPasswordProps} />
         <InputField {...confirmPasswordProps} />
@@ -25,7 +25,7 @@ const AccountPassword = () => {
         >
           Update Password
         </Button>
-      </form>
+      </Form>
     </div>
   );
 };

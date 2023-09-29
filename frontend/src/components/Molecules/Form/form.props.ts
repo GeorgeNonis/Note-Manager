@@ -5,4 +5,5 @@ export type StyledFormProps = StyledComponentProps<typeof StyledForm>;
 
 export interface FormProps extends StyledFormProps {
   children: React.ReactNode;
+  backgroundUnset?: boolean;
 }

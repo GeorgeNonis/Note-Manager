@@ -2,14 +2,9 @@ import ReactDOM from "react-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
-import { AvatarOptions } from "../../../index";
 import styles from "./styles.module.scss";
-import { InitialState } from "../../../../store/interfaces";
-import { Transition } from "react-transition-group";
-
-interface AccountAvatarProps {
-  initialState: InitialState;
-}
+import AvatarModal from "../../avataroptions/avatarOptions";
+import { AccountAvatarProps } from "./accountAvatar.props";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -17,23 +12,14 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
 
   return (
     <>
-      <Transition
-        in={values.changeAvatar}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
-        {(transState) =>
-          ReactDOM.createPortal(
-            <AvatarOptions
-              transitionState={transState}
-              closeModal={handlers.setChangeAvatar}
-              avatarHandler={handlers.selectAvatarHandler}
-            />,
-            document.getElementById("avataroptions")!
-          )
-        }
-      </Transition>
+      {ReactDOM.createPortal(
+        <AvatarModal
+          open={values.changeAvatar}
+          closeModal={handlers.setChangeAvatar}
+          avatarHandler={handlers.selectAvatarHandler}
+        />,
+        document.getElementById("avataroptions")!
+      )}
 
       <div className={styles.mainContent}>
         <div className={styles.avatars}>
