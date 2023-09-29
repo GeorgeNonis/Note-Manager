@@ -5,7 +5,6 @@ import { IRootState } from "../../../store/store";
 import { addNote, sortUnpinnedNotes } from "../../../store/notes-slice";
 import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
-import { errorState } from "../../../store/display-state-slice";
 
 export const useExistingNotesSection = () => {
   const token = sessionStorage.getItem("auth-token")!;
@@ -25,11 +24,8 @@ export const useExistingNotesSection = () => {
   });
 
   const onDragEnd = async (e: React.DragEvent) => {
-    // console.log("before id");
     const id = e.dataTransfer.getData("id");
-    // console.log("after id");
     if (id.length === 0) return;
-    // console.log("before callback");
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
       }
@@ -54,7 +50,6 @@ export const useExistingNotesSection = () => {
       token
     );
     boolean && dispatch(addNote(processedNote));
-    // : dispatch(errorState(response[1]?.message));
 
     setTitle("");
     setNote("");

@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
 
 const NotesSection = ({
-  // notes,
   dragable = true,
 }: {
   notes: NoteObj[];
@@ -15,7 +14,7 @@ const NotesSection = ({
   const { onDragEnter, onDragStart, onDragEnd } = useNotesSection();
   const { notes } = useSelector((state: IRootState) => state.notes);
   let zIndex = 1000;
-  // console.log({ notes });
+
   return (
     <main className={styles.content}>
       <div className={styles.notes}>

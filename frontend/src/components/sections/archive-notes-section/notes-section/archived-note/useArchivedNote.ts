@@ -30,7 +30,6 @@ export const useArchivedNote = ({ note, zindex }: CustomHook) => {
     dispatch(fetchingDataHandler());
   };
 
-  // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;
 

@@ -59,7 +59,6 @@ export const useOptions = ({
     if (sucessfullRequest) {
       dispatch(copyNote({ id, pinned, archived, sharedId }));
     } else {
-      // dispatch(errorState(response[1]?.message));
     }
 
     dispatch(httpReqResLoading());
@@ -76,7 +75,7 @@ export const useOptions = ({
 
     sucessfullRequest &&
       dispatch(deleteNote({ id: note.id, pinned, archived }));
-    // : dispatch(errorState(response[1]?.message));
+
     setDisplay(false);
     dispatch(fetchingDataHandler());
   };
@@ -116,7 +115,6 @@ export const useOptions = ({
       if (sucessfullRequest) {
         dispatch(checkBoxes({ id: note.id, pinned, archived }));
       } else {
-        // dispatch(errorState(response[1]?.message));
       }
       setDiscardBoxes(!discardBoxes);
     } else {
@@ -136,7 +134,6 @@ export const useOptions = ({
           dispatch(
             checkBoxes({ id: note.id, pinned, archived, uncheckednote })
           );
-        // : dispatch(errorState(response[1]?.message));
       }
     }
     dispatch(fetchingDataHandler());
@@ -156,7 +153,6 @@ export const useOptions = ({
     sucessfullRequest && !archived
       ? dispatch(archiveNote({ id: note.id, pinned }))
       : dispatch(unarchiveNote({ id: note.id }));
-    // : dispatch(errorState(response[1]?.message));
     dispatch(fetchingDataHandler());
   };
 

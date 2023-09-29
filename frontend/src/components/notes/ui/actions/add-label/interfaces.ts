@@ -2,7 +2,6 @@ export interface AddLabelProps {
   id: string;
   pinned: boolean;
   archived?: boolean;
-  // styles: CSSModuleClasses;
 }
 
 export interface Note {
@@ -29,6 +28,5 @@ export interface CheckBoxProps {
       id: string
     ) => void;
     addLabelHandler: () => void;
-    // checkBoxStyle: (obj: Labels) => string;
   };
 }

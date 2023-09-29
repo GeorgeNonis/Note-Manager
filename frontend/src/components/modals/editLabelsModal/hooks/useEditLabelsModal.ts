@@ -39,7 +39,6 @@ export const useEditLabelsModal = (
     const response = await addLabelHttp({ label, labelId: sharedId, token });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(addLabel({ label, labelId: sharedId }));
-    // : dispatch(errorState(response[1]?.message));
 
     setLabel("");
     dispatch(fetchingDataHandler());

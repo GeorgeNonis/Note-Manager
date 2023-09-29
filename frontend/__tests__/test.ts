@@ -24,7 +24,6 @@ const initiateUser = async () => {
 };
 
 const getUser = async () => {
-  // const response = await axios.post(`http://localhost:4569/v1/signup`, { email: 'nonis@gmail.com', pwd: '123' })
   const email = "nonis@gmail.com";
   const pwd = "123";
   const response = await fetch(`http://localhost:4569/v1/signup`, {

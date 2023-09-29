@@ -23,9 +23,6 @@ export const useRootLayout = () => {
   const error = "";
   axios.interceptors.request.use(
     (request) => {
-      // console.log("1");
-      // dispatch(fetchingDataHandler());
-
       return request;
     },
     (err) => {
@@ -36,8 +33,6 @@ export const useRootLayout = () => {
   axios.interceptors.response.use(
     (response) => {
       displayState.error.length > 0 && dispatch(errorState(error));
-      // console.log("2");
-      // dispatch(fetchingDataHandler());
 
       return response;
     },
@@ -46,8 +41,6 @@ export const useRootLayout = () => {
         response: { status },
         message,
       } = err;
-      // console.log({ err });
-      // console.log({ message });
       if (status == 401) {
         logoutHandler();
       } else if (status === 500) {

@@ -119,12 +119,9 @@ export const findNoteIndex = (arr, id) => {
 export const createUser = (email, hashedPwd, image) => {
   const curr = new Date();
   curr.setDate(curr.getDate());
-  // console.log({ curr });
   const date = curr.toISOString().substring(0, 10);
-  // console.log({ date });
   const lastTimeDitedNote = curr.toISOString().substring(0, 10);
-  // console.log({ lastTimeDitedNote });
-  // console.log("okay until here");
+
   const user = {
     userId: uuidv4(),
     email,
@@ -140,18 +137,3 @@ export const createUser = (email, hashedPwd, image) => {
   };
   return user;
 };
-
-// export const convertImageToBase64 = (imgUrl, callback) => {
-//   const image = new Image();
-//   image.crossOrigin = "anonymous";
-//   image.onload = () => {
-//     const canvas = document.createElement("canvas");
-//     const ctx = canvas.getContext("2d");
-//     canvas.height = image.naturalHeight;
-//     canvas.width = image.naturalWidth;
-//     ctx.drawImage(image, 0, 0);
-//     const dataUrl = canvas.toDataURL();
-//     callback && callback(dataUrl);
-//   };
-//   image.src = imgUrl;
-// };

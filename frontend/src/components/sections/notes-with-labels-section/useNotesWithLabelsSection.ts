@@ -22,7 +22,6 @@ export const useNotesWithLabelsSection = ({ label }: useHookProps) => {
     pnNotes,
     unNotes,
     dummys,
-    // loading,
     state,
   };
 };

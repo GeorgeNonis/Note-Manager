@@ -9,7 +9,6 @@ export const useArchiveNotesSection = () => {
   );
   const { error, loadingInitialState } = displayState;
   const [display, setDisplay] = useState<boolean>(false);
-  // const dispatch = useDispatch();
 
   const clickOutsideNote = useOutsideClick(() => {
     setDisplay(false);

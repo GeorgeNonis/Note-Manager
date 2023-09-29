@@ -36,7 +36,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
       dispatch(
         addLabel({ id, pinned, archived, label: value, labelId: sharedId })
       );
-    // : dispatch(errorState(response[1]?.message));
+
     setValue("");
     dispatch(fetchingDataHandler());
   };

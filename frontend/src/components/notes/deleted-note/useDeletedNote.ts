@@ -25,7 +25,7 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(restoreNote(note.id));
-    // : dispatch(errorState(response[1]?.message));
+
     dispatch(fetchingDataHandler());
   };
 
@@ -36,7 +36,6 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(removeNote(note.id));
-    // : dispatch(errorState(response[1]?.message));
 
     setReview(false);
     dispatch(fetchingDataHandler());

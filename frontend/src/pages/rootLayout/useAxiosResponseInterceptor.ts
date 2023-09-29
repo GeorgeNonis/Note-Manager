@@ -37,7 +37,7 @@ const useAxiosREsponseInterceptor = () => {
       } else {
         dispatch(errorState(status.toString()));
       }
-      // dispatch(fetchingDataHandler());
+
       return Promise.reject(err);
     }
   );

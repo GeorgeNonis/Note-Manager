@@ -19,13 +19,10 @@ const ExistinNotesSection = () => {
   } = useSelector((state: IRootState) => state);
   if (useStore.values.loading) return <LoadingSpinner />;
 
-  // if (useStore.values.error === "Network Error") return <></>;
-
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
   );
   const notes = useStore.values.state.notes.length !== 0 && (
-    // <NotesSection notes={[...useStore.values.state.notes]} />
     <NotesSection notes={[...existingnotes]} />
   );
 

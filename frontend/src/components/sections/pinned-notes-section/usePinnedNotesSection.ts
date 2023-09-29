@@ -19,11 +19,10 @@ export const usePinnedNotesSection = () => {
   const onDragEnd = async () => {
     const cb = (arr: Iterable<NoteObj>[]) => {
       if (!Array.isArray(arr)) {
-        // dispatch(errorState(arr));
       }
       dispatch(sortNotes({ arr, pinned: true }));
     };
-    // console.log("pinned note");
+
     await DragEndUtil({ state, index, indexOf, cb, pinned: true, token });
   };
 

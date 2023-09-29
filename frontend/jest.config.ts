@@ -1,9 +1,3 @@
-// export default {
-//   transform: {
-//     "^.+\\.tsx?$": "ts-jest",
-//   },
-// };
-
 export default {
   testEnvironment: "jsdom",
   transform: {

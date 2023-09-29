@@ -49,13 +49,9 @@ export const DragEndUtil = async ({
     arr[i1] = arr[i2];
     // Step 3
     arr[i2] = temp;
-    // console.log({ temp });
     return arr;
   };
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
-  // console.log({ index, indexOf });
-  // console.log({ notesPrevState });
-  // console.log({ b });
   const response = await sortNotesHttp([...b], pinned, token);
 
   const [, error] = response;
@@ -101,15 +97,10 @@ export const notePostHandler = async (
   return { processedNote, boolean, response };
 };
 
-/**
- * Testing vs code extension for Github collab
- */
-
 export const IfNetworkDown = (msg: string): string => {
   if (msg === "Network down") {
     return ErrorMessages.networkdown;
   } else {
-    // console.log({ msg });
     return msg;
   }
 };

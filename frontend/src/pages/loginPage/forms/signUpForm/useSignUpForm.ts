@@ -122,7 +122,6 @@ export const useSignUpForm = () => {
 
     const timeout = setTimeout(() => {
       if (result) {
-        // Only call doesUserExists if the email format is valid
         doesUserExists();
       }
     }, 500);

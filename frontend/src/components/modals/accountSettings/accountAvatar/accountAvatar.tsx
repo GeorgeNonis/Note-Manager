@@ -14,7 +14,7 @@ interface AccountAvatarProps {
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
   const { image } = initialState;
-  // console.log(values.hoverOnAvatar);
+
   return (
     <>
       <Transition
@@ -34,14 +34,7 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
           )
         }
       </Transition>
-      {/* {values.changeAvatar &&
-        ReactDOM.createPortal(
-          <AvatarOptions
-            closeModal={handlers.setChangeAvatar}
-            avatarHandler={handlers.selectAvatarHandler}
-          />,
-          document.getElementById("avataroptions")!
-        )} */}
+
       <div className={styles.mainContent}>
         <div className={styles.avatars}>
           <img

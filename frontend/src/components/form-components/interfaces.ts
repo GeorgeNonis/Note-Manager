@@ -1,14 +1,4 @@
-// export interface FormProps {
-//   display: boolean;
-//   onChangeNote: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   onChangeTitle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   note: string;
-//   setDisplay: (arg: boolean) => void;
-//   title: string;
-// }
-
 import { InitialState } from "../../store/interfaces";
-import { useExistingNotesSection } from "../sections/existing-notes-section/useExistingNotesSection";
 
 export interface InputTextProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

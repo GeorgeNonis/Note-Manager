@@ -7,7 +7,6 @@ export const getUsersHttp = async <T>(
   email: string,
   token: string
 ): Promise<[T | null | AxiosResponse, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
   try {
     const response = await axios.get<AxiosResponse | T>(
       `userexist?email=${email}`,
@@ -53,7 +52,6 @@ export const getNotesHttp = async <T>(
 export const getLabelsHttp = async (
   token: string
 ): Promise<[Labels[] | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
   try {
     const response = await axios.get(`notes/labels`, {
       headers: {

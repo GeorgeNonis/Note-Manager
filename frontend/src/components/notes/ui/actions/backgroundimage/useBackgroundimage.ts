@@ -40,7 +40,6 @@ export const useBackgroundimage = ({
     );
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(setColor({ value, id, pinned, archived }));
-    // : dispatch(errorState(response[1]?.message));
 
     setDisplayPalette(false);
     dispatch(fetchingDataHandler());

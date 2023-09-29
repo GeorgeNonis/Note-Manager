@@ -63,7 +63,6 @@ export const useAccountAvatar = (initialState: InitialState) => {
         }, 250);
       }, 500);
     } else {
-      // console.log(response[1]?.message);
     }
     dispatch(fetchingDataHandler());
   };

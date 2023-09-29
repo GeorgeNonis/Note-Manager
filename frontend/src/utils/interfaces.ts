@@ -7,8 +7,4 @@ export interface DragEndProps {
   cb: ([]: any) => void;
   pinned: boolean;
   token: string;
-  /**
-   * Doesnt work idk
-   */
-  // cb: ([]: Iterable<NoteObj>[]) => void;
 }

@@ -7,8 +7,6 @@ export const deleteNoteHttp = async <T, E>(
   archived: boolean,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.delete<T, E>(
       `notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
@@ -31,8 +29,6 @@ export const deleteLabelHttp = async <T, E>(
   label: string,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.delete<T, E>(`notes/labels/:${label}`, {
       headers: {
@@ -52,8 +48,6 @@ export const deleteAccountHttp = async <T, E>(
   email: string,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.get<T, E>(`account?email=${email}`, {
       headers: {

@@ -8,8 +8,6 @@ export const sortNotesHttp = async (
   pinned: boolean,
   token: string
 ) => {
-  // console.log("Okay until here");
-  // console.log(data, pinned, token);
   try {
     const response = await axios.post(
       `notes/sortnotes?isnotepined=${pinned}`,
@@ -124,7 +122,6 @@ export const tickLabelHandlerHttp = async <T, E>(
   archived: boolean = false,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // console.log({ id, label, pinned, archived, token });
   try {
     const response = await axios.post<T, E>(
       `notes/label/:${id}?label=${label}&isnotepined=${pinned}&isarchived=${archived}`,

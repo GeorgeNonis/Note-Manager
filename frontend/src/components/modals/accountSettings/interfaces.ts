@@ -4,7 +4,6 @@ export interface useAccountSettingsProps {}
 
 export interface AccountSettingsProps {
   transitionState: string;
-  // closeModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface NavLinkProps {

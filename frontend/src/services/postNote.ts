@@ -1,4 +1,4 @@
-import { AxiosError, AxiosHeaders, AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "./axios";
 
 import { NoteObj } from "../interfaces/interfaces";
@@ -58,8 +58,7 @@ export const createUserHttp = async <T, E>(
 export const getUserHttp = async <T, E>({
   email,
   pwd,
-}: // token,
-UserDetailsProps): Promise<[AxiosResponse | null, AxiosError | null]> => {
+}: UserDetailsProps): Promise<[AxiosResponse | null, AxiosError | null]> => {
   try {
     const response = await axios.post<AxiosResponse>(`login`, {
       email,
@@ -150,8 +149,6 @@ export const restoreNoteHttp = async <T, E>(
   id: string,
   token: string
 ): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `trashbin/:${id}`,
@@ -178,8 +175,6 @@ export const copyNoteHttp = async <T, E>({
   archived,
   token,
 }: CopyNoteProps): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
@@ -269,8 +264,6 @@ export const archiveNoteHandlerHttp = async <T, E>({
   archived,
   token,
 }: ArchiveNoteProps): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/${

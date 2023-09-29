@@ -11,8 +11,6 @@ const ArchiveNotesSection = () => {
 
   if (useStore.values.loading) return <Comp.LoadingSpinner />;
 
-  // if (useStore.values.error === "Network Error") return <></>;
-
   const notes = !useStore.values.loading && archivedNotes.length !== 0 && (
     <Comp.ArchivedNotesSection notes={[...archivedNotes]} />
   );
@@ -20,7 +18,6 @@ const ArchiveNotesSection = () => {
   return (
     <Wrapper styles={styles}>
       <section className={styles.allNotes}>
-        {/* <NoArchievedNotesMsg /> */}
         {archivedNotes.length > 0 ? notes : <Comp.NoArchievedNotesMsg />}
       </section>
     </Wrapper>

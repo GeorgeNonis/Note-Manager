@@ -8,9 +8,4 @@ const getToken = () => {
 
 export default axios.create({
   baseURL: BASE_URL,
-  // withCredentials: true,
-  // headers: {
-  //   "Content-Type": "application/json",
-  //   Authorization: getToken(),
-  // },
 });

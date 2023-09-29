@@ -34,7 +34,6 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
         editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
       );
     dispatch(fetchingDataHandler());
-    // : dispatch(errorState(response[1]?.message));
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
@@ -45,10 +44,8 @@ export const useNote = ({ note, pinned, zindex }: CustomHook) => {
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(pinHandler(note.id));
-    // : dispatch(errorState(response[1]?.message));
     dispatch(fetchingDataHandler());
   };
-  // const zIndex = !review ? zindex : 20002;
   const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;
 
