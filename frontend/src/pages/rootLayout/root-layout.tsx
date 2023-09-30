@@ -23,6 +23,10 @@ const RootLayout = () => {
   return (
     <>
       <ToastContainer />
+      {ReactDOM.createPortal(
+        <Comp.AccountSettings open={accountSettings} />,
+        document.getElementById("accountsettings")!
+      )}
       {loadingInitialState && <Comp.LoadingSpinner />}
       {!loadingInitialState && (
         <main
@@ -53,19 +57,6 @@ const RootLayout = () => {
           >
             {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
           </div>
-          <Transition
-            in={accountSettings}
-            timeout={500}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(transState) =>
-              ReactDOM.createPortal(
-                <Comp.AccountSettings transitionState={transState} />,
-                document.getElementById("accountsettings")!
-              )
-            }
-          </Transition>
           <Comp.Account />
           <div
             className={

@@ -3,6 +3,7 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountOptions } from "./useAccountOptions";
 import styles from "./styles.module.scss";
 import { AccountOptionsProps } from "./interfaces";
+import { Button } from "../../Atoms";
 
 const AccountOptions = ({ openAccountModal, image }: AccountOptionsProps) => {
   const { handlers, values } = useAccountOptions({ openAccountModal });
@@ -20,18 +21,15 @@ const AccountOptions = ({ openAccountModal, image }: AccountOptionsProps) => {
           )}
           <img className={styles.profimg} src={image} alt="user_picture" />
         </div>
-        <button
-          className={styles.manageaccount}
+        <Button
           onClick={() => handlers.accountSettingsHandler()}
+          css={{ w: "80%" }}
         >
           Manage your Account
-        </button>
-        <button
-          className={styles.signoutbutton}
-          onClick={handlers.logoutHandler}
-        >
+        </Button>
+        <Button onClick={handlers.logoutHandler} css={{ w: "80%" }}>
           Sign Out
-        </button>
+        </Button>
       </div>
     </>
   );

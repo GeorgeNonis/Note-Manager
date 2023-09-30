@@ -10,7 +10,6 @@ const Button = ({
   onClick,
   enableThrottle,
   delayThrottle = 1000,
-  type,
   ...props
 }: ButtonProps) => {
   const [isDisabled, setIsDisabled] = useState(disabled);
@@ -19,7 +18,7 @@ const Button = ({
   const throttleOnClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(e);
-      if (enableThrottle || type === "submit") {
+      if (enableThrottle || props.type === "submit") {
         setIsDisabled(true);
 
         setTimeout(() => {
@@ -37,7 +36,6 @@ const Button = ({
 
   return (
     <StyledButton
-      type={type}
       disabled={isDisabled || isLoading}
       {...props}
       onClick={throttleOnClick}

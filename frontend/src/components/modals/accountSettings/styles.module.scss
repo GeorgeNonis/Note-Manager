@@ -1,11 +1,6 @@
 @import "../../../styles/mixins.module.scss";
 
 @media (max-width: 599px) {
-  .modalContent {
-    width: 80dvw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 1rem;
   }
@@ -23,11 +18,6 @@
   }
 }
 @media (max-width: 450px) {
-  .modalContent {
-    width: 90dvw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 1rem;
   }
@@ -35,20 +25,8 @@
   .content {
     grid-template-columns: 2.8fr 9.2fr;
   }
-
-  .col1 {
-    h3 {
-      padding: 0.5rem 0.7rem;
-      font-size: 0.75rem;
-    }
-  }
 }
 @media (min-width: 599px) {
-  .modalContent {
-    width: 80dvw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 1.2rem;
   }
@@ -56,20 +34,8 @@
   .content {
     grid-template-columns: 2.8fr 9.2fr;
   }
-
-  .col1 {
-    h3 {
-      padding: 0.4rem 0.6rem;
-      font-size: 0.75rem;
-    }
-  }
 }
 @media (min-width: 1024px) {
-  .modalContent {
-    width: 70dvw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 1.3rem;
   }
@@ -77,20 +43,8 @@
   .content {
     grid-template-columns: 2.8fr 9.2fr;
   }
-
-  .col1 {
-    h3 {
-      padding: 0.5rem;
-      font-size: 0.87rem;
-    }
-  }
 }
 @media (min-width: 1200px) {
-  .modalContent {
-    width: 60dvw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 1.4rem;
   }
@@ -98,21 +52,9 @@
   .content {
     grid-template-columns: 3fr 9fr;
   }
-
-  .col1 {
-    h3 {
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-  }
 }
 
 @media (min-width: 2400px) {
-  .modalContent {
-    width: 50vw;
-    padding: 1rem 1.5rem 1rem 1.5rem;
-  }
-
   .title {
     font-size: 2.5rem;
   }
@@ -120,54 +62,11 @@
   .content {
     grid-template-columns: 3fr 9fr;
   }
-
-  .col1 {
-    grid-gap: 2rem;
-    h3 {
-      padding: 1rem;
-      font-size: 1.5rem;
-    }
-  }
-}
-
-.backdrop {
-  position: fixed;
-  inset: 0 auto auto 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 400;
-  background-color: rgba(10, 10, 10, 0.6);
-}
-
-.modalContent {
-  //Might remove
-  box-sizing: border-box;
-  //Might remove
-
-  position: absolute;
-  border-radius: 8px;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-
-  height: 80dvh;
-  background-color: #313235;
-  z-index: 500;
-  border: none;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 60%), 0 4px 8px 3px rgb(0 0 0 / 30%);
-}
-
-.openModal {
-  animation: openModal 0.4s ease-out forwards;
-}
-
-.closeModal {
-  animation: closeModal 0.4s ease-out forwards;
 }
 
 .content {
   height: 80%;
   display: grid;
-  // grid-template-columns: 2.5fr 9.5fr;
   place-items: center;
   margin: 2rem 0;
 }
@@ -181,22 +80,6 @@
   display: grid;
   align-self: start;
   width: 100%;
-  h3 {
-    // font-size: 1rem;
-    font-weight: 300;
-    // padding: 0.7rem;
-    margin: 0;
-    border-radius: 0 25px 25px 0;
-    // width: 90%;
-    box-sizing: border-box;
-    cursor: pointer;
-    transition: all 250ms ease-in-out;
-
-    &:hover {
-      background-color: #28292c;
-      width: 100%;
-    }
-  }
 }
 
 .col2 {
@@ -204,54 +87,4 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-}
-
-.active {
-  width: 100%;
-  color: white;
-  transition: all 0.5ms ease-in-out;
-  background-color: #f26716;
-}
-
-.xMark {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  transition: all 230ms ease-in-out;
-  &:hover {
-    transform: rotate(180deg);
-  }
-}
-
-@keyframes openModal {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -100%);
-  }
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -60%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-@keyframes closeModal {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translate(-50%, -60%);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -100%);
-  }
 }

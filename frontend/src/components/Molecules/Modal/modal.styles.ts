@@ -12,9 +12,15 @@ export const StyledModal = styled("div", {
   transform: "translate(-50%, -50%)",
   transition: "$default",
 
-  zIndex: 500,
-
   variants: {
+    innerModal: {
+      true: {
+        zIndex: "$innerModal",
+      },
+      false: {
+        zIndex: "$modal",
+      },
+    },
     fullscreen: {
       true: {
         br: 0,
@@ -35,6 +41,7 @@ export const StyledModal = styled("div", {
     },
   },
 });
+
 export const StyledBackdrop = styled("div", {
   position: "fixed",
   top: 0,
@@ -45,9 +52,14 @@ export const StyledBackdrop = styled("div", {
   height: "100vh",
   bgc: "rgba(10, 10, 10, 0.6)",
   transition: "$default",
-  zIndex: 400,
+  zIndex: "$background",
 
   variants: {
+    innerModal: {
+      true: {
+        zIndex: "$innerModal",
+      },
+    },
     isOpen: {
       true: {
         fadeIn,
@@ -64,7 +76,7 @@ export const StyledBackdrop = styled("div", {
 });
 
 export const StyledXmark = styled(HiXMark, {
-  position: "absolute",
+  position: "fixed",
   top: "1rem",
   right: "1rem",
   width: "2rem",

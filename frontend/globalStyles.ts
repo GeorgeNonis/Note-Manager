@@ -1,6 +1,6 @@
 import { CSS, PropertyValue, createStitches, keyframes } from "@stitches/react";
 
-export const { styled } = createStitches({
+export const { styled, globalCss, css, config } = createStitches({
   theme: {
     colors: {
       primaryDisableBackground: "rgb(255, 144, 79)",
@@ -33,6 +33,11 @@ export const { styled } = createStitches({
       defaultSize: "200px",
       formSize: "500px",
       formMobileSize: "300px",
+    },
+    zIndices: {
+      modal: 500,
+      innerModal: 501,
+      background: 400,
     },
   },
   media: {

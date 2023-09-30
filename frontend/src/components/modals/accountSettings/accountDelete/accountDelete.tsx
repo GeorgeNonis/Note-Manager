@@ -1,10 +1,8 @@
-import { Link } from "react-router-dom";
 import { useAccountDelete } from "./useAccountDelete";
-import { InitialState } from "../../../../store/interfaces";
+import { Button, Input } from "../../../Atoms";
+import { AccountDeleteProps } from "./interfaces";
 import styles from "./style.module.scss";
-interface AccountDeleteProps {
-  initialState: InitialState;
-}
+
 const AccountDelete = ({ initialState }: AccountDeleteProps) => {
   const { email } = initialState;
   const { validMatch, setConfirmEmail, deleteAccountHandler } =
@@ -17,10 +15,21 @@ const AccountDelete = ({ initialState }: AccountDeleteProps) => {
       </p>
 
       <p>To confirm fill the box below with your email</p>
-      <input type="text" onChange={(e) => setConfirmEmail(e.target.value)} />
-      <button disabled={!validMatch} onClick={deleteAccountHandler}>
+      <Input
+        type="text"
+        onChange={(e) => setConfirmEmail(e.target.value)}
+        css={{
+          textAlign: "center",
+          w: "50%",
+        }}
+      />
+      <Button
+        disabled={!validMatch}
+        onClick={deleteAccountHandler}
+        variant={"danger"}
+      >
         Delete Account
-      </button>
+      </Button>
     </div>
   );
 };

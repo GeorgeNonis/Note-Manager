@@ -5,6 +5,7 @@ import { DEFAULT_AVTR } from "../../../../config";
 import styles from "./styles.module.scss";
 import AvatarModal from "../../avataroptions/avatarOptions";
 import { AccountAvatarProps } from "./accountAvatar.props";
+import { Button } from "../../../Atoms";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -76,15 +77,15 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
             )}
         </div>
         <div className={styles.actions}>
-          <button onClick={() => handlers.setChangeAvatar(true)}>
+          <Button onClick={() => handlers.setChangeAvatar(true)}>
             Change Avatar
-          </button>
-          <button
+          </Button>
+          <Button
             disabled={values.default_avatar || values.saveAvatar}
             onClick={handlers.saveAvatarHandler}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </>

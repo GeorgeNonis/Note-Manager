@@ -5,23 +5,27 @@ import { AvatarModalProps } from "./interfaces";
 import styles from "./styles.module.scss";
 import { Modal } from "../../Molecules";
 import { StyledComputer } from "./avatarOptions.styles";
-import { Input } from "../../Atoms";
+import { Button, Input } from "../../Atoms";
 
 const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
   navigator.userAgent;
   return (
-    <Modal onClose={() => closeModal((prev) => !prev)} open={open}>
-      <h1>Avatar Options</h1>
+    <Modal
+      onClose={() => closeModal((prev) => !prev)}
+      open={open}
+      innerModal={true}
+      title="Avatar Options"
+    >
       <div className={styles.actions}>
         <StyledComputer>
-          <button>
+          <Button css={{ bgc: "unset" }}>
             <GrPersonalComputer
               fill="black"
               stroke="gray"
               color="gray"
               className={styles.svg}
             />
-          </button>
+          </Button>
           <h3>
             {/Android|iPhone/i.test(navigator.userAgent)
               ? "From Gallery"
