@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { deleteAccountHttp } from "../../../../services/delete";
 import { isThereError } from "../../../../utils";
 import { useLogoutHandler } from "../../../../hooks/useLogoutHandler";
+import { toast } from "react-toastify";
 
 export const useAccountDelete = ({ email }: { email: string }) => {
   const { logoutHandler } = useLogoutHandler();
@@ -15,6 +16,7 @@ export const useAccountDelete = ({ email }: { email: string }) => {
     const response = await deleteAccountHttp(email, token);
     const successfullRequest = isThereError(response);
     if (successfullRequest) {
+      toast.success("Account has been delete!");
       logoutHandler();
     }
   };

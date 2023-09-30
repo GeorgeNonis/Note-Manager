@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Text } from "../../Atoms";
 import { ModalProps } from "./modal.props";
 import { StyledBackdrop, StyledModal, StyledXmark } from "./modal.styles";
@@ -11,6 +12,13 @@ const Modal = ({
   title,
   ...props
 }: ModalProps) => {
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [open]);
   return (
     <StyledBackdrop onClick={onClose} isOpen={open} innerModal={innerModal}>
       <StyledModal
