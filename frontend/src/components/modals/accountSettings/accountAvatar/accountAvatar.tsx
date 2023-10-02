@@ -2,10 +2,11 @@ import ReactDOM from "react-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
-import styles from "./styles.module.scss";
 import AvatarModal from "../../avataroptions/avatarOptions";
 import { AccountAvatarProps } from "./accountAvatar.props";
 import { Button } from "../../../Atoms";
+import { StyledCancelButton } from "./accountAvatar.styles";
+import styles from "./styles.module.scss";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -68,12 +69,11 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
           {!values.default_avatar &&
             !values.changeAvatar &&
             !values.saveAvatar && (
-              <button
+              <StyledCancelButton
                 onClick={() => handlers.setSelectedAvatar(DEFAULT_AVTR)}
-                className={styles.cancelButton}
               >
                 Cancel
-              </button>
+              </StyledCancelButton>
             )}
         </div>
         <div className={styles.actions}>

@@ -1,10 +1,12 @@
 import { Suspense } from "react";
-import { GrPersonalComputer } from "react-icons/gr";
 import { URL_REGEX, cached_avatar_pictures } from "../../../config";
 import { AvatarModalProps } from "./interfaces";
-import styles from "./styles.module.scss";
 import { Modal } from "../../Molecules";
-import { StyledComputer } from "./avatarOptions.styles";
+import {
+  StyledComputer,
+  StyledImagesContainer,
+  StyledSvg,
+} from "./avatarOptions.styles";
 import { Button, Input } from "../../Atoms";
 
 const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
@@ -16,15 +18,10 @@ const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
       innerModal={true}
       title="Avatar Options"
     >
-      <div className={styles.actions}>
+      <div>
         <StyledComputer>
           <Button css={{ bgc: "unset" }}>
-            <GrPersonalComputer
-              fill="black"
-              stroke="gray"
-              color="gray"
-              className={styles.svg}
-            />
+            <StyledSvg fill="black" stroke="gray" color="gray" />
           </Button>
           <h3>
             {/Android|iPhone/i.test(navigator.userAgent)
@@ -55,7 +52,7 @@ const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
             accept="image/png, image/jpeg"
           />
         </StyledComputer>
-        <div className={styles.modalImages}>
+        <StyledImagesContainer centerItems gap={"16"}>
           <Suspense fallback={"...loading avatars"}>
             {cached_avatar_pictures.map((avtr) => {
               return (
@@ -69,7 +66,7 @@ const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
               );
             })}
           </Suspense>
-        </div>
+        </StyledImagesContainer>
       </div>
     </Modal>
   );

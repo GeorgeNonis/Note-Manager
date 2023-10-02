@@ -12,6 +12,7 @@ export const { styled, globalCss, css, config } = createStitches({
       2: "10px",
       3: "15px",
       4: "20px",
+      round: "50%",
     },
     space: {
       0: "0px",
