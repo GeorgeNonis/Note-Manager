@@ -9,5 +9,8 @@ export const textSizes = ["xs", "s", "m", "l", "xl"] as const;
 export type StyledTextProps = StyledComponentProps<typeof StyledText>;
 
 export interface TextProps extends Omit<StyledTextProps, "color"> {
+  /**
+   * `Optional` - Color of text
+   */
   color?: keyof ThemeColors;
 }
