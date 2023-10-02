@@ -1,4 +1,3 @@
-import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccount } from "./useAccount";
 import AccountOptions from "./accountOptions/accountOptions";
 import styles from "./styles.module.scss";

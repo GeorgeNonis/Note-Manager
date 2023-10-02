@@ -16,7 +16,6 @@ export const StyledButton = styled("button", {
   "&:disabled": {
     cursor: "default",
     pointerEvents: "none",
-    backgroundColor: "$primaryDisableBackground",
     color: "$primaryDisableText !important",
   },
 

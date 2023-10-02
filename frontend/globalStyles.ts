@@ -1,6 +1,6 @@
-import { PropertyValue, createStitches, keyframes } from "@stitches/react";
+import { CSS, PropertyValue, createStitches, keyframes } from "@stitches/react";
 
-export const { styled } = createStitches({
+export const { styled, globalCss, css, config } = createStitches({
   theme: {
     colors: {
       primaryDisableBackground: "rgb(255, 144, 79)",
@@ -12,6 +12,7 @@ export const { styled } = createStitches({
       2: "10px",
       3: "15px",
       4: "20px",
+      round: "50%",
     },
     space: {
       0: "0px",
@@ -19,6 +20,9 @@ export const { styled } = createStitches({
       2: "8px",
       3: "16px",
       4: "32px",
+    },
+    transitions: {
+      default: "0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860)",
     },
     sizes: {
       0: "20px",
@@ -30,6 +34,11 @@ export const { styled } = createStitches({
       defaultSize: "200px",
       formSize: "500px",
       formMobileSize: "300px",
+    },
+    zIndices: {
+      modal: 500,
+      innerModal: 501,
+      background: 400,
     },
   },
   media: {
@@ -157,4 +166,27 @@ export const StyledLoadingSemiCircle = styled("div", {
     borderColor: "#fff transparent #fff transparent",
     animation: `${rotate} 1.2s linear infinite`,
   },
+});
+
+export const createAnimation = (
+  keyframe: Keyframe[] | Keyframe,
+  duration = 0.2
+): CSS => {
+  const timingFunc = `${duration}s cubic-bezier(0.785, 0.135, 0.150, 0.860)`;
+  const animation = Array.isArray(keyframe)
+    ? keyframe.join(` ${timingFunc}, `) + ` ${timingFunc}`
+    : `${keyframe} ${timingFunc}`;
+  return {
+    animation: animation,
+  };
+};
+
+export const fadeIn = keyframes({
+  "0%": { opacity: 0, visibility: "hidden" },
+  "100%": { opacity: 1, visibility: "visible" },
+});
+
+export const fadeOut = keyframes({
+  "0%": { opacity: 1, visibility: "visible" },
+  "100%": { opacity: 0, visibility: "hidden" },
 });

@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeNoteHttp, restoreNoteHttp } from "../../../services";
-import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { removeNote, restoreNote } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
 import { Props } from "./interfaces";
-import {
-  errorState,
-  fetchingDataHandler,
-} from "../../../store/display-state-slice";
+import { fetchingDataHandler } from "../../../store/display-state-slice";
 
 export const useDeletedNote = ({ note, zindex }: Props) => {
   const [review, setReview] = useState<boolean>(false);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("auth-token")!;
-
-  const clickOutsideNote = useOutsideClick(() => setReview(false));
 
   const restoreProcess = async (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(fetchingDataHandler());
@@ -46,7 +40,6 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
   return {
     review,
     setReview,
-    clickOutsideNote,
     restoreProcess,
     removeProcess,
     zIndex,

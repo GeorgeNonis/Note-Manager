@@ -10,14 +10,8 @@ import { useDeletedNote } from "./useDeletedNote";
 import styles from "./styles.module.scss";
 
 const DeletedNote = ({ note, zindex }: Props) => {
-  const {
-    review,
-    setReview,
-    clickOutsideNote,
-    restoreProcess,
-    removeProcess,
-    zIndex,
-  } = useDeletedNote({ note, zindex });
+  const { review, setReview, restoreProcess, removeProcess, zIndex } =
+    useDeletedNote({ note, zindex });
   return (
     <>
       {review &&

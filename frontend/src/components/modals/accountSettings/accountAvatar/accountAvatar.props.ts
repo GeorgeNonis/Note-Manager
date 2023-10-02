@@ -1,5 +1,5 @@
 import { InitialState } from "../../../../store/interfaces";
 
-export interface AccountPasswordProps {
+export interface AccountAvatarProps {
   initialState: InitialState;
 }

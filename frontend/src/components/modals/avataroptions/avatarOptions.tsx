@@ -1,86 +1,74 @@
 import { Suspense } from "react";
-import { GrPersonalComputer } from "react-icons/gr";
 import { URL_REGEX, cached_avatar_pictures } from "../../../config";
-import { AvatarOptionsProps } from "./interfaces";
-import { HiXMark } from "react-icons/hi2";
-import styles from "./styles.module.scss";
+import { AvatarModalProps } from "./interfaces";
+import { Modal } from "../../Molecules";
+import {
+  StyledComputer,
+  StyledImagesContainer,
+  StyledSvg,
+} from "./avatarOptions.styles";
+import { Button, Input } from "../../Atoms";
 
-const AvatarOptions = ({
-  closeModal,
-  avatarHandler,
-  transitionState,
-}: AvatarOptionsProps) => {
-  const cssClasses = [
-    styles.modalContent,
-    transitionState === "entering"
-      ? styles.openModal
-      : transitionState === "exiting"
-      ? styles.closeModal
-      : null,
-  ];
+const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
   navigator.userAgent;
   return (
-    <>
-      <div
-        className={styles.backdrop}
-        onClick={() => closeModal((prev) => !prev)}
-      ></div>
-      <div className={cssClasses.join(" ")}>
-        <HiXMark
-          className={styles.xMark}
-          onClick={() => closeModal((prev) => !prev)}
-        />
-        <h1>Avatar Options</h1>
-        <div className={styles.actions}>
-          <div className={styles.fromcomputer}>
-            <button>
-              <GrPersonalComputer
-                fill="black"
-                stroke="gray"
-                color="gray"
-                className={styles.svg}
-              />
-            </button>
-            <h3>
-              {/Android|iPhone/i.test(navigator.userAgent)
-                ? "From Gallery"
-                : "From Computer"}
-            </h3>
-            <input
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                if (e.target.files) {
-                  avatarHandler(
-                    URL_REGEX.test(URL.createObjectURL(e.target.files![0]))
-                      ? URL.createObjectURL(e.target.files![0])
-                      : e.target.files![0]
-                  );
-                }
-              }}
-              name="image"
-              type="file"
-              id="file"
-              className={styles.input}
-              accept="image/png, image/jpeg"
-            />
-          </div>
-          <div className={styles.modalImages}>
-            <Suspense fallback={"...loading avatars"}>
-              {cached_avatar_pictures.map((avtr) => {
-                return (
-                  <img
-                    src={avtr.src}
-                    key={avtr.src}
-                    onClick={() => {
-                      avatarHandler(avtr.src);
-                    }}
-                  />
+    <Modal
+      onClose={() => closeModal((prev) => !prev)}
+      open={open}
+      innerModal={true}
+      title="Avatar Options"
+    >
+      <div>
+        <StyledComputer>
+          <Button css={{ bgc: "unset" }}>
+            <StyledSvg fill="black" stroke="gray" color="gray" />
+          </Button>
+          <h3>
+            {/Android|iPhone/i.test(navigator.userAgent)
+              ? "From Gallery"
+              : "From Computer"}
+          </h3>
+          <Input
+            css={{
+              position: "absolute",
+              cursor: "pointer",
+              opacity: 0,
+              top: 0,
+              w: "100%",
+              h: "100%",
+            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (e.target.files) {
+                avatarHandler(
+                  URL_REGEX.test(URL.createObjectURL(e.target.files![0]))
+                    ? URL.createObjectURL(e.target.files![0])
+                    : e.target.files![0]
                 );
-              })}
-            </Suspense>
-          </div>
-        </div>
+              }
+            }}
+            name="image"
+            type="file"
+            id="file"
+            accept="image/png, image/jpeg"
+          />
+        </StyledComputer>
+        <StyledImagesContainer centerItems gap={"16"}>
+          <Suspense fallback={"...loading avatars"}>
+            {cached_avatar_pictures.map((avtr) => {
+              return (
+                <img
+                  src={avtr.src}
+                  key={avtr.src}
+                  onClick={() => {
+                    avatarHandler(avtr.src);
+                  }}
+                />
+              );
+            })}
+          </Suspense>
+        </StyledImagesContainer>
       </div>
-    </>
+    </Modal>
   );
 };
-export default AvatarOptions;
+export default AvatarModal;

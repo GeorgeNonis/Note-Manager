@@ -2,14 +2,11 @@ import ReactDOM from "react-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
-import { AvatarOptions } from "../../../index";
+import AvatarModal from "../../avataroptions/avatarOptions";
+import { AccountAvatarProps } from "./accountAvatar.props";
+import { Button } from "../../../Atoms";
+import { StyledCancelButton } from "./accountAvatar.styles";
 import styles from "./styles.module.scss";
-import { InitialState } from "../../../../store/interfaces";
-import { Transition } from "react-transition-group";
-
-interface AccountAvatarProps {
-  initialState: InitialState;
-}
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -17,23 +14,14 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
 
   return (
     <>
-      <Transition
-        in={values.changeAvatar}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
-        {(transState) =>
-          ReactDOM.createPortal(
-            <AvatarOptions
-              transitionState={transState}
-              closeModal={handlers.setChangeAvatar}
-              avatarHandler={handlers.selectAvatarHandler}
-            />,
-            document.getElementById("avataroptions")!
-          )
-        }
-      </Transition>
+      {ReactDOM.createPortal(
+        <AvatarModal
+          open={values.changeAvatar}
+          closeModal={handlers.setChangeAvatar}
+          avatarHandler={handlers.selectAvatarHandler}
+        />,
+        document.getElementById("avataroptions")!
+      )}
 
       <div className={styles.mainContent}>
         <div className={styles.avatars}>
@@ -81,24 +69,23 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
           {!values.default_avatar &&
             !values.changeAvatar &&
             !values.saveAvatar && (
-              <button
+              <StyledCancelButton
                 onClick={() => handlers.setSelectedAvatar(DEFAULT_AVTR)}
-                className={styles.cancelButton}
               >
                 Cancel
-              </button>
+              </StyledCancelButton>
             )}
         </div>
         <div className={styles.actions}>
-          <button onClick={() => handlers.setChangeAvatar(true)}>
+          <Button onClick={() => handlers.setChangeAvatar(true)}>
             Change Avatar
-          </button>
-          <button
+          </Button>
+          <Button
             disabled={values.default_avatar || values.saveAvatar}
             onClick={handlers.saveAvatarHandler}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     </>

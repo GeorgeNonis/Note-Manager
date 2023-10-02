@@ -1,12 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { ReviewModalProps } from "./reviewModal.props";
 import styles from "./style.module.scss";
 
-interface Props {
-  setReview?: Dispatch<SetStateAction<boolean>>;
-  transitionState?: string;
-}
-
-const ReviewModal = ({ setReview, transitionState }: Props) => {
+const ReviewModal = ({ setReview, transitionState }: ReviewModalProps) => {
   const duration = 500;
 
   const defaultStyle = {

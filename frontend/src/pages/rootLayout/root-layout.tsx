@@ -8,6 +8,7 @@ import { useRootLayout } from "./useRootLayout";
 import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
+import { ToastContainer } from "react-toastify";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
@@ -21,6 +22,11 @@ const RootLayout = () => {
   } = state.values.displayState;
   return (
     <>
+      <ToastContainer />
+      {ReactDOM.createPortal(
+        <Comp.AccountSettings open={accountSettings} />,
+        document.getElementById("accountsettings")!
+      )}
       {loadingInitialState && <Comp.LoadingSpinner />}
       {!loadingInitialState && (
         <main
@@ -51,19 +57,6 @@ const RootLayout = () => {
           >
             {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
           </div>
-          <Transition
-            in={accountSettings}
-            timeout={500}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(transState) =>
-              ReactDOM.createPortal(
-                <Comp.AccountSettings transitionState={transState} />,
-                document.getElementById("accountsettings")!
-              )
-            }
-          </Transition>
           <Comp.Account />
           <div
             className={
