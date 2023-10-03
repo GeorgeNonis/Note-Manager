@@ -1,9 +1,9 @@
 import { useNotesSection } from "./useNotesSection";
 import { NoteObj } from "../../../../interfaces/interfaces";
 import Note from "../../../notes/existing-note/existing-note";
-import styles from "./styles.module.scss";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
+import styles from "./styles.module.scss";
 
 const NotesSection = ({
   dragable = true,

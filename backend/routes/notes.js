@@ -1,9 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { createUser, getIdPinnedStatus } from "../utils/utils.js";
+import { getIdPinnedStatus } from "../utils/utils.js";
 import UserBluePrint from "../data/schema.js";
-import { veirfyJWT } from "./middleAuth.js";
 const router = express.Router();
 
 /**

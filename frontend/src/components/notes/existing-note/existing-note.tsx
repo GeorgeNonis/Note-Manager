@@ -10,7 +10,6 @@ import {
 import { useNote } from "./useNote";
 import { Transition } from "react-transition-group";
 import styles from "../note.module.scss";
-import LoadingSpinnerAction from "../../ui/loading-spinner-action";
 
 const Note = ({
   note,
@@ -23,28 +22,24 @@ const Note = ({
   dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
+  const { actions, values } = state;
   return (
     <>
-      <Transition
-        in={state.values.review}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
+      <Transition in={values.review} timeout={500} mountOnEnter unmountOnExit>
         {(transState) => (
           <ReviewModal
-            setReview={state.actions.setReview}
+            setReview={actions.setReview}
             transitionState={transState}
           />
         )}
       </Transition>
       <NoteWrapper
         dragable={dragable}
-        zIndex={state.values.zIndex}
+        zIndex={values.zIndex}
         position={position}
         pinned={pinned}
-        review={state.values.review}
-        setReview={state.actions.setReview}
+        review={values.review}
+        setReview={actions.setReview}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
@@ -52,36 +47,36 @@ const Note = ({
       >
         <Pin
           pinned={pinned}
-          pinNoteHandler={state.actions.pinNoteHandler}
+          pinNoteHandler={actions.pinNoteHandler}
           styles={styles}
         />
 
         <Title
           editable={false}
-          title={state.values.noteTitle}
-          setNoteTitle={state.actions.setNoteTitle}
+          title={values.noteTitle}
+          setNoteTitle={actions.setNoteTitle}
         />
         <NoteDetails
           editable={false}
-          setNotedetails={state.actions.setNotedetails}
+          setNotedetails={actions.setNotedetails}
           pinned={pinned}
           note={note}
-          noteValue={state.values.noteValue}
+          noteValue={values.noteValue}
           checkbox={note.checkbox}
         />
-        {state.values.review && (
+        {values.review && (
           <div className={styles.actions}>
             <button
-              disabled={state.values.disableBtn}
+              disabled={values.disableBtn}
               className={
-                state.values.disableBtn
+                values.disableBtn
                   ? styles.reviewNoteButtonDisabled
                   : styles.reviewNoteButton
               }
               onKeyDown={(e) => {
-                e.key === "Enter" && state.actions.saveChanges();
+                e.key === "Enter" && actions.saveChanges();
               }}
-              onClick={state.actions.saveChanges}
+              onClick={actions.saveChanges}
             >
               Save Changes
             </button>
@@ -89,7 +84,7 @@ const Note = ({
               className={styles.reviewNoteButton}
               onClick={(e) => {
                 e.stopPropagation();
-                state.actions.setReview(!state.values.review);
+                actions.setReview(!values.review);
               }}
             >
               Close
@@ -97,7 +92,7 @@ const Note = ({
           </div>
         )}
         <Options
-          review={state.values.review}
+          review={values.review}
           note={note}
           pinned={pinned}
           styles={styles}
