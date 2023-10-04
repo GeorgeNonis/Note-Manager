@@ -3,6 +3,7 @@ import { styled } from "../../../../../globalStyles";
 export const StyledWrapper = styled("div", {
   display: "grid",
   gridTemplateRows: "2fr 7.5fr 1.5fr 1.5fr",
+  w: "100%",
   position: "relative",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
