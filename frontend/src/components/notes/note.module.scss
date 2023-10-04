@@ -50,7 +50,6 @@
   position: relative;
   background-repeat: no-repeat !important;
   background-size: cover !important;
-  width: 100%;
   margin-inline: auto;
   min-height: 15rem;
   max-height: 20rem;
@@ -65,38 +64,6 @@
   overflow-wrap: anywhere;
   letter-spacing: 0.01785714em;
   font-family: "Google Sans", Roboto, Arial, sans-serif;
-  transition: all 700ms linear;
-  .noteTitle {
-    all: unset;
-    padding: 0.5rem 1rem;
-    margin-block: 0;
-    outline: none;
-    font-size: 1rem;
-    font-weight: 400;
-    width: 85%;
-    ::-webkit-scrollbar {
-      all: unset;
-    }
-  }
-
-  .notedetails {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    outline: none;
-    color: white !important;
-    font-size: 0.875rem;
-    overflow-x: auto;
-  }
-
-  .textArea {
-    all: unset;
-    padding: 1rem;
-    height: 100%;
-    box-sizing: border-box;
-    font-size: 0.875rem;
-    color: white;
-    font-weight: 400;
-  }
 
   &:hover {
     .optionsContent {
@@ -113,28 +80,28 @@
   }
 }
 
-.review {
-  position: absolute;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background-position: center !important;
-  min-height: 70dvh;
-  z-index: 10065;
-  background-color: #242424;
-  inset: 50% auto auto 50%;
-  display: grid;
-  transform: translate(-50%, -50%);
-  transform-origin: center;
-  @include for-phone-only {
-    width: 85dvw;
-  }
-  @media (min-width: 599px) {
-    width: 40dvw;
-  }
-  @include for-desktop-up {
-    width: 35dvw;
-  }
-}
+// .review {
+//   // position: absolute;
+//   // inset: 50% auto auto 50%;
+//   // transform: translate(-50%, -50%);
+//   // transform-origin: center;
+//   background-repeat: no-repeat !important;
+//   background-size: cover !important;
+//   background-position: center !important;
+//   min-height: 70dvh;
+//   z-index: 10065;
+//   background-color: #242424;
+//   display: grid;
+//   // @include for-phone-only {
+//   //   width: 85dvw;
+//   // }
+//   // @media (min-width: 599px) {
+//   //   width: 40dvw;
+//   // }
+//   // @include for-desktop-up {
+//   //   width: 35dvw;
+//   // }
+// }
 
 .pin {
   position: absolute;
@@ -156,20 +123,20 @@
 
   text-align: center;
   opacity: 0%;
-  transition: opacity ease-in-out 500ms;
-  @include for-phone-only {
-    font-size: 0.6rem;
-  }
-  @media (min-width: 599px) {
-    font-size: 0.7rem;
-    right: -1rem;
-    width: 5rem;
-  }
-  @include for-desktop-up {
-    left: -4rem;
-    right: -1rem;
-    font-size: 0.875rem;
-  }
+  // transition: opacity ease-in-out 500ms;
+  // @include for-phone-only {
+  //   font-size: 0.6rem;
+  // }
+  // @media (min-width: 599px) {
+  //   font-size: 0.7rem;
+  //   right: -1rem;
+  //   width: 5rem;
+  // }
+  // @include for-desktop-up {
+  //   left: -4rem;
+  //   right: -1rem;
+  //   font-size: 0.875rem;
+  // }
 }
 
 .icon {
@@ -290,47 +257,47 @@
   display: none;
 }
 
-@mixin btnStyle {
-  all: unset;
-  box-sizing: border-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  letter-spacing: 0.01785714em;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  padding: 8px 24px;
-  justify-self: flex-end;
-  color: #dadce0;
-  &:hover {
-    background-color: rgba(138, 180, 248, 0.039);
-    cursor: pointer;
-  }
-}
-.actions {
-  grid-row: 3;
-  background-color: #202124;
-  & button:nth-of-type(2) {
-    float: right;
-  }
-}
+// @mixin btnStyle {
+//   all: unset;
+//   box-sizing: border-box;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+//   letter-spacing: 0.01785714em;
+//   font-family: "Google Sans", Roboto, Arial, sans-serif;
+//   font-size: 0.875rem;
+//   font-weight: 500;
+//   line-height: 1.25rem;
+//   padding: 8px 24px;
+//   justify-self: flex-end;
+//   color: #dadce0;
+//   &:hover {
+//     background-color: rgba(138, 180, 248, 0.039);
+//     cursor: pointer;
+//   }
+// }
+// .actions {
+//   grid-row: 3;
+//   background-color: #202124;
+//   & button:nth-of-type(2) {
+//     float: right;
+//   }
+// }
 
-.reviewNoteButton {
-  @include btnStyle();
-  &:hover {
-    cursor: pointer;
-  }
-}
+// .reviewNoteButton {
+//   @include btnStyle();
+//   &:hover {
+//     cursor: pointer;
+//   }
+// }
 
-.reviewNoteButtonDisabled {
-  @include btnStyle();
-  color: gray;
-  &:hover {
-    cursor: not-allowed;
-  }
-}
+// .reviewNoteButtonDisabled {
+//   @include btnStyle();
+//   color: gray;
+//   &:hover {
+//     cursor: not-allowed;
+//   }
+// }
 
 .visible {
   visibility: visible;

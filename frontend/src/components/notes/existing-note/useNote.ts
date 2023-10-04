@@ -20,6 +20,37 @@ export const useNote = ({ note, pinned }: CustomHook) => {
   const noteId = note.id;
 
   const token = sessionStorage.getItem("auth-token")!;
+
+  const [styles, setStyles] = useState<React.CSSProperties | undefined>();
+
+  const handleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (review) {
+      setReview(false);
+      setStyles(undefined);
+    } else {
+      const rect = (e.target as Element).getBoundingClientRect();
+
+      const targetLeft = window.innerWidth / 2 - rect.width / 2;
+      const targetTop = window.innerHeight / 2 - rect.height / 2;
+
+      const translateX = targetLeft - rect.left;
+      const translateY = targetTop - rect.top;
+
+      setReview(true);
+      setStyles({
+        position: "fixed",
+        top: rect.top + "px",
+        left: rect.left + "px",
+        width: rect.width + "px",
+        height: rect.height + "px",
+        zIndex: 1000,
+        transform: `translate(${translateX}px, ${translateY}px) scale(1.5)`,
+      });
+    }
+  };
+
   const saveChanges = async () => {
     dispatch(fetchingDataHandler());
 
@@ -37,17 +68,6 @@ export const useNote = ({ note, pinned }: CustomHook) => {
         editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
       );
     dispatch(fetchingDataHandler());
-  };
-
-  const handleNoteClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setInitialPosition({
-      top: rect.top,
-      left: rect.left,
-      width: rect.width,
-      height: rect.height,
-    });
-    setReview(!review);
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
@@ -72,6 +92,7 @@ export const useNote = ({ note, pinned }: CustomHook) => {
       noteValue,
       noteTitle,
       initialPosition,
+      styles,
     },
     actions: {
       setReview,
@@ -79,7 +100,7 @@ export const useNote = ({ note, pinned }: CustomHook) => {
       saveChanges,
       setNotedetails,
       setNoteTitle,
-      handleNoteClick,
+      handleExpand,
     },
   };
 

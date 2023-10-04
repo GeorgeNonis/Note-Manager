@@ -1,6 +1,5 @@
-import { colorLogic, onReviewingNote } from "../../../../utils/utilsStyling";
 import { ExistingNoteWrapperProps } from "./interfaces";
-import styles from "../../note.module.scss";
+import { StyledWrapper } from "./styles";
 
 const ExistingNoteWrapper = ({
   children,
@@ -9,26 +8,24 @@ const ExistingNoteWrapper = ({
   position,
   zIndex,
   pinned,
-  setReview,
+  styles,
+  onClick,
   onDragStart,
   onDragEnter,
   onDragEnd,
   dragable,
 }: ExistingNoteWrapperProps) => {
   return (
-    <div
-      style={{
-        zIndex: zIndex,
-        background:
-          note.color.includes("#") || note.color === "transparent"
-            ? "#202124"
-            : `url(${note.color})`,
+    <StyledWrapper
+      css={{
+        ...styles,
+
+        ...(note.color.includes("#") || note.color === "transparent"
+          ? { bgc: "#202124" }
+          : { backgroundImage: `url(${note.color})` }),
       }}
-      className={onReviewingNote({ review, styles })}
-      onClick={(e) => {
-        e.stopPropagation();
-        setReview(true);
-      }}
+      review={review}
+      onClick={onClick}
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
@@ -36,7 +33,7 @@ const ExistingNoteWrapper = ({
       onDragOver={(e) => e.preventDefault()}
     >
       {children}
-    </div>
+    </StyledWrapper>
   );
 };
 export default ExistingNoteWrapper;

@@ -1,7 +1,7 @@
 import { NoteDetailsProps } from "./interfaces";
 import { Checkbox } from "../../index";
 import CompleteItems from "./checkbox/complete-items";
-import styles from "../note.module.scss";
+import { StyledNoteDetails, StyledTextArea } from "./styles";
 
 const NoteDetails = ({
   setNotedetails,
@@ -15,9 +15,8 @@ const NoteDetails = ({
   return (
     <>
       {!checkbox && (
-        <textarea
+        <StyledTextArea
           readOnly={editable}
-          className={styles.textArea}
           name="notedetails"
           id="notedetails"
           spellCheck="true"
@@ -31,7 +30,7 @@ const NoteDetails = ({
         />
       )}
       {checkbox && (
-        <div className={styles.notedetails}>
+        <StyledNoteDetails>
           {checkbox &&
             note.unChecked?.length! > 0 &&
             note.unChecked!.map((info) => {
@@ -54,7 +53,7 @@ const NoteDetails = ({
               pinned={pinned!}
             />
           )}
-        </div>
+        </StyledNoteDetails>
       )}
     </>
   );

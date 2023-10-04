@@ -10,6 +10,8 @@ import {
 import { useNote } from "./useNote";
 import { Transition } from "react-transition-group";
 import styles from "../note.module.scss";
+import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
+import { StyledActions, StyledButton } from "../ui/styles";
 
 const Note = ({
   note,
@@ -23,16 +25,10 @@ const Note = ({
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
   const { actions, values } = state;
+
   return (
     <>
-      <Transition in={values.review} timeout={500} mountOnEnter unmountOnExit>
-        {(transState) => (
-          <ReviewModal
-            setReview={actions.setReview}
-            transitionState={transState}
-          />
-        )}
-      </Transition>
+      <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
       <NoteWrapper
         dragable={dragable}
         zIndex={values.zIndex}
@@ -40,6 +36,8 @@ const Note = ({
         pinned={pinned}
         review={values.review}
         setReview={actions.setReview}
+        onClick={actions.handleExpand}
+        styles={values.styles!}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
@@ -65,31 +63,18 @@ const Note = ({
           checkbox={note.checkbox}
         />
         {values.review && (
-          <div className={styles.actions}>
-            <button
+          <StyledActions>
+            <StyledButton
               disabled={values.disableBtn}
-              className={
-                values.disableBtn
-                  ? styles.reviewNoteButtonDisabled
-                  : styles.reviewNoteButton
-              }
               onKeyDown={(e) => {
                 e.key === "Enter" && actions.saveChanges();
               }}
               onClick={actions.saveChanges}
             >
               Save Changes
-            </button>
-            <button
-              className={styles.reviewNoteButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                actions.setReview(!values.review);
-              }}
-            >
-              Close
-            </button>
-          </div>
+            </StyledButton>
+            <StyledButton onClick={actions.handleExpand}>Close</StyledButton>
+          </StyledActions>
         )}
         <Options
           review={values.review}
