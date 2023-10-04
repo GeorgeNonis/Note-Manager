@@ -8,7 +8,7 @@ const Pin = ({ pinned, pinNoteHandler }: NotePinProps) => {
       {pinned ? (
         <StyledPinnedIcon as={BsFillPinFill} />
       ) : (
-        <Icon as={BsPinAngle} />
+        <Icon as={BsPinAngle} rotate={true} />
       )}
       <StyledSpan>{pinned ? "Unpin Note" : "Pin note"}</StyledSpan>
     </StyledPin>

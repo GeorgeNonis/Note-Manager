@@ -63,7 +63,7 @@ const Note = ({
           checkbox={note.checkbox}
         />
         {values.review && (
-          <StyledActions>
+          <StyledActions autoFlow={"column"} centerItems={true}>
             <StyledButton
               disabled={values.disableBtn}
               onKeyDown={(e) => {

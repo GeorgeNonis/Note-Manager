@@ -1,4 +1,5 @@
 import { styled } from "../../../../globalStyles";
+import { Grid } from "../../Molecules";
 
 export const StyledTitle = styled("textarea", {
   all: "unset",
@@ -29,13 +30,8 @@ export const StyledTextArea = styled("textarea", {
   fontWeight: "400",
 });
 
-export const StyledActions = styled("div", {
-  gridRow: "3",
+export const StyledActions = styled(Grid, {
   backgroundColor: "#202124",
-
-  "& button:nth-of-type(2)": {
-    float: "right",
-  },
 });
 
 export const StyledButton = styled("button", {
@@ -65,8 +61,6 @@ export const StyledButton = styled("button", {
 });
 
 export const StyledSpan = styled("span", {
-  position: "absolute",
-  top: "2rem",
   textAlign: "center",
   opacity: 0,
 });
@@ -75,20 +69,19 @@ export const Icon = styled("div", {
   height: "1.5rem",
   display: "block",
   marginInline: "auto",
-  transform: "rotate(315deg)",
-  position: "absolute",
-  opacity: 0,
-  right: "14px",
 
-  "&:hover": {
-    color: "white",
-    opacity: 1,
+  opacity: 1,
+  variants: {
+    rotate: {
+      true: {
+        transform: "rotate(315deg)",
+      },
+    },
   },
 });
 
 export const StyledPinnedIcon = styled(Icon, {
   color: "gray",
-  transform: "none",
 });
 
 export const StyledPin = styled("div", {
