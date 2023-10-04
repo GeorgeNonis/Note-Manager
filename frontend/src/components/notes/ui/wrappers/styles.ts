@@ -12,7 +12,7 @@ export const StyledWrapper = styled("div", {
   boxSizing: "border-box",
   color: "gray",
   border: "1px solid gray",
-  borderRadius: "$2",
+  borderRadius: "$1",
   outline: "none",
   textOverflow: "ellipsis",
   overflowWrap: "anywhere",
@@ -24,7 +24,8 @@ export const StyledWrapper = styled("div", {
   variants: {
     review: {
       true: {
-        minH: "300px",
+        // minH: "500px",
+        // minW: "500px",
         zIndex: 10065,
         backgroundColor: "#242424",
         display: "grid",

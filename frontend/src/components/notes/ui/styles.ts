@@ -3,10 +3,11 @@ import { Grid } from "../../Molecules";
 
 export const StyledTitle = styled("textarea", {
   all: "unset",
+  color: "white",
   padding: "0.5rem 1rem",
   marginBlock: "0",
   outline: "none",
-  fontSize: "1rem",
+  fontSize: "smaller",
   fontWeight: "400",
   width: "85%",
 });
@@ -25,7 +26,7 @@ export const StyledTextArea = styled("textarea", {
   padding: "1rem",
   height: "100%",
   boxSizing: "border-box",
-  fontSize: "0.875rem",
+  fontSize: "smaller",
   color: "white",
   fontWeight: "400",
 });

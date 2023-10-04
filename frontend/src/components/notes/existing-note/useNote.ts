@@ -30,23 +30,13 @@ export const useNote = ({ note, pinned }: CustomHook) => {
       setReview(false);
       setStyles(undefined);
     } else {
-      const rect = (e.target as Element).getBoundingClientRect();
-
-      const targetLeft = window.innerWidth / 2 - rect.width / 2;
-      const targetTop = window.innerHeight / 2 - rect.height / 2;
-
-      const translateX = targetLeft - rect.left;
-      const translateY = targetTop - rect.top;
-
       setReview(true);
       setStyles({
         position: "fixed",
-        top: rect.top + "px",
-        left: rect.left + "px",
-        width: rect.width + "px",
-        height: rect.height + "px",
+        top: "50%",
+        left: "50%",
         zIndex: 1000,
-        transform: `translate(${translateX}px, ${translateY}px) scale(1.5)`,
+        transform: `translate(-50%, -50%)`,
       });
     }
   };
