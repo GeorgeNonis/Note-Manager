@@ -19,9 +19,6 @@ export const StyledWrapper = styled("div", {
   overflowWrap: "anywhere",
   letterSpacing: "0.01785714em",
   fontFamily: '"Google Sans", Roboto, Arial, sans-serif',
-
-  transition: "all 0.3s ease-in-out",
-
   variants: {
     review: {
       true: {
