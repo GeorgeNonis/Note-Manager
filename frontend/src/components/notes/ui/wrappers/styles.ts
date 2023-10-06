@@ -25,8 +25,8 @@ export const StyledWrapper = styled("div", {
   variants: {
     review: {
       true: {
-        // minH: "500px",
-        // minW: "500px",
+        w: 500,
+        h: 700,
         zIndex: 10065,
         backgroundColor: "#242424",
         display: "grid",
