@@ -1,8 +1,14 @@
 import { styled } from "../../../../../globalStyles";
+import {
+  StyledActions,
+  StyledNoteOptions,
+  StyledOptionsContent,
+  StyledPin,
+} from "../styles";
 
 export const StyledWrapper = styled("div", {
   display: "grid",
-  gridTemplateRows: "2fr 7.5fr 1.5fr 1.5fr",
+  gridTemplateRows: "2fr 7.5fr 2fr",
   w: "100%",
   position: "relative",
   backgroundRepeat: "no-repeat",
@@ -19,6 +25,7 @@ export const StyledWrapper = styled("div", {
   overflowWrap: "anywhere",
   letterSpacing: "0.01785714em",
   fontFamily: '"Google Sans", Roboto, Arial, sans-serif',
+
   variants: {
     review: {
       true: {
@@ -26,12 +33,26 @@ export const StyledWrapper = styled("div", {
         h: 700,
         zIndex: 10065,
         backgroundColor: "#242424",
-        display: "grid",
+        [`& ${StyledNoteOptions},${StyledPin},${StyledOptionsContent},${StyledActions}`]:
+          {
+            opacity: 1,
+          },
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        // zIndex: 1000,
+        transform: `translate(-50%, -50%)`,
       },
       false: {
         minHeight: "15rem",
         maxHeight: "20rem",
       },
+    },
+  },
+  "&:hover": {
+    color: "white",
+    [`& ${StyledNoteOptions},${StyledPin},${StyledOptionsContent},`]: {
+      opacity: 1,
     },
   },
 });

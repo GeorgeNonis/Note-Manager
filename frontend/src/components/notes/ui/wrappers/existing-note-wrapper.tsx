@@ -6,24 +6,23 @@ const ExistingNoteWrapper = ({
   review,
   note,
   position,
-  zIndex,
   pinned,
-  styles,
   onClick,
   onDragStart,
   onDragEnter,
   onDragEnd,
   dragable,
 }: ExistingNoteWrapperProps) => {
+  const getBackgroundStyle = () => {
+    if (note.color.includes("#") || note.color === "transparent") {
+      return { backgroundColor: "#202124" };
+    } else {
+      return { backgroundImage: `url(${note.color})` };
+    }
+  };
   return (
     <StyledWrapper
-      css={{
-        ...styles,
-
-        ...(note.color.includes("#") || note.color === "transparent"
-          ? { bgc: "#202124" }
-          : { backgroundImage: `url(${note.color})` }),
-      }}
+      css={getBackgroundStyle()}
       review={review}
       onClick={!review ? onClick : undefined}
       draggable={dragable}

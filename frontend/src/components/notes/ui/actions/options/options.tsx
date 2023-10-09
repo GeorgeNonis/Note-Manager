@@ -1,32 +1,33 @@
 import { Transition } from "react-transition-group";
 import ReactDOM from "react-dom";
 import { IoMdColorPalette } from "react-icons/io";
-import { BiArchiveOut, BiArchiveIn } from "react-icons/bi";
+import { BiArchiveOut, BiArchiveIn, BiDotsHorizontal } from "react-icons/bi";
 import { OptionsProps } from "./interfaces";
 import { useOptions } from "./useOptions";
 import Option from "./option";
 import AddLabel from "../add-label";
 import DiscardBoxes from "../../../../modals/discard-boxes";
 import BackgroundImage from "../backgroundimage/backgroundImage";
-import styles from "../../../note.module.scss";
+import {
+  StyledDotedOptions,
+  StyledOptions,
+  StyledOptionsContent,
+} from "../../styles";
 
-const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
+const Options = ({ note, pinned, archived = false }: OptionsProps) => {
   const { checkbox, id } = note;
-  const { handlers, outsideOptions, state, useStyles } = useOptions({
+  const { handlers, outsideOptions, state } = useOptions({
     archived,
     note,
     pinned,
-    styles,
-    review,
   });
 
   return (
-    <div
-      className={useStyles.contentStyle}
+    <StyledOptionsContent
       onClick={(e) => e.stopPropagation()}
       ref={outsideOptions}
     >
-      <div className={useStyles.optionsStyle}>
+      <StyledOptions autoFlow={"column"} centerItems={"true"}>
         <Option
           text="Background Options"
           onClick={() => state.setDisplayPalette(!state.displayPalette)}
@@ -40,22 +41,15 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           {archived ? <BiArchiveOut /> : <BiArchiveIn />}
         </Option>
 
-        <Option
-          text="More Tools"
-          onClick={(e) => {
-            e.stopPropagation();
-            handlers.openDotOptions();
-          }}
-          textStyle={state.display ? styles.hide : undefined}
-        >
-          <h2>...</h2>
+        <Option text="More Tools" onClick={handlers.openDotOptions}>
+          {<BiDotsHorizontal />}
         </Option>
-      </div>
+      </StyledOptions>
       {state.displayAddLabel && (
         <AddLabel id={id} pinned={pinned} archived={archived} />
       )}
       {state.display && (
-        <div className={styles.options}>
+        <StyledDotedOptions>
           <h3 onClick={handlers.deleteHandler} role={"button"}>
             Delete
           </h3>
@@ -68,7 +62,7 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
             {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
           </h3>
-        </div>
+        </StyledDotedOptions>
       )}
       <Transition
         in={state.displayPalette}
@@ -106,7 +100,7 @@ const Options = ({ note, pinned, review, archived = false }: OptionsProps) => {
           )
         }
       </Transition>
-    </div>
+    </StyledOptionsContent>
   );
 };
 

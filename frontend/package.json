@@ -16,6 +16,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@reduxjs/toolkit": "^1.9.2",
     "@stitches/react": "^1.2.8",

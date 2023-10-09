@@ -21,24 +21,9 @@ export const useNote = ({ note, pinned }: CustomHook) => {
 
   const token = sessionStorage.getItem("auth-token")!;
 
-  const [styles, setStyles] = useState<React.CSSProperties | undefined>();
-
   const handleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    if (review) {
-      setReview(false);
-      setStyles(undefined);
-    } else {
-      setReview(true);
-      setStyles({
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        zIndex: 1000,
-        transform: `translate(-50%, -50%)`,
-      });
-    }
+    setReview(!review);
   };
 
   const saveChanges = async () => {
@@ -82,7 +67,6 @@ export const useNote = ({ note, pinned }: CustomHook) => {
       noteValue,
       noteTitle,
       initialPosition,
-      styles,
     },
     actions: {
       setReview,

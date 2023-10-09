@@ -1,15 +1,6 @@
 import { NoteProps } from "./interfaces";
-import {
-  Options,
-  ReviewModal,
-  Title,
-  NoteDetails,
-  Pin,
-  NoteWrapper,
-} from "../../index";
+import { Options, Title, NoteDetails, Pin, NoteWrapper } from "../../index";
 import { useNote } from "./useNote";
-import { Transition } from "react-transition-group";
-import styles from "../note.module.scss";
 import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
 import { StyledActions, StyledButton } from "../ui/styles";
 
@@ -37,16 +28,15 @@ const Note = ({
         review={values.review}
         setReview={actions.setReview}
         onClick={actions.handleExpand}
-        styles={values.styles!}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
         onDragStart={onDragStart}
       >
         <Pin
+          review={values.review}
           pinned={pinned}
           pinNoteHandler={actions.pinNoteHandler}
-          styles={styles}
         />
 
         <Title
@@ -62,26 +52,19 @@ const Note = ({
           noteValue={values.noteValue}
           checkbox={note.checkbox}
         />
-        {values.review && (
-          <StyledActions autoFlow={"column"} centerItems={true}>
-            <StyledButton
-              disabled={values.disableBtn}
-              onKeyDown={(e) => {
-                e.key === "Enter" && actions.saveChanges();
-              }}
-              onClick={actions.saveChanges}
-            >
-              Save Changes
-            </StyledButton>
-            <StyledButton onClick={actions.handleExpand}>Close</StyledButton>
-          </StyledActions>
-        )}
-        <Options
-          review={values.review}
-          note={note}
-          pinned={pinned}
-          styles={styles}
-        />
+        <StyledActions autoFlow={"column"} centerItems={true}>
+          <StyledButton
+            disabled={values.disableBtn}
+            onKeyDown={(e) => {
+              e.key === "Enter" && actions.saveChanges();
+            }}
+            onClick={actions.saveChanges}
+          >
+            Save Changes
+          </StyledButton>
+          <StyledButton onClick={actions.handleExpand}>Close</StyledButton>
+        </StyledActions>
+        <Options note={note} pinned={pinned} />
       </NoteWrapper>
     </>
   );
