@@ -33,10 +33,12 @@ export const StyledTextArea = styled("textarea", {
 
 export const StyledActions = styled(Grid, {
   backgroundColor: "#202124",
+  textAlign: "center",
 });
 
 export const StyledButton = styled("button", {
   all: "unset",
+  w: "100%",
   boxSizing: "border-box",
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -47,7 +49,6 @@ export const StyledButton = styled("button", {
   fontWeight: 500,
   lineHeight: "1.25rem",
   padding: "8px 24px",
-  justifySelf: "flex-end",
   color: "#dadce0",
 
   "&:hover": {

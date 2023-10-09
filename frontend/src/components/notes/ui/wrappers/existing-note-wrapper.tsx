@@ -25,7 +25,7 @@ const ExistingNoteWrapper = ({
           : { backgroundImage: `url(${note.color})` }),
       }}
       review={review}
-      onClick={onClick}
+      onClick={!review ? onClick : undefined}
       draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
