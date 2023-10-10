@@ -35,11 +35,16 @@ export const useDeletedNote = ({ note, zindex }: Props) => {
     dispatch(fetchingDataHandler());
   };
 
+  const handleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setReview(!review);
+  };
+
   const zIndex = !review ? zindex : 20001;
 
   return {
     review,
-    setReview,
+    handleExpand,
     restoreProcess,
     removeProcess,
     zIndex,

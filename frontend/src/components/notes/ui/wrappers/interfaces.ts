@@ -9,7 +9,6 @@ export interface ExistingNoteWrapperProps {
   position: number;
   zIndex: number | string;
   dragable: boolean;
-  setReview?: Dispatch<SetStateAction<boolean>>;
   onClick: (e: React.MouseEvent) => void;
   onDragEnd: (e: React.DragEvent) => void;
   onDragEnter: (e: React.DragEvent, position: number) => void;
@@ -24,5 +23,5 @@ export interface ExistingNoteWrapperProps {
 export interface DeletedNoteWrapperProps
   extends Pick<
     ExistingNoteWrapperProps,
-    "children" | "review" | "note" | "zIndex" | "setReview"
+    "children" | "review" | "note" | "zIndex" | "onClick"
   > {}

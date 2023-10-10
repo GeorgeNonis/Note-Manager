@@ -26,7 +26,6 @@ const Note = ({
         position={position}
         pinned={pinned}
         review={values.review}
-        setReview={actions.setReview}
         onClick={actions.handleExpand}
         note={note}
         onDragEnd={onDragEnd}
