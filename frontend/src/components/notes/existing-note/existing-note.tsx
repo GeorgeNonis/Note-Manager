@@ -1,16 +1,8 @@
 import { NoteProps } from "./interfaces";
-import {
-  Options,
-  ReviewModal,
-  Title,
-  NoteDetails,
-  Pin,
-  NoteWrapper,
-} from "../../index";
+import { Options, Title, NoteDetails, Pin, NoteWrapper } from "../../index";
 import { useNote } from "./useNote";
-import { Transition } from "react-transition-group";
-import styles from "../note.module.scss";
-import LoadingSpinnerAction from "../../ui/loading-spinner-action";
+import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
+import { StyledActions, StyledButton } from "../ui/styles";
 
 const Note = ({
   note,
@@ -23,85 +15,55 @@ const Note = ({
   dragable = true,
 }: NoteProps) => {
   const { state } = useNote({ note, pinned, zindex });
+  const { actions, values } = state;
+
   return (
     <>
-      <Transition
-        in={state.values.review}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
-        {(transState) => (
-          <ReviewModal
-            setReview={state.actions.setReview}
-            transitionState={transState}
-          />
-        )}
-      </Transition>
+      <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
       <NoteWrapper
         dragable={dragable}
-        zIndex={state.values.zIndex}
+        zIndex={values.zIndex}
         position={position}
         pinned={pinned}
-        review={state.values.review}
-        setReview={state.actions.setReview}
+        review={values.review}
+        onClick={actions.handleExpand}
         note={note}
         onDragEnd={onDragEnd}
         onDragEnter={onDragEnter}
         onDragStart={onDragStart}
       >
         <Pin
+          review={values.review}
           pinned={pinned}
-          pinNoteHandler={state.actions.pinNoteHandler}
-          styles={styles}
+          pinNoteHandler={actions.pinNoteHandler}
         />
 
         <Title
           editable={false}
-          title={state.values.noteTitle}
-          setNoteTitle={state.actions.setNoteTitle}
+          title={values.noteTitle}
+          setNoteTitle={actions.setNoteTitle}
         />
         <NoteDetails
           editable={false}
-          setNotedetails={state.actions.setNotedetails}
+          setNotedetails={actions.setNotedetails}
           pinned={pinned}
           note={note}
-          noteValue={state.values.noteValue}
+          noteValue={values.noteValue}
           checkbox={note.checkbox}
         />
-        {state.values.review && (
-          <div className={styles.actions}>
-            <button
-              disabled={state.values.disableBtn}
-              className={
-                state.values.disableBtn
-                  ? styles.reviewNoteButtonDisabled
-                  : styles.reviewNoteButton
-              }
-              onKeyDown={(e) => {
-                e.key === "Enter" && state.actions.saveChanges();
-              }}
-              onClick={state.actions.saveChanges}
-            >
-              Save Changes
-            </button>
-            <button
-              className={styles.reviewNoteButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                state.actions.setReview(!state.values.review);
-              }}
-            >
-              Close
-            </button>
-          </div>
-        )}
-        <Options
-          review={state.values.review}
-          note={note}
-          pinned={pinned}
-          styles={styles}
-        />
+        <StyledActions autoFlow={"column"} centerItems={true}>
+          <StyledButton
+            disabled={values.disableBtn}
+            onKeyDown={(e) => {
+              e.key === "Enter" && actions.saveChanges();
+            }}
+            onClick={actions.saveChanges}
+          >
+            Save Changes
+          </StyledButton>
+          <StyledButton onClick={actions.handleExpand}>Close</StyledButton>
+        </StyledActions>
+        <Options note={note} pinned={pinned} />
       </NoteWrapper>
     </>
   );

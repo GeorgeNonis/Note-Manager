@@ -14,7 +14,6 @@ import {
   unarchiveNote,
 } from "../../../../../store/notes-slice";
 import {
-  errorState,
   fetchingDataHandler,
   httpReqResLoading,
 } from "../../../../../store/display-state-slice";
@@ -24,13 +23,7 @@ import { UseOptionsProps } from "./interfaces";
 import { CreateCheckBoxes } from "./utils";
 import { archiveNoteHandlerHttp } from "../../../../../services/postNote";
 
-export const useOptions = ({
-  archived,
-  note,
-  pinned,
-  styles,
-  review,
-}: UseOptionsProps) => {
+export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
   const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [discardBoxes, setDiscardBoxes] = useState(false);
@@ -156,16 +149,6 @@ export const useOptions = ({
     dispatch(fetchingDataHandler());
   };
 
-  const contentStyle =
-    display || displayPalette || review
-      ? `${styles.optionsContent} ${styles.visible}`
-      : `${styles.optionsContent} `;
-
-  const optionsStyle =
-    display || displayPalette
-      ? `${styles.style} ${styles.visible}`
-      : `${styles.style} `;
-
   const state = {
     displayAddLabel,
     display,
@@ -188,14 +171,9 @@ export const useOptions = ({
     discardBoxesHandler,
     closeModal,
   };
-  const useStyles = {
-    contentStyle,
-    optionsStyle,
-  };
   return {
     state,
     outsideOptions,
-    useStyles,
     handlers,
   };
 };

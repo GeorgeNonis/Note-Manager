@@ -1,29 +1,19 @@
-import { colorLogic, onReviewingNote } from "../../../../utils/utilsStyling";
 import { DeletedNoteWrapperProps } from "./interfaces";
-import styles from "../../note.module.scss";
+import { StyledWrapper } from "./styles";
 
 const DeletedNoteWrapper = ({
   children,
-  zIndex,
   review,
-  note,
-  setReview,
+  onClick,
 }: DeletedNoteWrapperProps) => {
   return (
-    <div
-      style={{
-        zIndex: zIndex,
-        backgroundColor: colorLogic({ review, note }),
-      }}
-      className={onReviewingNote({ review, styles })}
-      onClick={(e) => {
-        e.stopPropagation();
-        setReview(true);
-      }}
+    <StyledWrapper
+      review={review}
+      onClick={!review ? onClick : undefined}
       aria-multiline="true"
     >
       {children}
-    </div>
+    </StyledWrapper>
   );
 };
 export default DeletedNoteWrapper;

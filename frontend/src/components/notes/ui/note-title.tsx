@@ -1,5 +1,5 @@
 import { NoteTitleProps } from "./interfaces";
-import styles from "../note.module.scss";
+import { StyledTitle } from "./styles";
 
 const NoteTitle = ({
   title,
@@ -7,9 +7,8 @@ const NoteTitle = ({
   editable = true,
 }: NoteTitleProps) => {
   return (
-    <textarea
+    <StyledTitle
       readOnly={editable}
-      className={styles.noteTitle}
       name="notedetails"
       id="notedetails"
       spellCheck="true"

@@ -2,10 +2,8 @@ import { NoteObj } from "../../../../../interfaces/interfaces";
 
 export interface OptionsProps {
   archived?: boolean;
-  review: boolean;
   note: NoteObj;
   pinned: boolean;
-  styles: CSSModuleClasses;
 }
 
 export interface UseOptionsProps extends OptionsProps {

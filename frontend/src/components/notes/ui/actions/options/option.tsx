@@ -1,12 +1,12 @@
 import { OptionProps } from "./interfaces";
-import styles from "../../../note.module.scss";
+import { StyledOption } from "../../styles";
 
 const Option = ({ children, text, onClick, textStyle }: OptionProps) => {
   return (
-    <div role={"button"} onClick={onClick} className={styles.option}>
+    <StyledOption role={"button"} onClick={onClick}>
       {children}
       <h3 className={textStyle}>{text}</h3>
-    </div>
+    </StyledOption>
   );
 };
 export default Option;

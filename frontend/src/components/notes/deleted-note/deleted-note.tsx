@@ -1,6 +1,6 @@
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import {
-  ReviewModal,
+  // ReviewModal,
   Title,
   NoteDetails,
   DeletedNoteWrapper,
@@ -8,20 +8,22 @@ import {
 import { Props } from "./interfaces";
 import { useDeletedNote } from "./useDeletedNote";
 import styles from "./styles.module.scss";
+import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
 
 const DeletedNote = ({ note, zindex }: Props) => {
-  const { review, setReview, restoreProcess, removeProcess, zIndex } =
+  const { review, restoreProcess, removeProcess, handleExpand, zIndex } =
     useDeletedNote({ note, zindex });
   return (
     <>
-      {review &&
+      {/* {review &&
         ReactDOM.createPortal(
           <ReviewModal setReview={setReview} />,
           document.getElementById("reviewModal")!
-        )}
+        )} */}
+      <StyledBackdrop isOpen={review} onClick={handleExpand} />
       <DeletedNoteWrapper
         note={note}
-        setReview={setReview}
+        onClick={handleExpand}
         review={review}
         zIndex={zIndex}
       >

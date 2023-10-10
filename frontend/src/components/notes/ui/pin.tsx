@@ -1,16 +1,17 @@
 import { NotePinProps } from "./interfaces";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
+import { Icon, StyledPin, StyledPinnedIcon, StyledSpan } from "./styles";
 
-const Pin = ({ styles, pinned, pinNoteHandler }: NotePinProps) => {
+const Pin = ({ pinned, pinNoteHandler, review }: NotePinProps) => {
   return (
-    <div className={styles.pin} onClick={pinNoteHandler}>
+    <StyledPin onClick={pinNoteHandler}>
       {pinned ? (
-        <BsFillPinFill className={`${styles.pinned} ${styles.icon}`} />
+        <StyledPinnedIcon as={BsFillPinFill} />
       ) : (
-        <BsPinAngle className={styles.icon} />
+        <Icon as={BsPinAngle} rotate={true} />
       )}
-      <span className={styles.span}>{pinned ? "Unpin Note" : "Pin note"}</span>
-    </div>
+      <StyledSpan>{pinned ? "Unpin Note" : "Pin note"}</StyledSpan>
+    </StyledPin>
   );
 };
 export default Pin;

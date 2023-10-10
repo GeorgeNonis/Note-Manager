@@ -16,6 +16,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@floating-ui/react": "^0.26.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@reduxjs/toolkit": "^1.9.2",
     "@stitches/react": "^1.2.8",
@@ -46,6 +47,7 @@
     "@types/react": "^18.0.27",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.10",
+    "@types/react-modal": "^3.16.1",
     "@types/react-transition-group": "^4.4.5",
     "@vitejs/plugin-react": "^3.1.0",
     "cross-env": "^7.0.3",

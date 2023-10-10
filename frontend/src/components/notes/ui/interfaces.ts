@@ -12,8 +12,8 @@ export interface NoteDetailsProps {
 }
 
 export interface NotePinProps {
-  styles: CSSModuleClasses;
   pinned: boolean;
+  review: boolean;
   pinNoteHandler: (e: React.MouseEvent) => void;
 }
 
