@@ -8,6 +8,7 @@ const DeletedNoteWrapper = ({
 }: DeletedNoteWrapperProps) => {
   return (
     <StyledWrapper
+      deletedNote={true}
       review={review}
       onClick={!review ? onClick : undefined}
       aria-multiline="true"

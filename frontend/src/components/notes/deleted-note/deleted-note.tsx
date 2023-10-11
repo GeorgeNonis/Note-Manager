@@ -1,25 +1,14 @@
-// import ReactDOM from "react-dom";
-import {
-  // ReviewModal,
-  Title,
-  NoteDetails,
-  DeletedNoteWrapper,
-} from "../../index";
+import { Title, NoteDetails, DeletedNoteWrapper } from "../../index";
 import { Props } from "./interfaces";
 import { useDeletedNote } from "./useDeletedNote";
-import styles from "./styles.module.scss";
 import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
+import { StyledActions } from "./delete-note.styles";
 
 const DeletedNote = ({ note, zindex }: Props) => {
   const { review, restoreProcess, removeProcess, handleExpand, zIndex } =
     useDeletedNote({ note, zindex });
   return (
     <>
-      {/* {review &&
-        ReactDOM.createPortal(
-          <ReviewModal setReview={setReview} />,
-          document.getElementById("reviewModal")!
-        )} */}
       <StyledBackdrop isOpen={review} onClick={handleExpand} />
       <DeletedNoteWrapper
         note={note}
@@ -29,10 +18,10 @@ const DeletedNote = ({ note, zindex }: Props) => {
       >
         <Title title={note.title} />
         <NoteDetails note={note} />
-        <div className={styles.actions}>
+        <StyledActions autoFlow={"column"}>
           <button onClick={restoreProcess}>Restore Note</button>
           <button onClick={removeProcess}>Delete Note</button>
-        </div>
+        </StyledActions>
       </DeletedNoteWrapper>
     </>
   );
