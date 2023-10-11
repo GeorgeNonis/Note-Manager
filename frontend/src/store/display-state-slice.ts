@@ -34,7 +34,6 @@ const displayState = createSlice({
       state.loadingInitialState = payload;
     },
     errorState(state, { payload: error }) {
-      // console.log({ error });
       state.error = error;
     },
     httpReqResLoading(state) {

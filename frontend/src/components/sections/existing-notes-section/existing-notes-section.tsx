@@ -17,7 +17,8 @@ const ExistinNotesSection = () => {
   const {
     notes: { notes: existingnotes },
   } = useSelector((state: IRootState) => state);
-  if (useStore.values.loading) return <LoadingSpinner />;
+  if (useStore.values.loading)
+    return <LoadingSpinner open={useStore.values.loading} />;
 
   const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
     <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />

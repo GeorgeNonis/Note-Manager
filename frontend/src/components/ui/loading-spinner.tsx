@@ -1,12 +1,16 @@
+import { StyledBackdrop } from "../Molecules/Modal/modal.styles";
 import styles from "./styles.module.scss";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ open = true }: { open?: boolean }) => {
   return (
-    <div className={styles.loadingSpinner}>
-      {[...Array(4).keys()].map((e, i) => {
-        return <span key={i}></span>;
-      })}
-    </div>
+    <>
+      <StyledBackdrop isOpen={open} />
+      <div className={styles.loadingSpinner} style={{ zIndex: 800 }}>
+        {[...Array(4).keys()].map((e, i) => {
+          return <span key={i}></span>;
+        })}
+      </div>
+    </>
   );
 };
 export default LoadingSpinner;

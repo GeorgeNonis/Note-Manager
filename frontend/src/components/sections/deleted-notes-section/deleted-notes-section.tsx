@@ -1,28 +1,32 @@
-import { EmptyTrash, DeletedNote } from "../../index";
+import { EmptyTrash, DeletedNote, LoadingSpinner } from "../../index";
 import { useDeletedNotesSection } from "./useDeletedNotesSection";
-import styles from "./styles.module.scss";
+import { StyledSection, StyledWarning } from "./deleted-notes-section.styles";
 
 const DeletedNotesSection = () => {
-  const { state } = useDeletedNotesSection();
+  const { state, handlers } = useDeletedNotesSection();
 
-  let zindex = 1000;
   return (
     <>
       <main>
-        <h3 className={styles.warning}>
-          Notes in Trash are deleted after 7 days.
-        </h3>
-        <section className={styles.notes}>
+        <StyledWarning>Notes in Trash are deleted after 7 days.</StyledWarning>
+        <StyledSection>
+          {state.loading && <LoadingSpinner open={state.loading} />}
           {state.notes.deletedNotes.length === 0 &&
           !state.displayState.loadingInitialState ? (
             <EmptyTrash />
           ) : (
             state.notes.deletedNotes.map((note, i) => {
-              zindex -= 1;
-              return <DeletedNote zindex={zindex} note={note} key={i} />;
+              return (
+                <DeletedNote
+                  note={note}
+                  key={i}
+                  {...handlers}
+                  loading={state.loading}
+                />
+              );
             })
           )}
-        </section>
+        </StyledSection>
       </main>
     </>
   );

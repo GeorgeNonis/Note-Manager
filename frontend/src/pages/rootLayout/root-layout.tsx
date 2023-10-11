@@ -36,7 +36,7 @@ const RootLayout = () => {
               : `${styles.main} ${styles.isSideBarClosed}`
           }
           style={{
-            cursor: httpReqResLoading ? "progress" : "auto",
+            cursor: fetchingData ? "progress" : "auto",
             pointerEvents: fetchingData ? "none" : "auto",
           }}
         >

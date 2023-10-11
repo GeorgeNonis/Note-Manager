@@ -27,11 +27,6 @@ export const StyledWrapper = styled("div", {
   fontFamily: '"Google Sans", Roboto, Arial, sans-serif',
 
   variants: {
-    deletedNote: {
-      true: {
-        gridTemplateRows: "3fr 7.5fr 1fr",
-      },
-    },
     review: {
       true: {
         w: 500,

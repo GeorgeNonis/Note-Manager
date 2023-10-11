@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { NoteObj } from "../../../../interfaces/interfaces";
 
 export interface ExistingNoteWrapperProps {
@@ -7,7 +6,6 @@ export interface ExistingNoteWrapperProps {
   note: NoteObj;
   pinned: boolean;
   position: number;
-  zIndex: number | string;
   dragable: boolean;
   onClick: (e: React.MouseEvent) => void;
   onDragEnd: (e: React.DragEvent) => void;
@@ -23,5 +21,5 @@ export interface ExistingNoteWrapperProps {
 export interface DeletedNoteWrapperProps
   extends Pick<
     ExistingNoteWrapperProps,
-    "children" | "review" | "note" | "zIndex" | "onClick"
+    "children" | "review" | "note" | "onClick"
   > {}
