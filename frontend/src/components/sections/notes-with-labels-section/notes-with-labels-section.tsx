@@ -13,12 +13,12 @@ const NotesWithLabelsSection = () => {
   return (
     <section className={styles.allNotes}>
       {unNotes.length == 0 && pnNotes.length === 0 && <NoNotesMsg />}
+      <Section dragable={true} notes={pnNotes} header="Pinned" />
       <Section
         dragable={true}
         notes={unNotes}
         header={pnNotes.length !== 0 ? "Others" : undefined}
       />
-      <Section dragable={true} notes={pnNotes} header="Pinned" />
     </section>
   );
 };
