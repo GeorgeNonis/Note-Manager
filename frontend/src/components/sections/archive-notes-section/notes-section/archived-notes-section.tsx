@@ -8,15 +8,11 @@ import styles from "./styles.module.scss";
  */
 
 const ArchivedNotesSection = ({ notes }: { notes: NoteObj[] }) => {
-  let zIndex = 1000;
   return (
     <main className={styles.content}>
       <div className={styles.notes} role="divwithnotes">
         {notes.map((n, i) => {
-          zIndex -= 1;
-          return (
-            <ArchivedNote position={i} zindex={zIndex} note={n} key={n.id} />
-          );
+          return <ArchivedNote position={i} note={n} key={n.id} />;
         })}
       </div>
     </main>

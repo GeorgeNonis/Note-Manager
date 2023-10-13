@@ -62,7 +62,6 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
       noteTitle,
     },
     actions: {
-      setReview,
       pinNoteHandler,
       saveChanges,
       setNotedetails,

@@ -1,6 +1,8 @@
 import { NoteObj } from "../../../interfaces/interfaces";
 
-export interface PinnedNotesSectionProps {
+export interface SectionProps {
   notes: NoteObj[];
   dragable?: boolean;
+  header?: string;
+  pinnedNotes?: boolean;
 }

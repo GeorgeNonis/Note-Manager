@@ -1,8 +1,8 @@
 import { NoteProps } from "./interfaces";
 import { Options, Title, NoteDetails, NoteWrapper } from "../../../../index";
 import { useArchivedNote } from "./useArchivedNote";
-import styles from "../../../../notes/note.module.scss";
 import { StyledBackdrop } from "../../../../Molecules/Modal/modal.styles";
+import { StyledActions, StyledButton } from "../../../../notes/ui/styles";
 
 const Note = ({ note, position }: NoteProps) => {
   const { state } = useArchivedNote({ note });
@@ -35,30 +35,19 @@ const Note = ({ note, position }: NoteProps) => {
           noteValue={state.values.noteValue}
           checkbox={note.checkbox}
         />
-        {state.values.review && (
-          <div className={styles.actions}>
-            <button
-              disabled={state.values.disableBtn}
-              className={
-                state.values.disableBtn
-                  ? styles.reviewNoteButtonDisabled
-                  : styles.reviewNoteButton
-              }
-              onKeyDown={(e) => {
-                e.key === "Enter" && state.actions.saveChanges();
-              }}
-              onClick={state.actions.saveChanges}
-            >
-              Save Changes
-            </button>
-            <button
-              className={styles.reviewNoteButton}
-              onClick={actions.handleExpand}
-            >
-              Close
-            </button>
-          </div>
-        )}
+
+        <StyledActions autoFlow={"column"} centerItems={true}>
+          <StyledButton
+            disabled={state.values.disableBtn}
+            onKeyDown={(e) => {
+              e.key === "Enter" && state.actions.saveChanges();
+            }}
+            onClick={state.actions.saveChanges}
+          >
+            Save Changes
+          </StyledButton>
+          <StyledButton onClick={actions.handleExpand}>Close</StyledButton>
+        </StyledActions>
         <Options archived={true} note={note} pinned={false} />
       </NoteWrapper>
     </>
