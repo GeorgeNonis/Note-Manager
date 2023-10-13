@@ -8,18 +8,15 @@ const PinnedNotesSection = ({
   dragable = true,
 }: PinnedNotesSectionProps) => {
   const { onDragEnter, onDragStart, onDragEnd } = usePinnedNotesSection();
-  let zIndex = 1000;
   return (
     <main className={styles.content}>
       <p>Pinned</p>
       <div className={styles.notes} role="divwithnotes">
         {notes.map((n, i) => {
-          zIndex -= 1;
           return (
             <Note
               dragable={dragable}
               position={i}
-              zindex={zIndex}
               note={n}
               onDragEnd={onDragEnd}
               onDragEnter={onDragEnter}

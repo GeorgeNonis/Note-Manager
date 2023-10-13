@@ -1,6 +1,6 @@
 import { useArchiveNotesSection } from "./useArchiveNotesSection";
 import * as Comp from "../../index";
-import Wrapper from "./wrapper";
+
 import styles from "./style.module.scss";
 
 const ArchiveNotesSection = () => {
@@ -16,11 +16,9 @@ const ArchiveNotesSection = () => {
   );
 
   return (
-    <Wrapper styles={styles}>
-      <section className={styles.allNotes}>
-        {archivedNotes.length > 0 ? notes : <Comp.NoArchievedNotesMsg />}
-      </section>
-    </Wrapper>
+    <section className={styles.allNotes}>
+      {archivedNotes.length > 0 ? notes : <Comp.NoArchievedNotesMsg />}
+    </section>
   );
 };
 

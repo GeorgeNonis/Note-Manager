@@ -42,6 +42,15 @@ export const StyledButton = styled("button", {
       danger: {
         backgroundColor: "#ff7272",
       },
+      reset: {
+        bgc: "unset",
+        border: "unset",
+        br: "unset",
+        p: "unset",
+        "&:hover": {
+          bgc: "#28292c",
+        },
+      },
     },
   },
 

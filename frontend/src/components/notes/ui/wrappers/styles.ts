@@ -41,6 +41,10 @@ export const StyledWrapper = styled("div", {
         top: "50%",
         left: "50%",
         transform: `translate(-50%, -50%)`,
+
+        "@mobile": {
+          w: 400,
+        },
       },
       false: {
         minHeight: "15rem",

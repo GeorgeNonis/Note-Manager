@@ -16,7 +16,6 @@ const RootLayout = () => {
     error,
     loadingInitialState,
     displaySideBar,
-    httpReqResLoading,
     accountSettings,
     fetchingData,
   } = state.values.displayState;
@@ -35,10 +34,10 @@ const RootLayout = () => {
               ? styles.main
               : `${styles.main} ${styles.isSideBarClosed}`
           }
-          style={{
-            cursor: httpReqResLoading ? "progress" : "auto",
-            pointerEvents: fetchingData ? "none" : "auto",
-          }}
+          // style={{
+          //   cursor: fetchingData ? "progress" : "auto",
+          //   pointerEvents: fetchingData ? "none" : "auto",
+          // }}
         >
           <Comp.MenuThreeLines />
           {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
@@ -142,8 +141,6 @@ const RootLayout = () => {
               )
             }
           </Transition>
-
-          {/* {loadingInitialState && <Comp.LoadingSpinner />} */}
 
           {!loadingInitialState && <Outlet />}
         </main>

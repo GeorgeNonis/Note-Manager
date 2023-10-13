@@ -10,11 +10,10 @@ const Note = ({
   onDragEnd,
   onDragEnter,
   onDragStart,
-  zindex,
   pinned = true,
   dragable = true,
 }: NoteProps) => {
-  const { state } = useNote({ note, pinned, zindex });
+  const { state } = useNote({ note, pinned });
   const { actions, values } = state;
 
   return (
@@ -22,7 +21,6 @@ const Note = ({
       <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
       <NoteWrapper
         dragable={dragable}
-        zIndex={values.zIndex}
         position={position}
         pinned={pinned}
         review={values.review}
