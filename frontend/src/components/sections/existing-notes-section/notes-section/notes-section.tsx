@@ -13,19 +13,16 @@ const NotesSection = ({
 }) => {
   const { onDragEnter, onDragStart, onDragEnd } = useNotesSection();
   const { notes } = useSelector((state: IRootState) => state.notes);
-  let zIndex = 1000;
 
   return (
     <main className={styles.content}>
       <div className={styles.notes}>
         {notes.map((n, i) => {
-          zIndex -= 1;
           return (
             <Note
               dragable={dragable}
               pinned={false}
               position={i}
-              zindex={zIndex}
               note={n}
               onDragEnd={onDragEnd}
               onDragEnter={onDragEnter}

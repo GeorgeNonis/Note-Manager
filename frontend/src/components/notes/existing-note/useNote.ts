@@ -4,15 +4,9 @@ import { editNoteHttp, pinNoteHandlerHttp } from "../../../services";
 import { fetchingDataHandler } from "../../../store/display-state-slice";
 import { editNote, pinHandler } from "../../../store/notes-slice";
 import { isThereError } from "../../../utils/utils";
-import { CustomHook } from "./interfaces";
+import { UseNoteProps } from "./interfaces";
 
-export const useNote = ({ note, pinned }: CustomHook) => {
-  const [initialPosition, setInitialPosition] = useState({
-    top: 0,
-    left: 0,
-    width: 0,
-    height: 0,
-  });
+export const useNote = ({ note, pinned }: UseNoteProps) => {
   const [review, setReview] = useState<boolean>(false);
   const [noteValue, setNotedetails] = useState<string>(note.note);
   const [noteTitle, setNoteTitle] = useState<string>(note.title);
@@ -66,7 +60,6 @@ export const useNote = ({ note, pinned }: CustomHook) => {
       title: noteTitle,
       noteValue,
       noteTitle,
-      initialPosition,
     },
     actions: {
       setReview,

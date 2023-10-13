@@ -4,7 +4,6 @@ import {
   PinnedNotesSection,
   OthersTitle,
 } from "../../index";
-import Wrapper from "./wrapper";
 import { useExistingNotesSection } from "./useExistingNotesSection";
 import NotesSection from "./notes-section/notes-section";
 import styles from "./styles.module.scss";
@@ -28,7 +27,7 @@ const ExistinNotesSection = () => {
   );
 
   return (
-    <Wrapper styles={styles}>
+    <div>
       <main
         className={styles.mainSection}
         ref={useStore.values.clickOutsideNote}
@@ -41,7 +40,7 @@ const ExistinNotesSection = () => {
         <NoNotesMsg state={useStore.values.state} />
         {notes}
       </section>
-    </Wrapper>
+    </div>
   );
 };
 

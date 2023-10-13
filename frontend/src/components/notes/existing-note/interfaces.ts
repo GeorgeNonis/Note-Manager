@@ -2,7 +2,7 @@ import { NoteObj } from "../../../interfaces/interfaces";
 
 export interface NoteProps {
   note: NoteObj;
-  zindex: number;
+
   position: number;
   pinned?: boolean;
   dragable?: boolean;
@@ -16,6 +16,6 @@ export interface NoteProps {
   ) => void;
 }
 
-export interface CustomHook extends Pick<NoteProps, "note" | "zindex"> {
+export interface UseNoteProps extends Pick<NoteProps, "note"> {
   pinned: boolean;
 }

@@ -1,12 +1,15 @@
 import { MdOutlineLabel } from "react-icons/md";
-import styles from "./styles.module.scss";
+import { Text } from "../../Atoms";
+import { StyledDiv } from "./notes-with-labels-section.styles";
 
 const NoNotesMsg = () => {
   return (
-    <div className={styles.noNotesDiv}>
+    <StyledDiv>
       <MdOutlineLabel />
-      <h3 className={styles.noNotesTitle}>No notes with this label yet</h3>
-    </div>
+      <Text size={"m"} fontWeight={"700"} css={{ color: "gray" }}>
+        No notes with this label yet
+      </Text>
+    </StyledDiv>
   );
 };
 export default NoNotesMsg;

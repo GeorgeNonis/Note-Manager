@@ -2,8 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDnd } from "../../../../hooks";
 import { NoteObj } from "../../../../interfaces/interfaces";
-import { errorState } from "../../../../store/display-state-slice";
-import { sortNotes, sortUnpinnedNotes } from "../../../../store/notes-slice";
+import { sortUnpinnedNotes } from "../../../../store/notes-slice";
 import { IRootState } from "../../../../store/store";
 import { DragEndUtil } from "../../../../utils";
 
@@ -18,8 +17,6 @@ export const useNotesSection = () => {
    * so you can close it
    */
   const onDragEnd = async (e: React.DragEvent) => {
-    const id = e.dataTransfer.getData("id");
-
     const draggable =
       e.currentTarget.attributes.getNamedItem("draggable")?.value;
     if (!draggable) return;

@@ -1,41 +1,21 @@
 import { NoteProps } from "./interfaces";
-import {
-  Options,
-  ReviewModal,
-  Title,
-  NoteDetails,
-  NoteWrapper,
-  LoadingSpinner,
-} from "../../../../index";
+import { Options, Title, NoteDetails, NoteWrapper } from "../../../../index";
 import { useArchivedNote } from "./useArchivedNote";
-import { Transition } from "react-transition-group";
 import styles from "../../../../notes/note.module.scss";
-import LoadingSpinnerAction from "../../../../ui/loading-spinner-action";
+import { StyledBackdrop } from "../../../../Molecules/Modal/modal.styles";
 
-const Note = ({ note, position, zindex }: NoteProps) => {
-  const { state } = useArchivedNote({ note, zindex });
+const Note = ({ note, position }: NoteProps) => {
+  const { state } = useArchivedNote({ note });
+  const { actions, values } = state;
   return (
     <>
-      <Transition
-        in={state.values.review}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
-        {(transState) => (
-          <ReviewModal
-            setReview={state.actions.setReview}
-            transitionState={transState}
-          />
-        )}
-      </Transition>
+      <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
       <NoteWrapper
         dragable={false}
-        zIndex={state.values.zIndex}
         position={position}
         pinned={false}
         review={state.values.review}
-        setReview={state.actions.setReview}
+        onClick={actions.handleExpand}
         note={note}
         onDragEnd={() => {}}
         onDragEnter={() => {}}
@@ -73,22 +53,13 @@ const Note = ({ note, position, zindex }: NoteProps) => {
             </button>
             <button
               className={styles.reviewNoteButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                state.actions.setReview(!state.values.review);
-              }}
+              onClick={actions.handleExpand}
             >
               Close
             </button>
           </div>
         )}
-        <Options
-          archived={true}
-          review={state.values.review}
-          note={note}
-          pinned={false}
-          styles={styles}
-        />
+        <Options archived={true} note={note} pinned={false} />
       </NoteWrapper>
     </>
   );
