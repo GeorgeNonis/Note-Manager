@@ -22,13 +22,13 @@ const ExistinNotesSection = () => {
         <Form key={100} useStore={useStore} />
       </main>
       <section className={styles.allNotes}>
+        <Section dragable={true} notes={pinnedNotes} header="Pinned" />
         <Section
           pinnedNotes={false}
           dragable={true}
           notes={notes}
           header={pinnedNotes.length !== 0 ? "Others" : undefined}
         />
-        <Section dragable={true} notes={pinnedNotes} header="Pinned" />
         <NoNotesMsg state={useStore.values.state} />
       </section>
     </Wrapper>
