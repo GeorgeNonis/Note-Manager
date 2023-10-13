@@ -1,7 +1,10 @@
 import { NoteObj } from "../../../interfaces/interfaces";
 
-export interface Props {
-  loading: boolean;
+export interface DeletedNoteProps {
+  loading: {
+    restoreLoading: boolean;
+    removeLoading: boolean;
+  };
   note: NoteObj;
   restoreProcess: (
     e: React.MouseEvent<Element, MouseEvent>,

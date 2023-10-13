@@ -7,8 +7,9 @@ export const StyledActions = styled(Grid, {
 });
 
 export const StyledButton = styled(Button, {
-  w: "100%",
-  h: "100%",
+  w: "unset !important",
+  minH: "$2",
+  h: "unset !important",
   m: 0,
   p: "$2",
 });

@@ -1,4 +1,4 @@
-import { EmptyTrash, DeletedNote, LoadingSpinner } from "../../index";
+import { EmptyTrash, DeletedNote } from "../../index";
 import { useDeletedNotesSection } from "./useDeletedNotesSection";
 import { StyledSection, StyledWarning } from "./deleted-notes-section.styles";
 
@@ -10,7 +10,6 @@ const DeletedNotesSection = () => {
       <main>
         <StyledWarning>Notes in Trash are deleted after 7 days.</StyledWarning>
         <StyledSection>
-          {state.loading && <LoadingSpinner open={state.loading} />}
           {state.notes.deletedNotes.length === 0 &&
           !state.displayState.loadingInitialState ? (
             <EmptyTrash />

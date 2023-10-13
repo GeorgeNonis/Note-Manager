@@ -6,7 +6,8 @@ import { isThereError } from "../../../utils";
 import { removeNote, restoreNote } from "../../../store/notes-slice";
 
 export const useDeletedNotesSection = () => {
-  const [loading, setLoading] = useState(false);
+  const [restoreLoading, setRestoreLoading] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState(false);
   const dispatch = useDispatch();
   const token = sessionStorage.getItem("auth-token")!;
 
@@ -15,33 +16,31 @@ export const useDeletedNotesSection = () => {
     (state: IRootState) => state.displayState
   );
 
-  const loadingHandler = (arg: boolean) => {
-    setLoading(arg);
-  };
-
   const restoreProcess = async (e: React.MouseEvent, id: string) => {
-    loadingHandler(true);
     e.stopPropagation();
+    setRestoreLoading(true);
     const response = await restoreNoteHttp(id, token);
+    setRestoreLoading(false);
 
     const successfulRequest = isThereError(response);
     successfulRequest && dispatch(restoreNote(id));
-    loadingHandler(false);
   };
 
   const removeProcess = async (e: React.MouseEvent, id: string) => {
-    loadingHandler(true);
     e.stopPropagation();
+    setRemoveLoading(true);
     const response = await removeNoteHttp(id, token);
+    setRemoveLoading(false);
 
     const successfulRequest = isThereError(response);
     successfulRequest && dispatch(removeNote(id));
-
-    loadingHandler(false);
   };
 
   const state = {
-    loading,
+    loading: {
+      restoreLoading,
+      removeLoading,
+    },
     notes: notesState,
     displayState: {
       error,

@@ -26,7 +26,6 @@ const RootLayout = () => {
         <Comp.AccountSettings open={accountSettings} />,
         document.getElementById("accountsettings")!
       )}
-      {loadingInitialState && <Comp.LoadingSpinner />}
       {!loadingInitialState && (
         <main
           className={
@@ -34,11 +33,8 @@ const RootLayout = () => {
               ? styles.main
               : `${styles.main} ${styles.isSideBarClosed}`
           }
-          // style={{
-          //   cursor: fetchingData ? "progress" : "auto",
-          //   pointerEvents: fetchingData ? "none" : "auto",
-          // }}
         >
+          {(fetchingData || loadingInitialState) && <Comp.LoadingSpinner />}
           <Comp.MenuThreeLines />
           {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
           <div

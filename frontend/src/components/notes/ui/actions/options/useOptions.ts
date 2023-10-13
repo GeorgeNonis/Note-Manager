@@ -37,7 +37,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
   });
 
   const copyNoteHandler = async (id: string, pinned: boolean) => {
-    dispatch(fetchingDataHandler());
     const sharedId = uuidv4();
     const response = await copyNoteHttp({
       noteId: id,
@@ -56,7 +55,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
 
     dispatch(httpReqResLoading());
     setDisplay(false);
-    dispatch(fetchingDataHandler());
   };
 
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
@@ -94,7 +92,7 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
   };
 
   const checkBoxesHandler = async (e: React.MouseEvent<HTMLElement>) => {
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
     const { uncheckednote } = CreateCheckBoxes({ note });
     if (e.currentTarget.id === "discard") {
       const response = await checkBoxesHandlerHttp({
@@ -129,7 +127,7 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
           );
       }
     }
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
   };
 
   const archiveNoteHandler = async () => {

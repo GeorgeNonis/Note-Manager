@@ -1,65 +1,59 @@
 import { BackgroundImageProps } from "./interfaces";
 import { useBackgroundimage } from "./useBackgroundimage";
 import styles from "./styles.module.scss";
+import { Modal } from "../../../../Molecules";
+import LoadingSpinner from "../../../../ui/loading-spinner";
 
 const BackgroundImage = ({
   setDisplayPalette,
   id,
   pinned,
   archived,
-  transitionState,
+  open,
 }: BackgroundImageProps) => {
-  const { images: mobileVersion, displayHandler } = useBackgroundimage({
+  const {
+    images: mobileVersion,
+    loading,
+    displayHandler,
+  } = useBackgroundimage({
     setDisplayPalette,
     id,
     pinned,
     archived,
-    transitionState,
   });
 
-  const cssClasses = [
-    styles.modalContent,
-    transitionState === "entering"
-      ? styles.openModal
-      : transitionState === "exiting"
-      ? styles.closeModal
-      : null,
-  ];
-
   return (
-    <>
-      <div
-        className={styles.backdrop}
-        onClick={(e) => setDisplayPalette((prev) => !prev)}
-      ></div>
-      <div className={cssClasses.join(" ")}>
-        <h3 className={styles.title}>Background Image</h3>
-        <div className={styles.backgroundImages}>
-          <div
-            className={styles.default}
-            onClick={() => {
-              displayHandler(`#202124`);
-            }}
-          >
-            <h3>Default</h3>
-          </div>
-          {mobileVersion.map((bg) => {
-            return (
-              <img
-                loading="lazy"
-                style={{ pointerEvents: "all" }}
-                src={bg.src}
-                alt={bg.src}
-                key={bg.src}
-                onClick={() => {
-                  displayHandler(bg.src);
-                }}
-              />
-            );
-          })}
+    <Modal
+      onClose={() => setDisplayPalette((prev) => !prev)}
+      open={open}
+      title="Background Image"
+    >
+      {loading && <LoadingSpinner />}
+      <div className={styles.backgroundImages}>
+        <div
+          className={styles.default}
+          onClick={() => {
+            displayHandler(`#202124`);
+          }}
+        >
+          <h3>Default</h3>
         </div>
+        {mobileVersion.map((bg) => {
+          return (
+            <img
+              loading="lazy"
+              style={{ pointerEvents: "all" }}
+              src={bg.src}
+              alt={bg.src}
+              key={bg.src}
+              onClick={() => {
+                displayHandler(bg.src);
+              }}
+            />
+          );
+        })}
       </div>
-    </>
+    </Modal>
   );
 };
 export default BackgroundImage;

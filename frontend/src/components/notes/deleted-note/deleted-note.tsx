@@ -1,16 +1,18 @@
 import { Title, NoteDetails, DeletedNoteWrapper, Button } from "../../index";
-import { Props } from "./interfaces";
+import { DeletedNoteProps } from "./interfaces";
 import { useDeletedNote } from "./useDeletedNote";
 import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
 import { StyledActions, StyledButton } from "./delete-note.styles";
+import { StyledLoadingSemiCircle } from "../../../../globalStyles";
 
 const DeletedNote = ({
   note,
-  loading,
   removeProcess,
   restoreProcess,
-}: Props) => {
+  loading,
+}: DeletedNoteProps) => {
   const { review, handleExpand } = useDeletedNote();
+  const { removeLoading, restoreLoading } = loading;
   return (
     <>
       <StyledBackdrop isOpen={review} onClick={handleExpand} />
@@ -19,20 +21,20 @@ const DeletedNote = ({
         <NoteDetails note={note} />
         <StyledActions autoFlow={"column"}>
           <StyledButton
-            disabled={loading}
+            disabled={removeLoading || restoreLoading}
             onClick={(e) => restoreProcess(e, note.id)}
             size={"small"}
             variant={"reset"}
           >
-            Restore Note
+            {restoreLoading ? <StyledLoadingSemiCircle /> : "Restore Note"}
           </StyledButton>
           <StyledButton
-            disabled={loading}
+            disabled={removeLoading || restoreLoading}
             variant={"reset"}
             onClick={(e) => removeProcess(e, note.id)}
             size={"small"}
           >
-            Delete Note
+            {removeLoading ? <StyledLoadingSemiCircle /> : "Delete Note"}
           </StyledButton>
         </StyledActions>
       </DeletedNoteWrapper>

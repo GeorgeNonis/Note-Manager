@@ -1,4 +1,4 @@
-import { styled } from "../../../../globalStyles";
+import { styled } from "../../../../../globalStyles";
 
 export const StyledDiv = styled("div", {
   display: "grid",

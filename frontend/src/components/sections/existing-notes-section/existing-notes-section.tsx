@@ -1,20 +1,18 @@
-import { LoadingSpinner, Form } from "../../index";
-import Wrapper from "./wrapper";
+import { LoadingSpinner, Form, Grid } from "../../index";
 import { useExistingNotesSection } from "./useExistingNotesSection";
 import styles from "./styles.module.scss";
-import NoNotesMsg from "../ui/noNotesMsg";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../../store/store";
 import Section from "../section/section";
+import NoNotes from "../ui/noNotes";
+import { BiNotepad } from "react-icons/bi";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
-  const {
-    notes: { notes, pinnedNotes },
-  } = useSelector((state: IRootState) => state);
+  const { pinnedNotes, notes } = useStore.values.state;
+
+  const isThereAnyNotes = pinnedNotes.length === 0 && notes.length === 0;
   if (useStore.values.loading) return <LoadingSpinner />;
   return (
-    <Wrapper styles={styles}>
+    <Grid>
       <main
         className={styles.mainSection}
         ref={useStore.values.clickOutsideNote}
@@ -29,9 +27,11 @@ const ExistinNotesSection = () => {
           notes={notes}
           header={pinnedNotes.length !== 0 ? "Others" : undefined}
         />
-        <NoNotesMsg state={useStore.values.state} />
+        {isThereAnyNotes && (
+          <NoNotes SVG={BiNotepad} children={"No Existing Notes"} />
+        )}
       </section>
-    </Wrapper>
+    </Grid>
   );
 };
 
