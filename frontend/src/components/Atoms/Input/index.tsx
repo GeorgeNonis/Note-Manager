@@ -13,7 +13,12 @@ import { StyledInput } from "./input.styles";
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ backgroundUnset, ...props }, ref) => (
-    <StyledInput backgroundUnset={backgroundUnset} required {...props} />
+    <StyledInput
+      backgroundUnset={backgroundUnset}
+      required
+      {...props}
+      ref={ref}
+    />
   )
 );
 export default Input;

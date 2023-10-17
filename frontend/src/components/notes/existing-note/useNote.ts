@@ -21,7 +21,7 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
   };
 
   const saveChanges = async () => {
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
 
     const response = await editNoteHttp({
       noteId,
@@ -36,18 +36,18 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
       dispatch(
         editNote({ pinned, id: noteId, titleValue: noteTitle, noteValue })
       );
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
 
     e.stopPropagation();
     const response = await pinNoteHandlerHttp(note.id, pinned, token);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(pinHandler(note.id));
-    dispatch(fetchingDataHandler());
+    // dispatch(fetchingDataHandler());
   };
   const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;

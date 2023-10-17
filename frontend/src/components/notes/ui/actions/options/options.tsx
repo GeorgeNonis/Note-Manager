@@ -22,6 +22,25 @@ const Options = ({ note, pinned, archived = false }: OptionsProps) => {
     pinned,
   });
 
+  const dotteOptions = state.display && (
+    <StyledDotedOptions>
+      <h3 onClick={handlers.deleteHandler} role={"button"}>
+        Delete
+      </h3>
+      {!archived && (
+        <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
+      )}
+      <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>Make a Copy</h3>
+      <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
+        {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
+      </h3>
+    </StyledDotedOptions>
+  );
+
+  const addLabel = state.displayAddLabel && (
+    <AddLabel id={id} pinned={pinned} archived={archived} />
+  );
+
   return (
     <>
       <BackgroundImage
@@ -53,26 +72,8 @@ const Options = ({ note, pinned, archived = false }: OptionsProps) => {
             {<BiDotsHorizontal />}
           </Option>
         </StyledOptions>
-        {state.displayAddLabel && (
-          <AddLabel id={id} pinned={pinned} archived={archived} />
-        )}
-        {state.display && (
-          <StyledDotedOptions>
-            <h3 onClick={handlers.deleteHandler} role={"button"}>
-              Delete
-            </h3>
-            {!archived && (
-              <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
-            )}
-            <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>
-              Make a Copy
-            </h3>
-            <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
-              {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
-            </h3>
-          </StyledDotedOptions>
-        )}
-
+        {addLabel}
+        {dotteOptions}
         <Transition
           in={state.discardBoxes}
           timeout={500}

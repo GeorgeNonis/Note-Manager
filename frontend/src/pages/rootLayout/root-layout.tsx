@@ -21,6 +21,7 @@ const RootLayout = () => {
   } = state.values.displayState;
   return (
     <>
+      {(fetchingData || loadingInitialState) && <Comp.LoadingSpinner />}
       <ToastContainer />
       {ReactDOM.createPortal(
         <Comp.AccountSettings open={accountSettings} />,
@@ -34,7 +35,6 @@ const RootLayout = () => {
               : `${styles.main} ${styles.isSideBarClosed}`
           }
         >
-          {(fetchingData || loadingInitialState) && <Comp.LoadingSpinner />}
           <Comp.MenuThreeLines />
           {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
           <div
