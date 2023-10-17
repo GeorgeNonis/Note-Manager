@@ -13,12 +13,7 @@ const ExistinNotesSection = () => {
   if (useStore.values.loading) return <LoadingSpinner />;
   return (
     <Grid>
-      <main
-        className={styles.mainSection}
-        ref={useStore.values.clickOutsideNote}
-      >
-        <Form key={100} useStore={useStore} />
-      </main>
+      <Form key={100} useStore={useStore} />
       <section className={styles.allNotes}>
         <Section dragable={true} notes={pinnedNotes} header="Pinned" />
         <Section

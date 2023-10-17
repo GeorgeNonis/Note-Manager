@@ -1,12 +1,13 @@
 import Input from "./inputText";
 import { FormProps } from "./interfaces";
+import { StyledForm } from "./styles";
 import styles from "./styles.module.scss";
 
 const Form = ({ useStore }: FormProps) => {
   const disableBtn =
     useStore.values.title.length == 0 && useStore.values.note.length == 0;
   return (
-    <>
+    <StyledForm ref={useStore.values.clickOutsideNote}>
       {useStore.values.display && (
         <>
           <Input
@@ -65,7 +66,7 @@ const Form = ({ useStore }: FormProps) => {
           </button>
         )}
       </div>
-    </>
+    </StyledForm>
   );
 };
 
