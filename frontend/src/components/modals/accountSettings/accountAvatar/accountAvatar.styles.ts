@@ -6,3 +6,11 @@ export const StyledCancelButton = styled(Button, {
   inset: "90% auto auto 50%",
   transform: "translate(-50%, -50%)",
 });
+
+export const StyledButton = styled(Button, {
+  minW: "fit-content",
+  w: "130px",
+  "@mobile": {
+    fontSize: "small !important",
+  },
+});

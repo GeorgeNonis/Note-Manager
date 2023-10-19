@@ -13,6 +13,11 @@ export const StyledSvg = styled(GrPersonalComputer, {
 
 export const StyledImagesContainer = styled(Grid, {
   gridTemplateColumns: "repeat(3,1fr)",
+
+  "@mobile": {
+    gridAutoFlow: "row",
+    gridTemplateColumns: "repeat(2,1fr)",
+  },
   img: {
     width: "150px",
     br: "$round",

@@ -1,5 +1,6 @@
 import { styled } from "../../../../globalStyles";
 import { Text } from "../../Atoms";
+import { Grid } from "../../Molecules";
 
 export const StyledNavLink = styled(Text, {
   fontWeight: 300,
@@ -27,4 +28,13 @@ export const StyledNavLink = styled(Text, {
       },
     },
   },
+});
+
+export const StyledColumn1 = styled(Grid, {
+  w: "100%",
+  alignSelf: "start",
+});
+export const StyledColumn2 = styled(Grid, {
+  w: "100%",
+  h: "100%",
 });

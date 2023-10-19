@@ -6,6 +6,7 @@ import * as Components from "../../index";
 import { IRootState } from "../../../store/store";
 import { Modal } from "../../Molecules";
 import styles from "./styles.module.scss";
+import { StyledColumn1, StyledColumn2 } from "./accountSettings.styles";
 
 const AccountSettings = ({ open }: AccountSettingsProps) => {
   const { ...initialState } = useSelector((state: IRootState) => state.notes);
@@ -40,7 +41,7 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
       title="Account Settings"
     >
       <div className={styles.content}>
-        <div className={styles.col1}>
+        <StyledColumn1>
           {navLinks.map((link) => (
             <Components.NavLinkCompo
               onClick={setOption}
@@ -49,8 +50,8 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
               key={link}
             />
           ))}
-        </div>
-        <div className={styles.col2}>{options[option as keyof Key].el}</div>
+        </StyledColumn1>
+        <StyledColumn2>{options[option as keyof Key].el}</StyledColumn2>
       </div>
     </Modal>
   );

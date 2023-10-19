@@ -47,14 +47,6 @@
       height: 2.4rem;
     }
   }
-
-  .actions {
-    button {
-      width: 5.5rem;
-      height: 2rem;
-      font-size: 0.65rem;
-    }
-  }
 }
 @media (max-width: 450px) {
   .avatar {
@@ -251,12 +243,6 @@
 
 .avatars {
   position: relative;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
 }
 
 .avatar {

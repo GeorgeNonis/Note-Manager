@@ -49,6 +49,7 @@ export const useExistingNotesSection = () => {
       note,
       token
     );
+    console.log({ response, processedNote });
     boolean && dispatch(addNote(processedNote));
 
     setTitle("");
