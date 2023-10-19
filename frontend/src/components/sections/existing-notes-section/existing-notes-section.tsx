@@ -11,21 +11,23 @@ const ExistinNotesSection = () => {
 
   const isThereAnyNotes = pinnedNotes.length === 0 && notes.length === 0;
   if (useStore.values.loading) return <LoadingSpinner />;
+
   return (
     <Grid>
       <Form key={100} useStore={useStore} />
-      <section className={styles.allNotes}>
-        <Section dragable={true} notes={pinnedNotes} header="Pinned" />
-        <Section
-          pinnedNotes={false}
-          dragable={true}
-          notes={notes}
-          header={pinnedNotes.length !== 0 ? "Others" : undefined}
-        />
-        {isThereAnyNotes && (
-          <NoNotes SVG={BiNotepad} children={"No Existing Notes"} />
-        )}
-      </section>
+      {isThereAnyNotes ? (
+        <section className={styles.allNotes}>
+          <Section dragable={true} notes={pinnedNotes} header="Pinned" />
+          <Section
+            pinnedNotes={false}
+            dragable={true}
+            notes={notes}
+            header={pinnedNotes.length !== 0 ? "Others" : undefined}
+          />
+        </section>
+      ) : (
+        <NoNotes SVG={BiNotepad} children={"No Existing Notes"} />
+      )}
     </Grid>
   );
 };

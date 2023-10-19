@@ -1,12 +1,9 @@
 import { styled } from "../../../../../globalStyles";
+import { Grid } from "../../../Molecules";
 
-export const StyledDiv = styled("div", {
-  display: "grid",
-  alignItems: "center",
-  justifyItems: "center",
-  position: "absolute",
-  inset: "50% auto auto 50%",
-  transform: "translate(-50%, -50%)",
+export const StyledDiv = styled(Grid, {
+  marginInline: "auto",
+  marginTop: "100px",
   svg: {
     width: "7rem",
     height: "7rem",

@@ -1,71 +1,58 @@
+import { Button } from "../Atoms";
 import Input from "./inputText";
 import { FormProps } from "./interfaces";
-import { StyledForm } from "./styles";
-import styles from "./styles.module.scss";
+import { StyledActions, StyledForm } from "./styles";
 
 const Form = ({ useStore }: FormProps) => {
-  const disableBtn =
-    useStore.values.title.length == 0 && useStore.values.note.length == 0;
+  const { display, clickOutsideNote, title, note } = useStore.values;
+  const disableBtn = title.length == 0 && note.length == 0;
   return (
-    <StyledForm ref={useStore.values.clickOutsideNote}>
-      {useStore.values.display && (
-        <>
-          <Input
-            onChange={useStore.actions.onChangeTitle}
-            value={useStore.values.title}
-            placeholder={"Title"}
-          />
-        </>
+    <StyledForm ref={clickOutsideNote}>
+      {display && (
+        <Input
+          onChange={useStore.actions.onChangeTitle}
+          value={title}
+          placeholder={"Title"}
+        />
       )}
       <Input
         onChange={useStore.actions.onChangeNote!}
         placeholder={"Take a note..."}
-        value={useStore.values.note!}
+        value={note!}
         onClick={() => {
           useStore.actions.setDisplay(true);
         }}
       />
-      <div className={styles.actions}>
-        {useStore.values.display && (
-          <button
+      {display && (
+        <StyledActions autoFlow={"column"}>
+          <Button
+            variant={"reset"}
             disabled={disableBtn}
-            className={
-              disableBtn
-                ? styles.closeFormButtonDisabled
-                : styles.closeFormButton
-            }
             onClick={() => {
               useStore.actions.saveNote();
               useStore.actions.setDisplay(false);
             }}
           >
             Create Note
-          </button>
-        )}
-        {useStore.values.display && (
-          <button
+          </Button>
+          <Button
+            variant={"reset"}
             disabled={disableBtn}
-            className={
-              disableBtn
-                ? styles.closeFormButtonDisabled
-                : styles.closeFormButton
-            }
             onClick={useStore.actions.clearInputs}
           >
             Clear Inputs
-          </button>
-        )}
-        {useStore.values.display && (
-          <button
-            className={styles.closeFormButton}
+          </Button>
+
+          <Button
+            variant={"reset"}
             onClick={() => {
               useStore.actions.setDisplay(false);
             }}
           >
             Close
-          </button>
-        )}
-      </div>
+          </Button>
+        </StyledActions>
+      )}
     </StyledForm>
   );
 };

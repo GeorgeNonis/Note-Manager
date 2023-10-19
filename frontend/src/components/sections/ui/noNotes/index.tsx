@@ -4,7 +4,7 @@ import { NoNotesProps } from "./types";
 
 const NoNotes = ({ SVG, children }: NoNotesProps) => {
   return (
-    <StyledDiv>
+    <StyledDiv centerItems={true}>
       <SVG />
       <Text size={"m"} fontWeight={"700"} css={{ color: "gray" }}>
         {children}
