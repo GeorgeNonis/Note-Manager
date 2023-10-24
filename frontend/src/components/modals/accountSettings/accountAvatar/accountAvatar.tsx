@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
 import AvatarModal from "../../avataroptions/avatarOptions";
@@ -10,7 +9,6 @@ import {
   StyledImage,
   StyledSvg,
 } from "./accountAvatar.styles";
-// import styles from "./styles.module.scss";
 import { Grid } from "../../../Molecules";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
@@ -57,7 +55,7 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
           <StyledImage
             css={{ zIndex: `${values.twikZindex ? 12 : 1}` }}
             onClick={() => handlers.setChangeAvatar(true)}
-            avatar={
+            selectedAvatar={
               !values.default_avatar &&
               !values.changeAvatar &&
               !values.saveAvatar
