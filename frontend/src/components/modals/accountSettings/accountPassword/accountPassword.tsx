@@ -1,5 +1,4 @@
 import { useAccountPassword } from "./useAccountPassword";
-import styles from "./styles.module.scss";
 import { Grid, InputField } from "../../../Molecules";
 import { Button } from "../../../Atoms";
 
@@ -13,7 +12,7 @@ const AccountPassword = () => {
     loading,
   } = useAccountPassword();
   return (
-    <div className={styles.mainContent}>
+    <Grid>
       <Grid>
         <InputField {...currentPasswordProps} />
         <InputField {...newPasswordProps} />
@@ -26,7 +25,7 @@ const AccountPassword = () => {
           Update Password
         </Button>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 export default AccountPassword;

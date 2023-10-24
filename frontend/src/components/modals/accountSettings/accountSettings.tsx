@@ -5,7 +5,6 @@ import { openAccountSettings } from "../../../store/display-state-slice";
 import * as Components from "../../index";
 import { IRootState } from "../../../store/store";
 import { Modal } from "../../Molecules";
-import styles from "./styles.module.scss";
 import { StyledColumn1, StyledColumn2 } from "./accountSettings.styles";
 
 const AccountSettings = ({ open }: AccountSettingsProps) => {
@@ -39,8 +38,16 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
       onClose={() => dispatch(openAccountSettings())}
       open={open}
       title="Account Settings"
+      css={{
+        display: "grid",
+        gridTemplateRows: "1fr 11fr",
+      }}
     >
-      <div className={styles.content}>
+      <Components.Grid
+        autoFlow={"column"}
+        centerItems={true}
+        css={{ gridTemplateColumns: "2fr 8fr" }}
+      >
         <StyledColumn1>
           {navLinks.map((link) => (
             <Components.NavLinkCompo
@@ -52,7 +59,7 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
           ))}
         </StyledColumn1>
         <StyledColumn2>{options[option as keyof Key].el}</StyledColumn2>
-      </div>
+      </Components.Grid>
     </Modal>
   );
 };

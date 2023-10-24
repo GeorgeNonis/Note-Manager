@@ -11,6 +11,10 @@ export const StyledNavLink = styled(Text, {
   p: "$2",
   transition: "$default",
 
+  "@mobile": {
+    fontSize: "small",
+  },
+
   variants: {
     isActive: {
       true: {

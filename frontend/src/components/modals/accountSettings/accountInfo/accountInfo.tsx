@@ -1,6 +1,6 @@
 import Info from "./info";
 import { AccountInfoProps } from "./accountInfo.props";
-import styles from "./styles.module.scss";
+import { Grid } from "../../../Molecules";
 
 const AccountInfo = ({ initialState }: AccountInfoProps) => {
   const { email, date, lastTimeDitedNote } = initialState;
@@ -10,12 +10,12 @@ const AccountInfo = ({ initialState }: AccountInfoProps) => {
     { name: "Last time you edited a Note", value: lastTimeDitedNote },
   ];
   return (
-    <div className={styles.accountDetails}>
-      <div className={styles.mainContent}>
+    <div>
+      <Grid gap={"32"} css={{ padding: "$4" }}>
         {info.map((inf) => (
           <Info {...inf} />
         ))}
-      </div>
+      </Grid>
     </div>
   );
 };

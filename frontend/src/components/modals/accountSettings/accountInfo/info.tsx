@@ -1,11 +1,13 @@
+import { Input } from "../../../Atoms";
 import { InfoProps } from "./accountInfo.props";
+import { StyledFieldSet } from "./accountInfo.styles";
 
 const Info = ({ name, type = "date", value }: InfoProps) => {
   return (
-    <fieldset>
+    <StyledFieldSet>
       <legend>{name}</legend>
-      <input type={type} value={value} readOnly />
-    </fieldset>
+      <Input type={type} value={value} readOnly />
+    </StyledFieldSet>
   );
 };
 export default Info;
