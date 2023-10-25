@@ -3,9 +3,7 @@ import { styled } from "../../../../../globalStyles";
 import { Button } from "../../../Atoms";
 
 export const StyledCancelButton = styled(Button, {
-  position: "absolute !important",
-  inset: "90% auto auto 50%",
-  transform: "translate(-50%, -50%)",
+  placeSelf: "self-end",
 });
 
 export const StyledButton = styled(Button, {
@@ -44,7 +42,7 @@ export const StyledImage = styled("img", {
         transform: "translate(-50%, -50%)",
         inset: "50% auto auto 25%",
         "@mobile": {
-          inset: "75% auto auto 50%",
+          inset: "65% auto auto 50%",
         },
       },
     },
@@ -78,7 +76,7 @@ export const StyledSvg = styled(MdOutlineAddAPhoto, {
         transform: "translate(-50%, -50%)",
         inset: "50% auto auto 25%",
         "@mobile": {
-          inset: "75% auto auto 50%",
+          inset: "65% auto auto 50%",
         },
       },
     },

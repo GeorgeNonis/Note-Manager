@@ -127,6 +127,7 @@ export const StyledOption = styled("div", {
     },
   },
   h3: {
+    zIndex: 1,
     position: "absolute",
     visibility: "hidden",
     inset: "50% auto auto 50%",

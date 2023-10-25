@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountOptions } from "./useAccountOptions";
 import styles from "./styles.module.scss";
