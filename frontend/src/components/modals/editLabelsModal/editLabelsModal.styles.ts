@@ -15,4 +15,5 @@ export const StyledButton = styled(Button, {
 export const StyledLabelsDiv = styled(Grid, {
   marginBlock: "$2",
   gridTemplateColumns: "1fr 11fr",
+  gap: "$2",
 });

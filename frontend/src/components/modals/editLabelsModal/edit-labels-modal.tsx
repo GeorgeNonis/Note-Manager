@@ -7,7 +7,7 @@ import {
   StyledBackdrop,
   StyledModal,
 } from "../../Molecules/Modal/modal.styles";
-import { Text } from "../../Atoms";
+import { Input, Text } from "../../Atoms";
 import { Grid } from "../../Molecules";
 
 const EditLabelsModal = ({
@@ -28,12 +28,12 @@ const EditLabelsModal = ({
               className={!state.values.createLabel ? styles.xmark : styles.plus}
               onClick={(e) => state.actions.createLabelHandler(e)}
             />
-            <input
+            <Input
+              css={{ all: "unset" }}
               ref={state.values.newLabelRef}
               type="text"
               placeholder="Create new label"
               value={state.values.label}
-              className={styles.modalInput}
               onChange={(e) => state.actions.setLabel(e.target.value)}
               onClick={state.actions.onClickCreateLabelInputHandler}
               onKeyDown={(e) => {
