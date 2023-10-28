@@ -69,7 +69,7 @@ const Options = ({ note, pinned, archived = false }: OptionsProps) => {
           </Option>
 
           <Option text="More Tools" onClick={handlers.openDotOptions}>
-            {<BiDotsHorizontal />}
+            <BiDotsHorizontal />
           </Option>
         </StyledOptions>
         {addLabel}
