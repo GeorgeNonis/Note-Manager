@@ -4,8 +4,11 @@ import { Button } from "../../Atoms";
 import { StyledContent, StyledProfileImage } from "./accountOptions.styles";
 import { Grid } from "../../Molecules";
 
-const AccountOptions = ({ openAccountModal, image }: AccountOptionsProps) => {
-  const { handlers } = useAccountOptions({ openAccountModal });
+const AccountOptions = ({
+  accountSettingsHandler,
+  image,
+}: AccountOptionsProps) => {
+  const { handlers } = useAccountOptions({ accountSettingsHandler });
 
   return (
     <>

@@ -1,10 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
-
 export interface AccountOptionsProps {
-  openAccountModal: Dispatch<SetStateAction<boolean>>;
+  accountSettingsHandler: () => void;
   image: string;
 }
 
 export interface UseAccountOptionsProps {
-  openAccountModal: Dispatch<SetStateAction<boolean>>;
+  accountSettingsHandler: () => void;
 }

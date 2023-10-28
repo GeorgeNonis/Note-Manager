@@ -4,7 +4,7 @@ import { useLogoutHandler } from "../../../hooks/useLogoutHandler";
 import { UseAccountOptionsProps } from "./interfaces";
 
 export const useAccountOptions = ({
-  openAccountModal,
+  accountSettingsHandler: accSettingHandler,
 }: UseAccountOptionsProps) => {
   const { logoutHandler } = useLogoutHandler();
 
@@ -12,7 +12,7 @@ export const useAccountOptions = ({
 
   const accountSettingsHandler = () => {
     dispatch(openAccountSettings());
-    openAccountModal(false);
+    accSettingHandler();
   };
 
   const state = {
