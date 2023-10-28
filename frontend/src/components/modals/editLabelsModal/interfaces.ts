@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { Labels } from "../../../services/interfaces";
-export interface Props {
-  transState: string;
-  closeModal: Dispatch<SetStateAction<boolean>>;
+export interface LabelModalProps {
+  modalState: boolean;
+  labelModalHandler: () => void;
 }
 
 export interface LabelProps {

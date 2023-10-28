@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import { Transition } from "react-transition-group";
 import { Outlet, NavLink } from "react-router-dom";
 import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
 import { MdOutlineArchive } from "react-icons/md";
@@ -95,7 +94,7 @@ const RootLayout = () => {
                   : styles.inactive
               }
               tabIndex={1}
-              onClick={() => state.actions.setEditLabelsModal(true)}
+              onClick={state.actions.labelModalHandler}
             >
               <MdOutlineModeEditOutline />
               <h3>Edit Labels</h3>
@@ -121,23 +120,12 @@ const RootLayout = () => {
               <h3>Trash</h3>
             </NavLink>
           </div>
-          <Transition
-            in={state.values.editLabelsModal}
-            timeout={500}
-            mountOnEnter
-            unmountOnExit
-          >
-            {(transState) =>
-              ReactDOM.createPortal(
-                <Comp.EditLabelsModal
-                  transState={transState}
-                  closeModal={state.actions.setEditLabelsModal}
-                />,
-                document.getElementById("editLabelsModal")!
-              )
-            }
-          </Transition>
-
+          {state.values.editLabelsModal && (
+            <Comp.EditLabelsModal
+              modalState={state.values.editLabelsModal}
+              labelModalHandler={state.actions.labelModalHandler}
+            />
+          )}
           {!loadingInitialState && <Outlet />}
         </main>
       )}

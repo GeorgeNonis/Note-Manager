@@ -26,7 +26,7 @@ const Label = ({ label }: LabelProps) => {
         <div
           className={styles.label}
           onClick={() => state.actions.setDeleteConfig(true)}
-        ></div>
+        />
         <input
           onClick={() => state.actions.setEdit(true)}
           onChange={(e) => {

@@ -2,14 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../../../store/store";
 import { addLabel } from "../../../../store/notes-slice";
-import { Dispatch, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addLabelHttp } from "../../../../services";
 import { isThereError } from "../../../../utils/utils";
 import { fetchingDataHandler } from "../../../../store/display-state-slice";
 
-export const useEditLabelsModal = (
-  cb: Dispatch<React.SetStateAction<boolean>>
-) => {
+export const useEditLabelsModal = () => {
   const token = sessionStorage.getItem("auth-token")!;
   const labels = useSelector((state: IRootState) => {
     return state.notes.labels;
@@ -23,25 +21,33 @@ export const useEditLabelsModal = (
     setCreateLabel(false);
   };
 
+  const loadingHandler = () => {
+    dispatch(fetchingDataHandler());
+  };
+
+  const isNotValid =
+    label.length === 0 || labels.some((l) => l.label === label);
+
   const createLabelHandler = async (
     e:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
-    dispatch(fetchingDataHandler());
-    if (e.currentTarget.id === "x&plus") {
-      setCreateLabel(!createLabel);
-      return createLabel && newLabelRef.current?.focus();
-    }
-    setCreateLabel(!createLabel);
-    if (label.length === 0 || labels.some((l) => l.label === label)) return;
-    const sharedId = uuidv4();
-    const response = await addLabelHttp({ label, labelId: sharedId, token });
-    const sucessfullRequest = isThereError(response);
-    sucessfullRequest && dispatch(addLabel({ label, labelId: sharedId }));
+    loadingHandler();
 
-    setLabel("");
-    dispatch(fetchingDataHandler());
+    if (e.currentTarget.id === "x&plus" && !isNotValid) {
+      setCreateLabel(!createLabel);
+      createLabel && newLabelRef.current?.focus();
+    } else if (!isNotValid) {
+      setCreateLabel(!createLabel);
+      const sharedId = uuidv4();
+      const response = await addLabelHttp({ label, labelId: sharedId, token });
+      const successfulRequest = isThereError(response);
+      successfulRequest && dispatch(addLabel({ label, labelId: sharedId }));
+
+      setLabel("");
+    }
+    loadingHandler();
   };
 
   const state = {

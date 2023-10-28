@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import { useOutsideHover } from "../../hooks/useOutsideHover";
 import { useDispatch, useSelector } from "react-redux";
 import { IfNetworkDown, isThereError, onDropBin } from "../../utils";
-import { deleteNote, initial, logout } from "../../store/notes-slice";
+import { deleteNote, initial } from "../../store/notes-slice";
 import { IRootState } from "../../store/store";
 import { getNotesHttp } from "../../services";
 import {
   errorState,
-  fetchingDataHandler,
   loadingInitialState,
-  refreshState,
 } from "../../store/display-state-slice";
 import { ErrorMessages } from "../../errors/error-messages";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
 
@@ -69,12 +67,16 @@ export const useRootLayout = () => {
     );
   };
 
+  const labelModalHandler = () => {
+    setEditLabelsModal(!editLabelsModal);
+  };
+
   const networkError = displayState.error === networkdown;
   const state = {
     labels,
     values: { mouseOverTrash, editLabelsModal, displayState, networkError },
     actions: {
-      setEditLabelsModal,
+      labelModalHandler,
       setMouseOverTrash,
       onDropHandler,
     },
