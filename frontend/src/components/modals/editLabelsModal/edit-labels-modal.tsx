@@ -1,14 +1,20 @@
 import { LabelModalProps } from "./interfaces";
 import { useEditLabelsModal } from "./hooks";
 import Label from "./label";
-import styles from "./style.module.scss";
-import { StyledButton, StyledLabelsDiv } from "./editLabelsModal.styles";
+import {
+  StyledButton,
+  StyledLabelsDiv,
+  StyledPlus,
+  StyledTick,
+  StyledXMark,
+} from "./editLabelsModal.styles";
 import {
   StyledBackdrop,
   StyledModal,
 } from "../../Molecules/Modal/modal.styles";
 import { Input, Text } from "../../Atoms";
 import { Grid } from "../../Molecules";
+import Svg from "./components/svg";
 
 const EditLabelsModal = ({
   labelModalHandler,
@@ -23,10 +29,12 @@ const EditLabelsModal = ({
         <Grid css={{ padding: "$2" }}>
           <Text>Edit labels</Text>
           <StyledLabelsDiv autoFlow={"column"}>
-            <div
+            <Svg
+              First={StyledXMark}
+              Second={StyledPlus}
+              cond={!state.values.createLabel}
+              onClick={state.actions.createLabelHandler}
               id="x&plus"
-              className={!state.values.createLabel ? styles.xmark : styles.plus}
-              onClick={(e) => state.actions.createLabelHandler(e)}
             />
             <Input
               css={{ all: "unset" }}
@@ -41,9 +49,10 @@ const EditLabelsModal = ({
                 state.actions.createLabelHandler(e);
               }}
             />
-            <div
-              className={!state.values.createLabel ? styles.tick : undefined}
-              onClick={(e) => state.actions.createLabelHandler(e)}
+            <Svg
+              cond={!state.values.createLabel}
+              First={StyledTick}
+              onClick={state.actions.createLabelHandler}
             />
           </StyledLabelsDiv>
           {state.values.labels.map((l) => {

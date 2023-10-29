@@ -1,8 +1,15 @@
 import ReactDOM from "react-dom";
-import { DeleteLabelConfigModal } from "../../index";
+import { DeleteLabelConfigModal, Input } from "../../index";
 import { LabelProps } from "./interfaces";
 import { useLabel } from "./hooks";
-import styles from "./style.module.scss";
+import Svg from "./components/svg";
+import {
+  StyledLabel,
+  StyledLabelsDiv,
+  StyledPencil,
+  StyledTick,
+  StyledTrashBin,
+} from "./editLabelsModal.styles";
 
 const Label = ({ label }: LabelProps) => {
   const { state } = useLabel(label);
@@ -15,39 +22,43 @@ const Label = ({ label }: LabelProps) => {
           document.getElementById("editLabelsModal")!
         )}
 
-      <div
+      <StyledLabelsDiv
+        autoFlow={"column"}
         ref={state.values.hoverOutsideLabel}
-        className={styles.modalDiv}
         key={label}
         onMouseEnter={() =>
           state.actions.setMouseOverLabel(!state.values.mouseOverLabel)
         }
       >
-        <div
-          className={styles.label}
+        <Svg
+          cond={!state.values.mouseOverLabel}
+          First={StyledLabel}
+          Second={StyledTrashBin}
           onClick={() => state.actions.setDeleteConfig(true)}
         />
-        <input
+        <Input
+          css={{ all: "unset" }}
           onClick={() => state.actions.setEdit(true)}
           onChange={(e) => {
             state.actions.setNewLabel(e.target.value);
           }}
           onKeyDown={(e) => {
             if (e.key !== "Enter") return;
-            state.actions.OnEditHandler();
+            state.actions.onEditHandler();
           }}
           ref={state.values.inputRef}
-          className={styles.modalEditInput}
           type="text"
           name={label}
           id={label}
           defaultValue={label}
         />
-        <div
-          className={!state.values.edit ? styles.pencil : styles.tick}
-          onClick={state.actions.OnEditHandler}
-        ></div>
-      </div>
+        <Svg
+          cond={state.values.edit}
+          First={StyledPencil}
+          Second={StyledTick}
+          onClick={state.actions.onEditHandler}
+        />
+      </StyledLabelsDiv>
     </>
   );
 };

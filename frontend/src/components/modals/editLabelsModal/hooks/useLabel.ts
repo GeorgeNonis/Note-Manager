@@ -4,10 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useOutsideHover } from "../../../../hooks";
 import { deleteLabelHttp } from "../../../../services";
 import { editLabelHttp } from "../../../../services/";
-import {
-  errorState,
-  fetchingDataHandler,
-} from "../../../../store/display-state-slice";
+import { fetchingDataHandler } from "../../../../store/display-state-slice";
 import { deleteLabel, editLabel } from "../../../../store/notes-slice";
 import { isThereError } from "../../../../utils";
 
@@ -30,16 +27,13 @@ export const useLabel = (label: string) => {
     if (sucessfullRequest) {
       params.labelId?.split(":")[1] && navigate("/notes");
       dispatch(deleteLabel(label));
-    } else {
     }
     dispatch(fetchingDataHandler());
   };
 
-  const OnEditHandler = async () => {
-    if (!edit) {
+  const onEditHandler = async () => {
+    if (label === newLabel || newLabel.length === 0 || !edit)
       return setEdit(!edit);
-    }
-    if (label === newLabel || newLabel.length === 0) return;
 
     dispatch(fetchingDataHandler());
     const response = await editLabelHttp(label, newLabel, token);
@@ -48,7 +42,6 @@ export const useLabel = (label: string) => {
 
     if (sucessfullRequest) {
       dispatch(editLabel({ label, newLabel }));
-    } else {
     }
     dispatch(fetchingDataHandler());
   };
@@ -68,7 +61,7 @@ export const useLabel = (label: string) => {
       setDeleteConfig,
       setNewLabel,
       deleteLabelHandler,
-      OnEditHandler,
+      onEditHandler,
     },
   };
 

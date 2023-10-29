@@ -34,12 +34,9 @@ export const useEditLabelsModal = () => {
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
     loadingHandler();
-
-    if (e.currentTarget.id === "x&plus" && !isNotValid) {
-      setCreateLabel(!createLabel);
+    if (e.currentTarget.id === "x&plus") {
       createLabel && newLabelRef.current?.focus();
     } else if (!isNotValid) {
-      setCreateLabel(!createLabel);
       const sharedId = uuidv4();
       const response = await addLabelHttp({ label, labelId: sharedId, token });
       const successfulRequest = isThereError(response);
@@ -47,6 +44,7 @@ export const useEditLabelsModal = () => {
 
       setLabel("");
     }
+    setCreateLabel(!createLabel);
     loadingHandler();
   };
 
