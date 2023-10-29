@@ -12,6 +12,7 @@ import {
 import { useLocation } from "react-router-dom";
 import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
+import { FaTrash, FaTrashRestore } from "react-icons/fa";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
@@ -53,7 +54,6 @@ export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
-  const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
   const token = sessionStorage.getItem("auth-token")!;
   const onDropHandler = async (e: React.DragEvent) => {
     await onDropBin(
@@ -69,9 +69,21 @@ export const useRootLayout = () => {
     setEditLabelsModal(!editLabelsModal);
   };
 
+  const trashVals = {
+    cond: !mouseOverTrash,
+    First: FaTrash,
+    Second: FaTrashRestore,
+    id: "trashbin",
+    onMouseEnter: () => setMouseOverTrash(true),
+    onMouseLeave: () => setMouseOverTrash(false),
+    onDragEnter: () => setMouseOverTrash(true),
+    onDrop: onDropHandler,
+    onDragOver: (e: React.DragEvent) => e.preventDefault(),
+  };
+
   const state = {
     labels,
-    values: { mouseOverTrash, editLabelsModal, displayState },
+    values: { mouseOverTrash, editLabelsModal, displayState, trashVals },
     actions: {
       labelModalHandler,
       setMouseOverTrash,
@@ -119,7 +131,6 @@ export const useRootLayout = () => {
   }, []);
 
   return {
-    hoverOutsideTrash,
     state,
   };
 };

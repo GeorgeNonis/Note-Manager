@@ -25,7 +25,7 @@ const ExistingNoteWrapper = ({
       css={getBackgroundStyle()}
       review={review}
       onClick={!review ? onClick : undefined}
-      draggable={dragable}
+      // draggable={dragable}
       onDragStart={(e) => onDragStart(e, position, pinned, note.id)}
       onDragEnter={(e) => onDragEnter(e, position)}
       onDrop={(e) => onDragEnd(e)}
