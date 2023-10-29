@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { URL_REGEX, cached_avatar_pictures } from "../../../config";
 import { AvatarModalProps } from "./interfaces";
-import { Modal } from "../../Molecules";
+import { Grid, Modal } from "../../Molecules";
 import {
   StyledComputer,
   StyledImagesContainer,
@@ -18,7 +18,7 @@ const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
       innerModal={true}
       title="Avatar Options"
     >
-      <div>
+      <Grid>
         <StyledComputer>
           <Button css={{ bgc: "unset" }}>
             <StyledSvg fill="black" stroke="gray" color="gray" />
@@ -67,7 +67,7 @@ const AvatarModal = ({ closeModal, avatarHandler, open }: AvatarModalProps) => {
             })}
           </Suspense>
         </StyledImagesContainer>
-      </div>
+      </Grid>
     </Modal>
   );
 };

@@ -1,12 +1,7 @@
 import { InitialState } from "../../store/interfaces";
+import { StyledInputProps } from "../Atoms/Input/input.props";
 
-export interface InputTextProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  placeholder: string;
-  onClick?: () => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-}
+export type InputProps = StyledInputProps;
 
 export interface FormProps {
   useStore: {

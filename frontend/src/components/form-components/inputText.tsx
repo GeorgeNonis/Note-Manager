@@ -1,13 +1,15 @@
-import { InputTextProps } from "./interfaces";
+import { InputProps } from "../Atoms/Input/input.props";
+import { StyledInput } from "./styles";
 
-const Input = (props: InputTextProps) => {
+const Input = ({ ...props }: InputProps) => {
   return (
-    <input
-      {...props}
+    <StyledInput
+      backgroundUnset={true}
       contentEditable="true"
       spellCheck="true"
       aria-multiline="true"
       role={"textbox"}
+      {...props}
     />
   );
 };

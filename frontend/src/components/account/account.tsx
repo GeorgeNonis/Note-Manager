@@ -1,31 +1,28 @@
 import { useAccount } from "./useAccount";
 import AccountOptions from "./accountOptions/accountOptions";
-import styles from "./styles.module.scss";
 import { useSelector } from "react-redux";
 import { IRootState } from "../../store/store";
+import { StyledContent, StyledImage } from "./account.styles";
 
 const Account = () => {
   const { handlers, values } = useAccount();
   const { image } = useSelector((state: IRootState) => state.notes);
 
   return (
-    <div className={styles.mainContent} ref={values.OnclickOutside}>
-      <img
+    <StyledContent ref={values.OnclickOutside}>
+      <StyledImage
         loading="lazy"
-        className={styles.userImage}
-        onClick={() => {
-          handlers.setAccountSettings(!values.accountSettings);
-        }}
+        onClick={handlers.accountSettingsHandler}
         src={image}
         alt="user_picture"
       />
       {values.accountSettings && (
         <AccountOptions
-          openAccountModal={handlers.setAccountSettings}
+          accountSettingsHandler={handlers.accountSettingsHandler}
           image={image}
         />
       )}
-    </div>
+    </StyledContent>
   );
 };
 export default Account;

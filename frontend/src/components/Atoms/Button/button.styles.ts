@@ -11,7 +11,6 @@ export const StyledButton = styled("button", {
   border: "none",
   cursor: "pointer",
   fontFamily: "CormorantGaramond",
-  transition: "all 250ms ease-in-out",
 
   "&:disabled": {
     cursor: "default",

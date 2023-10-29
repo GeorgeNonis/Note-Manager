@@ -1,12 +1,15 @@
 import ReactDOM from "react-dom";
-import { MdOutlineAddAPhoto } from "react-icons/md";
 import { useAccountAvatar } from "./useAccountAvatar";
 import { DEFAULT_AVTR } from "../../../../config";
 import AvatarModal from "../../avataroptions/avatarOptions";
 import { AccountAvatarProps } from "./accountAvatar.props";
-import { Button } from "../../../Atoms";
-import { StyledCancelButton } from "./accountAvatar.styles";
-import styles from "./styles.module.scss";
+import {
+  StyledButton,
+  StyledCancelButton,
+  StyledImage,
+  StyledSvg,
+} from "./accountAvatar.styles";
+import { Grid } from "../../../Molecules";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -23,45 +26,39 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
         document.getElementById("avataroptions")!
       )}
 
-      <div className={styles.mainContent}>
-        <div className={styles.avatars}>
-          <img
-            style={{ background: `${values.changeAvatar ? "gray" : "none"}` }}
+      <Grid>
+        <Grid css={{ position: "relative" }}>
+          <StyledImage
+            background={values.changeAvatar}
             onMouseEnter={() => handlers.setHoverOnAvatar(true)}
             onMouseLeave={() => handlers.setHoverOnAvatar(false)}
             onClick={handlers.setChangeAvatarHandler}
-            className={
+            avatar={
               !values.default_avatar &&
               !values.changeAvatar &&
               !values.saveAvatar
-                ? `${styles.avatar} ${styles.test}`
-                : styles.avatar
             }
             src={image}
             alt="user_picture"
           />
           {values.hoverOnAvatar && (
-            <MdOutlineAddAPhoto
+            <StyledSvg
               onClick={() => handlers.setChangeAvatar((prev) => !prev)}
               onMouseEnter={() => handlers.setHoverOnAvatar(true)}
-              className={
+              avatar={
                 !values.default_avatar &&
                 !values.changeAvatar &&
                 !values.saveAvatar
-                  ? `${styles.svg} ${styles.test}`
-                  : styles.svg
               }
             />
           )}
-          <img
-            style={{ zIndex: `${values.twikZindex ? 12 : 1}` }}
+          <StyledImage
+            css={{ zIndex: `${values.twikZindex ? 12 : 1}` }}
             onClick={() => handlers.setChangeAvatar(true)}
-            className={
+            selectedAvatar={
               !values.default_avatar &&
               !values.changeAvatar &&
               !values.saveAvatar
-                ? `${styles.selectedAvatar} ${styles.test1}`
-                : styles.selectedAvatar
             }
             src={values.selectedAvatar as string}
             alt={DEFAULT_AVTR}
@@ -75,19 +72,23 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
                 Cancel
               </StyledCancelButton>
             )}
-        </div>
-        <div className={styles.actions}>
-          <Button onClick={() => handlers.setChangeAvatar(true)}>
+        </Grid>
+        <Grid
+          centerItems={true}
+          autoFlow={"column"}
+          css={{ gridAutoColumns: "1fr" }}
+        >
+          <StyledButton onClick={() => handlers.setChangeAvatar(true)}>
             Change Avatar
-          </Button>
-          <Button
+          </StyledButton>
+          <StyledButton
             disabled={values.default_avatar || values.saveAvatar}
             onClick={handlers.saveAvatarHandler}
           >
             Save
-          </Button>
-        </div>
-      </div>
+          </StyledButton>
+        </Grid>
+      </Grid>
     </>
   );
 };

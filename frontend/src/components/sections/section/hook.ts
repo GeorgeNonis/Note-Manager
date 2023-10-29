@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useDnd } from "../../../hooks/useDnD";
-import { sortNotes } from "../../../store/notes-slice";
 import { IRootState } from "../../../store/store";
+import { useDnd } from "../../../hooks";
 import { NoteObj } from "../../../interfaces/interfaces";
-import { DragEndUtil } from "../../../utils/utils";
-import { errorState } from "../../../store/display-state-slice";
+import { sortNotes } from "../../../store/notes-slice";
+import { DragEndUtil } from "../../../utils";
 
-export const usePinnedNotesSection = () => {
+export const useSection = () => {
   const token = sessionStorage.getItem("auth-token")!;
   const state = useSelector((state: IRootState) => state.notes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();

@@ -1,38 +1,47 @@
-import { Props } from "./interfaces";
+import { LabelModalProps } from "./interfaces";
 import { useEditLabelsModal } from "./hooks";
 import Label from "./label";
-import styles from "./style.module.scss";
+import {
+  StyledButton,
+  StyledLabelsDiv,
+  StyledPlus,
+  StyledTick,
+  StyledXMark,
+} from "./editLabelsModal.styles";
+import {
+  StyledBackdrop,
+  StyledModal,
+} from "../../Molecules/Modal/modal.styles";
+import { Input, Text } from "../../Atoms";
+import { Grid } from "../../Molecules";
+import Svg from "./components/svg";
 
-const EditLabelsModal = ({ closeModal, transState }: Props) => {
-  const { state } = useEditLabelsModal(closeModal);
-
-  const cssClasses = [
-    styles.modalContent,
-    transState === "entering"
-      ? styles.openModal
-      : transState === "exiting"
-      ? styles.closeModal
-      : null,
-  ];
+const EditLabelsModal = ({
+  labelModalHandler,
+  modalState,
+}: LabelModalProps) => {
+  const { state } = useEditLabelsModal();
 
   return (
     <>
-      <div className={styles.backdrop} onClick={() => closeModal(false)}></div>
-      <div className={cssClasses.join(" ")}>
-        <div className={styles.modalEditing}>
-          <h3 className={styles.modalTitle}>Edit labels</h3>
-          <div className={styles.modalDiv}>
-            <div
+      <StyledBackdrop onClick={labelModalHandler} isOpen={modalState} />
+      <StyledModal css={{ zIndex: 600 }}>
+        <Grid css={{ padding: "$2" }}>
+          <Text>Edit labels</Text>
+          <StyledLabelsDiv autoFlow={"column"}>
+            <Svg
+              First={StyledXMark}
+              Second={StyledPlus}
+              cond={!state.values.createLabel}
+              onClick={state.actions.createLabelHandler}
               id="x&plus"
-              className={!state.values.createLabel ? styles.xmark : styles.plus}
-              onClick={(e) => state.actions.createLabelHandler(e)}
-            ></div>
-            <input
+            />
+            <Input
+              css={{ all: "unset" }}
               ref={state.values.newLabelRef}
               type="text"
               placeholder="Create new label"
               value={state.values.label}
-              className={styles.modalInput}
               onChange={(e) => state.actions.setLabel(e.target.value)}
               onClick={state.actions.onClickCreateLabelInputHandler}
               onKeyDown={(e) => {
@@ -40,24 +49,20 @@ const EditLabelsModal = ({ closeModal, transState }: Props) => {
                 state.actions.createLabelHandler(e);
               }}
             />
-            <div
-              className={!state.values.createLabel ? styles.tick : undefined}
-              onClick={(e) => state.actions.createLabelHandler(e)}
-            ></div>
-          </div>
+            <Svg
+              cond={!state.values.createLabel}
+              First={StyledTick}
+              onClick={state.actions.createLabelHandler}
+            />
+          </StyledLabelsDiv>
           {state.values.labels.map((l) => {
             return <Label label={l.label} key={l.label} state={state} />;
           })}
-        </div>
-        <div className={styles.modalLabelButtonDiv}>
-          <button
-            className={styles.modalButton}
-            onClick={() => closeModal(false)}
-          >
-            Done
-          </button>
-        </div>
-      </div>
+        </Grid>
+        <StyledButton variant={"reset"} onClick={labelModalHandler}>
+          Done
+        </StyledButton>
+      </StyledModal>
     </>
   );
 };

@@ -1,10 +1,7 @@
+import { ErrorFetchingProps } from "./interfaces";
 import styles from "./styles.module.scss";
 
-interface Props {
-  errorMessage: string;
-}
-
-const ErrorFetching = ({ errorMessage }: Props) => {
+const ErrorFetching = ({ errorMessage }: ErrorFetchingProps) => {
   return <p className={styles.error}>{errorMessage}</p>;
 };
 export default ErrorFetching;

@@ -1,46 +1,33 @@
-import {
-  LoadingSpinner,
-  Form,
-  PinnedNotesSection,
-  OthersTitle,
-} from "../../index";
+import { LoadingSpinner, Form, Grid } from "../../index";
 import { useExistingNotesSection } from "./useExistingNotesSection";
-import NotesSection from "./notes-section/notes-section";
-import styles from "./styles.module.scss";
-import NoNotesMsg from "../ui/noNotesMsg";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../../store/store";
+import Section from "../section/section";
+import NoNotes from "../ui/noNotes";
+import { BiNotepad } from "react-icons/bi";
 
 const ExistinNotesSection = () => {
   const { useStore } = useExistingNotesSection();
-  const {
-    notes: { notes: existingnotes },
-  } = useSelector((state: IRootState) => state);
-  if (useStore.values.loading)
-    return <LoadingSpinner open={useStore.values.loading} />;
+  const { pinnedNotes, notes } = useStore.values.state;
 
-  const pinnedNotes = useStore.values.state.pinnedNotes.length !== 0 && (
-    <PinnedNotesSection notes={[...useStore.values.state.pinnedNotes!]} />
-  );
-  const notes = useStore.values.state.notes.length !== 0 && (
-    <NotesSection notes={[...existingnotes]} />
-  );
+  const isThereAnyNotes = pinnedNotes.length === 0 && notes.length === 0;
+  if (useStore.values.loading) return <LoadingSpinner />;
 
   return (
-    <div>
-      <main
-        className={styles.mainSection}
-        ref={useStore.values.clickOutsideNote}
-      >
-        <Form key={100} useStore={useStore} />
-      </main>
-      <section className={styles.allNotes}>
-        {pinnedNotes}
-        <OthersTitle state={useStore.values.state!} />
-        <NoNotesMsg state={useStore.values.state} />
-        {notes}
-      </section>
-    </div>
+    <Grid>
+      <Form key={100} useStore={useStore} />
+      {!isThereAnyNotes ? (
+        <Grid gap={"16"} css={{ margin: "0 16px" }}>
+          <Section dragable={true} notes={pinnedNotes} header="Pinned" />
+          <Section
+            pinnedNotes={false}
+            dragable={true}
+            notes={notes}
+            header={pinnedNotes.length !== 0 ? "Others" : undefined}
+          />
+        </Grid>
+      ) : (
+        <NoNotes SVG={BiNotepad} children={"No Existing Notes"} />
+      )}
+    </Grid>
   );
 };
 

@@ -22,85 +22,77 @@ const Options = ({ note, pinned, archived = false }: OptionsProps) => {
     pinned,
   });
 
-  return (
-    <StyledOptionsContent
-      onClick={(e) => e.stopPropagation()}
-      ref={outsideOptions}
-    >
-      <StyledOptions autoFlow={"column"} centerItems={"true"}>
-        <Option
-          text="Background Options"
-          onClick={() => state.setDisplayPalette(!state.displayPalette)}
-        >
-          <IoMdColorPalette />
-        </Option>
-        <Option
-          text={!archived ? "Archive Note" : "Unarchive Note"}
-          onClick={() => state.archiveNoteHandler()}
-        >
-          {archived ? <BiArchiveOut /> : <BiArchiveIn />}
-        </Option>
+  const dotteOptions = state.display && (
+    <StyledDotedOptions>
+      <h3 onClick={handlers.deleteHandler} role={"button"}>
+        Delete
+      </h3>
+      {!archived && (
+        <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
+      )}
+      <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>Make a Copy</h3>
+      <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
+        {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
+      </h3>
+    </StyledDotedOptions>
+  );
 
-        <Option text="More Tools" onClick={handlers.openDotOptions}>
-          {<BiDotsHorizontal />}
-        </Option>
-      </StyledOptions>
-      {state.displayAddLabel && (
-        <AddLabel id={id} pinned={pinned} archived={archived} />
-      )}
-      {state.display && (
-        <StyledDotedOptions>
-          <h3 onClick={handlers.deleteHandler} role={"button"}>
-            Delete
-          </h3>
-          {!archived && (
-            <h3 onClick={() => handlers.addLabelHandler()}>Add Label</h3>
-          )}
-          <h3 onClick={() => handlers.copyNoteHandler(id, pinned)}>
-            Make a Copy
-          </h3>
-          <h3 onClick={(e) => handlers.checkBoxesHandler(e)}>
-            {!checkbox ? "Create checkboxes" : "Discard checkboxes"}
-          </h3>
-        </StyledDotedOptions>
-      )}
-      <Transition
-        in={state.displayPalette}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
+  const addLabel = state.displayAddLabel && (
+    <AddLabel id={id} pinned={pinned} archived={archived} />
+  );
+
+  return (
+    <>
+      <BackgroundImage
+        open={state.displayPalette}
+        archived={archived}
+        setDisplayPalette={state.setDisplayPalette}
+        id={id}
+        pinned={pinned}
+      />
+      <StyledOptionsContent
+        onClick={(e) => e.stopPropagation()}
+        ref={outsideOptions}
       >
-        {(transState) =>
-          ReactDOM.createPortal(
-            <BackgroundImage
-              transitionState={transState}
-              archived={archived}
-              setDisplayPalette={state.setDisplayPalette}
-              id={id}
-              pinned={pinned}
-            />,
-            document.getElementById("backgroundimage")!
-          )
-        }
-      </Transition>
-      <Transition
-        in={state.discardBoxes}
-        timeout={500}
-        mountOnEnter
-        unmountOnExit
-      >
-        {(transState) =>
-          ReactDOM.createPortal(
-            <DiscardBoxes
-              transitionState={transState}
-              closeModal={handlers.closeModal}
-              checkboxhandler={handlers.checkBoxesHandler}
-            />,
-            document.getElementById("discardBoxes")!
-          )
-        }
-      </Transition>
-    </StyledOptionsContent>
+        <StyledOptions autoFlow={"column"} centerItems={"true"}>
+          <Option
+            text="Background Options"
+            onClick={() => state.setDisplayPalette(!state.displayPalette)}
+          >
+            <IoMdColorPalette />
+          </Option>
+          <Option
+            text={!archived ? "Archive Note" : "Unarchive Note"}
+            onClick={() => state.archiveNoteHandler()}
+          >
+            {archived ? <BiArchiveOut /> : <BiArchiveIn />}
+          </Option>
+
+          <Option text="More Tools" onClick={handlers.openDotOptions}>
+            <BiDotsHorizontal />
+          </Option>
+        </StyledOptions>
+        {addLabel}
+        {dotteOptions}
+        <Transition
+          in={state.discardBoxes}
+          timeout={500}
+          mountOnEnter
+          unmountOnExit
+        >
+          {(transState) =>
+            ReactDOM.createPortal(
+              <DiscardBoxes
+                transitionState={transState}
+                closeModal={handlers.closeModal}
+                checkboxhandler={handlers.checkBoxesHandler}
+              />,
+              document.getElementById("discardBoxes")!
+            )
+          }
+        </Transition>
+      </StyledOptionsContent>
+    </>
   );
 };
 

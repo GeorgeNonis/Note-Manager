@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateNoteColorHttp } from "../../../../../services";
-import {
-  errorState,
-  fetchingDataHandler,
-} from "../../../../../store/display-state-slice";
 import { setColor } from "../../../../../store/notes-slice";
 import { isThereError } from "../../../../../utils/utils";
 import { useBackgroundimageProps } from "./interfaces";
@@ -18,6 +14,7 @@ export const useBackgroundimage = ({
 }: useBackgroundimageProps) => {
   const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   useEffect(() => {
@@ -30,7 +27,8 @@ export const useBackgroundimage = ({
   }, []);
 
   const displayHandler = async (value: string) => {
-    dispatch(fetchingDataHandler());
+    setLoading(true);
+
     const response = await updateNoteColorHttp(
       value,
       id,
@@ -42,8 +40,8 @@ export const useBackgroundimage = ({
     sucessfullRequest && dispatch(setColor({ value, id, pinned, archived }));
 
     setDisplayPalette(false);
-    dispatch(fetchingDataHandler());
+    setLoading(false);
   };
 
-  return { displayHandler, images };
+  return { displayHandler, images, loading };
 };

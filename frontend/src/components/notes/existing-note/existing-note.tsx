@@ -18,7 +18,9 @@ const Note = ({
 
   return (
     <>
-      <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
+      {values.review && (
+        <StyledBackdrop isOpen={values.review} onClick={actions.handleExpand} />
+      )}
       <NoteWrapper
         dragable={dragable}
         position={position}
