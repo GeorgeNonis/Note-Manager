@@ -11,13 +11,8 @@ import { ToastContainer } from "react-toastify";
 
 const RootLayout = () => {
   const { hoverOutsideTrash, state } = useRootLayout();
-  const {
-    error,
-    loadingInitialState,
-    displaySideBar,
-    accountSettings,
-    fetchingData,
-  } = state.values.displayState;
+  const { loadingInitialState, displaySideBar, accountSettings, fetchingData } =
+    state.values.displayState;
   return (
     <>
       {(fetchingData || loadingInitialState) && <Comp.LoadingSpinner />}
@@ -35,7 +30,6 @@ const RootLayout = () => {
           }
         >
           <Comp.MenuThreeLines />
-          {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
           <div
             ref={hoverOutsideTrash}
             id="trashbin"
