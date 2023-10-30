@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { Outlet, NavLink } from "react-router-dom";
-import { FaTrash, FaTrashRestore, FaRegLightbulb } from "react-icons/fa";
+import { FaRegLightbulb } from "react-icons/fa";
 import { MdOutlineArchive } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
@@ -8,16 +8,12 @@ import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
 import { ToastContainer } from "react-toastify";
+import { StyledTrash } from "./rootLayout.styles";
 
 const RootLayout = () => {
-  const { hoverOutsideTrash, state } = useRootLayout();
-  const {
-    error,
-    loadingInitialState,
-    displaySideBar,
-    accountSettings,
-    fetchingData,
-  } = state.values.displayState;
+  const { state } = useRootLayout();
+  const { loadingInitialState, displaySideBar, accountSettings, fetchingData } =
+    state.values.displayState;
   return (
     <>
       {(fetchingData || loadingInitialState) && <Comp.LoadingSpinner />}
@@ -35,22 +31,8 @@ const RootLayout = () => {
           }
         >
           <Comp.MenuThreeLines />
-          {error.length > 0 && <Comp.ErrorWithFeature message={error} />}
-          <div
-            ref={hoverOutsideTrash}
-            id="trashbin"
-            className={styles.BiTrash}
-            onMouseEnter={() => {
-              state.actions.setMouseOverTrash(true);
-            }}
-            onDragEnter={() => {
-              state.actions.setMouseOverTrash(true);
-            }}
-            onDrop={state.actions.onDropHandler}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            {!state.values.mouseOverTrash ? <FaTrash /> : <FaTrashRestore />}
-          </div>
+          {/* <StyledTrash {...state.values.trashVals} /> */}
+
           <Comp.Account />
           <div
             className={

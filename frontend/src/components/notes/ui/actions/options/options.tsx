@@ -41,15 +41,19 @@ const Options = ({ note, pinned, archived = false }: OptionsProps) => {
     <AddLabel id={id} pinned={pinned} archived={archived} />
   );
 
+  const backgroundImages = state.displayPalette && (
+    <BackgroundImage
+      open={state.displayPalette}
+      archived={archived}
+      setDisplayPalette={state.setDisplayPalette}
+      id={id}
+      pinned={pinned}
+    />
+  );
+
   return (
     <>
-      <BackgroundImage
-        open={state.displayPalette}
-        archived={archived}
-        setDisplayPalette={state.setDisplayPalette}
-        id={id}
-        pinned={pinned}
-      />
+      {backgroundImages}
       <StyledOptionsContent
         onClick={(e) => e.stopPropagation()}
         ref={outsideOptions}

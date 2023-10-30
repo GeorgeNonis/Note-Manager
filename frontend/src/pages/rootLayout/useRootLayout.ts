@@ -9,10 +9,10 @@ import {
   errorState,
   loadingInitialState,
 } from "../../store/display-state-slice";
-import { ErrorMessages } from "../../errors/error-messages";
 import { useLocation } from "react-router-dom";
 import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
+import { FaTrash, FaTrashRestore } from "react-icons/fa";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
@@ -54,8 +54,6 @@ export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
-  const hoverOutsideTrash = useOutsideHover(() => setMouseOverTrash(false));
-  const { networkdown } = ErrorMessages;
   const token = sessionStorage.getItem("auth-token")!;
   const onDropHandler = async (e: React.DragEvent) => {
     await onDropBin(
@@ -71,10 +69,21 @@ export const useRootLayout = () => {
     setEditLabelsModal(!editLabelsModal);
   };
 
-  const networkError = displayState.error === networkdown;
+  const trashVals = {
+    cond: !mouseOverTrash,
+    First: FaTrash,
+    Second: FaTrashRestore,
+    id: "trashbin",
+    onMouseEnter: () => setMouseOverTrash(true),
+    onMouseLeave: () => setMouseOverTrash(false),
+    onDragEnter: () => setMouseOverTrash(true),
+    onDrop: onDropHandler,
+    onDragOver: (e: React.DragEvent) => e.preventDefault(),
+  };
+
   const state = {
     labels,
-    values: { mouseOverTrash, editLabelsModal, displayState, networkError },
+    values: { mouseOverTrash, editLabelsModal, displayState, trashVals },
     actions: {
       labelModalHandler,
       setMouseOverTrash,
@@ -102,7 +111,7 @@ export const useRootLayout = () => {
   }, [location]);
 
   useEffect(() => {
-    const fetch = async () => {
+    const initialFetch = async () => {
       const response = await getNotesHttp(token!);
 
       const sucessfullRequest = isThereError(response);
@@ -118,23 +127,10 @@ export const useRootLayout = () => {
 
       dispatch(loadingInitialState(false));
     };
-    fetch();
+    initialFetch();
   }, []);
 
-  useEffect(() => {
-    if (!displayState.error) return;
-
-    const timer = setTimeout(() => {
-      dispatch(errorState(""));
-    }, 5000);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [displayState.error]);
-
   return {
-    hoverOutsideTrash,
     state,
   };
 };
