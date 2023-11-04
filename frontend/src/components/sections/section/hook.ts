@@ -6,7 +6,6 @@ import { sortNotes } from "../../../store/notes-slice";
 import { DragEndUtil } from "../../../utils";
 
 export const useSection = () => {
-  const token = sessionStorage.getItem("auth-token")!;
   const state = useSelector((state: IRootState) => state.notes);
   const { onDragEnter, onDragStart, index, indexOf } = useDnd();
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ export const useSection = () => {
       dispatch(sortNotes({ arr, pinned: true }));
     };
 
-    await DragEndUtil({ state, index, indexOf, cb, pinned: true, token });
+    await DragEndUtil({ state, index, indexOf, cb, pinned: true });
   };
 
   return {

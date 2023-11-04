@@ -53,15 +53,10 @@ export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
   const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
-  const token = sessionStorage.getItem("auth-token")!;
   const onDropHandler = async (e: React.DragEvent) => {
-    await onDropBin(
-      e,
-      (id, pinned) => {
-        dispatch(deleteNote({ id, pinned }));
-      },
-      token
-    );
+    await onDropBin(e, (id, pinned) => {
+      dispatch(deleteNote({ id, pinned }));
+    });
   };
 
   const labelModalHandler = () => {

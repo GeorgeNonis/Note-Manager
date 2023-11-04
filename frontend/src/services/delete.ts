@@ -4,8 +4,7 @@ import axios from "./axios";
 export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean,
-  archived: boolean,
-  token: string
+  archived: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.delete<T, E>(
@@ -33,8 +32,7 @@ export const deleteLabelHttp = async <T, E>(
 };
 
 export const deleteAccountHttp = async <T, E>(
-  email: string,
-  token: string
+  email: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.get<T, E>(`account?email=${email}`);

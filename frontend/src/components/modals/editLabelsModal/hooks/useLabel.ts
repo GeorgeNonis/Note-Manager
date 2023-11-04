@@ -10,7 +10,6 @@ import { isThereError } from "../../../../utils";
 
 export const useLabel = (label: string) => {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("auth-token")!;
   const params = useParams();
   const dispatch = useDispatch();
   const [newLabel, setNewLabel] = useState("");
@@ -36,7 +35,7 @@ export const useLabel = (label: string) => {
       return setEdit(!edit);
 
     dispatch(fetchingDataHandler());
-    const response = await editLabelHttp(label, newLabel, token);
+    const response = await editLabelHttp(label, newLabel);
 
     const sucessfullRequest = isThereError(response);
 

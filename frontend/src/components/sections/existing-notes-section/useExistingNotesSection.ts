@@ -7,7 +7,6 @@ import { NoteObj } from "../../../interfaces/interfaces";
 import { notePostHandler, DragEndUtil } from "../../../utils/utils";
 
 export const useExistingNotesSection = () => {
-  const token = sessionStorage.getItem("auth-token")!;
   const { notes: state, displayState } = useSelector(
     (state: IRootState) => state
   );
@@ -31,7 +30,7 @@ export const useExistingNotesSection = () => {
       }
       dispatch(sortUnpinnedNotes({ arr }));
     };
-    await DragEndUtil({ state, index, indexOf, cb, pinned: false, token });
+    await DragEndUtil({ state, index, indexOf, cb, pinned: false });
   };
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -43,11 +42,9 @@ export const useExistingNotesSection = () => {
   };
 
   const saveNote = async () => {
-    const token = sessionStorage.getItem("auth-token")!;
     const { processedNote, boolean, response } = await notePostHandler(
       title,
-      note,
-      token
+      note
     );
     console.log({ response, processedNote });
     boolean && dispatch(addNote(processedNote));

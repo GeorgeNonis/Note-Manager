@@ -9,7 +9,6 @@ export const useAccountDelete = ({ email }: { email: string }) => {
 
   const [confirmEmail, setConfirmEmail] = useState(``);
   const [validMatch, setValidMatch] = useState(false);
-  const token = sessionStorage.getItem("auth-token")!;
 
   const deleteAccountHandler = async () => {
     if (!validMatch) return;

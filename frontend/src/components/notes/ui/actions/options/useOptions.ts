@@ -24,7 +24,6 @@ import { CreateCheckBoxes } from "./utils";
 import { archiveNoteHandlerHttp } from "../../../../../services/postNote";
 
 export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
-  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [discardBoxes, setDiscardBoxes] = useState(false);
   const [display, setDisplay] = useState<boolean>(false);
@@ -43,7 +42,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
       pinned,
       archived,
       sharedId,
-      token,
     });
     dispatch(httpReqResLoading());
 
@@ -100,7 +98,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
         pinned,
         archived,
         uncheckednote,
-        token,
       });
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {
@@ -118,7 +115,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
           pinned,
           archived,
           uncheckednote,
-          token,
         });
         const sucessfullRequest = isThereError(response);
         sucessfullRequest &&
@@ -136,7 +132,6 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
       noteId: note.id,
       pinned,
       archived,
-      token,
     });
 
     const sucessfullRequest = isThereError(response);
