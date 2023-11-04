@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useOutsideHover } from "../../hooks/useOutsideHover";
 import { useDispatch, useSelector } from "react-redux";
 import { IfNetworkDown, isThereError, onDropBin } from "../../utils";
 import { deleteNote, initial } from "../../store/notes-slice";
