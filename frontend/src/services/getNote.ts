@@ -3,18 +3,11 @@ import axios from "./axios";
 import { Labels } from "./interfaces";
 
 export const getUsersHttp = async <T>(
-  email: string,
-  token: string
+  email: string
 ): Promise<[T | null | AxiosResponse, AxiosError | null]> => {
   try {
     const response = await axios.get<AxiosResponse | T>(
-      `userexist?email=${email}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
+      `userexist?email=${email}`
     );
     return [response.data, null];
   } catch (error) {
@@ -30,35 +23,13 @@ export interface AxiosResponse<T = any> {
   config: AxiosRequestConfig;
   request?: any;
 }
-export const getNotesHttp = async <T>(
-  token: string
-): Promise<[AxiosResponse | null, AxiosError | null]> => {
+export const getNotesHttp = async <T>(): Promise<
+  [AxiosResponse | null, AxiosError | null]
+> => {
   try {
-    const response = await axios.get<AxiosResponse>(`notes`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await axios.get<AxiosResponse>(`notes`);
 
     return [response, null];
-  } catch (error) {
-    const err = error as AxiosError;
-    return [null, err];
-  }
-};
-
-export const getLabelsHttp = async (
-  token: string
-): Promise<[Labels[] | null, AxiosError | null]> => {
-  try {
-    const response = await axios.get(`notes/labels`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    return [response.data, null];
   } catch (error) {
     const err = error as AxiosError;
     return [null, err];

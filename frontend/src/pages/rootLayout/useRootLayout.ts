@@ -111,7 +111,7 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const initialFetch = async () => {
-      const response = await getNotesHttp(token!);
+      const response = await getNotesHttp();
 
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {

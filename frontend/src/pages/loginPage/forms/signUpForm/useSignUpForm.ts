@@ -97,7 +97,7 @@ export const useSignUpForm = () => {
 
   const doesUserExists = async () => {
     setRequestState(true);
-    const response = await getUsersHttp(email, token);
+    const response = await getUsersHttp(email);
     setRequestState(false);
     dispatch(emailAlreadyInUseHandler(response[0]));
   };
