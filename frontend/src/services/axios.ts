@@ -10,10 +10,10 @@ export default axios.create({
 
 axios.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const token = sessionStorage.get("auth-token");
+    const token = sessionStorage.getItem("auth-token");
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
 
     return config;

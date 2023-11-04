@@ -1,6 +1,5 @@
 import { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "./axios";
-import { BASE_URL } from "../config";
 import { Labels } from "./interfaces";
 
 export const getUsersHttp = async <T>(
