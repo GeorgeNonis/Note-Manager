@@ -9,7 +9,7 @@ import {
   loadingInitialState,
 } from "../../store/display-state-slice";
 import { useLocation } from "react-router-dom";
-import axios from "../../services/axios";
+// import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
 
@@ -17,37 +17,37 @@ export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
   const dispatch = useDispatch();
-  const error = "";
-  axios.interceptors.request.use(
-    (request) => {
-      return request;
-    },
-    (err) => {
-      return Promise.reject;
-    }
-  );
+  // const error = "";
+  // axios.interceptors.request.use(
+  //   (request) => {
+  //     return request;
+  //   },
+  //   (err) => {
+  //     return Promise.reject;
+  //   }
+  // );
 
-  axios.interceptors.response.use(
-    (response) => {
-      displayState.error.length > 0 && dispatch(errorState(error));
+  // axios.interceptors.response.use(
+  //   (response) => {
+  //     displayState.error.length > 0 && dispatch(errorState(error));
 
-      return response;
-    },
-    (err) => {
-      const {
-        response: { status },
-        message,
-      } = err;
-      if (status == 401) {
-        logoutHandler();
-      } else if (status === 500) {
-        dispatch(errorState(IfNetworkDown(message)));
-      } else {
-        dispatch(errorState(status.toString()));
-      }
-      return Promise.reject(err);
-    }
-  );
+  //     return response;
+  //   },
+  //   (err) => {
+  //     const {
+  //       response: { status },
+  //       message,
+  //     } = err;
+  //     if (status == 401) {
+  //       logoutHandler();
+  //     } else if (status === 500) {
+  //       dispatch(errorState(IfNetworkDown(message)));
+  //     } else {
+  //       dispatch(errorState(status.toString()));
+  //     }
+  //     return Promise.reject(err);
+  //   }
+  // );
 
   const location = useLocation();
   const labels = useSelector((state: IRootState) => state.notes.labels);
