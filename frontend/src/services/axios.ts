@@ -1,10 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { BASE_URL } from "../config";
-
-const getToken = () => {
-  const token = sessionStorage.get("auth-token");
-  return token;
-};
 
 export default axios.create({
   baseURL: BASE_URL,
@@ -12,3 +7,18 @@ export default axios.create({
     "Content-Type": "application/json",
   },
 });
+
+axios.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const token = sessionStorage.get("auth-token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  }
+);
