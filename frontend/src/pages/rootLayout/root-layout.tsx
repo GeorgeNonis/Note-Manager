@@ -8,7 +8,6 @@ import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
 import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
 import { ToastContainer } from "react-toastify";
-import { StyledTrash } from "./rootLayout.styles";
 
 const RootLayout = () => {
   const { state } = useRootLayout();
@@ -31,8 +30,6 @@ const RootLayout = () => {
           }
         >
           <Comp.MenuThreeLines />
-          {/* <StyledTrash {...state.values.trashVals} /> */}
-
           <Comp.Account />
           <div
             className={
