@@ -1,6 +1,5 @@
 import { AxiosError, AxiosRequestConfig } from "axios";
 import axios from "./axios";
-import { Labels } from "./interfaces";
 
 export const getUsersHttp = async <T>(
   email: string

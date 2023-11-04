@@ -22,7 +22,7 @@ export const useLabel = (label: string) => {
 
   const deleteLabelHandler = async () => {
     dispatch(fetchingDataHandler());
-    const response = await deleteLabelHttp(label, token);
+    const response = await deleteLabelHttp(label);
     const sucessfullRequest = isThereError(response);
     if (sucessfullRequest) {
       params.labelId?.split(":")[1] && navigate("/notes");

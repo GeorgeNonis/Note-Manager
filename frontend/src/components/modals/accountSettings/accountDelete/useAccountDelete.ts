@@ -13,7 +13,7 @@ export const useAccountDelete = ({ email }: { email: string }) => {
 
   const deleteAccountHandler = async () => {
     if (!validMatch) return;
-    const response = await deleteAccountHttp(email, token);
+    const response = await deleteAccountHttp(email);
     const successfullRequest = isThereError(response);
     if (successfullRequest) {
       toast.success("Account has been delete!");

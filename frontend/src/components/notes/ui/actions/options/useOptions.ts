@@ -61,7 +61,7 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
     dispatch(fetchingDataHandler());
     e.stopPropagation();
 
-    const response = await deleteNoteHttp(note.id, pinned, archived!, token);
+    const response = await deleteNoteHttp(note.id, pinned, archived!);
     const sucessfullRequest = isThereError(response);
 
     sucessfullRequest &&
