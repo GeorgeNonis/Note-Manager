@@ -4,10 +4,12 @@ import { FaRegLightbulb } from "react-icons/fa";
 import { MdOutlineArchive } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { useRootLayout } from "./useRootLayout";
-import { MdOutlineLabel, MdOutlineModeEditOutline } from "react-icons/md";
+import { MdOutlineModeEditOutline } from "react-icons/md";
 import * as Comp from "../../components";
 import styles from "../../styles/App.module.scss";
 import { ToastContainer } from "react-toastify";
+import Link from "./comps/link";
+import LabelLinks from "./comps/menu/comps/labels-links";
 
 const RootLayout = () => {
   const { state } = useRootLayout();
@@ -38,34 +40,11 @@ const RootLayout = () => {
                 : `${styles.div} ${styles.isSideBarClosedLinks}`
             }
           >
-            <NavLink
-              to={"/notes"}
-              end
-              role={"button"}
-              className={({ isActive }) => {
-                return isActive ? styles.active : styles.inactive;
-              }}
-            >
+            <Link to={"/notes"} end>
               <FaRegLightbulb />
               <h3>Notes</h3>
-            </NavLink>
-
-            {state.labels.map((l) => {
-              return (
-                <NavLink
-                  key={l.label}
-                  to={`labelsnotesection/:${l.labelId}`}
-                  role={"button"}
-                  className={({ isActive }) => {
-                    return isActive ? styles.active : styles.inactive;
-                  }}
-                >
-                  <MdOutlineLabel />
-                  <h3>{l.label}</h3>
-                </NavLink>
-              );
-            })}
-
+            </Link>
+            <LabelLinks />
             <a
               className={
                 state.values.displayState.error
@@ -78,26 +57,14 @@ const RootLayout = () => {
               <MdOutlineModeEditOutline />
               <h3>Edit Labels</h3>
             </a>
-            <NavLink
-              to={"archivenotes"}
-              role={"button"}
-              className={({ isActive }) => {
-                return isActive ? styles.active : styles.inactive;
-              }}
-            >
+            <Link to={"archivenotes"}>
               <MdOutlineArchive />
               <h3>Archive</h3>
-            </NavLink>
-            <NavLink
-              to={"deletednotes"}
-              role={"button"}
-              className={({ isActive }) => {
-                return isActive ? styles.active : styles.inactive;
-              }}
-            >
+            </Link>
+            <Link to={"deletednotes"}>
               <BiTrash />
               <h3>Trash</h3>
-            </NavLink>
+            </Link>
           </div>
           {state.values.editLabelsModal && (
             <Comp.EditLabelsModal
