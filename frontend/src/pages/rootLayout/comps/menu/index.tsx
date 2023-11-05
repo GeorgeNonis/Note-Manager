@@ -7,7 +7,13 @@ import { MdOutlineArchive, MdOutlineModeEditOutline } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { ReactNode } from "react";
 
-const Menu = ({ children }: { children: ReactNode }) => {
+const Menu = ({
+  children,
+  onClick,
+}: {
+  children: ReactNode;
+  onClick: () => void;
+}) => {
   return (
     <StyledMenu>
       <MenuThreeLines />
@@ -19,16 +25,10 @@ const Menu = ({ children }: { children: ReactNode }) => {
           <h3>Notes</h3>
         </Link>
         <LabelLinks />
-        {/* <a
-          className={
-            state.values.displayState.error ? styles.disable : styles.inactive
-          }
-          tabIndex={1}
-          onClick={state.actions.labelModalHandler}
-        >
+        <Link onClick={onClick} to={""} button>
           <MdOutlineModeEditOutline />
           <h3>Edit Labels</h3>
-        </a> */}
+        </Link>
         <Link to={"archivenotes"}>
           <MdOutlineArchive />
           <h3>Archive</h3>

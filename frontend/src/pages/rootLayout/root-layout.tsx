@@ -18,7 +18,7 @@ const RootLayout = () => {
         document.getElementById("accountsettings")!
       )}
       {!loadingInitialState && (
-        <Menu>
+        <Menu onClick={state.actions.labelModalHandler}>
           {state.values.editLabelsModal && (
             <Comp.EditLabelsModal
               modalState={state.values.editLabelsModal}
@@ -27,56 +27,6 @@ const RootLayout = () => {
           )}
           {!loadingInitialState && <Outlet />}
         </Menu>
-        // <main
-        //   className={
-        //     displaySideBar
-        //       ? styles.main
-        //       : `${styles.main} ${styles.isSideBarClosed}`
-        //   }
-        // >
-        //   <Comp.MenuThreeLines />
-        //   <Comp.Account />
-        //   <div
-        //     className={
-        //       displaySideBar
-        //         ? styles.div
-        //         : `${styles.div} ${styles.isSideBarClosedLinks}`
-        //     }
-        //   >
-        //     <Link to={"/notes"} end>
-        //       <FaRegLightbulb />
-        //       <h3>Notes</h3>
-        //     </Link>
-        //     <LabelLinks />
-        //     <a
-        //       className={
-        //         state.values.displayState.error
-        //           ? styles.disable
-        //           : styles.inactive
-        //       }
-        //       tabIndex={1}
-        //       onClick={state.actions.labelModalHandler}
-        //     >
-        //       <MdOutlineModeEditOutline />
-        //       <h3>Edit Labels</h3>
-        //     </a>
-        //     <Link to={"archivenotes"}>
-        //       <MdOutlineArchive />
-        //       <h3>Archive</h3>
-        //     </Link>
-        //     <Link to={"deletednotes"}>
-        //       <BiTrash />
-        //       <h3>Trash</h3>
-        //     </Link>
-        //   </div>
-        //   {state.values.editLabelsModal && (
-        //     <Comp.EditLabelsModal
-        //       modalState={state.values.editLabelsModal}
-        //       labelModalHandler={state.actions.labelModalHandler}
-        //     />
-        //   )}
-        //   {!loadingInitialState && <Outlet />}
-        // </main>
       )}
     </>
   );

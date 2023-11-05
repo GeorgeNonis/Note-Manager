@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { styled } from "../../../../../globalStyles";
 
-export const StyledLink = styled(NavLink, {
+const commonStyles = {
   color: "gray",
   display: "grid",
   gridAutoFlow: "column",
@@ -16,7 +16,6 @@ export const StyledLink = styled(NavLink, {
   transition: "all 250ms ease-in-out",
 
   "&:hover": {
-    height: "4rem",
     gap: "0",
     backgroundColor: "#28292c",
   },
@@ -37,4 +36,12 @@ export const StyledLink = styled(NavLink, {
     color: "white",
     backgroundColor: "#41331c",
   },
+};
+
+export const StyledLink = styled(NavLink, {
+  ...commonStyles,
+});
+
+export const StyledButton = styled("a", {
+  ...commonStyles,
 });
