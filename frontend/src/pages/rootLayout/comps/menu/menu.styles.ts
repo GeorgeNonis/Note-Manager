@@ -16,3 +16,5 @@ export const StyledMenu = styled("div", {
     },
   },
 });
+
+export const StyledSideBar = styled("div", {});
