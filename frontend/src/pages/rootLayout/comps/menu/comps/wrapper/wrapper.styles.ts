@@ -21,7 +21,7 @@ export const BurgerStyle = {
   },
   bmMenuWrap: {
     position: "fixed",
-    width: "60%",
+    width: "70%",
     height: "100%",
     top: "0px",
   },
