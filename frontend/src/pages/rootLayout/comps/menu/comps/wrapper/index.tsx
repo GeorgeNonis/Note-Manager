@@ -2,14 +2,14 @@ import { slide as BurgerMenu } from "react-burger-menu";
 import { useMediaQuery } from "react-responsive";
 import { SCREENS } from "../../../../../../config";
 import { ReactNode } from "react";
-import { StyledMenu } from "../../menu.styles";
+import { StyledSideBar } from "../../menu.styles";
 import { BurgerStyle } from "./wrapper.styles";
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
+  const isMobile = useMediaQuery({ minWidth: SCREENS.sm });
 
   if (isMobile) {
-    return <StyledMenu>{children}</StyledMenu>;
+    return <StyledSideBar>{children}</StyledSideBar>;
   } else {
     return <BurgerMenu styles={BurgerStyle}>{children}</BurgerMenu>;
   }

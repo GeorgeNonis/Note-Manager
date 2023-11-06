@@ -9,10 +9,7 @@ import {
   loadingInitialState,
 } from "../../store/display-state-slice";
 import { useLocation } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
-import { FaTrash, FaTrashRestore } from "react-icons/fa";
-import { SCREENS } from "../../config";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
@@ -54,7 +51,7 @@ export const useRootLayout = () => {
   const location = useLocation();
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
-  const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
+
   const onDropHandler = async (e: React.DragEvent) => {
     await onDropBin(e, (id, pinned) => {
       dispatch(deleteNote({ id, pinned }));
@@ -65,24 +62,11 @@ export const useRootLayout = () => {
     setEditLabelsModal(!editLabelsModal);
   };
 
-  const trashVals = {
-    cond: !mouseOverTrash,
-    First: FaTrash,
-    Second: FaTrashRestore,
-    id: "trashbin",
-    onMouseEnter: () => setMouseOverTrash(true),
-    onMouseLeave: () => setMouseOverTrash(false),
-    onDragEnter: () => setMouseOverTrash(true),
-    onDrop: onDropHandler,
-    onDragOver: (e: React.DragEvent) => e.preventDefault(),
-  };
-
   const state = {
     labels,
-    values: { mouseOverTrash, editLabelsModal, displayState, trashVals },
+    values: { editLabelsModal, displayState },
     actions: {
       labelModalHandler,
-      setMouseOverTrash,
       onDropHandler,
     },
   };

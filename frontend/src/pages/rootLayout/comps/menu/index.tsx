@@ -1,7 +1,7 @@
 import { FaRegLightbulb } from "react-icons/fa";
-import { Account, MenuThreeLines } from "../../../../components";
+import { Account } from "../../../../components";
 import Link from "../link";
-import { StyledMenu, StyledSideBar } from "./menu.styles";
+import { StyledMenu } from "./menu.styles";
 import LabelLinks from "./comps/labels-links";
 import { MdOutlineArchive, MdOutlineModeEditOutline } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
@@ -16,11 +16,10 @@ const Menu = ({
   onClick: () => void;
 }) => {
   return (
-    <Wrapper>
-      <MenuThreeLines />
+    <StyledMenu>
       <Account />
 
-      <StyledSideBar>
+      <Wrapper>
         <Link to={"/notes"} end>
           <FaRegLightbulb />
           <h3>Notes</h3>
@@ -38,9 +37,9 @@ const Menu = ({
           <BiTrash />
           <h3>Trash</h3>
         </Link>
-      </StyledSideBar>
+      </Wrapper>
       {children}
-    </Wrapper>
+    </StyledMenu>
   );
 };
 export default Menu;
