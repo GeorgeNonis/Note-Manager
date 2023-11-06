@@ -5,7 +5,6 @@ export const BurgerStyle = {
     height: "20px",
     left: "20px",
     top: "20px",
-    backgroundColor: "white",
   },
   bmBurgerBars: {
     background: "#373a47",
@@ -25,13 +24,12 @@ export const BurgerStyle = {
     width: "60%",
     height: "100%",
     top: "0px",
-    gridAutoRows: "50px",
-    gap: "19px",
   },
   bmMenu: {
     background: "#202124",
     padding: "2.5em 0",
     fontSize: "1.15em",
+    overflow: "hidden",
   },
   bmMorphShape: {
     fill: "#373a47",
@@ -39,6 +37,8 @@ export const BurgerStyle = {
   bmItemList: {
     display: "grid",
 
+    gridAutoRows: "50px",
+    gap: "19px",
     color: "#b8b7ad",
     padding: "0.8em",
   },
