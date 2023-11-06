@@ -8,7 +8,6 @@ import { changeAvatarPictureHttp } from "../../../../services";
 import { fetchingDataHandler } from "../../../../store/display-state-slice";
 
 export const useAccountAvatar = (initialState: InitialState) => {
-  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [changeAvatar, setChangeAvatar] = useState(false);
   const [hoverOnAvatar, setHoverOnAvatar] = useState(false);
@@ -49,7 +48,6 @@ export const useAccountAvatar = (initialState: InitialState) => {
     dispatch(fetchingDataHandler());
     const response = await changeAvatarPictureHttp({
       avatar: selectedAvatar as string,
-      token,
     });
     const successfullRequest = isThereError(response);
     if (successfullRequest) {

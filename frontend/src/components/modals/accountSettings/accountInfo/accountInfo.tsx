@@ -12,8 +12,8 @@ const AccountInfo = ({ initialState }: AccountInfoProps) => {
   return (
     <div>
       <Grid gap={"32"} css={{ padding: "$4" }}>
-        {info.map((inf) => (
-          <Info {...inf} />
+        {info.map((inf, index) => (
+          <Info {...inf} key={index} />
         ))}
       </Grid>
     </div>

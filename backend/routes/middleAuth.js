@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 export const veirfyJWT = (req, res, next) => {
   const token = req.headers["authorization"];
-
   if (!token) {
     return res.status(401).json({ message: "UNATHORIZED" });
   }
@@ -18,6 +17,4 @@ export const veirfyJWT = (req, res, next) => {
     req.user = user;
     return next();
   });
-
-  // console.log("In the middleware End");
 };

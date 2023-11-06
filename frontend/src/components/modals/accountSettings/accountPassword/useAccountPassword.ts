@@ -37,14 +37,12 @@ export const useAccountPassword = () => {
   };
 
   const errRef = useRef<HTMLParagraphElement>(null);
-  const token = sessionStorage.getItem("auth-token") as string;
 
   const checkPassword = async () => {
     setLoading(true);
     try {
       const res = await checkPasswordValidity({
         password: currentPassword,
-        token,
       });
       setValidCurrentPassword(res[0]?.data.match);
     } catch (error) {
@@ -60,7 +58,7 @@ export const useAccountPassword = () => {
     if (!v1 || !validCurrentPassword) {
       return;
     }
-    const response = await newPasswordHttp(newPassword, token);
+    const response = await newPasswordHttp(newPassword);
     const successRequest = isThereError(response);
 
     if (successRequest) {

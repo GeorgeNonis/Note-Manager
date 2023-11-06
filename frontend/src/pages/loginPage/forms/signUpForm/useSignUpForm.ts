@@ -19,7 +19,6 @@ export const useSignUpForm = () => {
     (state: IRootState) => state.displayState
   );
   const [requestState, setRequestState] = useState(false);
-  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
@@ -74,7 +73,6 @@ export const useSignUpForm = () => {
   };
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const token = sessionStorage.getItem("auth-token")!;
     e.preventDefault();
     const v1 = USER_REGEX.test(email);
     const v2 = PWD_REGEX.test(password);
@@ -84,7 +82,7 @@ export const useSignUpForm = () => {
       return;
     }
     setRequestState(true);
-    const response = await createUserHttp(email, password, avatar, token);
+    const response = await createUserHttp(email, password, avatar);
     const successRequest = isThereError(response);
     if (successRequest) {
       const token = response[0]?.headers.authorization;
@@ -97,7 +95,7 @@ export const useSignUpForm = () => {
 
   const doesUserExists = async () => {
     setRequestState(true);
-    const response = await getUsersHttp(email, token);
+    const response = await getUsersHttp(email);
     setRequestState(false);
     dispatch(emailAlreadyInUseHandler(response[0]));
   };

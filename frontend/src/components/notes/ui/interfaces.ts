@@ -13,7 +13,6 @@ export interface NoteDetailsProps {
 
 export interface NotePinProps {
   pinned: boolean;
-  review: boolean;
   pinNoteHandler: (e: React.MouseEvent) => void;
 }
 

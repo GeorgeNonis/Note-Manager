@@ -13,7 +13,6 @@ import { AddLabelProps, Labels } from "./interfaces";
 import styles from "./styles.module.scss";
 
 export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
-  const token = sessionStorage.getItem("auth-token")!;
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
@@ -29,7 +28,6 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
       archived,
       label: value,
       labelId: sharedId,
-      token,
     });
     const sucessfullRequest = isThereError(response);
     sucessfullRequest &&
@@ -60,13 +58,7 @@ export const useAddLabel = ({ id, pinned, archived }: AddLabelProps) => {
     id: string
   ) => {
     dispatch(fetchingDataHandler());
-    const response = await tickLabelHandlerHttp(
-      id,
-      label,
-      pinned,
-      archived,
-      token
-    );
+    const response = await tickLabelHandlerHttp(id, label, pinned, archived);
     const sucessfullRequest = isThereError(response);
 
     if (sucessfullRequest) {

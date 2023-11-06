@@ -6,5 +6,4 @@ export interface DragEndProps {
   state: InitialState;
   cb: ([]: any) => void;
   pinned: boolean;
-  token: string;
 }

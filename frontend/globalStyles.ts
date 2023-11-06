@@ -3,6 +3,7 @@ import { CSS, PropertyValue, createStitches, keyframes } from "@stitches/react";
 export const { styled, globalCss, css, config } = createStitches({
   theme: {
     colors: {
+      primarySiteBackground: "#202124",
       primaryDisableBackground: "rgb(255, 144, 79)",
       primaryDisableText: "#ffffff8c",
       inputShadow: "rgba(0, 0, 0, 0.4588235294)",

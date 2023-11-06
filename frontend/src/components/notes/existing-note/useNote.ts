@@ -13,8 +13,6 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
   const dispatch = useDispatch();
   const noteId = note.id;
 
-  const token = sessionStorage.getItem("auth-token")!;
-
   const handleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
     setReview(!review);
@@ -28,7 +26,6 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
       pinned,
       titleValue: noteTitle,
       noteValue,
-      token,
     });
 
     const sucessfullRequest = isThereError(response);
@@ -40,14 +37,14 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
-    // dispatch(fetchingDataHandler());
+    dispatch(fetchingDataHandler());
 
     e.stopPropagation();
-    const response = await pinNoteHandlerHttp(note.id, pinned, token);
+    const response = await pinNoteHandlerHttp(note.id, pinned);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(pinHandler(note.id));
-    // dispatch(fetchingDataHandler());
+    dispatch(fetchingDataHandler());
   };
   const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;

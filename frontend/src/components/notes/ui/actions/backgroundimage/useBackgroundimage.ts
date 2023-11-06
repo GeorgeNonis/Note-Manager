@@ -12,7 +12,6 @@ export const useBackgroundimage = ({
   pinned,
   archived,
 }: useBackgroundimageProps) => {
-  const token = sessionStorage.getItem("auth-token")!;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -29,13 +28,7 @@ export const useBackgroundimage = ({
   const displayHandler = async (value: string) => {
     setLoading(true);
 
-    const response = await updateNoteColorHttp(
-      value,
-      id,
-      pinned,
-      archived,
-      token
-    );
+    const response = await updateNoteColorHttp(value, id, pinned, archived);
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(setColor({ value, id, pinned, archived }));
 

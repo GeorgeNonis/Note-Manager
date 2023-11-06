@@ -9,7 +9,6 @@ export const useDeletedNotesSection = () => {
   const [restoreLoading, setRestoreLoading] = useState(false);
   const [removeLoading, setRemoveLoading] = useState(false);
   const dispatch = useDispatch();
-  const token = sessionStorage.getItem("auth-token")!;
 
   const notesState = useSelector((state: IRootState) => state.notes);
   const { error, loadingInitialState } = useSelector(
@@ -19,7 +18,7 @@ export const useDeletedNotesSection = () => {
   const restoreProcess = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     setRestoreLoading(true);
-    const response = await restoreNoteHttp(id, token);
+    const response = await restoreNoteHttp(id);
     setRestoreLoading(false);
 
     const successfulRequest = isThereError(response);
@@ -29,7 +28,7 @@ export const useDeletedNotesSection = () => {
   const removeProcess = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
     setRemoveLoading(true);
-    const response = await removeNoteHttp(id, token);
+    const response = await removeNoteHttp(id);
     setRemoveLoading(false);
 
     const successfulRequest = isThereError(response);

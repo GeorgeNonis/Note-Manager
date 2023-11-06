@@ -7,15 +7,14 @@ import { v4 as uuidv4 } from "uuid";
 
 export const onDropBin = async (
   e: React.DragEvent,
-  cb: (id: string, pinned: boolean) => void,
-  token: string
+  cb: (id: string, pinned: boolean) => void
 ) => {
   const id = e.dataTransfer.getData("id");
   const pinned = e.dataTransfer.getData("pinned") === "false" ? false : true;
 
   if (id.length === 0) return;
   if (window.confirm("Are you sure you wanna delete this note?")) {
-    const response = await deleteNoteHttp(id, pinned, false, token);
+    const response = await deleteNoteHttp(id, pinned, false);
     if (response[1] === null) {
       cb(id, pinned);
     }
@@ -38,7 +37,6 @@ export const DragEndUtil = async ({
   state,
   cb,
   pinned,
-  token,
 }: DragEndProps) => {
   const notesPrevState = !pinned ? [...state.notes] : [...state.pinnedNotes];
 
@@ -52,7 +50,7 @@ export const DragEndUtil = async ({
     return arr;
   };
   const b = swapElements({ arr: notesPrevState, i1: index, i2: indexOf });
-  const response = await sortNotesHttp([...b], pinned, token);
+  const response = await sortNotesHttp([...b], pinned);
 
   const [, error] = response;
   if (!error === undefined) {
@@ -76,8 +74,7 @@ export const isThereError = <
 
 export const notePostHandler = async (
   titleValue: string,
-  noteValue: string,
-  token: string
+  noteValue: string
 ) => {
   const processedNote = {
     title: "",
@@ -91,7 +88,7 @@ export const notePostHandler = async (
   processedNote.title = titleValue;
   processedNote.note = noteValue;
   processedNote.id = uuidv4();
-  const response = await addNoteHttp(processedNote, token);
+  const response = await addNoteHttp(processedNote);
   const boolean = isThereError(response);
 
   return { processedNote, boolean, response };

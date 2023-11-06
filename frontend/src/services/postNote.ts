@@ -10,6 +10,7 @@ import {
   UserDetailsProps,
   UserAvatarProps,
   UserPasswordProps,
+  Responseheaders,
 } from "./interfaces";
 export interface AxiosResponse<T = any> {
   data: T;
@@ -20,32 +21,17 @@ export interface AxiosResponse<T = any> {
   request?: any;
 }
 
-type Responseheaders = {
-  headers: {
-    authorization: string;
-  };
-};
 export const createUserHttp = async <T, E>(
   email: string,
   pwd: string,
-  image: string,
-  token: string
+  image: string
 ): Promise<[Responseheaders | AxiosResponse | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<Responseheaders>(
-      `signup`,
-      {
-        email,
-        pwd,
-        image,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<Responseheaders>(`signup`, {
+      email,
+      pwd,
+      image,
+    });
 
     return [response, null];
   } catch (error) {
@@ -72,22 +58,12 @@ export const getUserHttp = async <T, E>({
   }
 };
 export const addNoteHttp = async <T, E>(
-  data: NoteObj,
-  token: string
+  data: NoteObj
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(
-      `notes`,
-      {
-        ...data,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<T, E>(`notes`, {
+      ...data,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -98,19 +74,12 @@ export const addNoteHttp = async <T, E>(
 
 export const pinNoteHandlerHttp = async <T, E>(
   id: string,
-  pinned: boolean,
-  token: string
+  pinned: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
       `notes/pinnote/:${id}?isnotepined=${pinned}`,
-      { undefined },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
+      { undefined }
     );
     return [response, null];
   } catch (error) {
@@ -121,22 +90,12 @@ export const pinNoteHandlerHttp = async <T, E>(
 };
 
 export const removeNoteHttp = async <T, E>(
-  id: string,
-  token: string
+  id: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(
-      `trashbin/:${id}`,
-      {
-        id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<T, E>(`trashbin/:${id}`, {
+      id,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -146,20 +105,10 @@ export const removeNoteHttp = async <T, E>(
 };
 
 export const restoreNoteHttp = async <T, E>(
-  id: string,
-  token: string
+  id: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(
-      `trashbin/:${id}`,
-      { undefined },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<T, E>(`trashbin/:${id}`, { undefined });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -173,19 +122,12 @@ export const copyNoteHttp = async <T, E>({
   sharedId,
   pinned,
   archived,
-  token,
 }: CopyNoteProps): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
       `notes/copynote/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         sharedId,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
       }
     );
     return [response, null];
@@ -201,21 +143,12 @@ export const checkBoxesHandlerHttp = async <T, E>({
   pinned,
   uncheckednote,
   archived,
-  token,
 }: CheckBoxesProps): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/checkboxes/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         uncheckednote,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
       }
     );
     return [response, null];
@@ -232,22 +165,13 @@ export const checkBoxHandlerHttp = async <T, E>({
   archived,
   boxid,
   checked,
-  token,
 }: CheckBoxProps): Promise<[T | E | null, AxiosError | null]> => {
-  // const token = sessionStorage.getItem("auth-token");
-
   try {
     const response = await axios.post<T, E>(
       `notes/checkbox/:${noteId}?isnotepined=${pinned}&isarchived=${archived}`,
       {
         boxid,
         checked,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
       }
     );
     return [response, null];
@@ -262,20 +186,13 @@ export const archiveNoteHandlerHttp = async <T, E>({
   noteId,
   pinned,
   archived,
-  token,
 }: ArchiveNoteProps): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.post<T, E>(
       `notes/${
         !archived ? "archivenote" : "unarchivenote"
       }/:${noteId}?isnotepined=${pinned}`,
-      { undefined },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
+      { undefined }
     );
     return [response, null];
   } catch (error) {
@@ -287,23 +204,13 @@ export const archiveNoteHandlerHttp = async <T, E>({
 
 export const changeAvatarPictureHttp = async <T, E>({
   avatar,
-  token,
 }: UserAvatarProps): Promise<
   [Responseheaders | AxiosResponse | T | E | null, AxiosError | null]
 > => {
   try {
-    const response = await axios.post<AxiosResponse<T | E>>(
-      `avatar`,
-      {
-        avatar,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<AxiosResponse<T | E>>(`avatar`, {
+      avatar,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -313,21 +220,11 @@ export const changeAvatarPictureHttp = async <T, E>({
 };
 export const checkPasswordValidity = async ({
   password,
-  token,
 }: UserPasswordProps): Promise<[AxiosResponse | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<AxiosResponse>(
-      `pwd`,
-      {
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<AxiosResponse>(`pwd`, {
+      password,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -336,22 +233,12 @@ export const checkPasswordValidity = async ({
   }
 };
 export const newPasswordHttp = async (
-  password: string,
-  token: string
+  password: string
 ): Promise<[AxiosResponse | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<AxiosResponse>(
-      `npwd`,
-      {
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const response = await axios.post<AxiosResponse>(`npwd`, {
+      password,
+    });
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

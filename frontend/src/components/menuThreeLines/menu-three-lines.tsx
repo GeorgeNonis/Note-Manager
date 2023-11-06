@@ -3,7 +3,7 @@ import { useMenuThreeLines } from "./useMenuThreeLines";
 import styles from "./styles.module.scss";
 
 const MenuThreeLines = () => {
-  const { BarIsOn, toggleMenuThreeLines } = useMenuThreeLines();
+  const { toggleMenuThreeLines } = useMenuThreeLines();
   return (
     <div className={styles.menuThreeLines}>
       <AiOutlineMenu className={styles.burger} onClick={toggleMenuThreeLines} />

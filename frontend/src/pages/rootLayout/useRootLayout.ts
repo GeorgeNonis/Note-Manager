@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IfNetworkDown, isThereError, onDropBin } from "../../utils";
-import { deleteNote, initial } from "../../store/notes-slice";
+import { initial } from "../../store/notes-slice";
 import { IRootState } from "../../store/store";
 import { getNotesHttp } from "../../services";
 import {
@@ -9,84 +9,27 @@ import {
   loadingInitialState,
 } from "../../store/display-state-slice";
 import { useLocation } from "react-router-dom";
-import axios from "../../services/axios";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
-import { FaTrash, FaTrashRestore } from "react-icons/fa";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
+
   const dispatch = useDispatch();
-  const error = "";
-  axios.interceptors.request.use(
-    (request) => {
-      return request;
-    },
-    (err) => {
-      return Promise.reject;
-    }
-  );
-
-  axios.interceptors.response.use(
-    (response) => {
-      displayState.error.length > 0 && dispatch(errorState(error));
-
-      return response;
-    },
-    (err) => {
-      const {
-        response: { status },
-        message,
-      } = err;
-      if (status == 401) {
-        logoutHandler();
-      } else if (status === 500) {
-        dispatch(errorState(IfNetworkDown(message)));
-      } else {
-        dispatch(errorState(status.toString()));
-      }
-      return Promise.reject(err);
-    }
-  );
 
   const location = useLocation();
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
-  const [mouseOverTrash, setMouseOverTrash] = useState<boolean>(false);
-  const token = sessionStorage.getItem("auth-token")!;
-  const onDropHandler = async (e: React.DragEvent) => {
-    await onDropBin(
-      e,
-      (id, pinned) => {
-        dispatch(deleteNote({ id, pinned }));
-      },
-      token
-    );
-  };
 
   const labelModalHandler = () => {
     setEditLabelsModal(!editLabelsModal);
   };
 
-  const trashVals = {
-    cond: !mouseOverTrash,
-    First: FaTrash,
-    Second: FaTrashRestore,
-    id: "trashbin",
-    onMouseEnter: () => setMouseOverTrash(true),
-    onMouseLeave: () => setMouseOverTrash(false),
-    onDragEnter: () => setMouseOverTrash(true),
-    onDrop: onDropHandler,
-    onDragOver: (e: React.DragEvent) => e.preventDefault(),
-  };
-
   const state = {
     labels,
-    values: { mouseOverTrash, editLabelsModal, displayState, trashVals },
+    values: { editLabelsModal, displayState },
     actions: {
       labelModalHandler,
-      setMouseOverTrash,
-      onDropHandler,
     },
   };
 
@@ -111,7 +54,7 @@ export const useRootLayout = () => {
 
   useEffect(() => {
     const initialFetch = async () => {
-      const response = await getNotesHttp(token!);
+      const response = await getNotesHttp();
 
       const sucessfullRequest = isThereError(response);
       if (sucessfullRequest) {

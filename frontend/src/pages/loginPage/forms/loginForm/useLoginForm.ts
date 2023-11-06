@@ -32,7 +32,6 @@ export const useLoginForm = () => {
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     setUserMsg("Invalid Credentials");
-    const token = sessionStorage.getItem("auth-token")!;
     setValidCredentials(false);
     e.preventDefault();
     const v1 = USER_REGEX.test(email);
@@ -43,7 +42,7 @@ export const useLoginForm = () => {
       return;
     }
     setLoading(true);
-    const response = await getUserHttp({ email, pwd: password, token });
+    const response = await getUserHttp({ email, pwd: password });
 
     const successRequest = isThereError(response);
     if (response[0]?.data.msg) {

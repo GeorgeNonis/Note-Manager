@@ -32,11 +32,7 @@ const Note = ({
         onDragEnter={onDragEnter}
         onDragStart={onDragStart}
       >
-        <Pin
-          review={values.review}
-          pinned={pinned}
-          pinNoteHandler={actions.pinNoteHandler}
-        />
+        <Pin pinned={pinned} pinNoteHandler={actions.pinNoteHandler} />
 
         <Title
           editable={false}

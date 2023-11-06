@@ -10,7 +10,6 @@ import { isThereError } from "../../../../utils";
 
 export const useLabel = (label: string) => {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("auth-token")!;
   const params = useParams();
   const dispatch = useDispatch();
   const [newLabel, setNewLabel] = useState("");
@@ -22,7 +21,7 @@ export const useLabel = (label: string) => {
 
   const deleteLabelHandler = async () => {
     dispatch(fetchingDataHandler());
-    const response = await deleteLabelHttp(label, token);
+    const response = await deleteLabelHttp(label);
     const sucessfullRequest = isThereError(response);
     if (sucessfullRequest) {
       params.labelId?.split(":")[1] && navigate("/notes");
@@ -36,7 +35,7 @@ export const useLabel = (label: string) => {
       return setEdit(!edit);
 
     dispatch(fetchingDataHandler());
-    const response = await editLabelHttp(label, newLabel, token);
+    const response = await editLabelHttp(label, newLabel);
 
     const sucessfullRequest = isThereError(response);
 

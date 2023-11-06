@@ -4,18 +4,11 @@ import axios from "./axios";
 export const deleteNoteHttp = async <T, E>(
   id: string,
   pinned: boolean,
-  archived: boolean,
-  token: string
+  archived: boolean
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
     const response = await axios.delete<T, E>(
-      `notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
+      `notes/:${id}?isnotepined=${pinned}&isarchived=${archived}`
     );
     return [response, null];
   } catch (error) {
@@ -26,16 +19,10 @@ export const deleteNoteHttp = async <T, E>(
 };
 
 export const deleteLabelHttp = async <T, E>(
-  label: string,
-  token: string
+  label: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.delete<T, E>(`notes/labels/:${label}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await axios.delete<T, E>(`notes/labels/:${label}`);
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;
@@ -45,16 +32,10 @@ export const deleteLabelHttp = async <T, E>(
 };
 
 export const deleteAccountHttp = async <T, E>(
-  email: string,
-  token: string
+  email: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.get<T, E>(`account?email=${email}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+    const response = await axios.get<T, E>(`account?email=${email}`);
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

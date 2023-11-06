@@ -2,7 +2,7 @@ import { NotePinProps } from "./interfaces";
 import { BsPinAngle, BsFillPinFill } from "react-icons/bs";
 import { Icon, StyledPin, StyledPinnedIcon, StyledSpan } from "./styles";
 
-const Pin = ({ pinned, pinNoteHandler, review }: NotePinProps) => {
+const Pin = ({ pinned, pinNoteHandler }: NotePinProps) => {
   return (
     <StyledPin onClick={pinNoteHandler}>
       {pinned ? (

@@ -1,0 +1,28 @@
+/*
+  MEDIA QUERIES
+*/
+.content {
+  display: grid;
+  gap: 1rem;
+}
+
+.notes {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem;
+}
+@media (min-width: 900px) {
+  .notes {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+@media (max-width: 599px) {
+  .notes {
+    grid-auto-flow: rows;
+  }
+}
+@media (min-width: 1200px) {
+  .notes {
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+  }
+}/*# sourceMappingURL=styles.module.css.map */

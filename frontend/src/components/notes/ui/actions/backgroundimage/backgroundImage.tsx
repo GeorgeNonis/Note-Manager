@@ -1,8 +1,12 @@
 import { BackgroundImageProps } from "./interfaces";
 import { useBackgroundimage } from "./useBackgroundimage";
-import styles from "./styles.module.scss";
 import { Modal } from "../../../../Molecules";
 import LoadingSpinner from "../../../../ui/loading-spinner";
+import {
+  StyledContainer,
+  StyledDefault,
+  StyledImg,
+} from "./backgroundImage.styles";
 
 const BackgroundImage = ({
   setDisplayPalette,
@@ -29,18 +33,17 @@ const BackgroundImage = ({
       title="Background Image"
     >
       {loading && <LoadingSpinner />}
-      <div className={styles.backgroundImages}>
-        <div
-          className={styles.default}
+      <StyledContainer>
+        <StyledDefault
           onClick={() => {
             displayHandler(`#202124`);
           }}
         >
           <h3>Default</h3>
-        </div>
+        </StyledDefault>
         {mobileVersion.map((bg) => {
           return (
-            <img
+            <StyledImg
               loading="lazy"
               style={{ pointerEvents: "all" }}
               src={bg.src}
@@ -52,7 +55,7 @@ const BackgroundImage = ({
             />
           );
         })}
-      </div>
+      </StyledContainer>
     </Modal>
   );
 };

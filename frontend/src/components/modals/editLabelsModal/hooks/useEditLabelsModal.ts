@@ -8,7 +8,6 @@ import { isThereError } from "../../../../utils/utils";
 import { fetchingDataHandler } from "../../../../store/display-state-slice";
 
 export const useEditLabelsModal = () => {
-  const token = sessionStorage.getItem("auth-token")!;
   const labels = useSelector((state: IRootState) => {
     return state.notes.labels;
   });
@@ -38,7 +37,7 @@ export const useEditLabelsModal = () => {
       createLabel && newLabelRef.current?.focus();
     } else if (!isNotValid) {
       const sharedId = uuidv4();
-      const response = await addLabelHttp({ label, labelId: sharedId, token });
+      const response = await addLabelHttp({ label, labelId: sharedId });
       const successfulRequest = isThereError(response);
       successfulRequest && dispatch(addLabel({ label, labelId: sharedId }));
 
