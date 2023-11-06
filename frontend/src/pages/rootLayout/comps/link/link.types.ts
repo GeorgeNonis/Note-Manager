@@ -7,5 +7,4 @@ export type StyledLinkProps = StyledComponentProps<typeof StyledLink>;
 export interface LinkProps extends StyledLinkProps {
   button?: boolean;
   children: ReactNode;
-  onClick?: () => void;
 }

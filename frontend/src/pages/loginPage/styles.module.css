@@ -1,0 +1,12 @@
+.main {
+  font-family: "CormorantGaramond";
+  box-sizing: border-box;
+  height: 100dvh;
+  width: 100dvw;
+  display: grid;
+  place-content: center;
+  background-image: url("../../../images/ratio6-4.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+}/*# sourceMappingURL=styles.module.css.map */
