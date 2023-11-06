@@ -15,6 +15,9 @@ export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
 
+  const token = sessionStorage.getItem("auth-token");
+  console.log({ token });
+
   const dispatch = useDispatch();
   // const error = "";
   // axios.interceptors.request.use(
