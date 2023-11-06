@@ -1,24 +1,24 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import axios from "axios";
 import { BASE_URL } from "../config";
 
-export default axios.create({
+const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-axios.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig) => {
+axiosInstance.interceptors.request.use(
+  (config) => {
     const token = sessionStorage.getItem("auth-token");
-
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
-
     return config;
   },
-  (error: AxiosError) => {
+  (error) => {
     return Promise.reject(error);
   }
 );
+
+export default axiosInstance;
