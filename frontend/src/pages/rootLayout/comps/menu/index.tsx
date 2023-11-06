@@ -7,6 +7,8 @@ import { MdOutlineArchive, MdOutlineModeEditOutline } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { ReactNode } from "react";
 import Wrapper from "./comps/wrapper";
+import { useMediaQuery } from "react-responsive";
+import { SCREENS } from "../../../../config";
 
 const Menu = ({
   children,
@@ -15,8 +17,9 @@ const Menu = ({
   children: ReactNode;
   onClick: () => void;
 }) => {
+  const isMobile = useMediaQuery({ minWidth: SCREENS.sm });
   return (
-    <StyledMenu>
+    <StyledMenu isMobile={!isMobile}>
       <Account />
 
       <Wrapper>

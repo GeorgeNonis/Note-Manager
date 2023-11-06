@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IfNetworkDown, isThereError, onDropBin } from "../../utils";
-import { deleteNote, initial } from "../../store/notes-slice";
+import { initial } from "../../store/notes-slice";
 import { IRootState } from "../../store/store";
 import { getNotesHttp } from "../../services";
 import {
@@ -21,12 +21,6 @@ export const useRootLayout = () => {
   const labels = useSelector((state: IRootState) => state.notes.labels);
   const [editLabelsModal, setEditLabelsModal] = useState<boolean>(false);
 
-  const onDropHandler = async (e: React.DragEvent) => {
-    await onDropBin(e, (id, pinned) => {
-      dispatch(deleteNote({ id, pinned }));
-    });
-  };
-
   const labelModalHandler = () => {
     setEditLabelsModal(!editLabelsModal);
   };
@@ -36,7 +30,6 @@ export const useRootLayout = () => {
     values: { editLabelsModal, displayState },
     actions: {
       labelModalHandler,
-      onDropHandler,
     },
   };
 

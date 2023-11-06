@@ -9,9 +9,9 @@ export const StyledMenu = styled("div", {
   paddingTop: "1rem",
 
   variants: {
-    sideBarClosed: {
+    isMobile: {
       true: {
-        gridTemplateColumns: "1fr 11fr",
+        gridTemplateColumns: "unset",
       },
     },
   },
