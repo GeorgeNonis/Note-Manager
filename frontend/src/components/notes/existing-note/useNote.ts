@@ -37,14 +37,14 @@ export const useNote = ({ note, pinned }: UseNoteProps) => {
   };
 
   const pinNoteHandler = async (e: React.MouseEvent) => {
-    // dispatch(fetchingDataHandler());
+    dispatch(fetchingDataHandler());
 
     e.stopPropagation();
     const response = await pinNoteHandlerHttp(note.id, pinned);
 
     const sucessfullRequest = isThereError(response);
     sucessfullRequest && dispatch(pinHandler(note.id));
-    // dispatch(fetchingDataHandler());
+    dispatch(fetchingDataHandler());
   };
   const zIndex = !review ? "auto" : 20002;
   const disableBtn = noteValue === note.note && noteTitle === note.title;
