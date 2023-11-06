@@ -6,6 +6,7 @@ import LabelLinks from "./comps/labels-links";
 import { MdOutlineArchive, MdOutlineModeEditOutline } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { ReactNode } from "react";
+import Wrapper from "./comps/wrapper";
 
 const Menu = ({
   children,
@@ -15,7 +16,7 @@ const Menu = ({
   onClick: () => void;
 }) => {
   return (
-    <StyledMenu>
+    <Wrapper>
       <MenuThreeLines />
       <Account />
 
@@ -39,7 +40,7 @@ const Menu = ({
         </Link>
       </StyledSideBar>
       {children}
-    </StyledMenu>
+    </Wrapper>
   );
 };
 export default Menu;

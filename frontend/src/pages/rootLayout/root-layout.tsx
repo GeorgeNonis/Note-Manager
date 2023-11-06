@@ -7,7 +7,7 @@ import Menu from "./comps/menu";
 
 const RootLayout = () => {
   const { state } = useRootLayout();
-  const { loadingInitialState, displaySideBar, accountSettings, fetchingData } =
+  const { loadingInitialState, accountSettings, fetchingData } =
     state.values.displayState;
   return (
     <>

@@ -9,13 +9,15 @@ import {
   loadingInitialState,
 } from "../../store/display-state-slice";
 import { useLocation } from "react-router-dom";
-// import axios from "../../services/axios";
+import { useMediaQuery } from "react-responsive";
 import { useLogoutHandler } from "../../hooks/useLogoutHandler";
 import { FaTrash, FaTrashRestore } from "react-icons/fa";
+import { SCREENS } from "../../config";
 
 export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
+
   const dispatch = useDispatch();
   // const error = "";
   // axios.interceptors.request.use(
