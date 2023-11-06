@@ -15,41 +15,7 @@ export const useRootLayout = () => {
   const displayState = useSelector((state: IRootState) => state.displayState);
   const { logoutHandler } = useLogoutHandler();
 
-  const token = sessionStorage.getItem("auth-token");
-  console.log({ token });
-
   const dispatch = useDispatch();
-  // const error = "";
-  // axios.interceptors.request.use(
-  //   (request) => {
-  //     return request;
-  //   },
-  //   (err) => {
-  //     return Promise.reject;
-  //   }
-  // );
-
-  // axios.interceptors.response.use(
-  //   (response) => {
-  //     displayState.error.length > 0 && dispatch(errorState(error));
-
-  //     return response;
-  //   },
-  //   (err) => {
-  //     const {
-  //       response: { status },
-  //       message,
-  //     } = err;
-  //     if (status == 401) {
-  //       logoutHandler();
-  //     } else if (status === 500) {
-  //       dispatch(errorState(IfNetworkDown(message)));
-  //     } else {
-  //       dispatch(errorState(status.toString()));
-  //     }
-  //     return Promise.reject(err);
-  //   }
-  // );
 
   const location = useLocation();
   const labels = useSelector((state: IRootState) => state.notes.labels);
