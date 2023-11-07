@@ -23,8 +23,6 @@ router.get("/v1/notes", async (req, res, next) => {
   }
 });
 
-// Promise.allSettled
-
 router.get("/v1/trashbin", async (req, res, next) => {
   const email = req.user;
 
@@ -126,14 +124,12 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 
   const { data } = req.body;
   const pinned = req.query.isnotepined === "true";
-  // console.log({ email, data, pinned });
 
   try {
     const response = await UserBluePrint.updateOne(
       { email },
       pinned ? { pinnedNotes: [...data] } : { unPinnedNotes: [...data] }
     );
-    // console.log({ response });
     res.status(200).json({
       message: "Sorted your items Successfully",
     });
@@ -147,8 +143,6 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
 router.post("/v1/trashbin/:id", async (req, res, next) => {
   const email = req.user;
   const id = req.params.id.split(":")[1];
-  // console.log("testing purposes");
-  // return res.status(500).json({ message: "Internal error" });
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
