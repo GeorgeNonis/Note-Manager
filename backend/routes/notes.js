@@ -309,7 +309,6 @@ router.post(`/notes/label/:id`, async (req, res, next) => {
       labels[findLabelIndex].notes.push({ id, checked: true, pinned });
     }
 
-    // response.labels = [...labels];
     const response = await UserBluePrint.updateOne(
       { email },
       {
@@ -640,12 +639,9 @@ router.delete("/notes/:id", async (req, res, next) => {
             deletedNotes: [...deletedNotes, { ...note }],
           }
     );
-    console.log({ response });
     res.status(200).json({ message: "Deleted note successfully" });
     return [response, null];
   } catch (error) {
-    console.log("the error", error);
-
     res.status(500).json({ message: "Internal error", error });
     return [null, error];
   }
