@@ -49,7 +49,7 @@ router.post("/notes", async (req, res) => {
   const { userDocument } = req;
 
   const lastTimeEditedNote = new Date().toISOString().substring(0, 10);
-
+  console.log({ userDocument });
   try {
     userDocument.unPinnedNotes.push(data);
     userDocument.lastTimeEditedNote = lastTimeEditedNote;
@@ -607,9 +607,10 @@ router.delete("/trashbin/:id", async (req, res, next) => {
 
 router.delete("/notes/:id", async (req, res, next) => {
   const email = req.user;
-  const { userDocument } = req;
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
+
+  console.log(pinned, archived);
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -619,6 +620,7 @@ router.delete("/notes/:id", async (req, res, next) => {
       : pinned
       ? pinnedNotes
       : unPinnedNotes;
+    console.log({ user });
     const note = prevState.find((n) => n.id === id);
 
     const response = await UserBluePrint.updateOne(
@@ -638,10 +640,12 @@ router.delete("/notes/:id", async (req, res, next) => {
             deletedNotes: [...deletedNotes, { ...note }],
           }
     );
-
+    console.log({ response });
     res.status(200).json({ message: "Deleted note successfully" });
     return [response, null];
   } catch (error) {
+    console.log("the error", error);
+
     res.status(500).json({ message: "Internal error", error });
     return [null, error];
   }

@@ -16,7 +16,6 @@ export { default as EditLabelsModal } from "./modals/editLabelsModal";
 export { default as DeleteLabelConfigModal } from "./modals/delete-label-config-modal";
 export { default as Checkbox } from "./notes/ui/checkbox";
 export { default as DiscardBoxes } from "./modals/discard-boxes";
-export { default as MenuThreeLines } from "./menuThreeLines";
 export { default as ErrorWithFeature } from "../errors/errorWithFeature";
 export { default as LoginPage } from "../pages/loginPage";
 export { default as AccountInfo } from "../components/modals/accountSettings/accountInfo";

@@ -58,7 +58,7 @@ export const useOptions = ({ archived, note, pinned }: UseOptionsProps) => {
   const deleteHandler = async (e: React.MouseEvent<HTMLHeadElement>) => {
     dispatch(fetchingDataHandler());
     e.stopPropagation();
-
+    console.log(note.id);
     const response = await deleteNoteHttp(note.id, pinned, archived!);
     const sucessfullRequest = isThereError(response);
 

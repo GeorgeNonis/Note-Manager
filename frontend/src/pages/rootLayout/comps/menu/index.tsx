@@ -34,7 +34,7 @@ const Menu = ({
         </Link>
         <Link to={"archivenotes"}>
           <MdOutlineArchive />
-          <Text>Archive</Text>
+          <Text>Archived</Text>
         </Link>
         <Link to={"deletednotes"}>
           <BiTrash />
