@@ -9,13 +9,14 @@ const router = express.Router();
  */
 
 router.get("/notes", async (req, res, next) => {
-  const { userDocument } = req;
+  const email = req.user;
 
   try {
+    const user = await UserBluePrint.findOne({ email }).exec();
     res.status(200).json({
-      ...userDocument,
+      ...user,
     });
-    return [userDocument, null];
+    return [user, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
     return [null, error];
@@ -23,16 +24,25 @@ router.get("/notes", async (req, res, next) => {
 });
 
 router.get("/trashbin", async (req, res, next) => {
-  const { userDocument } = req;
+  const email = req.user;
 
-  res.status(200).json(userDocument.deletedNotes);
+  UserBluePrint.findOne({ email })
+    .exec()
+    .then((user) => {
+      res.status(200).json(user.deletedNotes);
+    })
+    .catch((error) => {
+      return res.status(500).json({ message: "Internal error", error });
+    });
 });
 
 router.get("/notes/labels", async (req, res, next) => {
-  const { userDocument } = req;
+  const email = req.user;
 
   try {
-    res.status(200).json(userDocument.labels);
+    const response = await UserBluePrint.findOne({ email }).exec();
+
+    res.status(200).json(response.labels);
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
@@ -44,19 +54,27 @@ router.get("/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/notes", async (req, res) => {
-  const { data } = req.body;
-  const { userDocument } = req;
+router.post("/notes", async (req, res, next) => {
+  const data = req.body;
+  const email = req.user;
 
-  const lastTimeEditedNote = new Date().toISOString().substring(0, 10);
-  console.log({ userDocument });
+  const curr = new Date();
+  curr.setDate(curr.getDate());
+  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+
   try {
-    userDocument.unPinnedNotes.push(data);
-    userDocument.lastTimeEditedNote = lastTimeEditedNote;
+    const user = await UserBluePrint.findOne({ email }).exec();
 
-    const response = await userDocument.save();
+    const { unPinnedNotes } = user;
+    const response = await UserBluePrint.updateOne(
+      { email: email },
+      {
+        unPinnedNotes: [...unPinnedNotes, { ...data }],
+        lastTimeDitedNote: lastTimeDitedNote,
+      }
+    ).exec();
 
-    res.status(200).json({ message: "Successfully added note" });
+    res.status(200).json({ message: "Sucessfully edited note" });
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
@@ -66,7 +84,6 @@ router.post("/notes", async (req, res) => {
 
 router.post("/notes/editnote/:id", async (req, res, next) => {
   const email = req.user;
-  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -104,7 +121,6 @@ router.post("/notes/editnote/:id", async (req, res, next) => {
 
 router.post("/notes/sortnotes", async (req, res, next) => {
   const email = req.user;
-  const { userDocument } = req;
 
   const { data } = req.body;
   const pinned = req.query.isnotepined === "true";
