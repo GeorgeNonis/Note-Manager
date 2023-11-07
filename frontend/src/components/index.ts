@@ -1,9 +1,3 @@
-// export { default as ReviewModal } from "./modals/reviewModal";
-// export { default as PinnedNotesSection } from "./sections/pinned-notes-section";
-// export { default as OthersTitle } from "./sections/ui/others-title";
-// export { default as NoNotesTitle } from "./sections/ui/noNotesMsg";
-// export { default as NoArchievedNotesMsg } from "./sections/archive-notes-section/noArchivedNotes";
-// export { default as EmptyTrash } from "./ui/empty-trash";
 export { default as Options } from "./notes/ui/actions/options";
 export { default as Title } from "./notes/ui/note-title";
 export { default as NoteDetails } from "./notes/ui/note-details";
