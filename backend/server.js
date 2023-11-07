@@ -23,7 +23,6 @@ mongoose
 
   .connect(process.env.DB_API)
   .then((res) => {
-    // console.log({ res });
     app.listen(PORT, () => {
       console.log(`App is running on port ${PORT}`);
     });

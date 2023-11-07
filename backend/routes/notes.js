@@ -9,16 +9,13 @@ const router = express.Router();
  */
 
 router.get("/notes", async (req, res, next) => {
-  const email = req.user;
   const { userDocument } = req;
-  console.log({ userDocument });
 
   try {
-    const user = await UserBluePrint.findOne({ email }).exec();
     res.status(200).json({
-      ...user,
+      ...userDocument,
     });
-    return [user, null];
+    return [userDocument, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
     return [null, error];
@@ -26,25 +23,16 @@ router.get("/notes", async (req, res, next) => {
 });
 
 router.get("/trashbin", async (req, res, next) => {
-  const email = req.user;
+  const { userDocument } = req;
 
-  UserBluePrint.findOne({ email })
-    .exec()
-    .then((user) => {
-      res.status(200).json(user.deletedNotes);
-    })
-    .catch((error) => {
-      return res.status(500).json({ message: "Internal error", error });
-    });
+  res.status(200).json(userDocument.deletedNotes);
 });
 
 router.get("/notes/labels", async (req, res, next) => {
-  const email = req.user;
+  const { userDocument } = req;
 
   try {
-    const response = await UserBluePrint.findOne({ email }).exec();
-
-    res.status(200).json(response.labels);
+    res.status(200).json(userDocument.labels);
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
@@ -56,27 +44,19 @@ router.get("/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/notes", async (req, res, next) => {
-  const data = req.body;
-  const email = req.user;
+router.post("/notes", async (req, res) => {
+  const { data } = req.body;
+  const { userDocument } = req;
 
-  const curr = new Date();
-  curr.setDate(curr.getDate());
-  const lastTimeDitedNote = curr.toISOString().substring(0, 10);
+  const lastTimeEditedNote = new Date().toISOString().substring(0, 10);
 
   try {
-    const user = await UserBluePrint.findOne({ email }).exec();
+    userDocument.unPinnedNotes.push(data);
+    userDocument.lastTimeEditedNote = lastTimeEditedNote;
 
-    const { unPinnedNotes } = user;
-    const response = await UserBluePrint.updateOne(
-      { email: email },
-      {
-        unPinnedNotes: [...unPinnedNotes, { ...data }],
-        lastTimeDitedNote: lastTimeDitedNote,
-      }
-    ).exec();
+    const response = await userDocument.save();
 
-    res.status(200).json({ message: "Sucessfully edited note" });
+    res.status(200).json({ message: "Successfully added note" });
     return [response, null];
   } catch (error) {
     res.status(500).json({ message: "Internal error", error });
@@ -86,6 +66,7 @@ router.post("/notes", async (req, res, next) => {
 
 router.post("/notes/editnote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -123,6 +104,7 @@ router.post("/notes/editnote/:id", async (req, res, next) => {
 
 router.post("/notes/sortnotes", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { data } = req.body;
   const pinned = req.query.isnotepined === "true";
@@ -144,6 +126,8 @@ router.post("/notes/sortnotes", async (req, res, next) => {
 
 router.post("/trashbin/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const id = req.params.id.split(":")[1];
 
   try {
@@ -168,31 +152,9 @@ router.post("/trashbin/:id", async (req, res, next) => {
   }
 });
 
-router.post("/trashbin", async (req, res, next) => {
-  const email = req.user;
-
-  const id = req.body.id;
-  try {
-    const user = await UserBluePrint.findOne({ email }).exec();
-
-    const { deletedNotes } = data;
-    const response = await UserBluePrint.updateOne(
-      { email },
-      {
-        deletedNotes: [...deletedNotes.filter((n) => n.id !== id)],
-      }
-    );
-
-    res.status(200).json({ message: "Successfully removed" });
-    return [response, null];
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-    return [null, error];
-  }
-});
-
 router.post("/notes/pinnote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -225,6 +187,7 @@ router.post("/notes/pinnote/:id", async (req, res, next) => {
 
 router.post("/notes/colorupdate/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -264,6 +227,7 @@ router.post("/notes/colorupdate/:id", async (req, res, next) => {
 
 router.post(`/notes/copynote/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
@@ -294,6 +258,7 @@ router.post(`/notes/copynote/:id`, async (req, res, next) => {
 
 router.post(`/notes/labels/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { label, labelId } = req.body;
@@ -323,6 +288,7 @@ router.post(`/notes/labels/:id`, async (req, res, next) => {
 
 router.post(`/notes/label/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
@@ -360,6 +326,7 @@ router.post(`/notes/label/:id`, async (req, res, next) => {
 
 router.post(`/labels/:label`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const label = req.params.label.split(":")[1].trim();
   const newLabel = req.body.newLabel;
@@ -389,6 +356,7 @@ router.post(`/labels/:label`, async (req, res, next) => {
 
 router.post(`/notes/checkboxes/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -441,6 +409,7 @@ router.post(`/notes/checkboxes/:id`, async (req, res, next) => {
 
 router.post(`/notes/checkbox/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -492,6 +461,8 @@ router.post(`/notes/checkbox/:id`, async (req, res, next) => {
 
 router.post("/notes/archivenote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
 
   try {
@@ -524,6 +495,8 @@ router.post("/notes/archivenote/:id", async (req, res, next) => {
 
 router.post("/notes/unarchivenote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { id } = getIdPinnedStatus(req);
 
   try {
@@ -551,6 +524,8 @@ router.post("/notes/unarchivenote/:id", async (req, res, next) => {
 
 router.post(`/avatar`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { avatar } = req.body;
 
   try {
@@ -570,6 +545,8 @@ router.post(`/avatar`, async (req, res) => {
 });
 router.post(`/pwd`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { password } = req.body;
   const response = await UserBluePrint.findOne({ email }).exec();
   const match = await bcrypt.compare(password, response.password);
@@ -583,6 +560,8 @@ router.post(`/pwd`, async (req, res) => {
 });
 router.post(`/npwd`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { password } = req.body;
   try {
     const newHashedPwd = await bcrypt.hash(password, 10);
@@ -604,8 +583,32 @@ router.post(`/npwd`, async (req, res) => {
  * DELETE REQUESTS
  */
 
+router.delete("/trashbin/:id", async (req, res, next) => {
+  const email = req.user;
+  const id = req.params.id.split(":")[1];
+
+  try {
+    const response = await UserBluePrint.updateOne(
+      { email: email },
+      { $pull: { deletedNotes: { id: id } } }
+    );
+    if (response.modifiedCount === 0) {
+      return res.status(404).json({ message: "Note not found in trashbin." });
+    }
+    res
+      .status(200)
+      .json({ message: "Note permanently deleted from trashbin." });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
 router.delete("/notes/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -646,6 +649,8 @@ router.delete("/notes/:id", async (req, res, next) => {
 
 router.delete(`/notes/labels/:label`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const label = req.params.label.split(":")[1];
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -666,6 +671,8 @@ router.delete(`/notes/labels/:label`, async (req, res, next) => {
 
 router.get(`/account`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   try {
     const response = await UserBluePrint.findOneAndDelete({ email });
     res.status(200).json({ message: "Sucessfully deleted account" });
