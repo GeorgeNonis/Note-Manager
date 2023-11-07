@@ -1,5 +1,5 @@
 import { FaRegLightbulb } from "react-icons/fa";
-import { Account } from "../../../../components";
+import { Account, Text } from "../../../../components";
 import Link from "../link";
 import { StyledMenu } from "./menu.styles";
 import LabelLinks from "./comps/labels-links";
@@ -25,20 +25,20 @@ const Menu = ({
       <Wrapper>
         <Link to={"/notes"} end>
           <FaRegLightbulb />
-          <h3>Notes</h3>
+          <Text>Notes</Text>
         </Link>
         <LabelLinks />
         <Link onClick={onClick} to={""} button>
           <MdOutlineModeEditOutline />
-          <h3>Edit Labels</h3>
+          <Text>Edit Labels</Text>
         </Link>
         <Link to={"archivenotes"}>
           <MdOutlineArchive />
-          <h3>Archive</h3>
+          <Text>Archive</Text>
         </Link>
         <Link to={"deletednotes"}>
           <BiTrash />
-          <h3>Trash</h3>
+          <Text>Trash</Text>
         </Link>
       </Wrapper>
       {children}

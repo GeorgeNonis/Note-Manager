@@ -8,8 +8,10 @@ const router = express.Router();
  * GET REQUESTS
  */
 
-router.get("/v1/notes", async (req, res, next) => {
+router.get("/notes", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+  console.log({ userDocument });
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -23,7 +25,7 @@ router.get("/v1/notes", async (req, res, next) => {
   }
 });
 
-router.get("/v1/trashbin", async (req, res, next) => {
+router.get("/trashbin", async (req, res, next) => {
   const email = req.user;
 
   UserBluePrint.findOne({ email })
@@ -36,7 +38,7 @@ router.get("/v1/trashbin", async (req, res, next) => {
     });
 });
 
-router.get("/v1/notes/labels", async (req, res, next) => {
+router.get("/notes/labels", async (req, res, next) => {
   const email = req.user;
 
   try {
@@ -54,7 +56,7 @@ router.get("/v1/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/v1/notes", async (req, res, next) => {
+router.post("/notes", async (req, res, next) => {
   const data = req.body;
   const email = req.user;
 
@@ -82,7 +84,7 @@ router.post("/v1/notes", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/editnote/:id", async (req, res, next) => {
+router.post("/notes/editnote/:id", async (req, res, next) => {
   const email = req.user;
 
   const curr = new Date();
@@ -119,7 +121,7 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/sortnotes", async (req, res, next) => {
+router.post("/notes/sortnotes", async (req, res, next) => {
   const email = req.user;
 
   const { data } = req.body;
@@ -140,7 +142,7 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
   }
 });
 
-router.post("/v1/trashbin/:id", async (req, res, next) => {
+router.post("/trashbin/:id", async (req, res, next) => {
   const email = req.user;
   const id = req.params.id.split(":")[1];
 
@@ -166,7 +168,7 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/trashbin", async (req, res, next) => {
+router.post("/trashbin", async (req, res, next) => {
   const email = req.user;
 
   const id = req.body.id;
@@ -189,7 +191,7 @@ router.post("/v1/trashbin", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
+router.post("/notes/pinnote/:id", async (req, res, next) => {
   const email = req.user;
 
   try {
@@ -221,7 +223,7 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
+router.post("/notes/colorupdate/:id", async (req, res, next) => {
   const email = req.user;
 
   const curr = new Date();
@@ -260,7 +262,7 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
+router.post(`/notes/copynote/:id`, async (req, res, next) => {
   const email = req.user;
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
@@ -290,7 +292,7 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
+router.post(`/notes/labels/:id`, async (req, res, next) => {
   const email = req.user;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
@@ -310,7 +312,6 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
         labels: [...labels, { ...newLabel }],
       }
     );
-    // response.labels = [...labels, { ...newLabel }];
 
     res.status(200).json({ message: "Sucessfully created label" });
     return [response, null];
@@ -320,12 +321,12 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/label/:id`, async (req, res, next) => {
+router.post(`/notes/label/:id`, async (req, res, next) => {
   const email = req.user;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
-  // console.log({ email, label, req });
+
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -357,7 +358,7 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/labels/:label`, async (req, res, next) => {
+router.post(`/labels/:label`, async (req, res, next) => {
   const email = req.user;
 
   const label = req.params.label.split(":")[1].trim();
@@ -377,8 +378,7 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
         labels: [...newState],
       }
     );
-    // response.labels = [...newState];
-    // response.save();
+
     res.status(200).json({ message: `Sucessfully edited ${label}` });
     return [response, null];
   } catch (error) {
@@ -387,7 +387,7 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
+router.post(`/notes/checkboxes/:id`, async (req, res, next) => {
   const email = req.user;
 
   const curr = new Date();
@@ -439,7 +439,7 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
+router.post(`/notes/checkbox/:id`, async (req, res, next) => {
   const email = req.user;
 
   const curr = new Date();
@@ -490,7 +490,7 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
+router.post("/notes/archivenote/:id", async (req, res, next) => {
   const email = req.user;
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
 
@@ -522,7 +522,7 @@ router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
+router.post("/notes/unarchivenote/:id", async (req, res, next) => {
   const email = req.user;
   const { id } = getIdPinnedStatus(req);
 
@@ -549,7 +549,7 @@ router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
   }
 });
 
-router.post(`/v1/avatar`, async (req, res) => {
+router.post(`/avatar`, async (req, res) => {
   const email = req.user;
   const { avatar } = req.body;
 
@@ -568,7 +568,7 @@ router.post(`/v1/avatar`, async (req, res) => {
     return [null, error];
   }
 });
-router.post(`/v1/pwd`, async (req, res) => {
+router.post(`/pwd`, async (req, res) => {
   const email = req.user;
   const { password } = req.body;
   const response = await UserBluePrint.findOne({ email }).exec();
@@ -581,7 +581,7 @@ router.post(`/v1/pwd`, async (req, res) => {
     return [null, error];
   }
 });
-router.post(`/v1/npwd`, async (req, res) => {
+router.post(`/npwd`, async (req, res) => {
   const email = req.user;
   const { password } = req.body;
   try {
@@ -604,7 +604,7 @@ router.post(`/v1/npwd`, async (req, res) => {
  * DELETE REQUESTS
  */
 
-router.delete("/v1/notes/:id", async (req, res, next) => {
+router.delete("/notes/:id", async (req, res, next) => {
   const email = req.user;
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
@@ -644,7 +644,7 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
   }
 });
 
-router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
+router.delete(`/notes/labels/:label`, async (req, res, next) => {
   const email = req.user;
   const label = req.params.label.split(":")[1];
   try {
@@ -664,7 +664,7 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
   }
 });
 
-router.get(`/v1/account`, async (req, res, next) => {
+router.get(`/account`, async (req, res, next) => {
   const email = req.user;
   try {
     const response = await UserBluePrint.findOneAndDelete({ email });
