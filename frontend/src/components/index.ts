@@ -1,9 +1,3 @@
-// export { default as ReviewModal } from "./modals/reviewModal";
-// export { default as PinnedNotesSection } from "./sections/pinned-notes-section";
-// export { default as OthersTitle } from "./sections/ui/others-title";
-// export { default as NoNotesTitle } from "./sections/ui/noNotesMsg";
-// export { default as NoArchievedNotesMsg } from "./sections/archive-notes-section/noArchivedNotes";
-// export { default as EmptyTrash } from "./ui/empty-trash";
 export { default as Options } from "./notes/ui/actions/options";
 export { default as Title } from "./notes/ui/note-title";
 export { default as NoteDetails } from "./notes/ui/note-details";
@@ -22,7 +16,6 @@ export { default as EditLabelsModal } from "./modals/editLabelsModal";
 export { default as DeleteLabelConfigModal } from "./modals/delete-label-config-modal";
 export { default as Checkbox } from "./notes/ui/checkbox";
 export { default as DiscardBoxes } from "./modals/discard-boxes";
-export { default as MenuThreeLines } from "./menuThreeLines";
 export { default as ErrorWithFeature } from "../errors/errorWithFeature";
 export { default as LoginPage } from "../pages/loginPage";
 export { default as AccountInfo } from "../components/modals/accountSettings/accountInfo";

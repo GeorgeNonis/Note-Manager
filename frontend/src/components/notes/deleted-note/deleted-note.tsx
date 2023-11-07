@@ -5,14 +5,16 @@ import { StyledBackdrop } from "../../Molecules/Modal/modal.styles";
 import { StyledActions, StyledButton } from "./delete-note.styles";
 import { StyledLoadingSemiCircle } from "../../../../globalStyles";
 
-const DeletedNote = ({
-  note,
-  removeProcess,
-  restoreProcess,
-  loading,
-}: DeletedNoteProps) => {
-  const { review, handleExpand } = useDeletedNote();
-  const { removeLoading, restoreLoading } = loading;
+const DeletedNote = ({ note }: DeletedNoteProps) => {
+  const {
+    removeProcess,
+    restoreProcess,
+    handleExpand,
+    removeLoading,
+    restoreLoading,
+    review,
+  } = useDeletedNote();
+
   return (
     <>
       <StyledBackdrop isOpen={review} onClick={handleExpand} />

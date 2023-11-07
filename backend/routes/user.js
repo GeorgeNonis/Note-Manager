@@ -62,7 +62,6 @@ router.get(`/v1/userexist`, async (req, res, next) => {
   const email = req.query.email;
   const allUsers = await UserBluePrint.find({});
 
-  const oneUser = await UserBluePrint.findOne({ email });
   const duplicate = allUsers.some((user) => {
     return user.email.toLowerCase() === email.toLowerCase();
   });

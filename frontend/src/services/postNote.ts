@@ -93,9 +93,7 @@ export const removeNoteHttp = async <T, E>(
   id: string
 ): Promise<[T | E | null, AxiosError | null]> => {
   try {
-    const response = await axios.post<T, E>(`trashbin/:${id}`, {
-      id,
-    });
+    const response = await axios.delete<T, E>(`trashbin/:${id}`);
     return [response, null];
   } catch (error) {
     const err = error as AxiosError;

@@ -5,26 +5,18 @@ import NoNotes from "../ui/noNotes";
 import { BiTrash } from "react-icons/bi";
 
 const DeletedNotesSection = () => {
-  const { state, handlers } = useDeletedNotesSection();
+  const { deletedNotes, loadingInitialState } = useDeletedNotesSection();
 
   return (
     <>
       <main>
         <StyledWarning>Notes in Trash are deleted after 7 days.</StyledWarning>
-        {state.notes.deletedNotes.length === 0 &&
-        !state.displayState.loadingInitialState ? (
+        {deletedNotes.length === 0 && !loadingInitialState ? (
           <NoNotes SVG={BiTrash} children={"No notes in Trash"} />
         ) : (
           <StyledSection>
-            {state.notes.deletedNotes.map((note, i) => {
-              return (
-                <DeletedNote
-                  note={note}
-                  key={i}
-                  {...handlers}
-                  loading={state.loading}
-                />
-              );
+            {deletedNotes.map((note, i) => {
+              return <DeletedNote note={note} key={i} />;
             })}
           </StyledSection>
         )}

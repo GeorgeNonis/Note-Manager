@@ -8,7 +8,7 @@ const router = express.Router();
  * GET REQUESTS
  */
 
-router.get("/v1/notes", async (req, res, next) => {
+router.get("/notes", async (req, res, next) => {
   const email = req.user;
 
   try {
@@ -23,7 +23,7 @@ router.get("/v1/notes", async (req, res, next) => {
   }
 });
 
-router.get("/v1/trashbin", async (req, res, next) => {
+router.get("/trashbin", async (req, res, next) => {
   const email = req.user;
 
   UserBluePrint.findOne({ email })
@@ -36,7 +36,7 @@ router.get("/v1/trashbin", async (req, res, next) => {
     });
 });
 
-router.get("/v1/notes/labels", async (req, res, next) => {
+router.get("/notes/labels", async (req, res, next) => {
   const email = req.user;
 
   try {
@@ -54,7 +54,7 @@ router.get("/v1/notes/labels", async (req, res, next) => {
  * POST REQUESTS
  */
 
-router.post("/v1/notes", async (req, res, next) => {
+router.post("/notes", async (req, res, next) => {
   const data = req.body;
   const email = req.user;
 
@@ -82,7 +82,7 @@ router.post("/v1/notes", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/editnote/:id", async (req, res, next) => {
+router.post("/notes/editnote/:id", async (req, res, next) => {
   const email = req.user;
 
   const curr = new Date();
@@ -119,7 +119,7 @@ router.post("/v1/notes/editnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/sortnotes", async (req, res, next) => {
+router.post("/notes/sortnotes", async (req, res, next) => {
   const email = req.user;
 
   const { data } = req.body;
@@ -140,8 +140,10 @@ router.post("/v1/notes/sortnotes", async (req, res, next) => {
   }
 });
 
-router.post("/v1/trashbin/:id", async (req, res, next) => {
+router.post("/trashbin/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const id = req.params.id.split(":")[1];
 
   try {
@@ -166,31 +168,9 @@ router.post("/v1/trashbin/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/trashbin", async (req, res, next) => {
+router.post("/notes/pinnote/:id", async (req, res, next) => {
   const email = req.user;
-
-  const id = req.body.id;
-  try {
-    const user = await UserBluePrint.findOne({ email }).exec();
-
-    const { deletedNotes } = data;
-    const response = await UserBluePrint.updateOne(
-      { email },
-      {
-        deletedNotes: [...deletedNotes.filter((n) => n.id !== id)],
-      }
-    );
-
-    res.status(200).json({ message: "Successfully removed" });
-    return [response, null];
-  } catch (error) {
-    res.status(500).json({ message: "Internal error", error });
-    return [null, error];
-  }
-});
-
-router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
-  const email = req.user;
+  const { userDocument } = req;
 
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -221,8 +201,9 @@ router.post("/v1/notes/pinnote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
+router.post("/notes/colorupdate/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -260,8 +241,9 @@ router.post("/v1/notes/colorupdate/:id", async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
+router.post(`/notes/copynote/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
   try {
@@ -290,8 +272,9 @@ router.post(`/v1/notes/copynote/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
+router.post(`/notes/labels/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const { label, labelId } = req.body;
@@ -310,7 +293,6 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
         labels: [...labels, { ...newLabel }],
       }
     );
-    // response.labels = [...labels, { ...newLabel }];
 
     res.status(200).json({ message: "Sucessfully created label" });
     return [response, null];
@@ -320,12 +302,13 @@ router.post(`/v1/notes/labels/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/label/:id`, async (req, res, next) => {
+router.post(`/notes/label/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
   const label = req.query.label;
-  // console.log({ email, label, req });
+
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -342,7 +325,6 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
       labels[findLabelIndex].notes.push({ id, checked: true, pinned });
     }
 
-    // response.labels = [...labels];
     const response = await UserBluePrint.updateOne(
       { email },
       {
@@ -357,8 +339,9 @@ router.post(`/v1/notes/label/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/labels/:label`, async (req, res, next) => {
+router.post(`/labels/:label`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const label = req.params.label.split(":")[1].trim();
   const newLabel = req.body.newLabel;
@@ -377,8 +360,7 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
         labels: [...newState],
       }
     );
-    // response.labels = [...newState];
-    // response.save();
+
     res.status(200).json({ message: `Sucessfully edited ${label}` });
     return [response, null];
   } catch (error) {
@@ -387,8 +369,9 @@ router.post(`/v1/labels/:label`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
+router.post(`/notes/checkboxes/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -439,8 +422,9 @@ router.post(`/v1/notes/checkboxes/:id`, async (req, res, next) => {
   }
 });
 
-router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
+router.post(`/notes/checkbox/:id`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
 
   const curr = new Date();
   curr.setDate(curr.getDate());
@@ -490,8 +474,10 @@ router.post(`/v1/notes/checkbox/:id`, async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
+router.post("/notes/archivenote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { id, isNotePined: pinned } = getIdPinnedStatus(req);
 
   try {
@@ -522,8 +508,10 @@ router.post("/v1/notes/archivenote/:id", async (req, res, next) => {
   }
 });
 
-router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
+router.post("/notes/unarchivenote/:id", async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { id } = getIdPinnedStatus(req);
 
   try {
@@ -549,8 +537,10 @@ router.post("/v1/notes/unarchivenote/:id", async (req, res, next) => {
   }
 });
 
-router.post(`/v1/avatar`, async (req, res) => {
+router.post(`/avatar`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { avatar } = req.body;
 
   try {
@@ -568,8 +558,10 @@ router.post(`/v1/avatar`, async (req, res) => {
     return [null, error];
   }
 });
-router.post(`/v1/pwd`, async (req, res) => {
+router.post(`/pwd`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { password } = req.body;
   const response = await UserBluePrint.findOne({ email }).exec();
   const match = await bcrypt.compare(password, response.password);
@@ -581,8 +573,10 @@ router.post(`/v1/pwd`, async (req, res) => {
     return [null, error];
   }
 });
-router.post(`/v1/npwd`, async (req, res) => {
+router.post(`/npwd`, async (req, res) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const { password } = req.body;
   try {
     const newHashedPwd = await bcrypt.hash(password, 10);
@@ -604,9 +598,34 @@ router.post(`/v1/npwd`, async (req, res) => {
  * DELETE REQUESTS
  */
 
-router.delete("/v1/notes/:id", async (req, res, next) => {
+router.delete("/trashbin/:id", async (req, res, next) => {
   const email = req.user;
+  const id = req.params.id.split(":")[1];
+
+  try {
+    const response = await UserBluePrint.updateOne(
+      { email: email },
+      { $pull: { deletedNotes: { id: id } } }
+    );
+    if (response.modifiedCount === 0) {
+      return res.status(404).json({ message: "Note not found in trashbin." });
+    }
+    res
+      .status(200)
+      .json({ message: "Note permanently deleted from trashbin." });
+    return [response, null];
+  } catch (error) {
+    res.status(500).json({ message: "Internal error", error });
+    return [null, error];
+  }
+});
+
+router.delete("/notes/:id", async (req, res, next) => {
+  const email = req.user;
+
   const { id, isNotePined: pinned, archived } = getIdPinnedStatus(req);
+
+  console.log(pinned, archived);
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
 
@@ -616,6 +635,7 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
       : pinned
       ? pinnedNotes
       : unPinnedNotes;
+    console.log({ user });
     const note = prevState.find((n) => n.id === id);
 
     const response = await UserBluePrint.updateOne(
@@ -635,7 +655,6 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
             deletedNotes: [...deletedNotes, { ...note }],
           }
     );
-
     res.status(200).json({ message: "Deleted note successfully" });
     return [response, null];
   } catch (error) {
@@ -644,8 +663,10 @@ router.delete("/v1/notes/:id", async (req, res, next) => {
   }
 });
 
-router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
+router.delete(`/notes/labels/:label`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   const label = req.params.label.split(":")[1];
   try {
     const user = await UserBluePrint.findOne({ email }).exec();
@@ -664,8 +685,10 @@ router.delete(`/v1/notes/labels/:label`, async (req, res, next) => {
   }
 });
 
-router.get(`/v1/account`, async (req, res, next) => {
+router.get(`/account`, async (req, res, next) => {
   const email = req.user;
+  const { userDocument } = req;
+
   try {
     const response = await UserBluePrint.findOneAndDelete({ email });
     res.status(200).json({ message: "Sucessfully deleted account" });
