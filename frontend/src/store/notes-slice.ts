@@ -4,7 +4,6 @@ import { InitialState } from "./interfaces";
 
 const initialState = {
   email: "",
-  // password: "",
   date: "",
   lastTimeDitedNote: "",
   image: "",
@@ -164,14 +163,12 @@ const notes = createSlice({
           label,
           labelId,
           notes: [{ id, checked: true }],
-          token: "",
         });
       } else {
         state.labels.push({
           label,
           labelId,
           notes: [],
-          token: "",
         });
       }
     },
