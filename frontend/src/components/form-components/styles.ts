@@ -1,6 +1,6 @@
+import { Grid } from "noniscomponents";
 import { styled } from "../../../globalStyles";
 import { Input } from "../Atoms";
-import { Grid } from "../Molecules";
 
 export const StyledForm = styled("div", {
   display: "grid",
