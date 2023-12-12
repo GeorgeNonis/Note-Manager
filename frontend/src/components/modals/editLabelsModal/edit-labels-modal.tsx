@@ -13,7 +13,9 @@ import {
   StyledModal,
 } from "../../Molecules/Modal/modal.styles";
 import { Input, Text } from "../../Atoms";
-import { Grid } from "../../Molecules";
+// import { Grid } from "../../Molecules";
+import { Grid } from "noniscomponents";
+
 import Svg from "./components/svg";
 
 const EditLabelsModal = ({

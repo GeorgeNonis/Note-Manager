@@ -1,7 +1,12 @@
 import { Suspense } from "react";
 import { URL_REGEX, cached_avatar_pictures } from "../../../config";
 import { AvatarModalProps } from "./interfaces";
-import { Grid, Modal } from "../../Molecules";
+import {
+  // Grid,
+  Modal,
+} from "../../Molecules";
+import { Grid } from "noniscomponents";
+
 import {
   StyledComputer,
   StyledImagesContainer,
