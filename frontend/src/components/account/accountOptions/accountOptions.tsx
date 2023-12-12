@@ -2,7 +2,6 @@ import { useAccountOptions } from "./useAccountOptions";
 import { AccountOptionsProps } from "./interfaces";
 import { Button } from "../../Atoms";
 import { StyledContent, StyledProfileImage } from "./accountOptions.styles";
-// import { Grid } from "../../Molecules";
 import { Grid } from "noniscomponents";
 
 const AccountOptions = ({

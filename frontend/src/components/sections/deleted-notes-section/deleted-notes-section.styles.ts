@@ -1,5 +1,5 @@
 import { styled } from "../../../../globalStyles";
-import { Grid } from "../../Molecules";
+import { Grid } from "noniscomponents";
 
 export const StyledSection = styled(Grid, {
   gap: "1rem",

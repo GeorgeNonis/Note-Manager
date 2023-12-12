@@ -9,7 +9,6 @@ import {
   StyledImage,
   StyledSvg,
 } from "./accountAvatar.styles";
-// import { Grid } from "../../../Molecules";
 import { Grid } from "noniscomponents";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
