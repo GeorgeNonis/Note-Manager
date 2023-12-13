@@ -2,7 +2,7 @@ import { useLoginForm } from "./useLoginForm";
 import { useDispatch } from "react-redux";
 import { formSwitch } from "../../../../store/display-state-slice";
 import { CrossLine, EmailField, PasswordField } from "./components";
-import Button from "../../../../components/Atoms/Button";
+import { Button } from "noniscomponents";
 import { Form } from "../../../../components/Molecules";
 
 const LoginForm = () => {
@@ -23,7 +23,9 @@ const LoginForm = () => {
           Login
         </Button>
         <CrossLine />
-        <Button onClick={() => dispatch(formSwitch())}>Sign Up</Button>
+        <Button onClick={() => dispatch(formSwitch())} theme={"#f26716"}>
+          Sign Up
+        </Button>
       </Form>
     </>
   );
