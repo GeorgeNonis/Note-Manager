@@ -2,8 +2,8 @@ import { useLoginForm } from "./useLoginForm";
 import { useDispatch } from "react-redux";
 import { formSwitch } from "../../../../store/display-state-slice";
 import { CrossLine, EmailField, PasswordField } from "./components";
-import { Button } from "noniscomponents";
 import { Form } from "../../../../components/Molecules";
+import { Button } from "../../../../components";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const LoginForm = () => {
         <Button
           disabled={!loginButtonValues.validInputs || loading}
           loading={loading}
+          theme={"purple"}
         >
           Login
         </Button>
