@@ -4,12 +4,11 @@ import { DEFAULT_AVTR } from "../../../../config";
 import AvatarModal from "../../avataroptions/avatarOptions";
 import { AccountAvatarProps } from "./accountAvatar.props";
 import {
-  StyledButton,
   StyledCancelButton,
   StyledImage,
   StyledSvg,
 } from "./accountAvatar.styles";
-import { Grid } from "../../../Molecules";
+import { Grid, Button } from "noniscomponents";
 
 const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
   const { values, handlers } = useAccountAvatar(initialState);
@@ -78,15 +77,19 @@ const AccountAvatar = ({ initialState }: AccountAvatarProps) => {
           autoFlow={"column"}
           css={{ gridAutoColumns: "1fr" }}
         >
-          <StyledButton onClick={() => handlers.setChangeAvatar(true)}>
+          <Button
+            onClick={() => handlers.setChangeAvatar(true)}
+            theme={"#f26716"}
+          >
             Change Avatar
-          </StyledButton>
-          <StyledButton
+          </Button>
+          <Button
+            theme={"#f26716"}
             disabled={values.default_avatar || values.saveAvatar}
             onClick={handlers.saveAvatarHandler}
           >
             Save
-          </StyledButton>
+          </Button>
         </Grid>
       </Grid>
     </>

@@ -1,6 +1,6 @@
 import Info from "./info";
 import { AccountInfoProps } from "./accountInfo.props";
-import { Grid } from "../../../Molecules";
+import { Grid } from "noniscomponents";
 
 const AccountInfo = ({ initialState }: AccountInfoProps) => {
   const { email, date, lastTimeDitedNote } = initialState;

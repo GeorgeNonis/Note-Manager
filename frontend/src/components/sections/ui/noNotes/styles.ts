@@ -1,5 +1,5 @@
 import { styled } from "../../../../../globalStyles";
-import { Grid } from "../../../Molecules";
+import { Grid } from "noniscomponents";
 
 export const StyledDiv = styled(Grid, {
   marginInline: "auto",

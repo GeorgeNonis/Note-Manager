@@ -1,6 +1,6 @@
 import { styled } from "../../../../globalStyles";
 import { Button } from "../../Atoms";
-import { Grid } from "../../Molecules";
+import { Grid } from "noniscomponents";
 
 export const StyledButton = styled(Button, {
   bgc: "rgba(154, 160, 166, 0.039)",

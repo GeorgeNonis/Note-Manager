@@ -1,6 +1,6 @@
 import { GrPersonalComputer } from "react-icons/gr";
 import { styled } from "../../../../globalStyles";
-import Grid from "../../Molecules/Grid";
+import { Grid } from "noniscomponents";
 
 export const StyledComputer = styled("div", {
   position: "relative",

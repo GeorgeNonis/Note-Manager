@@ -6,6 +6,7 @@ import * as Components from "../../index";
 import { IRootState } from "../../../store/store";
 import { Modal } from "../../Molecules";
 import { StyledColumn1, StyledColumn2 } from "./accountSettings.styles";
+import { Grid } from "noniscomponents";
 
 const AccountSettings = ({ open }: AccountSettingsProps) => {
   const { ...initialState } = useSelector((state: IRootState) => state.notes);
@@ -43,7 +44,7 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
         gridTemplateRows: "1fr 11fr",
       }}
     >
-      <Components.Grid
+      <Grid
         autoFlow={"column"}
         centerItems={true}
         css={{ gridTemplateColumns: "2fr 8fr" }}
@@ -59,7 +60,7 @@ const AccountSettings = ({ open }: AccountSettingsProps) => {
           ))}
         </StyledColumn1>
         <StyledColumn2>{options[option as keyof Key].el}</StyledColumn2>
-      </Components.Grid>
+      </Grid>
     </Modal>
   );
 };

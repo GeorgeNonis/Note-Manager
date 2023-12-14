@@ -1,6 +1,6 @@
 import { styled } from "../../../../globalStyles";
 import { Text } from "../../Atoms";
-import { Grid } from "../../Molecules";
+import { Grid } from "noniscomponents";
 
 export const StyledNavLink = styled(Text, {
   fontWeight: 300,

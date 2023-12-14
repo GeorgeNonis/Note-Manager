@@ -1,6 +1,6 @@
 import { useAccountPassword } from "./useAccountPassword";
-import { Grid, InputField } from "../../../Molecules";
-import { Button } from "../../../Atoms";
+import { InputField } from "../../../Molecules";
+import { Grid, Button } from "noniscomponents";
 
 const AccountPassword = () => {
   const {
@@ -21,6 +21,7 @@ const AccountPassword = () => {
           disabled={!validInputs}
           loading={loading}
           onClick={onSubmitHandler}
+          theme={"#f26716"}
         >
           Update Password
         </Button>

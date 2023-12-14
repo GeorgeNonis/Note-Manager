@@ -1,6 +1,6 @@
 import { styled } from "../../../../globalStyles";
 import { Button } from "../../Atoms";
-import { Grid } from "../../Molecules";
+import { Grid } from "noniscomponents";
 
 export const StyledActions = styled(Grid, {
   alignSelf: "self-end",
