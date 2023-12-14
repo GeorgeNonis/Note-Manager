@@ -1,7 +1,8 @@
 import { useAccountDelete } from "./useAccountDelete";
-import { Button, Input } from "../../../Atoms";
+import { Input } from "../../../Atoms";
 import { AccountDeleteProps } from "./interfaces";
 import styles from "./style.module.scss";
+import { Button } from "noniscomponents";
 
 const AccountDelete = ({ initialState }: AccountDeleteProps) => {
   const { email } = initialState;
@@ -26,7 +27,7 @@ const AccountDelete = ({ initialState }: AccountDeleteProps) => {
       <Button
         disabled={!validMatch}
         onClick={deleteAccountHandler}
-        variant={"danger"}
+        theme="rgb(255 60 60)"
       >
         Delete Account
       </Button>
