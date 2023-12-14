@@ -1,8 +1,7 @@
 import { useAccountOptions } from "./useAccountOptions";
 import { AccountOptionsProps } from "./interfaces";
-import { Button } from "../../Atoms";
 import { StyledContent, StyledProfileImage } from "./accountOptions.styles";
-import { Grid } from "noniscomponents";
+import { Button, Grid } from "noniscomponents";
 
 const AccountOptions = ({
   accountSettingsHandler,
@@ -18,11 +17,18 @@ const AccountOptions = ({
         </Grid>
         <Button
           onClick={() => handlers.accountSettingsHandler()}
-          css={{ w: "80%" }}
+          css={{ w: "80%", h: 30 }}
+          size={"s"}
+          theme={"#f26716"}
         >
           Manage your Account
         </Button>
-        <Button onClick={handlers.logoutHandler} css={{ w: "80%" }}>
+        <Button
+          onClick={handlers.logoutHandler}
+          css={{ w: "80%", h: 30 }}
+          size={"s"}
+          theme={"#f26716"}
+        >
           Sign Out
         </Button>
       </StyledContent>

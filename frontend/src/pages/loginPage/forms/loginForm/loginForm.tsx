@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { formSwitch } from "../../../../store/display-state-slice";
 import { CrossLine, EmailField, PasswordField } from "./components";
 import { Form } from "../../../../components/Molecules";
-import { Button } from "../../../../components";
+import { Button } from "noniscomponents";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -19,12 +19,17 @@ const LoginForm = () => {
         <Button
           disabled={!loginButtonValues.validInputs || loading}
           loading={loading}
-          theme={"purple"}
+          theme={"#f26716"}
+          size={"s"}
         >
           Login
         </Button>
         <CrossLine />
-        <Button onClick={() => dispatch(formSwitch())} theme={"#f26716"}>
+        <Button
+          onClick={() => dispatch(formSwitch())}
+          theme={"#f26716"}
+          size={"s"}
+        >
           Sign Up
         </Button>
       </Form>
